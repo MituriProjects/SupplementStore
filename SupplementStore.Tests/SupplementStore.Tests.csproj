@@ -15,6 +15,7 @@
   <ItemGroup>
     <ProjectReference Include="..\SupplementStore.Application\SupplementStore.Application.csproj" />
     <ProjectReference Include="..\SupplementStore.Domain\SupplementStore.Domain.csproj" />
+    <ProjectReference Include="..\SupplementStore.Infrastructure\SupplementStore.Infrastructure.csproj" />
     <ProjectReference Include="..\SupplementStore\SupplementStore.csproj" />
   </ItemGroup>
 
