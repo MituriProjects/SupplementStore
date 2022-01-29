@@ -1,0 +1,37 @@
+﻿@{
+
+    var request = ViewContext.HttpContext.Request;
+
+    var pathAndQuery = request.QueryString.HasValue
+        ? $"{request.Path}{request.QueryString}"
+        : request.Path.ToString();
+
+    var returnUrl = pathAndQuery.Contains("returnUrl")
+        ? ViewData["returnUrl"]
+        : pathAndQuery;
+}
+
+<div class="m-2 mx-4 text-end">
+
+    @if (User.Identity.IsAuthenticated) {
+
+        <a asp-action="Logout" asp-controller="Account" asp-route-returnUrl="@pathAndQuery" class="btn btn-primary">
+            Sign out
+        </a>
+    }
+    else {
+
+        <a asp-action="Register" asp-controller="Account" asp-route-returnUrl="@returnUrl"
+           class="btn btn-primary @(ViewContext.RouteData.Values["Action"].ToString() == "Register" ? "disabled" : "")">
+
+            Register
+        </a>
+
+        <a asp-action="Login" asp-controller="Account" asp-route-returnUrl="@returnUrl"
+           class="btn btn-primary @(ViewContext.RouteData.Values["Action"].ToString() == "Login" ? "disabled" : "")">
+
+            Login
+        </a>
+    }
+
+</div>
