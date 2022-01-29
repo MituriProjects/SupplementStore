@@ -1,11 +1,13 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ViewComponents;
 using SupplementStore.ViewModels.Account;
 using System.Threading.Tasks;
 
 namespace SupplementStore.Controllers {
 
+    [ViewComponent(Name = "Account")]
     public class AccountController : Controller {
 
         UserManager<IdentityUser> UserManager { get; }
@@ -18,6 +20,11 @@ namespace SupplementStore.Controllers {
 
             UserManager = userManager;
             SignInManager = signInManager;
+        }
+
+        public IViewComponentResult Invoke() {
+
+            return new ViewViewComponentResult();
         }
 
         public IActionResult Login(string returnUrl) {
