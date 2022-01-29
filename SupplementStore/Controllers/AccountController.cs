@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using SupplementStore.ViewModels.Account;
 using System.Threading.Tasks;
@@ -84,6 +85,14 @@ namespace SupplementStore.Controllers {
             }
 
             return View(model);
+        }
+
+        [Authorize]
+        public async Task<IActionResult> Logout(string returnUrl) {
+
+            await SignInManager.SignOutAsync();
+
+            return LocalRedirect(returnUrl ?? "/");
         }
     }
 }
