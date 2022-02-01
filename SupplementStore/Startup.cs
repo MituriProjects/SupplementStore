@@ -29,6 +29,7 @@ namespace SupplementStore {
                 .AddDefaultTokenProviders();
 
             services.AddTransient(typeof(IDocument<>), typeof(Document<>));
+            services.AddTransient<IDocumentApprover, DocumentApprover>();
 
             services.AddMvc();
         }
