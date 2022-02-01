@@ -28,6 +28,8 @@ namespace SupplementStore {
             }).AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
 
+            services.AddTransient(typeof(IDocument<>), typeof(Document<>));
+
             services.AddMvc();
         }
 
