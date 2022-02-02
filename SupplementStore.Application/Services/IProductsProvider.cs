@@ -4,6 +4,6 @@ using SupplementStore.Application.Results;
 namespace SupplementStore.Application.Services {
 
     public interface IProductsProvider {
-        ProductProviderResult Load(ProductProviderArgs args);
+        ProductsProviderResult Load(ProductProviderArgs args);
     }
 }

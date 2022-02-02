@@ -16,7 +16,7 @@ namespace SupplementStore.Infrastructure.AppServices {
             ProductDocument = productDocument;
         }
 
-        public ProductProviderResult Load(ProductProviderArgs args) {
+        public ProductsProviderResult Load(ProductProviderArgs args) {
 
             var products = ProductDocument.All
                 .Skip(args.Skip)
@@ -27,7 +27,7 @@ namespace SupplementStore.Infrastructure.AppServices {
                     Price = e.Price
                 });
 
-            return new ProductProviderResult {
+            return new ProductsProviderResult {
                 AllProductsCount = ProductDocument.All.Count(),
                 Products = products
             };
