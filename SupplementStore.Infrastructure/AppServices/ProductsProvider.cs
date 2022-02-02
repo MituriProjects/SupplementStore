@@ -16,7 +16,7 @@ namespace SupplementStore.Infrastructure.AppServices {
             ProductDocument = productDocument;
         }
 
-        public ProductsProviderResult Load(ProductProviderArgs args) {
+        public ProductsProviderResult Load(ProductsProviderArgs args) {
 
             var products = ProductDocument.All
                 .Skip(args.Skip)

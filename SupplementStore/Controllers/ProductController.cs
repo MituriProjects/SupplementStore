@@ -16,7 +16,7 @@ namespace SupplementStore.Controllers {
 
         public IActionResult Index(ProductIndexViewModel model) {
 
-            var loadedProducts = ProductProvider.Load(new ProductProviderArgs {
+            var loadedProducts = ProductProvider.Load(new ProductsProviderArgs {
                 Skip = model.Skip,
                 Take = model.Take
             });
