@@ -13,9 +13,9 @@ namespace SupplementStore.Tests {
             return this;
         }
 
-        public ContentScheme Lacks(object value) {
+        public ContentScheme Lacks(string name, object value) {
 
-            Elements.Add(new ContentElement(value, false));
+            Elements.Add(new ContentElement(name, value, false));
 
             return this;
         }
