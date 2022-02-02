@@ -5,7 +5,9 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using SupplementStore.Application.Services;
 using SupplementStore.Infrastructure;
+using SupplementStore.Infrastructure.AppServices;
 
 namespace SupplementStore {
 
@@ -31,6 +33,8 @@ namespace SupplementStore {
 
             services.AddTransient(typeof(IDocument<>), typeof(Document<>));
             services.AddTransient<IDocumentApprover, DocumentApprover>();
+
+            services.AddTransient<IProductProvider, ProductProvider>();
 
             services.AddMvc(options => {
 
