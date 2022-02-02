@@ -8,9 +8,9 @@ namespace SupplementStore.Tests {
 
         bool Occurs { get; }
 
-        public ContentElement(object value, bool occurs) {
+        public ContentElement(string name, object value, bool occurs) {
 
-            Value = $"<div>{value.ToString()}</div>";
+            Value = $"<div name=\"{name}\">{value.ToString()}</div>";
             Occurs = occurs;
         }
 
