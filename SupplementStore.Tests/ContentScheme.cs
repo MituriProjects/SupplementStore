@@ -6,9 +6,9 @@ namespace SupplementStore.Tests {
 
         List<ContentElement> Elements { get; } = new List<ContentElement>();
 
-        public ContentScheme Contains(object value) {
+        public ContentScheme Contains(string name, object value) {
 
-            Elements.Add(new ContentElement(value, true));
+            Elements.Add(new ContentElement(name, value, true));
 
             return this;
         }
