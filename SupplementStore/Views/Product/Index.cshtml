@@ -1,0 +1,55 @@
+﻿@model ProductIndexViewModel
+
+<environment exclude="Testing">
+
+    <form method="post" asp-controller="Product" asp-action="Index" class="d-inline-block mx-2">
+
+        <select asp-for="Take" class="form-select d-inline-block m-2" style="width:100px">
+            <option>10</option>
+            <option>20</option>
+            <option>50</option>
+        </select>
+
+        <button class="btn btn-outline-primary mb-1" type="submit">Apply</button>
+
+    </form>
+
+    <div class="mx-4 d-inline-block">
+
+        @for (int i = 0; i < Model.AllProductsCount / Model.Take + 1; i++) {
+
+            if (Model.Take * i == Model.Skip) {
+
+                <a asp-controller="Product" asp-action="Index" asp-route-skip="@(Model.Take * i)" asp-route-take="@Model.Take" class="btn btn-outline-dark m-1 disabled">@(i + 1)</a>
+            }
+            else {
+
+                <a asp-controller="Product" asp-action="Index" asp-route-skip="@(Model.Take * i)" asp-route-take="@Model.Take" class="btn btn-outline-primary m-1">@(i + 1)</a>
+            }
+        }
+
+    </div>
+
+    <ul>
+
+        @foreach (var product in Model.Products) {
+
+            <li>@product.Name -> @product.Price.ToString()</li>
+        }
+
+    </ul>
+
+</environment>
+
+<environment include="Testing">
+
+    <div name="AllProductsCount">@Model.AllProductsCount</div>
+
+    @foreach (var product in Model.Products) {
+
+        <div name="ProductId">@product.Id</div>
+        <div name="ProductName">@product.Name</div>
+        <div name="ProductPrice">@product.Price.ToString()</div>
+    }
+
+</environment>
