@@ -3,7 +3,7 @@ using SupplementStore.Application.Results;
 
 namespace SupplementStore.Application.Services {
 
-    public interface IProductProvider {
+    public interface IProductsProvider {
         ProductProviderResult Load(ProductProviderArgs args);
     }
 }

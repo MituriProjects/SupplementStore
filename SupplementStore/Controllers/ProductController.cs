@@ -7,9 +7,9 @@ namespace SupplementStore.Controllers {
 
     public class ProductController : Controller {
 
-        IProductProvider ProductProvider { get; }
+        IProductsProvider ProductProvider { get; }
 
-        public ProductController(IProductProvider productProvider) {
+        public ProductController(IProductsProvider productProvider) {
 
             ProductProvider = productProvider;
         }

@@ -7,7 +7,7 @@ using System.Linq;
 
 namespace SupplementStore.Infrastructure.AppServices {
 
-    public class ProductProvider : IProductProvider {
+    public class ProductProvider : IProductsProvider {
 
         IDocument<Product> ProductDocument { get; }
 
