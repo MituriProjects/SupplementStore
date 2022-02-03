@@ -1,0 +1,34 @@
+﻿@model IEnumerable<BasketProductDetails>
+
+<environment exclude="Testing">
+
+    <ul class="list-unstyled">
+
+        @foreach (var basketProductDetails in Model) {
+
+            <li class="bg-info w-25 m-2">
+
+                <span>@basketProductDetails.ProductName</span>
+                <span> -- </span>
+                <span>@basketProductDetails.Quantity</span>
+                <span> -- </span>
+                <span>@(basketProductDetails.Quantity * basketProductDetails.ProductPrice)</span>
+
+            </li>
+        }
+
+    </ul>
+
+</environment>
+
+<environment include="Testing">
+
+    @foreach (var basketProductDetails in Model) {
+
+        <div name="ProductId">@basketProductDetails.ProductId</div>
+        <div name="ProductName">@basketProductDetails.ProductName</div>
+        <div name="ProductPrice">@basketProductDetails.ProductPrice</div>
+        <div name="Quantity">@basketProductDetails.Quantity</div>
+    }
+
+</environment>
