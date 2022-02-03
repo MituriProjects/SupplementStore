@@ -10,14 +10,25 @@ namespace SupplementStore.Controllers {
 
         UserManager<IdentityUser> UserManager { get; }
 
+        IBasketProductsProvider BasketProductsProvider { get; }
+
         IBasketProductCreator BasketProductCreator { get; }
 
         public BasketController(
             UserManager<IdentityUser> userManager,
+            IBasketProductsProvider basketProductsProvider,
             IBasketProductCreator basketProductCreator) {
 
             UserManager = userManager;
+            BasketProductsProvider = basketProductsProvider;
             BasketProductCreator = basketProductCreator;
+        }
+
+        public IActionResult Index() {
+
+            var userId = UserManager.GetUserId(HttpContext.User);
+
+            return View(BasketProductsProvider.Load(userId));
         }
 
         [HttpPost]
