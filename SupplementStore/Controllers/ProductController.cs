@@ -7,16 +7,21 @@ namespace SupplementStore.Controllers {
 
     public class ProductController : Controller {
 
-        IProductsProvider ProductProvider { get; }
+        IProductProvider ProductProvider { get; }
 
-        public ProductController(IProductsProvider productProvider) {
+        IProductsProvider ProductsProvider { get; }
+
+        public ProductController(
+            IProductProvider productProvider,
+            IProductsProvider productsProvider) {
 
             ProductProvider = productProvider;
+            ProductsProvider = productsProvider;
         }
 
         public IActionResult Index(ProductIndexViewModel model) {
 
-            var loadedProducts = ProductProvider.Load(new ProductsProviderArgs {
+            var loadedProducts = ProductsProvider.Load(new ProductsProviderArgs {
                 Skip = model.Skip,
                 Take = model.Take
             });
@@ -25,6 +30,16 @@ namespace SupplementStore.Controllers {
             model.Products = loadedProducts.Products;
 
             return View(model);
+        }
+
+        public IActionResult Details(string id) {
+
+            var product = ProductProvider.Load(id);
+
+            if (product == null)
+                return RedirectToAction("Index");
+
+            return View(product);
         }
     }
 }
