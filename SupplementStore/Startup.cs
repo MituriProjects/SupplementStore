@@ -36,6 +36,7 @@ namespace SupplementStore {
 
             services.AddTransient<IProductProvider, ProductProvider>();
             services.AddTransient<IProductsProvider, ProductsProvider>();
+            services.AddTransient<IBasketProductsProvider, BasketProductsProvider>();
             services.AddTransient<IBasketProductCreator, BasketProductCreator>();
 
             services.AddMvc(options => {
