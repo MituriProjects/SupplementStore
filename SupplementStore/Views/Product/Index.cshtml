@@ -20,7 +20,7 @@
 
             if (Model.Take * i == Model.Skip) {
 
-                <a asp-controller="Product" asp-action="Index" asp-route-skip="@(Model.Take * i)" asp-route-take="@Model.Take" class="btn btn-outline-dark m-1 disabled">@(i + 1)</a>
+                <a asp-controller="Product" asp-action="Index" asp-route-skip="@(Model.Take * i)" asp-route-take="@Model.Take" class="btn btn-primary m-1 disabled">@(i + 1)</a>
             }
             else {
 
@@ -30,11 +30,15 @@
 
     </div>
 
-    <ul>
+    <ul class="list-unstyled">
 
         @foreach (var product in Model.Products) {
 
-            <li>@product.Name -> @product.Price.ToString()</li>
+            <li>
+                <a asp-controller="Product" asp-action="Details" asp-route-id="@product.Id" class="btn btn-secondary m-2">
+                    @product.Name -> @product.Price.ToString()
+                </a>
+            </li>
         }
 
     </ul>
