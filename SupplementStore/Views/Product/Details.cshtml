@@ -1,0 +1,16 @@
+﻿@model ProductDetails
+
+<environment exclude="Testing">
+
+    <h3>@Model.Name</h3>
+    <h4>@Model.Price</h4>
+
+</environment>
+
+<environment include="Testing">
+
+    <div name="ProductId">@Model.Id</div>
+    <div name="ProductName">@Model.Name</div>
+    <div name="ProductPrice">@Model.Price.ToString()</div>
+
+</environment>

@@ -1,10 +1,13 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using SupplementStore.Application.Services;
 using SupplementStore.Infrastructure;
+using SupplementStore.Infrastructure.AppServices;
 
 namespace SupplementStore {
 
@@ -21,14 +24,25 @@ namespace SupplementStore {
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services) {
 
-            services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(Configuration["ConnectionStrings:DefaultConnection"]));
+            ConfigureDatabase(services);
 
             services.AddIdentity<IdentityUser, IdentityRole>(options => {
                 options.User.RequireUniqueEmail = true;
             }).AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
 
-            services.AddMvc();
+            services.AddTransient(typeof(IDocument<>), typeof(Document<>));
+            services.AddTransient<IDocumentApprover, DocumentApprover>();
+
+            services.AddTransient<IProductProvider, ProductProvider>();
+            services.AddTransient<IProductsProvider, ProductsProvider>();
+
+            services.AddMvc(options => {
+
+                options.Filters.Add(new AutoValidateAntiforgeryTokenAttribute());
+            });
+
+            ReconfigureServices(services);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -51,6 +65,20 @@ namespace SupplementStore {
                     template: "{controller}/{action}/{id?}",
                     defaults: new { controller = "Home", action = "Index" });
             });
+
+            Reconfigure(app, env);
+        }
+
+        protected virtual void ConfigureDatabase(IServiceCollection services) {
+
+            services.AddDbContext<ApplicationDbContext>(options =>
+                options.UseSqlServer(Configuration["ConnectionStrings:DefaultConnection"]));
+        }
+
+        protected virtual void ReconfigureServices(IServiceCollection services) {
+        }
+
+        protected virtual void Reconfigure(IApplicationBuilder app, IHostingEnvironment env) {
         }
     }
 }
