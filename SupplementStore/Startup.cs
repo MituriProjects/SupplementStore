@@ -34,6 +34,7 @@ namespace SupplementStore {
             services.AddTransient(typeof(IDocument<>), typeof(Document<>));
             services.AddTransient<IDocumentApprover, DocumentApprover>();
 
+            services.AddTransient<IProductProvider, ProductProvider>();
             services.AddTransient<IProductsProvider, ProductsProvider>();
 
             services.AddMvc(options => {
