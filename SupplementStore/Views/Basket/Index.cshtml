@@ -13,6 +13,12 @@
                 <span>@basketProductDetails.Quantity</span>
                 <span> -- </span>
                 <span>@(basketProductDetails.Quantity * basketProductDetails.ProductPrice)</span>
+                <form method="post" asp-controller="Basket" asp-action="Remove" class="d-inline-block mx-3">
+                    <input hidden name="ProductId" value="@basketProductDetails.ProductId" />
+                    <button type="submit" class="btn btn-danger m-1 pt-1">
+                        <img src="~/images/trashcan.png" alt="trashcan" style="width:28px;height:28px;" />
+                    </button>
+                </form>
 
             </li>
         }
