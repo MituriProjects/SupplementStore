@@ -14,14 +14,18 @@ namespace SupplementStore.Controllers {
 
         IBasketProductCreator BasketProductCreator { get; }
 
+        IBasketProductRemover BasketProductRemover { get; }
+
         public BasketController(
             UserManager<IdentityUser> userManager,
             IBasketProductsProvider basketProductsProvider,
-            IBasketProductCreator basketProductCreator) {
+            IBasketProductCreator basketProductCreator,
+            IBasketProductRemover basketProductRemover) {
 
             UserManager = userManager;
             BasketProductsProvider = basketProductsProvider;
             BasketProductCreator = basketProductCreator;
+            BasketProductRemover = basketProductRemover;
         }
 
         public IActionResult Index() {
@@ -39,6 +43,16 @@ namespace SupplementStore.Controllers {
             BasketProductCreator.Create(userId, productId, quantity);
 
             return LocalRedirect(returnUrl ?? "/Basket");
+        }
+
+        [HttpPost]
+        public IActionResult Remove(string productId) {
+
+            var userId = UserManager.GetUserId(HttpContext.User);
+
+            BasketProductRemover.Remove(userId, productId);
+
+            return RedirectToAction("Index");
         }
     }
 }
