@@ -26,6 +26,7 @@ namespace SupplementStore.Tests.Integration.BasketTests {
                 var product = products.First(e => e.Id == basketProduct.ProductId);
 
                 var values = new Dictionary<string, object> {
+                    { "Id", basketProduct.Id },
                     { "ProductId", basketProduct.ProductId },
                     { "ProductName", product.Name },
                     { "ProductPrice", product.Price },
