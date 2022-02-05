@@ -5,12 +5,14 @@ using Microsoft.AspNetCore.TestHost;
 using Microsoft.Extensions.PlatformAbstractions;
 using Microsoft.Net.Http.Headers;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using CookieHeaderValue = Microsoft.Net.Http.Headers.CookieHeaderValue;
@@ -74,6 +76,17 @@ namespace SupplementStore.Tests.Integration {
             Content = await response.Content.ReadAsStringAsync();
 
             Headers = response.Headers;
+        }
+
+        protected async Task PatchAsync(string requestUri, params object[] operations) {
+
+            var jsonData = JsonConvert.SerializeObject(operations);
+
+            var httpContent = new StringContent(jsonData, Encoding.UTF8, "application/json");
+
+            httpContent.Headers.Add("RequestVerificationToken", await ArrangeAntiforgery());
+
+            await Client.PatchAsync(requestUri, httpContent);
         }
 
         protected void Examine(ContentScheme contentScheme) {
