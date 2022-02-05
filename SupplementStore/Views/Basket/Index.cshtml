@@ -34,9 +34,35 @@
 
     </ul>
 
+    <div class="bg-success text-light w-25 m-2 p-1">
+        <span>Do zapłaty: </span>
+        <span id="costSummary">0</span>
+    </div>
+
     <script type="text/javascript">
 
         $(document).ready(function () {
+
+            updateCostSummary();
+
+            function updateCostSummary() {
+
+                var costSummary = 0;
+
+                $(".price").map(function () {
+
+                    var price = parseFloat($(this).text());
+
+                    var quantityElement = $(this)
+                        .siblings(".quantity");
+
+                    var quantity = parseInt(quantityElement.text());
+
+                    costSummary += quantity * price;
+                });
+
+                $("#costSummary").text(costSummary.toFixed(2));
+            }
 
             $(".quantity-change-btn")
                 .click(changeQuantity);
@@ -74,6 +100,8 @@
 
                         costElement
                             .text(price * newQuantity);
+
+                        updateCostSummary();
                     }
                 });
             }
