@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace SupplementStore.Tests {
 
@@ -6,16 +7,23 @@ namespace SupplementStore.Tests {
 
         List<ContentElement> Elements { get; } = new List<ContentElement>();
 
+        Func<string, object, bool, ContentElement> ContentElementFactory { get; set; }
+
+        public ContentScheme() {
+
+            ContentElementFactory = (s, o, b) => new ContentElement(s, o, b);
+        }
+
         public ContentScheme Contains(string name, object value) {
 
-            Elements.Add(new ContentElement(name, value, true));
+            Elements.Add(ContentElementFactory(name, value, true));
 
             return this;
         }
 
         public ContentScheme Lacks(string name, object value) {
 
-            Elements.Add(new ContentElement(name, value, false));
+            Elements.Add(ContentElementFactory(name, value, false));
 
             return this;
         }
@@ -26,6 +34,20 @@ namespace SupplementStore.Tests {
 
                 contentElement.Examine(content);
             }
+        }
+
+        public static ContentScheme Json() {
+
+            return new ContentScheme {
+
+                ContentElementFactory = (s, o, b) => {
+
+                    s = char.ToLower(s[0]) + s.Substring(1);
+
+                    return ContentElement.Json(s, o, b);
+                }
+            };
+
         }
     }
 }
