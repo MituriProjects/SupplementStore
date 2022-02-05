@@ -28,6 +28,7 @@ namespace SupplementStore.Infrastructure.AppServices {
                 var product = ProductDocument.All.First(e => e.Id == basketProduct.ProductId);
 
                 yield return new BasketProductDetails {
+                    Id = basketProduct.Id.ToString(),
                     ProductId = basketProduct.ProductId.ToString(),
                     ProductName = product.Name,
                     ProductPrice = product.Price,
