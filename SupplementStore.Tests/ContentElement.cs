@@ -1,4 +1,5 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Newtonsoft.Json;
 
 namespace SupplementStore.Tests {
 
@@ -7,6 +8,12 @@ namespace SupplementStore.Tests {
         string Value { get; }
 
         bool Occurs { get; }
+
+        private ContentElement(string value, bool occurs) {
+
+            Value = value;
+            Occurs = occurs;
+        }
 
         public ContentElement(string name, object value, bool occurs) {
 
@@ -40,6 +47,11 @@ namespace SupplementStore.Tests {
         private void ThrowNotFound(string content) {
 
             throw new AssertFailedException($"Not found: {Value}; Content: {content}");
+        }
+
+        public static ContentElement Json(string name, object value, bool occurs) {
+
+            return new ContentElement($"\"{name}\":{JsonConvert.ToString(value)}", occurs);
         }
     }
 }
