@@ -14,7 +14,7 @@ namespace SupplementStore.Tests.Integration.ProductTests {
 
             await GetAsync($"/Product/Details/{products[1].Id}");
 
-            Examine(new ContentScheme()
+            Examine(ContentScheme.Html()
                 .Contains("ProductId", products[1].Id)
                 .Contains("ProductName", products[1].Name)
                 .Contains("ProductPrice", products[1].Price));

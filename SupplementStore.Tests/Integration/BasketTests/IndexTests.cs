@@ -20,7 +20,7 @@ namespace SupplementStore.Tests.Integration.BasketTests {
 
             await GetAsync("/Basket", TestData.User);
 
-            var contentScheme = new ContentScheme();
+            var contentScheme = ContentScheme.Html();
             foreach (var basketProduct in basketProducts) {
 
                 var product = products.First(e => e.Id == basketProduct.ProductId);
