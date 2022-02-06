@@ -9,9 +9,9 @@ namespace SupplementStore.Tests {
 
         Func<string, object, bool, ContentElement> ContentElementFactory { get; set; }
 
-        public ContentScheme() {
+        private ContentScheme(Func<string, object, bool, ContentElement> contentElementFactory) {
 
-            ContentElementFactory = (s, o, b) => new ContentElement(s, o, b);
+            ContentElementFactory = contentElementFactory;
         }
 
         public ContentScheme Contains(string name, object value) {
@@ -38,16 +38,18 @@ namespace SupplementStore.Tests {
 
         public static ContentScheme Json() {
 
-            return new ContentScheme {
+            return new ContentScheme((s, o, b) => {
 
-                ContentElementFactory = (s, o, b) => {
+                s = char.ToLower(s[0]) + s.Substring(1);
 
-                    s = char.ToLower(s[0]) + s.Substring(1);
+                return ContentElement.Json(s, o, b);
+            });
 
-                    return ContentElement.Json(s, o, b);
-                }
-            };
+        }
 
+        public static ContentScheme Html() {
+
+            return new ContentScheme((s, o, b) => ContentElement.Html(s, o, b));
         }
     }
 }
