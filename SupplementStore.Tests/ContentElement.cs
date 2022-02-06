@@ -15,12 +15,6 @@ namespace SupplementStore.Tests {
             Occurs = occurs;
         }
 
-        public ContentElement(string name, object value, bool occurs) {
-
-            Value = $"<div name=\"{name}\">{value.ToString()}</div>";
-            Occurs = occurs;
-        }
-
         public void Examine(string content) {
 
             if (Occurs) {
@@ -47,6 +41,11 @@ namespace SupplementStore.Tests {
         private void ThrowNotFound(string content) {
 
             throw new AssertFailedException($"Not found: {Value}; Content: {content}");
+        }
+
+        public static ContentElement Html(string name, object value, bool occurs) {
+
+            return new ContentElement($"<div name=\"{name}\">{value.ToString()}</div>", occurs);
         }
 
         public static ContentElement Json(string name, object value, bool occurs) {
