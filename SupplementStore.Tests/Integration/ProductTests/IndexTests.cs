@@ -14,7 +14,7 @@ namespace SupplementStore.Tests.Integration.ProductTests {
 
             await GetAsync("/Product");
 
-            Examine(new ContentScheme()
+            Examine(ContentScheme.Html()
                 .Contains("ProductId", products[0].Id)
                 .Contains("ProductName", products[0].Name)
                 .Contains("ProductPrice", products[0].Price)
@@ -30,7 +30,7 @@ namespace SupplementStore.Tests.Integration.ProductTests {
 
             await GetAsync("/Product");
 
-            Examine(new ContentScheme()
+            Examine(ContentScheme.Html()
                 .Contains("AllProductsCount", 3));
         }
 
@@ -41,7 +41,7 @@ namespace SupplementStore.Tests.Integration.ProductTests {
 
             await GetAsync("/Product?Skip=2&Take=2");
 
-            var contentScheme = new ContentScheme();
+            var contentScheme = ContentScheme.Html();
             for (int i = 0; i < products.Count(); i++) {
 
                 if (i < 2 || i == 4) {

@@ -5,6 +5,16 @@
     <h3>@Model.Name</h3>
     <h4>@Model.Price</h4>
 
+    @if (User.Identity.IsAuthenticated) {
+
+        <form method="post" asp-controller="Basket" asp-action="Add">
+            <input hidden name="ProductId" value="@Model.Id" />
+            <input hidden name="Quantity" value="1" />
+            <input hidden name="ReturnUrl" value="/Product/Details/@Model.Id" />
+            <button type="submit" class="btn btn-outline-primary">Add to basket</button>
+        </form>
+    }
+
 </environment>
 
 <environment include="Testing">

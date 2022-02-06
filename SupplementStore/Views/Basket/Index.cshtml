@@ -1,0 +1,137 @@
+﻿@model IEnumerable<BasketProductDetails>
+
+@{
+
+    var tokenSet = antiforgery.GetAndStoreTokens(Context);
+}
+
+<environment exclude="Testing">
+
+    <ul class="list-unstyled">
+
+        @foreach (var basketProductDetails in Model) {
+
+            <li class="bg-info w-25 m-2">
+
+                <div hidden class="id">@basketProductDetails.Id</div>
+                <div hidden class="price">@basketProductDetails.ProductPrice.ToString(CultureInfo.InvariantCulture)</div>
+                <span>@basketProductDetails.ProductName</span>
+                <span> -- </span>
+                <span class="quantity">@basketProductDetails.Quantity</span>
+                <span> -- </span>
+                <span class="cost">@(basketProductDetails.Quantity * basketProductDetails.ProductPrice)</span>
+                <div class="quantity-change-btn btn btn-outline-primary" data-quantity-change-value="-1">-</div>
+                <div class="quantity-change-btn btn btn-outline-primary" data-quantity-change-value="1">+</div>
+                <form method="post" asp-controller="Basket" asp-action="Remove" class="d-inline-block mx-3">
+                    <input hidden name="ProductId" value="@basketProductDetails.ProductId" />
+                    <button type="submit" class="btn btn-danger m-1 pt-1">
+                        <img src="~/images/trashcan.png" alt="trashcan" style="width:28px;height:28px;" />
+                    </button>
+                </form>
+
+            </li>
+        }
+
+    </ul>
+
+    <div class="bg-success text-light w-25 m-2 p-1">
+        <span>Do zapłaty: </span>
+        <span id="costSummary">0</span>
+    </div>
+
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+
+            updateCostSummary();
+
+            function updateCostSummary() {
+
+                var costSummary = 0;
+
+                $(".price").map(function () {
+
+                    var price = parseFloat($(this).text());
+
+                    var quantityElement = $(this)
+                        .siblings(".quantity");
+
+                    var quantity = parseInt(quantityElement.text());
+
+                    costSummary += quantity * price;
+                });
+
+                $("#costSummary").text(costSummary.toFixed(2));
+            }
+
+            $(".quantity-change-btn")
+                .click(changeQuantity);
+
+            function changeQuantity() {
+
+                var quantityElement = $(this)
+                    .siblings(".quantity");
+
+                var changeValue = $(this)
+                    .data("quantity-change-value");
+
+                var newQuantity = parseInt(quantityElement.text()) + changeValue;
+
+                var priceElement = $(this)
+                    .siblings(".price");
+
+                var price = parseFloat(priceElement.text());
+
+                var costElement = $(this)
+                    .siblings(".cost");
+
+                $.ajax(getUrl(this), {
+
+                    headers: {
+                        'Content-Type': 'application/json',
+                        '@tokenSet.HeaderName': '@tokenSet.RequestToken'
+                    },
+                    type: "PATCH",
+                    data: JSON.stringify([{ op: "replace", path: "quantity", value: newQuantity }]),
+                    success: function () {
+
+                        quantityElement
+                            .text(newQuantity);
+
+                        costElement
+                            .text(price * newQuantity);
+
+                        updateCostSummary();
+                    }
+                });
+            }
+
+            function getUrl(relatedElement) {
+
+                return `/api/basketproduct/${getId(relatedElement)}`;
+            }
+
+            function getId(relatedElement) {
+
+                return $(relatedElement)
+                    .siblings(".id")
+                    .text();
+            }
+        });
+
+    </script>
+
+</environment>
+
+<environment include="Testing">
+
+    @foreach (var basketProductDetails in Model) {
+
+        <div name="Id">@basketProductDetails.Id</div>
+        <div name="ProductId">@basketProductDetails.ProductId</div>
+        <div name="ProductName">@basketProductDetails.ProductName</div>
+        <div name="ProductPrice">@basketProductDetails.ProductPrice</div>
+        <div name="Quantity">@basketProductDetails.Quantity</div>
+    }
+
+</environment>

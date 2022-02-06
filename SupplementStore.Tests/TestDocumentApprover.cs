@@ -24,6 +24,11 @@ namespace SupplementStore.Tests {
                 "TestDocumentApprover has detected changes made after the call to the IDocumentApprover's SaveChanges method.");
         }
 
+        public static void ExamineNoChangesSaved() {
+
+            Assert.IsNull(OnSaveChangesValues, "The call to the IDocumentApprover's SaveChanges method was detected.");
+        }
+
         public static void ClearDocuments() {
 
             TestDocumentSet.ClearDocuments();

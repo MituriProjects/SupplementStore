@@ -15,6 +15,10 @@
 
     @if (User.Identity.IsAuthenticated) {
 
+        <a asp-action="Index" asp-controller="Basket" class="btn btn-primary mx-2 p-1" style="height:38px;width:55px;">
+            <img src="~/images/basket.png" alt="basket" style="height:28px;width:30px;" />
+        </a>
+
         <a asp-action="Logout" asp-controller="Account" asp-route-returnUrl="@pathAndQuery" class="btn btn-primary">
             Sign out
         </a>
