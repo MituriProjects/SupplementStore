@@ -9,8 +9,8 @@ namespace SupplementStore.Tests.Integration.BasketProductApiTests {
         [TestMethod]
         public async Task ReturnsBasketProductDetails() {
 
-            var product = TestProduct.Random();
-            var basketProduct = TestBasketProduct.Random()
+            var product = TestEntity.Random<TestProduct>();
+            var basketProduct = TestEntity.Random<TestBasketProduct>()
                 .WithProductId(product.Id);
 
             await GetAsync($"api/basketproduct/{basketProduct.Id}");

@@ -21,10 +21,10 @@ namespace SupplementStore.Tests.Integration.OrderTests {
         [TestMethod]
         public async Task UserIsLoggedIn_ReturnsOrderDetails() {
 
-            var order = TestOrder.Random()
+            var order = TestEntity.Random<TestOrder>()
                 .WithUserId(TestData.User.Id);
-            var products = TestProduct.Random(2);
-            var orderProducts = TestOrderProduct.Random(2);
+            var products = TestEntity.Random<TestProduct>(2);
+            var orderProducts = TestEntity.Random<TestOrderProduct>(2);
             orderProducts[0]
                 .WithOrderId(order.Id)
                 .WithProductId(products[0].Id);
@@ -55,7 +55,7 @@ namespace SupplementStore.Tests.Integration.OrderTests {
         [TestMethod]
         public async Task OrderDoesNotBelongToUser_RedirectsToMain() {
 
-            var order = TestOrder.Random()
+            var order = TestEntity.Random<TestOrder>()
                 .WithUserId(TestData.Users[1].Id);
 
             await GetAsync($"/Order/Summary/{order.Id}", TestData.Users[0]);

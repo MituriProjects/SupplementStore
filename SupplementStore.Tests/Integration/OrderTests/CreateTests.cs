@@ -21,8 +21,8 @@ namespace SupplementStore.Tests.Integration.OrderTests {
         [TestMethod]
         public async Task Get_UserIsLoggedIn_ReturnsBasketProductDetails() {
 
-            var products = TestProduct.Random(3);
-            var basketProducts = TestBasketProduct.Random(3);
+            var products = TestEntity.Random<TestProduct>(3);
+            var basketProducts = TestEntity.Random<TestBasketProduct>(3);
             basketProducts[0]
                 .WithProductId(products[2].Id)
                 .WithUserId(TestData.User.Id);
@@ -74,7 +74,7 @@ namespace SupplementStore.Tests.Integration.OrderTests {
         [TestMethod]
         public async Task Post_UserIsLoggedIn_CreatesOrderAndOrderProductsAndDeletesBasketProducts() {
 
-            var basketProducts = TestBasketProduct.Random(2);
+            var basketProducts = TestEntity.Random<TestBasketProduct>(2);
             basketProducts[0].WithUserId(TestData.User.Id);
             basketProducts[1].WithUserId(TestData.User.Id);
 
@@ -98,7 +98,7 @@ namespace SupplementStore.Tests.Integration.OrderTests {
         [TestMethod]
         public async Task Post_UserIsLoggedIn_RedirectsToOrderSummary() {
 
-            var basketProducts = TestBasketProduct.Random(2);
+            var basketProducts = TestEntity.Random<TestBasketProduct>(2);
             basketProducts[0].WithUserId(TestData.User.Id);
             basketProducts[1].WithUserId(TestData.User.Id);
 
@@ -117,7 +117,7 @@ namespace SupplementStore.Tests.Integration.OrderTests {
         [TestMethod]
         public async Task Post_PostalCodeIsInvalid_NoChangesSaved() {
 
-            var basketProducts = TestBasketProduct.Random(2);
+            var basketProducts = TestEntity.Random<TestBasketProduct>(2);
             basketProducts[0].WithUserId(TestData.User.Id);
             basketProducts[1].WithUserId(TestData.User.Id);
 
@@ -139,8 +139,8 @@ namespace SupplementStore.Tests.Integration.OrderTests {
         [TestMethod]
         public async Task Post_AddressIsEmpty_NoOrderCreated() {
 
-            var products = TestProduct.Random(2);
-            var basketProducts = TestBasketProduct.Random(2);
+            var products = TestEntity.Random<TestProduct>(2);
+            var basketProducts = TestEntity.Random<TestBasketProduct>(2);
             basketProducts[0]
                 .WithProductId(products[0].Id)
                 .WithUserId(TestData.User.Id);
@@ -165,8 +165,8 @@ namespace SupplementStore.Tests.Integration.OrderTests {
         [TestMethod]
         public async Task Post_PostalCodeIsEmpty_NoOrderCreated() {
 
-            var products = TestProduct.Random(2);
-            var basketProducts = TestBasketProduct.Random(2);
+            var products = TestEntity.Random<TestProduct>(2);
+            var basketProducts = TestEntity.Random<TestBasketProduct>(2);
             basketProducts[0]
                 .WithProductId(products[0].Id)
                 .WithUserId(TestData.User.Id);
@@ -191,8 +191,8 @@ namespace SupplementStore.Tests.Integration.OrderTests {
         [TestMethod]
         public async Task Post_CityIsEmpty_NoOrderCreated() {
 
-            var products = TestProduct.Random(2);
-            var basketProducts = TestBasketProduct.Random(2);
+            var products = TestEntity.Random<TestProduct>(2);
+            var basketProducts = TestEntity.Random<TestBasketProduct>(2);
             basketProducts[0]
                 .WithProductId(products[0].Id)
                 .WithUserId(TestData.User.Id);

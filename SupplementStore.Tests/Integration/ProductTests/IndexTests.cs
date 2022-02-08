@@ -10,7 +10,7 @@ namespace SupplementStore.Tests.Integration.ProductTests {
         [TestMethod]
         public async Task DefaultSkipAndTake_ReturnsDetailsOfProducts() {
 
-            var products = TestProduct.Random(2);
+            var products = TestEntity.Random<TestProduct>(2);
 
             await GetAsync("/Product");
 
@@ -26,7 +26,7 @@ namespace SupplementStore.Tests.Integration.ProductTests {
         [TestMethod]
         public async Task DefaultSkipAndTake_ReturnsAllProductsCount() {
 
-            var products = TestProduct.Random(3);
+            var products = TestEntity.Random<TestProduct>(3);
 
             await GetAsync("/Product");
 
@@ -37,7 +37,7 @@ namespace SupplementStore.Tests.Integration.ProductTests {
         [TestMethod]
         public async Task SkipEquals2AndTakeEquals2_ReturnsDetailsOfProducts() {
 
-            var products = TestProduct.Random(5);
+            var products = TestEntity.Random<TestProduct>(5);
 
             await GetAsync("/Product?Skip=2&Take=2");
 

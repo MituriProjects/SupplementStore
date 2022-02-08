@@ -11,8 +11,8 @@ namespace SupplementStore.Tests.Integration.BasketTests {
         [TestMethod]
         public async Task UserIsLoggedIn_ReturnsBasketProductDetails() {
 
-            var products = TestProduct.Random(4);
-            var basketProducts = TestBasketProduct.Random(4);
+            var products = TestEntity.Random<TestProduct>(4);
+            var basketProducts = TestEntity.Random<TestBasketProduct>(4);
             for (int i = 0; i < basketProducts.Length; i++)
                 basketProducts[i].WithProductId(products[i].Id);
             basketProducts[1].WithUserId(TestData.User.Id);

@@ -32,7 +32,7 @@ namespace SupplementStore.Tests.Integration.BasketTests {
         [TestMethod]
         public async Task BasketProductExists_DeletesBasketProduct() {
 
-            var basketProduct = TestBasketProduct.Random()
+            var basketProduct = TestEntity.Random<TestBasketProduct>()
                 .WithUserId(TestData.User.Id);
 
             await PostAsync($"/Basket/Remove", new Dictionary<string, string> {

@@ -35,7 +35,7 @@ namespace SupplementStore.Tests.Integration.BasketTests {
         [TestMethod]
         public async Task ProductIdIsValidAndQuantityEqualsOne_InsertsBasketProduct() {
 
-            var product = TestProduct.Random();
+            var product = TestEntity.Random<TestProduct>();
 
             await PostAsync("/Basket/Add", new Dictionary<string, string> {
                 { "ProductId",  product.Id.ToString()},
@@ -49,7 +49,7 @@ namespace SupplementStore.Tests.Integration.BasketTests {
         [TestMethod]
         public async Task ProductIdIsValidAndQuantityEqualsTwo_InsertsBasketProducts() {
 
-            var product = TestProduct.Random();
+            var product = TestEntity.Random<TestProduct>();
 
             await PostAsync("/Basket/Add", new Dictionary<string, string> {
                 { "ProductId",  product.Id.ToString()},
@@ -63,8 +63,8 @@ namespace SupplementStore.Tests.Integration.BasketTests {
         [TestMethod]
         public async Task ProductIdIsValidAndQuantityEqualsOneAndBasketProductExists_IncreasesBasketProductQuantity() {
 
-            var product = TestProduct.Random();
-            TestBasketProduct.Random()
+            var product = TestEntity.Random<TestProduct>();
+            TestEntity.Random<TestBasketProduct>()
                 .WithUserId(TestData.User.Id)
                 .WithProductId(product.Id)
                 .WithQuantity(1);
@@ -82,7 +82,7 @@ namespace SupplementStore.Tests.Integration.BasketTests {
         [TestMethod]
         public async Task UserIsLoggedOut_NoBasketProductCreation() {
 
-            var product = TestProduct.Random();
+            var product = TestEntity.Random<TestProduct>();
 
             await PostAsync("/Basket/Add", new Dictionary<string, string> {
                 { "ProductId",  product.Id.ToString()},
@@ -117,7 +117,7 @@ namespace SupplementStore.Tests.Integration.BasketTests {
         [TestMethod]
         public async Task QuantityEqualsZero_NoBasketProductCreation() {
 
-            var product = TestProduct.Random();
+            var product = TestEntity.Random<TestProduct>();
 
             await PostAsync("/Basket/Add", new Dictionary<string, string> {
                 { "ProductId",  product.Id.ToString()},
@@ -130,7 +130,7 @@ namespace SupplementStore.Tests.Integration.BasketTests {
         [TestMethod]
         public async Task QuantityIsBelowZero_NoBasketProductCreation() {
 
-            var product = TestProduct.Random();
+            var product = TestEntity.Random<TestProduct>();
 
             await PostAsync("/Basket/Add", new Dictionary<string, string> {
                 { "ProductId",  product.Id.ToString()},

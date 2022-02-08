@@ -10,7 +10,7 @@ namespace SupplementStore.Tests.Integration.ProductTests {
         [TestMethod]
         public async Task IdIsValid_ReturnsProductDetails() {
 
-            var products = TestProduct.Random(3);
+            var products = TestEntity.Random<TestProduct>(3);
 
             await GetAsync($"/Product/Details/{products[1].Id}");
 
@@ -23,7 +23,7 @@ namespace SupplementStore.Tests.Integration.ProductTests {
         [TestMethod]
         public async Task NoProductWithThisId_RedirectsToIndex() {
 
-            var products = TestProduct.Random(2);
+            var products = TestEntity.Random<TestProduct>(2);
 
             await GetAsync($"/Product/Details/{Guid.NewGuid().ToString()}");
 
@@ -33,7 +33,7 @@ namespace SupplementStore.Tests.Integration.ProductTests {
         [TestMethod]
         public async Task IdIsInvalid_RedirectsToIndex() {
 
-            var products = TestProduct.Random(2);
+            var products = TestEntity.Random<TestProduct>(2);
 
             await GetAsync($"/Product/Details/InvalidId");
 
