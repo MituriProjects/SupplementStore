@@ -41,6 +41,11 @@ namespace SupplementStore.Tests {
             Entities.Add(entity);
         }
 
+        public static TEntity First(Func<TEntity, bool> predicate) {
+
+            return Entities.First(predicate);
+        }
+
         public static void IsEmpty() {
 
             if (Entities.Count > 0) {
