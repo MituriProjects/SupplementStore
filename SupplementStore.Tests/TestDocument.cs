@@ -21,6 +21,8 @@ namespace SupplementStore.Tests {
 
         void IDocument<TEntity>.Add(TEntity entity) {
 
+            entity.Id = Guid.NewGuid();
+
             Entities.Add(TestEntityConverter.Process(entity));
         }
 
@@ -37,6 +39,11 @@ namespace SupplementStore.Tests {
         public static void Add(TEntity entity) {
 
             Entities.Add(entity);
+        }
+
+        public static TEntity First(Func<TEntity, bool> predicate) {
+
+            return Entities.First(predicate);
         }
 
         public static void IsEmpty() {

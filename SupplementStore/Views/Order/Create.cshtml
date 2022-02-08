@@ -1,0 +1,74 @@
+﻿@model OrderCreateViewModel
+
+<environment exclude="Testing">
+
+    @if (Model.BasketProducts.Count() > 0) {
+
+        <ul class="list-unstyled">
+
+            @foreach (var basketProduct in Model.BasketProducts) {
+
+                <li class="bg-info w-25 m-2">
+                    <span>@basketProduct.ProductName</span>
+                    <span> -- </span>
+                    <span class="quantity">@basketProduct.Quantity</span>
+                    <span> -- </span>
+                    <span class="cost">@(basketProduct.Quantity * basketProduct.ProductPrice)</span>
+                </li>
+            }
+
+        </ul>
+
+        var costSummary = 0M;
+
+        foreach (var basketProduct in Model.BasketProducts) {
+
+            costSummary += basketProduct.ProductPrice * basketProduct.Quantity;
+        }
+
+        <div class="bg-success text-light w-25 m-2 p-1">
+            <span>Do zapłaty: </span>
+            <span id="costSummary">@costSummary</span>
+        </div>
+
+        <div asp-validation-summary="All" class="text-danger"></div>
+
+        <form method="post" asp-controller="Order" asp-action="Create" class="m-2 w-25">
+            <div class="form-group">
+                <label asp-for="Address"></label>
+                <input asp-for="Address" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label asp-for="PostalCode"></label>
+                <input asp-for="PostalCode" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label asp-for="City"></label>
+                <input asp-for="City" class="form-control" />
+            </div>
+            <button type="submit" class="btn btn-success">Create order</button>
+        </form>
+    }
+    else {
+
+        <h3>You shouldn't be here...</h3>
+    }
+
+</environment>
+
+<environment include="Testing">
+
+    @foreach (var basketProduct in Model.BasketProducts) {
+
+        <div name="Id">@basketProduct.Id</div>
+        <div name="ProductId">@basketProduct.ProductId</div>
+        <div name="ProductName">@basketProduct.ProductName</div>
+        <div name="ProductPrice">@basketProduct.ProductPrice</div>
+        <div name="Quantity">@basketProduct.Quantity</div>
+    }
+
+    <div name="Address">@Model.Address</div>
+    <div name="PostalCode">@Model.PostalCode</div>
+    <div name="City">@Model.City</div>
+
+</environment>

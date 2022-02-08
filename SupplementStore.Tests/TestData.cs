@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace SupplementStore.Tests {
 
@@ -12,22 +13,32 @@ namespace SupplementStore.Tests {
             "Admin"
         };
 
-        public static IdentityUser[] AllUsers = new IdentityUser[] {
-            new IdentityUser { Email = "user0@test.pl", UserName = "user0@test.pl" },
-            new IdentityUser { Email = "user1@test.pl", UserName = "user1@test.pl" },
-            new IdentityUser { Email = "user2@test.pl", UserName = "user2@test.pl" }
+        public static IdentityUser[] Owners = new IdentityUser[] {
+            new IdentityUser { Email = "owner0@test.pl", UserName = "owner0@test.pl" }
         };
+
+        public static IdentityUser[] Admins = new IdentityUser[] {
+            new IdentityUser { Email = "admin0@test.pl", UserName = "admin0@test.pl" }
+        };
+
+        public static IdentityUser[] Users = new IdentityUser[] {
+            new IdentityUser { Email = "user0@test.pl", UserName = "user0@test.pl" },
+            new IdentityUser { Email = "user1@test.pl", UserName = "user1@test.pl" }
+        };
+
+        public static IdentityUser[] AllUsers = Owners.Concat(Admins).Concat(Users).ToArray();
+
+        public static IdentityUser Owner => Owners[0];
+
+        public static IdentityUser Admin => Admins[0];
+
+        public static IdentityUser User => Users[0];
 
         public static IDictionary<string, IEnumerable<string>> UserRoles = new Dictionary<string, IEnumerable<string>> {
             { Owner.Email, new string[] { Roles[0] } },
             { Admin.Email, new string[] { Roles[1] } },
-            { User.Email, new string[] { } }
+            { Users[0].Email, new string[] { } },
+            { Users[1].Email, new string[] { } }
         };
-
-        public static IdentityUser Owner => AllUsers[0];
-
-        public static IdentityUser Admin => AllUsers[1];
-
-        public static IdentityUser User => AllUsers[2];
     }
 }
