@@ -16,14 +16,18 @@ namespace SupplementStore.Controllers {
 
         IOrderCreator OrderCreator { get; }
 
+        IOrderProvider OrderProvider { get; }
+
         public OrderController(
             UserManager<IdentityUser> userManager,
             IBasketProductsProvider basketProductsProvider,
-            IOrderCreator orderCreator) {
+            IOrderCreator orderCreator,
+            IOrderProvider orderProvider) {
 
             UserManager = userManager;
             BasketProductsProvider = basketProductsProvider;
             OrderCreator = orderCreator;
+            OrderProvider = orderProvider;
         }
 
         public IActionResult Create() {
@@ -64,6 +68,21 @@ namespace SupplementStore.Controllers {
             }
 
             return LocalRedirect($"/Order/Summary/{order.Id.ToString()}");
+        }
+
+        public IActionResult Summary(string id) {
+
+            var orderDetails = OrderProvider.Load(id);
+
+            var userId = UserManager.GetUserId(HttpContext.User);
+
+            if (orderDetails == null)
+                return LocalRedirect("/");
+
+            if (orderDetails.UserId != userId)
+                return LocalRedirect("/");
+
+            return View(orderDetails);
         }
     }
 }
