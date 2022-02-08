@@ -19,6 +19,8 @@ namespace SupplementStore.Infrastructure {
 
         public DbSet<Order> Orders { get; set; }
 
+        public DbSet<OrderProduct> OrderProducts { get; set; }
+
         protected override void OnModelCreating(ModelBuilder builder) {
 
             base.OnModelCreating(builder);
@@ -26,6 +28,7 @@ namespace SupplementStore.Infrastructure {
             builder.ApplyConfiguration(new ProductConfiguration());
             builder.ApplyConfiguration(new BasketProductConfiguration());
             builder.ApplyConfiguration(new OrderConfiguration());
+            builder.ApplyConfiguration(new OrderProductConfiguration());
         }
     }
 }
