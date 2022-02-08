@@ -1,6 +1,5 @@
 ﻿using SupplementStore.Domain.Entities.Baskets;
 using System;
-using System.Linq;
 
 namespace SupplementStore.Tests {
 
@@ -26,33 +25,5 @@ namespace SupplementStore.Tests {
 
             return this;
         }
-
-        public static TestBasketProduct New() {
-
-            var product = new TestBasketProduct();
-
-            TestDocument<BasketProduct>.Add(product);
-
-            return product;
-        }
-
-        public static TestBasketProduct Random() {
-
-            var id = Guid.NewGuid();
-
-            var product = new TestBasketProduct {
-                Id = id,
-                UserId = Guid.NewGuid().ToString(),
-                ProductId = Guid.NewGuid(),
-                Quantity = RandomManager.Next(10)
-            };
-
-            TestDocument<BasketProduct>.Add(product);
-
-            return product;
-        }
-
-        public static TestBasketProduct[] Random(int count) =>
-            new TestBasketProduct[count].Select(e => Random()).ToArray();
     }
 }
