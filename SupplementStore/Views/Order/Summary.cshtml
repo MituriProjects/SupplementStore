@@ -1,0 +1,59 @@
+﻿@model OrderDetails
+
+<environment exclude="Testing">
+
+    <ul class="list-unstyled">
+
+        @foreach (var orderProduct in Model.OrderProducts) {
+
+            <li class="bg-info w-25 m-2">
+                <span>@orderProduct.ProductName</span>
+                <span> -- </span>
+                <span class="quantity">@orderProduct.Quantity</span>
+                <span> -- </span>
+                <span class="cost">@(orderProduct.Quantity * orderProduct.ProductPrice)</span>
+            </li>
+        }
+
+    </ul>
+
+    @{
+        var costSummary = 0M;
+
+        foreach (var orderProduct in Model.OrderProducts) {
+
+            costSummary += orderProduct.ProductPrice * orderProduct.Quantity;
+        }
+    }
+
+    <div class="bg-success text-light w-25 m-2 p-1">
+        <span>To pay: </span>
+        <span id="costSummary">@costSummary</span>
+    </div>
+
+    <div class="bg-info w-25 m-2">
+        <div>@Model.Address</div>
+        <div>@Model.PostalCode</div>
+        <div>@Model.City</div>
+    </div>
+    <div class="bg-info w-25 m-2">Order date: @Model.CreatedOn</div>
+
+</environment>
+
+<environment include="Testing">
+
+    <div name="Id">@Model.Id</div>
+    <div name="Address">@Model.Address</div>
+    <div name="PostalCode">@Model.PostalCode</div>
+    <div name="City">@Model.City</div>
+    <div name="CreatedOn">@Model.CreatedOn</div>
+
+    @foreach (var productDetails in Model.OrderProducts) {
+
+        <div name="ProductId">@productDetails.ProductId</div>
+        <div name="ProductName">@productDetails.ProductName</div>
+        <div name="ProductPrice">@productDetails.ProductPrice</div>
+        <div name="Quantity">@productDetails.Quantity</div>
+    }
+
+</environment>
