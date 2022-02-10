@@ -12,11 +12,14 @@ namespace SupplementStore.Infrastructure.Configurations {
                 .WithMany()
                 .HasForeignKey(e => e.UserId)
                 .IsRequired();
-            builder.Property(e => e.Address)
+            builder.OwnsOne(e => e.Address)
+                .Property(e => e.Street)
                 .IsRequired();
-            builder.Property(e => e.PostalCode)
+            builder.OwnsOne(e => e.Address)
+                .Property(e => e.PostalCode)
                 .IsRequired();
-            builder.Property(e => e.City)
+            builder.OwnsOne(e => e.Address)
+                .Property(e => e.City)
                 .IsRequired();
         }
     }
