@@ -1,4 +1,5 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using SupplementStore.Domain.Entities.Baskets;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -12,7 +13,7 @@ namespace SupplementStore.Tests.Integration.BasketTests {
         public async Task UserIsLoggedIn_ReturnsBasketProductDetails() {
 
             var products = TestEntity.Random<TestProduct>(4);
-            var basketProducts = TestEntity.Random<TestBasketProduct>(4);
+            var basketProducts = TestEntity.Random<BasketProduct>(4);
             for (int i = 0; i < basketProducts.Length; i++)
                 basketProducts[i].WithProductId(products[i].Id);
             basketProducts[1].WithUserId(TestData.User.Id);

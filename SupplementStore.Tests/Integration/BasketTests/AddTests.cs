@@ -64,7 +64,7 @@ namespace SupplementStore.Tests.Integration.BasketTests {
         public async Task ProductIdIsValidAndQuantityEqualsOneAndBasketProductExists_IncreasesBasketProductQuantity() {
 
             var product = TestEntity.Random<TestProduct>();
-            TestEntity.Random<TestBasketProduct>()
+            TestEntity.Random<BasketProduct>()
                 .WithUserId(TestData.User.Id)
                 .WithProductId(product.Id)
                 .WithQuantity(1);

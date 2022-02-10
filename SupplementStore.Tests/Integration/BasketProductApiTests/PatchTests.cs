@@ -11,7 +11,7 @@ namespace SupplementStore.Tests.Integration.BasketProductApiTests {
         public async Task UpdatesBasketProductQuantity() {
 
             var product = TestEntity.Random<TestProduct>();
-            var basketProduct = TestEntity.Random<TestBasketProduct>()
+            var basketProduct = TestEntity.Random<BasketProduct>()
                 .WithProductId(product.Id);
 
             var newQuantity = basketProduct.Quantity + 3;

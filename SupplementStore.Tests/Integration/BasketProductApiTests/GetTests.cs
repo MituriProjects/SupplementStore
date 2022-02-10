@@ -1,4 +1,5 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using SupplementStore.Domain.Entities.Baskets;
 using System.Threading.Tasks;
 
 namespace SupplementStore.Tests.Integration.BasketProductApiTests {
@@ -10,7 +11,7 @@ namespace SupplementStore.Tests.Integration.BasketProductApiTests {
         public async Task ReturnsBasketProductDetails() {
 
             var product = TestEntity.Random<TestProduct>();
-            var basketProduct = TestEntity.Random<TestBasketProduct>()
+            var basketProduct = TestEntity.Random<BasketProduct>()
                 .WithProductId(product.Id);
 
             await GetAsync($"api/basketproduct/{basketProduct.Id}");
