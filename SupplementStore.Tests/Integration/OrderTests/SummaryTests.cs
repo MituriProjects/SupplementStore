@@ -1,4 +1,5 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using SupplementStore.Domain.Entities.Orders;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
@@ -21,7 +22,7 @@ namespace SupplementStore.Tests.Integration.OrderTests {
         [TestMethod]
         public async Task UserIsLoggedIn_ReturnsOrderDetails() {
 
-            var order = TestEntity.Random<TestOrder>()
+            var order = TestEntity.Random<Order>()
                 .WithUserId(TestData.User.Id);
             var products = TestEntity.Random<TestProduct>(2);
             var orderProducts = TestEntity.Random<TestOrderProduct>(2);
@@ -55,7 +56,7 @@ namespace SupplementStore.Tests.Integration.OrderTests {
         [TestMethod]
         public async Task OrderDoesNotBelongToUser_RedirectsToMain() {
 
-            var order = TestEntity.Random<TestOrder>()
+            var order = TestEntity.Random<Order>()
                 .WithUserId(TestData.Users[1].Id);
 
             await GetAsync($"/Order/Summary/{order.Id}", TestData.Users[0]);
