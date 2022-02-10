@@ -1,4 +1,5 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using SupplementStore.Domain.Entities.Products;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -10,7 +11,7 @@ namespace SupplementStore.Tests.Integration.ProductTests {
         [TestMethod]
         public async Task DefaultSkipAndTake_ReturnsDetailsOfProducts() {
 
-            var products = TestEntity.Random<TestProduct>(2);
+            var products = TestEntity.Random<Product>(2);
 
             await GetAsync("/Product");
 
@@ -26,7 +27,7 @@ namespace SupplementStore.Tests.Integration.ProductTests {
         [TestMethod]
         public async Task DefaultSkipAndTake_ReturnsAllProductsCount() {
 
-            var products = TestEntity.Random<TestProduct>(3);
+            var products = TestEntity.Random<Product>(3);
 
             await GetAsync("/Product");
 
@@ -37,7 +38,7 @@ namespace SupplementStore.Tests.Integration.ProductTests {
         [TestMethod]
         public async Task SkipEquals2AndTakeEquals2_ReturnsDetailsOfProducts() {
 
-            var products = TestEntity.Random<TestProduct>(5);
+            var products = TestEntity.Random<Product>(5);
 
             await GetAsync("/Product?Skip=2&Take=2");
 

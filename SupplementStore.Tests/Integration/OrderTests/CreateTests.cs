@@ -1,6 +1,7 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using SupplementStore.Domain.Entities.Baskets;
 using SupplementStore.Domain.Entities.Orders;
+using SupplementStore.Domain.Entities.Products;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -21,7 +22,7 @@ namespace SupplementStore.Tests.Integration.OrderTests {
         [TestMethod]
         public async Task Get_UserIsLoggedIn_ReturnsBasketProductDetails() {
 
-            var products = TestEntity.Random<TestProduct>(3);
+            var products = TestEntity.Random<Product>(3);
             var basketProducts = TestEntity.Random<BasketProduct>(3);
             basketProducts[0]
                 .WithProductId(products[2].Id)
@@ -139,7 +140,7 @@ namespace SupplementStore.Tests.Integration.OrderTests {
         [TestMethod]
         public async Task Post_AddressIsEmpty_NoOrderCreated() {
 
-            var products = TestEntity.Random<TestProduct>(2);
+            var products = TestEntity.Random<Product>(2);
             var basketProducts = TestEntity.Random<BasketProduct>(2);
             basketProducts[0]
                 .WithProductId(products[0].Id)
@@ -165,7 +166,7 @@ namespace SupplementStore.Tests.Integration.OrderTests {
         [TestMethod]
         public async Task Post_PostalCodeIsEmpty_NoOrderCreated() {
 
-            var products = TestEntity.Random<TestProduct>(2);
+            var products = TestEntity.Random<Product>(2);
             var basketProducts = TestEntity.Random<BasketProduct>(2);
             basketProducts[0]
                 .WithProductId(products[0].Id)
@@ -191,7 +192,7 @@ namespace SupplementStore.Tests.Integration.OrderTests {
         [TestMethod]
         public async Task Post_CityIsEmpty_NoOrderCreated() {
 
-            var products = TestEntity.Random<TestProduct>(2);
+            var products = TestEntity.Random<Product>(2);
             var basketProducts = TestEntity.Random<BasketProduct>(2);
             basketProducts[0]
                 .WithProductId(products[0].Id)

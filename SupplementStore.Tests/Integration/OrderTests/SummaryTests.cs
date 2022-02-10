@@ -1,5 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using SupplementStore.Domain.Entities.Orders;
+using SupplementStore.Domain.Entities.Products;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
@@ -24,7 +25,7 @@ namespace SupplementStore.Tests.Integration.OrderTests {
 
             var order = TestEntity.Random<Order>()
                 .WithUserId(TestData.User.Id);
-            var products = TestEntity.Random<TestProduct>(2);
+            var products = TestEntity.Random<Product>(2);
             var orderProducts = TestEntity.Random<OrderProduct>(2);
             orderProducts[0]
                 .WithOrderId(order.Id)

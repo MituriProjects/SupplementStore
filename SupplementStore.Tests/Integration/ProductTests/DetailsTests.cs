@@ -1,4 +1,5 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using SupplementStore.Domain.Entities.Products;
 using System;
 using System.Threading.Tasks;
 
@@ -10,7 +11,7 @@ namespace SupplementStore.Tests.Integration.ProductTests {
         [TestMethod]
         public async Task IdIsValid_ReturnsProductDetails() {
 
-            var products = TestEntity.Random<TestProduct>(3);
+            var products = TestEntity.Random<Product>(3);
 
             await GetAsync($"/Product/Details/{products[1].Id}");
 
@@ -23,7 +24,7 @@ namespace SupplementStore.Tests.Integration.ProductTests {
         [TestMethod]
         public async Task NoProductWithThisId_RedirectsToIndex() {
 
-            var products = TestEntity.Random<TestProduct>(2);
+            var products = TestEntity.Random<Product>(2);
 
             await GetAsync($"/Product/Details/{Guid.NewGuid().ToString()}");
 
@@ -33,7 +34,7 @@ namespace SupplementStore.Tests.Integration.ProductTests {
         [TestMethod]
         public async Task IdIsInvalid_RedirectsToIndex() {
 
-            var products = TestEntity.Random<TestProduct>(2);
+            var products = TestEntity.Random<Product>(2);
 
             await GetAsync($"/Product/Details/InvalidId");
 

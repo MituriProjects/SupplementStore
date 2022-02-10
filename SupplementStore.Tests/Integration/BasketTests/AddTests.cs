@@ -1,5 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using SupplementStore.Domain.Entities.Baskets;
+using SupplementStore.Domain.Entities.Products;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -35,7 +36,7 @@ namespace SupplementStore.Tests.Integration.BasketTests {
         [TestMethod]
         public async Task ProductIdIsValidAndQuantityEqualsOne_InsertsBasketProduct() {
 
-            var product = TestEntity.Random<TestProduct>();
+            var product = TestEntity.Random<Product>();
 
             await PostAsync("/Basket/Add", new Dictionary<string, string> {
                 { "ProductId",  product.Id.ToString()},
@@ -49,7 +50,7 @@ namespace SupplementStore.Tests.Integration.BasketTests {
         [TestMethod]
         public async Task ProductIdIsValidAndQuantityEqualsTwo_InsertsBasketProducts() {
 
-            var product = TestEntity.Random<TestProduct>();
+            var product = TestEntity.Random<Product>();
 
             await PostAsync("/Basket/Add", new Dictionary<string, string> {
                 { "ProductId",  product.Id.ToString()},
@@ -63,7 +64,7 @@ namespace SupplementStore.Tests.Integration.BasketTests {
         [TestMethod]
         public async Task ProductIdIsValidAndQuantityEqualsOneAndBasketProductExists_IncreasesBasketProductQuantity() {
 
-            var product = TestEntity.Random<TestProduct>();
+            var product = TestEntity.Random<Product>();
             TestEntity.Random<BasketProduct>()
                 .WithUserId(TestData.User.Id)
                 .WithProductId(product.Id)
@@ -82,7 +83,7 @@ namespace SupplementStore.Tests.Integration.BasketTests {
         [TestMethod]
         public async Task UserIsLoggedOut_NoBasketProductCreation() {
 
-            var product = TestEntity.Random<TestProduct>();
+            var product = TestEntity.Random<Product>();
 
             await PostAsync("/Basket/Add", new Dictionary<string, string> {
                 { "ProductId",  product.Id.ToString()},
@@ -117,7 +118,7 @@ namespace SupplementStore.Tests.Integration.BasketTests {
         [TestMethod]
         public async Task QuantityEqualsZero_NoBasketProductCreation() {
 
-            var product = TestEntity.Random<TestProduct>();
+            var product = TestEntity.Random<Product>();
 
             await PostAsync("/Basket/Add", new Dictionary<string, string> {
                 { "ProductId",  product.Id.ToString()},
@@ -130,7 +131,7 @@ namespace SupplementStore.Tests.Integration.BasketTests {
         [TestMethod]
         public async Task QuantityIsBelowZero_NoBasketProductCreation() {
 
-            var product = TestEntity.Random<TestProduct>();
+            var product = TestEntity.Random<Product>();
 
             await PostAsync("/Basket/Add", new Dictionary<string, string> {
                 { "ProductId",  product.Id.ToString()},
