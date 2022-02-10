@@ -25,7 +25,7 @@ namespace SupplementStore.Tests.Integration.OrderTests {
             var order = TestEntity.Random<Order>()
                 .WithUserId(TestData.User.Id);
             var products = TestEntity.Random<TestProduct>(2);
-            var orderProducts = TestEntity.Random<TestOrderProduct>(2);
+            var orderProducts = TestEntity.Random<OrderProduct>(2);
             orderProducts[0]
                 .WithOrderId(order.Id)
                 .WithProductId(products[0].Id);
