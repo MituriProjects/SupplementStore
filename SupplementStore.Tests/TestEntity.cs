@@ -1,7 +1,8 @@
-﻿using System;
+﻿using SupplementStore.Domain;
+using SupplementStore.Domain.Entities.Orders;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
 
 namespace SupplementStore.Tests {
 
@@ -39,11 +40,10 @@ namespace SupplementStore.Tests {
 
         private static void AssignPropertyValues(object testEntity) {
 
-            var propertyActions = new Dictionary<Type, Action<PropertyInfo>> {
-                { typeof(string), p => p.SetValue(testEntity, $"{testEntity.GetType().Name}{p.Name}-{testEntity.GetType().GetProperty("Id").GetValue(testEntity)}") },
-                { typeof(Guid), p => p.SetValue(testEntity, Guid.NewGuid()) },
-                { typeof(int), p => p.SetValue(testEntity, RandomManager.Next(100)) },
-                { typeof(decimal), p => p.SetValue(testEntity, RandomManager.Next(10000) / 100M) }
+            var propertyActions = new Dictionary<Type, object> {
+                { typeof(Guid), Guid.NewGuid() },
+                { typeof(int), RandomManager.Next(100) },
+                { typeof(decimal), RandomManager.Next(10000) / 100M }
             };
 
             foreach (var property in testEntity.GetType().GetProperties()) {
@@ -58,8 +58,36 @@ namespace SupplementStore.Tests {
                     continue;
                 }
 
+                if (property.PropertyType == typeof(string)) {
+
+                    property.SetValue(testEntity, $"{testEntity.GetType().Name}-{property.Name}-{testEntity.GetType().GetProperty("Id").GetValue(testEntity)}");
+
+                    continue;
+                }
+
+                if (property.PropertyType.BaseType.IsGenericType
+                    && property.PropertyType.BaseType.GetGenericTypeDefinition() == typeof(ValueObject<>)) {
+
+                    var constructor = typeof(Address).GetConstructors()[0];
+
+                    var parameters = constructor.GetParameters();
+
+                    var parameterValues = new List<object>();
+
+                    foreach (var parameter in parameters) {
+
+                        parameterValues.Add($"{testEntity.GetType().Name}-{property.Name}-{parameter.Name[0].ToString().ToUpper() + parameter.Name.Substring(1)}-{testEntity.GetType().GetProperty("Id").GetValue(testEntity)}");
+                    }
+
+                    var obj = constructor.Invoke(parameterValues.ToArray());
+
+                    property.SetValue(testEntity, obj);
+
+                    continue;
+                }
+
                 if (propertyActions.ContainsKey(property.PropertyType))
-                    propertyActions[property.PropertyType](property);
+                    property.SetValue(testEntity, propertyActions[property.PropertyType]);
             }
         }
 
