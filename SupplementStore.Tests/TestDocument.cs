@@ -23,7 +23,7 @@ namespace SupplementStore.Tests {
 
             entity.Id = Guid.NewGuid();
 
-            Entities.Add(TestEntityConverter.Process(entity));
+            Entities.Add(entity);
         }
 
         public void Delete(Guid id) {
