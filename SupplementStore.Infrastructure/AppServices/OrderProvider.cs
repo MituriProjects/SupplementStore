@@ -43,9 +43,9 @@ namespace SupplementStore.Infrastructure.AppServices {
             return new OrderDetails {
                 Id = order.Id.ToString(),
                 UserId = order.UserId,
-                Address = order.Address,
-                PostalCode = order.PostalCode,
-                City = order.City,
+                Address = order.Address.Street,
+                PostalCode = order.Address.PostalCode,
+                City = order.Address.City,
                 CreatedOn = order.CreatedOn,
                 OrderProducts = orderProducts.Select(e => new OrderProductDetails {
                     ProductId = e.ProductId.ToString(),

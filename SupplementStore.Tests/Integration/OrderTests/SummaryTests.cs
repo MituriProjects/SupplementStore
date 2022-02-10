@@ -36,9 +36,9 @@ namespace SupplementStore.Tests.Integration.OrderTests {
 
             var contentScheme = ContentScheme.Html()
                 .Contains("Id", order.Id)
-                .Contains("Address", order.Address)
-                .Contains("PostalCode", order.PostalCode)
-                .Contains("City", order.City)
+                .Contains("Address", order.Address.Street)
+                .Contains("PostalCode", order.Address.PostalCode)
+                .Contains("City", order.Address.City)
                 .Contains("CreatedOn", order.CreatedOn);
 
             foreach (var orderProduct in orderProducts) {

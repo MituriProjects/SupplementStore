@@ -86,7 +86,7 @@ namespace SupplementStore.Tests.Integration.OrderTests {
 
             await PostAsync("/Order/Create", formData, TestData.User);
 
-            TestDocument<Order>.Single(e => e.Address == formData["Address"] && e.PostalCode == formData["PostalCode"] && e.City == formData["City"] && e.UserId == TestData.User.Id);
+            TestDocument<Order>.Single(e => e.Address.Street == formData["Address"] && e.Address.PostalCode == formData["PostalCode"] && e.Address.City == formData["City"] && e.UserId == TestData.User.Id);
             var createdOrder = TestDocument<Order>.First(e => e.UserId == TestData.User.Id);
             TestDocument<OrderProduct>.Single(e => e.OrderId == createdOrder.Id && e.ProductId == basketProducts[0].ProductId && e.Quantity == basketProducts[0].Quantity);
             TestDocument<OrderProduct>.Single(e => e.OrderId == createdOrder.Id && e.ProductId == basketProducts[1].ProductId && e.Quantity == basketProducts[1].Quantity);

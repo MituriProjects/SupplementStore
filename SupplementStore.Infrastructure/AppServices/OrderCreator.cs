@@ -33,9 +33,7 @@ namespace SupplementStore.Infrastructure.AppServices {
 
             var order = new Order {
                 UserId = args.UserId,
-                Address = args.Address,
-                PostalCode = args.PostalCode,
-                City = args.City
+                Address = new Address(args.Address, args.PostalCode, args.City)
             };
 
             OrderDocument.Add(order);
