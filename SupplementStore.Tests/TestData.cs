@@ -34,11 +34,12 @@ namespace SupplementStore.Tests {
 
         public static IdentityUser User => Users[0];
 
-        public static IDictionary<string, IEnumerable<string>> UserRoles = new Dictionary<string, IEnumerable<string>> {
-            { Owner.Email, new string[] { Roles[0] } },
-            { Admin.Email, new string[] { Roles[1] } },
-            { Users[0].Email, new string[] { } },
-            { Users[1].Email, new string[] { } }
-        };
+        public static IDictionary<string, IEnumerable<string>> UserRoles = Owners
+            .ToDictionary(g => g.Email, g => new string[] { Roles[0] }.AsEnumerable())
+            .Concat(Admins
+            .ToDictionary(g => g.Email, g => new string[] { Roles[1] }.AsEnumerable()))
+            .Concat(Users
+            .ToDictionary(g => g.Email, g => new string[] { }.AsEnumerable()))
+            .ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
     }
 }
