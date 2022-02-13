@@ -1,4 +1,5 @@
 ﻿using SupplementStore.Application.Services;
+using SupplementStore.Domain.Entities;
 using SupplementStore.Domain.Entities.Baskets;
 using SupplementStore.Domain.Entities.Products;
 using System;
@@ -8,18 +9,18 @@ namespace SupplementStore.Infrastructure.AppServices {
 
     public class BasketProductCreator : IBasketProductCreator {
 
-        IDocument<Product> ProductDocument { get; }
+        IRepository<Product> ProductRepository { get; }
 
         IDocument<BasketProduct> BasketProductDocument { get; }
 
         IDocumentApprover DocumentApprover { get; }
 
         public BasketProductCreator(
-            IDocument<Product> productDocument,
+            IRepository<Product> productRepository,
             IDocument<BasketProduct> basketProductDocument,
             IDocumentApprover documentApprover) {
 
-            ProductDocument = productDocument;
+            ProductRepository = productRepository;
             BasketProductDocument = basketProductDocument;
             DocumentApprover = documentApprover;
         }
@@ -32,8 +33,7 @@ namespace SupplementStore.Infrastructure.AppServices {
             if (Guid.TryParse(productId, out var guidProductId) == false)
                 return;
 
-            var product = ProductDocument.All
-                .FirstOrDefault(e => e.Id == guidProductId);
+            var product = ProductRepository.FindBy(guidProductId);
 
             if (product == null)
                 return;
