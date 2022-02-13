@@ -1,5 +1,4 @@
 ﻿using SupplementStore.Domain;
-using SupplementStore.Domain.Entities.Orders;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -68,20 +67,9 @@ namespace SupplementStore.Tests {
                 if (property.PropertyType.BaseType.IsGenericType
                     && property.PropertyType.BaseType.GetGenericTypeDefinition() == typeof(ValueObject<>)) {
 
-                    var constructor = typeof(Address).GetConstructors()[0];
+                    var valueObject = ValueObjectFactory.Create(property.PropertyType, entity);
 
-                    var parameters = constructor.GetParameters();
-
-                    var parameterValues = new List<object>();
-
-                    foreach (var parameter in parameters) {
-
-                        parameterValues.Add($"{entity.GetType().Name}-{property.Name}-{parameter.Name[0].ToString().ToUpper() + parameter.Name.Substring(1)}-{entity.GetType().GetProperty("Id").GetValue(entity)}");
-                    }
-
-                    var obj = constructor.Invoke(parameterValues.ToArray());
-
-                    property.SetValue(entity, obj);
+                    property.SetValue(entity, valueObject);
 
                     continue;
                 }
