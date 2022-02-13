@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 
 namespace SupplementStore.Domain.Entities.Baskets {
@@ -16,7 +15,7 @@ namespace SupplementStore.Domain.Entities.Baskets {
             ProductId = productId;
         }
 
-        public BasketProduct Process(IEnumerable<BasketProduct> entities) {
+        public BasketProduct Process(IQueryable<BasketProduct> entities) {
 
             return entities.FirstOrDefault(e => e.UserId == UserId && e.ProductId == ProductId);
         }
