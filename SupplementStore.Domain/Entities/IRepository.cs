@@ -7,6 +7,7 @@ namespace SupplementStore.Domain.Entities {
         where TEntity : Entity {
 
         IEnumerable<TEntity> Entities { get; }
+        int Count();
 
         void Add(TEntity entity);
         void Delete(Guid id);
