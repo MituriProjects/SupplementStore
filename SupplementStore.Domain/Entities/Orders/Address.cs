@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Text.RegularExpressions;
 
 namespace SupplementStore.Domain.Entities.Orders {
 
@@ -18,6 +20,8 @@ namespace SupplementStore.Domain.Entities.Orders {
             Street = street;
             PostalCode = postalCode;
             City = city;
+
+            Validate();
         }
 
         protected override IEnumerable<object> GetValues() {
@@ -27,6 +31,12 @@ namespace SupplementStore.Domain.Entities.Orders {
                 PostalCode,
                 City
             };
+        }
+
+        private void Validate() {
+
+            if (Regex.IsMatch(PostalCode, @"^\d{2}-\d{3}$") == false)
+                throw new InvalidStateException(PostalCode);
         }
     }
 }
