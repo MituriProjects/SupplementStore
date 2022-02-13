@@ -11,7 +11,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\SupplementStore.Application\SupplementStore.Application.csproj" />
-    <ProjectReference Include="..\SupplementStore.Infrastructure\SupplementStore.Infrastructure.csproj" />
+    <ProjectReference Include="..\SupplementStore.DependencyResolving\SupplementStore.DependencyResolving.csproj" />
   </ItemGroup>
 
 </Project>

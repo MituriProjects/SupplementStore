@@ -5,9 +5,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using SupplementStore.Application.Services;
+using SupplementStore.DependencyResolving;
 using SupplementStore.Infrastructure;
-using SupplementStore.Infrastructure.AppServices;
 
 namespace SupplementStore {
 
@@ -31,18 +30,7 @@ namespace SupplementStore {
             }).AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
 
-            services.AddTransient(typeof(IDocument<>), typeof(Document<>));
-            services.AddTransient<IDocumentApprover, DocumentApprover>();
-
-            services.AddTransient<IProductProvider, ProductProvider>();
-            services.AddTransient<IProductsProvider, ProductsProvider>();
-            services.AddTransient<IBasketProductProvider, BasketProductProvider>();
-            services.AddTransient<IBasketProductsProvider, BasketProductsProvider>();
-            services.AddTransient<IBasketProductCreator, BasketProductCreator>();
-            services.AddTransient<IBasketProductUpdater, BasketProductUpdater>();
-            services.AddTransient<IBasketProductRemover, BasketProductRemover>();
-            services.AddTransient<IOrderCreator, OrderCreator>();
-            services.AddTransient<IOrderProvider, OrderProvider>();
+            DependencyResolver.Install(services);
 
             services.AddMvc(options => {
 
