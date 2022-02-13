@@ -1,36 +1,34 @@
 ﻿using SupplementStore.Application.Models;
 using SupplementStore.Application.Services;
+using SupplementStore.Domain.Entities;
 using SupplementStore.Domain.Entities.Baskets;
 using SupplementStore.Domain.Entities.Products;
 using System;
-using System.Linq;
 
 namespace SupplementStore.Infrastructure.AppServices {
 
     public class BasketProductProvider : IBasketProductProvider {
 
-        IDocument<Product> ProductDocument { get; }
+        IRepository<Product> ProductRepository { get; }
 
-        IDocument<BasketProduct> BasketProductDocument { get; }
+        IRepository<BasketProduct> BasketProductRepository { get; }
 
         public BasketProductProvider(
-            IDocument<Product> productDocument,
-            IDocument<BasketProduct> basketProductDocument) {
+            IRepository<Product> productRepository,
+            IRepository<BasketProduct> basketProductRepository) {
 
-            ProductDocument = productDocument;
-            BasketProductDocument = basketProductDocument;
+            ProductRepository = productRepository;
+            BasketProductRepository = basketProductRepository;
         }
 
         public BasketProductDetails Load(string id) {
 
-            var basketProduct = BasketProductDocument.All
-                .FirstOrDefault(e => e.Id == Guid.Parse(id));
+            var basketProduct = BasketProductRepository.FindBy(Guid.Parse(id));
 
             if (basketProduct == null)
                 return null;
 
-            var product = ProductDocument.All
-                .FirstOrDefault(e => e.Id == basketProduct.ProductId);
+            var product = ProductRepository.FindBy(basketProduct.ProductId);
 
             if (product == null)
                 return null;
