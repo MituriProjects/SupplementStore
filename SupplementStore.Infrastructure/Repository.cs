@@ -15,7 +15,7 @@ namespace SupplementStore.Infrastructure {
             Document = document;
         }
 
-        public IEnumerable<TEntity> Entities => throw new NotImplementedException();
+        public IEnumerable<TEntity> Entities => Document.All;
 
         public void Add(TEntity entity) {
 
