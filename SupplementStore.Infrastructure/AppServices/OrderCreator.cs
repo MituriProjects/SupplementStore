@@ -1,6 +1,7 @@
 ﻿using SupplementStore.Application.Args;
 using SupplementStore.Application.Models;
 using SupplementStore.Application.Services;
+using SupplementStore.Domain.Entities;
 using SupplementStore.Domain.Entities.Baskets;
 using SupplementStore.Domain.Entities.Orders;
 using System.Linq;
@@ -9,23 +10,23 @@ namespace SupplementStore.Infrastructure.AppServices {
 
     public class OrderCreator : IOrderCreator {
 
-        IDocument<Order> OrderDocument { get; }
+        IRepository<Order> OrderRepository { get; }
 
-        IDocument<BasketProduct> BasketProductDocument { get; }
+        IRepository<BasketProduct> BasketProductRepository { get; }
 
-        IDocument<OrderProduct> OrderProductDocument { get; }
+        IRepository<OrderProduct> OrderProductRepository { get; }
 
         IDocumentApprover DocumentApprover { get; }
 
         public OrderCreator(
-            IDocument<Order> orderDocument,
-            IDocument<BasketProduct> basketProductDocument,
-            IDocument<OrderProduct> orderProductDocument,
+            IRepository<Order> orderRepository,
+            IRepository<BasketProduct> basketProductRepository,
+            IRepository<OrderProduct> orderProductRepository,
             IDocumentApprover documentApprover) {
 
-            OrderDocument = orderDocument;
-            BasketProductDocument = basketProductDocument;
-            OrderProductDocument = orderProductDocument;
+            OrderRepository = orderRepository;
+            BasketProductRepository = basketProductRepository;
+            OrderProductRepository = orderProductRepository;
             DocumentApprover = documentApprover;
         }
 
@@ -36,9 +37,9 @@ namespace SupplementStore.Infrastructure.AppServices {
                 Address = new Address(args.Address, args.PostalCode, args.City)
             };
 
-            OrderDocument.Add(order);
+            OrderRepository.Add(order);
 
-            foreach (var basketProduct in BasketProductDocument.All.Where(e => e.UserId == args.UserId).ToList()) {
+            foreach (var basketProduct in BasketProductRepository.FindBy(new UserBasketProductsFilter(args.UserId))) {
 
                 var orderProduct = new OrderProduct {
                     OrderId = order.Id,
@@ -46,9 +47,9 @@ namespace SupplementStore.Infrastructure.AppServices {
                     Quantity = basketProduct.Quantity
                 };
 
-                OrderProductDocument.Add(orderProduct);
+                OrderProductRepository.Add(orderProduct);
 
-                BasketProductDocument.Delete(basketProduct.Id);
+                BasketProductRepository.Delete(basketProduct.Id);
             }
 
             if (order.GetBrokenRules().Count() == 0) {
