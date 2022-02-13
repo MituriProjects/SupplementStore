@@ -118,9 +118,14 @@ namespace SupplementStore.Tests.Integration.OrderTests {
         [TestMethod]
         public async Task Post_PostalCodeIsInvalid_NoChangesSaved() {
 
+            var products = TestEntity.Random<Product>(2);
             var basketProducts = TestEntity.Random<BasketProduct>(2);
-            basketProducts[0].WithUserId(TestData.User.Id);
-            basketProducts[1].WithUserId(TestData.User.Id);
+            basketProducts[0]
+                .WithProductId(products[0].Id)
+                .WithUserId(TestData.User.Id);
+            basketProducts[1]
+                .WithProductId(products[1].Id)
+                .WithUserId(TestData.User.Id);
 
             var formData = new Dictionary<string, string> {
                 { "Address", "ul. Marii Konopnickiej 11" },
