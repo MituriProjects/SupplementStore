@@ -12,7 +12,7 @@ namespace SupplementStore.Domain.Entities.Baskets {
             UserId = userId;
         }
 
-        public IEnumerable<BasketProduct> Process(IEnumerable<BasketProduct> entities) {
+        public IEnumerable<BasketProduct> Process(IQueryable<BasketProduct> entities) {
 
             return entities.Where(e => e.UserId == UserId).ToList();
         }

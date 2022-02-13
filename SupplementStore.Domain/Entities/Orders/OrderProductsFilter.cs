@@ -13,7 +13,7 @@ namespace SupplementStore.Domain.Entities.Orders {
             OrderId = orderId;
         }
 
-        public IEnumerable<OrderProduct> Process(IEnumerable<OrderProduct> entities) {
+        public IEnumerable<OrderProduct> Process(IQueryable<OrderProduct> entities) {
 
             return entities.Where(e => e.OrderId == OrderId).ToList();
         }
