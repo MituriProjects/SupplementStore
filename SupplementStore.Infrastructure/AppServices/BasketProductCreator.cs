@@ -11,17 +11,17 @@ namespace SupplementStore.Infrastructure.AppServices {
 
         IRepository<Product> ProductRepository { get; }
 
-        IDocument<BasketProduct> BasketProductDocument { get; }
+        IRepository<BasketProduct> BasketProductRepository { get; }
 
         IDocumentApprover DocumentApprover { get; }
 
         public BasketProductCreator(
             IRepository<Product> productRepository,
-            IDocument<BasketProduct> basketProductDocument,
+            IRepository<BasketProduct> basketProductRepository,
             IDocumentApprover documentApprover) {
 
             ProductRepository = productRepository;
-            BasketProductDocument = basketProductDocument;
+            BasketProductRepository = basketProductRepository;
             DocumentApprover = documentApprover;
         }
 
@@ -38,8 +38,7 @@ namespace SupplementStore.Infrastructure.AppServices {
             if (product == null)
                 return;
 
-            var basketProduct = BasketProductDocument.All
-                .FirstOrDefault(e => e.UserId == userId && e.ProductId == guidProductId);
+            var basketProduct = BasketProductRepository.FindBy(new UserBasketProductFilter(userId, guidProductId));
 
             if (basketProduct == null) {
 
@@ -50,7 +49,7 @@ namespace SupplementStore.Infrastructure.AppServices {
                 };
 
                 if (IsValid(basketProduct))
-                    BasketProductDocument.Add(basketProduct);
+                    BasketProductRepository.Add(basketProduct);
             }
             else {
 
