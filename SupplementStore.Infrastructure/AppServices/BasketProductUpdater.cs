@@ -1,29 +1,31 @@
 ﻿using SupplementStore.Application.Models;
 using SupplementStore.Application.Services;
+using SupplementStore.Domain.Entities;
 using SupplementStore.Domain.Entities.Baskets;
 using System;
-using System.Linq;
 
 namespace SupplementStore.Infrastructure.AppServices {
 
     public class BasketProductUpdater : IBasketProductUpdater {
 
-        IDocument<BasketProduct> BasketProductDocument { get; }
+        IRepository<BasketProduct> BasketProductRepository { get; }
 
         IDocumentApprover DocumentApprover { get; }
 
         public BasketProductUpdater(
-            IDocument<BasketProduct> basketProductDocument,
+            IRepository<BasketProduct> basketProductRepository,
             IDocumentApprover documentApprover) {
 
-            BasketProductDocument = basketProductDocument;
+            BasketProductRepository = basketProductRepository;
             DocumentApprover = documentApprover;
         }
 
         public void Update(BasketProductDetails basketProductDetails) {
 
-            var basketProduct = BasketProductDocument.All
-                .FirstOrDefault(e => e.Id == Guid.Parse(basketProductDetails.Id));
+            if (Guid.TryParse(basketProductDetails.Id, out var guidBasketProductId) == false)
+                return;
+
+            var basketProduct = BasketProductRepository.FindBy(guidBasketProductId);
 
             if (basketProduct == null)
                 return;
