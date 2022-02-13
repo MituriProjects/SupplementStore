@@ -2,6 +2,7 @@
 using SupplementStore.Application.Models;
 using SupplementStore.Application.Results;
 using SupplementStore.Application.Services;
+using SupplementStore.Domain.Entities;
 using SupplementStore.Domain.Entities.Products;
 using System.Linq;
 
@@ -9,16 +10,16 @@ namespace SupplementStore.Infrastructure.AppServices {
 
     public class ProductsProvider : IProductsProvider {
 
-        IDocument<Product> ProductDocument { get; }
+        IRepository<Product> ProductRepository { get; }
 
-        public ProductsProvider(IDocument<Product> productDocument) {
+        public ProductsProvider(IRepository<Product> productRepository) {
 
-            ProductDocument = productDocument;
+            ProductRepository = productRepository;
         }
 
         public ProductsProviderResult Load(ProductsProviderArgs args) {
 
-            var products = ProductDocument.All
+            var products = ProductRepository.Entities
                 .Skip(args.Skip)
                 .Take(args.Take)
                 .Select(e => new ProductDetails {
@@ -28,7 +29,7 @@ namespace SupplementStore.Infrastructure.AppServices {
                 });
 
             return new ProductsProviderResult {
-                AllProductsCount = ProductDocument.All.Count(),
+                AllProductsCount = ProductRepository.Count(),
                 Products = products
             };
         }
