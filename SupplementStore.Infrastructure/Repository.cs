@@ -17,6 +17,8 @@ namespace SupplementStore.Infrastructure {
 
         public IEnumerable<TEntity> Entities => Document.All;
 
+        public int Count() => Document.All.Count();
+
         public void Add(TEntity entity) {
 
             Document.Add(entity);
