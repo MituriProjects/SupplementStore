@@ -1,31 +1,31 @@
 ﻿using SupplementStore.Application.Models;
 using SupplementStore.Application.Services;
+using SupplementStore.Domain.Entities;
 using SupplementStore.Domain.Entities.Baskets;
 using SupplementStore.Domain.Entities.Products;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace SupplementStore.Infrastructure.AppServices {
 
     public class BasketProductsProvider : IBasketProductsProvider {
 
-        IDocument<Product> ProductDocument { get; }
+        IRepository<Product> ProductRepository { get; }
 
-        IDocument<BasketProduct> BasketProductDocument { get; }
+        IRepository<BasketProduct> BasketProductRepository { get; }
 
         public BasketProductsProvider(
-            IDocument<Product> productDocument,
-            IDocument<BasketProduct> basketProductDocument) {
+            IRepository<Product> productRepository,
+            IRepository<BasketProduct> basketProductRepository) {
 
-            ProductDocument = productDocument;
-            BasketProductDocument = basketProductDocument;
+            ProductRepository = productRepository;
+            BasketProductRepository = basketProductRepository;
         }
 
         public IEnumerable<BasketProductDetails> Load(string userId) {
 
-            foreach (var basketProduct in BasketProductDocument.All.Where(e => e.UserId == userId).ToList()) {
+            foreach (var basketProduct in BasketProductRepository.FindBy(new UserBasketProductsFilter(userId))) {
 
-                var product = ProductDocument.All.First(e => e.Id == basketProduct.ProductId);
+                var product = ProductRepository.FindBy(basketProduct.ProductId);
 
                 yield return new BasketProductDetails {
                     Id = basketProduct.Id.ToString(),
