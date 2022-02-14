@@ -39,11 +39,11 @@ namespace SupplementStore.Tests {
                 .ToList();
         }
 
-        private static IEnumerable<object> GetEntityValues<TEntity>(TEntity testEntity)
+        private static IEnumerable<object> GetEntityValues<TEntity>(TEntity entity)
             where TEntity : Entity {
 
             return TestEntityHelper
-                .SelectPropertyValues(testEntity, testEntity)
+                .SelectPropertyValues(entity)
                 .Select(p => p.Value);
         }
     }
