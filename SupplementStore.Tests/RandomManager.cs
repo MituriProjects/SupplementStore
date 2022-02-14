@@ -11,6 +11,9 @@ namespace SupplementStore.Tests {
 
         public static int Next(int max) {
 
+            if (max <= 0)
+                throw new ArgumentException("The RandomManager's Next method expects a max argument to be above zero.");
+
             while (max <= PreviouslyGiven.Count) {
 
                 PreviouslyGiven.Dequeue();
@@ -19,7 +22,7 @@ namespace SupplementStore.Tests {
             int next = 0;
             do {
 
-                next = Random.Next(max);
+                next = Random.Next(1, max);
 
             } while (PreviouslyGiven.Contains(next));
 
