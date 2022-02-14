@@ -20,16 +20,13 @@ namespace SupplementStore.Tests {
                 .Where(m => m.Name.StartsWith("With"));
         }
 
-        public static IEnumerable<KeyValuePair<string, object>> SelectPropertyValues<TEntity>(TEntity entity, TEntity testEntity)
+        public static IEnumerable<KeyValuePair<string, object>> SelectPropertyValues<TEntity>(TEntity entity)
             where TEntity : Entity {
 
             if (entity == null)
                 throw new ArgumentNullException(nameof(entity));
 
-            if (testEntity == null)
-                throw new ArgumentNullException(nameof(testEntity));
-
-            var setterMethods = SelectSetterMethods(testEntity);
+            var setterMethods = SelectSetterMethods(entity);
 
             foreach (var setterMethod in setterMethods) {
 
