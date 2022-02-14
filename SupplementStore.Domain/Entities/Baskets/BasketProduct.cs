@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SupplementStore.Domain.Entities.Shared;
+using System;
 
 namespace SupplementStore.Domain.Entities.Baskets {
 
