@@ -15,8 +15,5 @@ namespace SupplementStore.Domain.Entities.Baskets {
             get => ProductQuantity.Value;
             set => ProductQuantity = new Quantity(value);
         }
-
-        protected override void Validate() {
-        }
     }
 }
