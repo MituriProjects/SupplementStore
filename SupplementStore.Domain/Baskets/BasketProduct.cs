@@ -5,6 +5,8 @@ namespace SupplementStore.Domain.Baskets {
 
     public class BasketProduct : Entity {
 
+        public BasketProductId BasketProductId { get; private set; } = new BasketProductId(Guid.Empty);
+
         Quantity ProductQuantity { get; set; }
 
         public string UserId { get; set; }
