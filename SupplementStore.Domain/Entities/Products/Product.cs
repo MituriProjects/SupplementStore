@@ -4,18 +4,19 @@
 
         ProductName ProductName { get; set; }
 
-        public string Name {
+        ProductPrice ProductPrice { get; set; }
 
+        public string Name {
             get => ProductName.Value;
             set => ProductName = new ProductName(value);
         }
 
-        public decimal Price { get; set; }
+        public decimal Price {
+            get => ProductPrice.Value;
+            set => ProductPrice = new ProductPrice(value);
+        }
 
         protected override void Validate() {
-
-            if (Price <= 0)
-                AddBrokenRule(ProductBusinessRules.PriceAboveZeroRequired);
         }
     }
 }
