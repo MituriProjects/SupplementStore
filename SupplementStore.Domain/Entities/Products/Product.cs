@@ -15,8 +15,5 @@
             get => ProductPrice.Value;
             set => ProductPrice = new ProductPrice(value);
         }
-
-        protected override void Validate() {
-        }
     }
 }
