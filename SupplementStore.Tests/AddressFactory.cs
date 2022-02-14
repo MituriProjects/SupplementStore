@@ -1,5 +1,5 @@
-﻿using SupplementStore.Domain.Entities;
-using SupplementStore.Domain.Entities.Orders;
+﻿using SupplementStore.Domain;
+using SupplementStore.Domain.Orders;
 
 namespace SupplementStore.Tests {
 

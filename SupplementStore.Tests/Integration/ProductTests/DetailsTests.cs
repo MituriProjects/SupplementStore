@@ -1,5 +1,5 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using SupplementStore.Domain.Entities.Products;
+using SupplementStore.Domain.Products;
 using System;
 using System.Threading.Tasks;
 

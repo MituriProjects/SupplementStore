@@ -1,6 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using SupplementStore.Domain.Entities.Baskets;
-using SupplementStore.Domain.Entities.Products;
+using SupplementStore.Domain.Baskets;
+using SupplementStore.Domain.Products;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;

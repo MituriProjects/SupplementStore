@@ -180,7 +180,7 @@ namespace SupplementStore.Infrastructure.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("SupplementStore.Domain.Entities.Baskets.BasketProduct", b =>
+            modelBuilder.Entity("SupplementStore.Domain.Baskets.BasketProduct", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -202,7 +202,7 @@ namespace SupplementStore.Infrastructure.Migrations
                     b.ToTable("BasketProducts");
                 });
 
-            modelBuilder.Entity("SupplementStore.Domain.Entities.Orders.Order", b =>
+            modelBuilder.Entity("SupplementStore.Domain.Orders.Order", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -220,7 +220,7 @@ namespace SupplementStore.Infrastructure.Migrations
                     b.ToTable("Orders");
                 });
 
-            modelBuilder.Entity("SupplementStore.Domain.Entities.Orders.OrderProduct", b =>
+            modelBuilder.Entity("SupplementStore.Domain.Orders.OrderProduct", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -241,7 +241,7 @@ namespace SupplementStore.Infrastructure.Migrations
                     b.ToTable("OrderProducts");
                 });
 
-            modelBuilder.Entity("SupplementStore.Domain.Entities.Products.Product", b =>
+            modelBuilder.Entity("SupplementStore.Domain.Products.Product", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -302,9 +302,9 @@ namespace SupplementStore.Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("SupplementStore.Domain.Entities.Baskets.BasketProduct", b =>
+            modelBuilder.Entity("SupplementStore.Domain.Baskets.BasketProduct", b =>
                 {
-                    b.HasOne("SupplementStore.Domain.Entities.Products.Product")
+                    b.HasOne("SupplementStore.Domain.Products.Product")
                         .WithMany()
                         .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Cascade);
@@ -315,14 +315,14 @@ namespace SupplementStore.Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("SupplementStore.Domain.Entities.Orders.Order", b =>
+            modelBuilder.Entity("SupplementStore.Domain.Orders.Order", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.OwnsOne("SupplementStore.Domain.Entities.Orders.Address", "Address", b1 =>
+                    b.OwnsOne("SupplementStore.Domain.Orders.Address", "Address", b1 =>
                         {
                             b1.Property<Guid?>("OrderId")
                                 .ValueGeneratedOnAdd();
@@ -338,21 +338,21 @@ namespace SupplementStore.Infrastructure.Migrations
 
                             b1.ToTable("Orders");
 
-                            b1.HasOne("SupplementStore.Domain.Entities.Orders.Order")
+                            b1.HasOne("SupplementStore.Domain.Orders.Order")
                                 .WithOne("Address")
-                                .HasForeignKey("SupplementStore.Domain.Entities.Orders.Address", "OrderId")
+                                .HasForeignKey("SupplementStore.Domain.Orders.Address", "OrderId")
                                 .OnDelete(DeleteBehavior.Cascade);
                         });
                 });
 
-            modelBuilder.Entity("SupplementStore.Domain.Entities.Orders.OrderProduct", b =>
+            modelBuilder.Entity("SupplementStore.Domain.Orders.OrderProduct", b =>
                 {
-                    b.HasOne("SupplementStore.Domain.Entities.Orders.Order")
+                    b.HasOne("SupplementStore.Domain.Orders.Order")
                         .WithMany()
                         .HasForeignKey("OrderId")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("SupplementStore.Domain.Entities.Products.Product")
+                    b.HasOne("SupplementStore.Domain.Products.Product")
                         .WithMany()
                         .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Cascade);

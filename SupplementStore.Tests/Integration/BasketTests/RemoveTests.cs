@@ -1,5 +1,5 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using SupplementStore.Domain.Entities.Baskets;
+using SupplementStore.Domain.Baskets;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;

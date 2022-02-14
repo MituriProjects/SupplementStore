@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using SupplementStore.Domain.Entities.Baskets;
-using SupplementStore.Domain.Entities.Products;
+using SupplementStore.Domain.Baskets;
+using SupplementStore.Domain.Products;
 
 namespace SupplementStore.Infrastructure.Configurations {
 

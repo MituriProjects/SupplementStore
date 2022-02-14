@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using SupplementStore.Domain.Entities;
+using SupplementStore.Domain;
 
 namespace SupplementStore.Infrastructure.Configurations {
 

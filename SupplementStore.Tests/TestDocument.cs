@@ -1,5 +1,5 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using SupplementStore.Domain.Entities;
+using SupplementStore.Domain;
 using SupplementStore.Infrastructure;
 using System;
 using System.Collections.Generic;

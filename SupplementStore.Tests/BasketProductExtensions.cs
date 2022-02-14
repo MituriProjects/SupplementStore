@@ -1,4 +1,4 @@
-﻿using SupplementStore.Domain.Entities.Baskets;
+﻿using SupplementStore.Domain.Baskets;
 using System;
 
 namespace SupplementStore.Tests {

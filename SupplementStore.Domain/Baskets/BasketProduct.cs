@@ -1,7 +1,7 @@
-﻿using SupplementStore.Domain.Entities.Shared;
+﻿using SupplementStore.Domain.Shared;
 using System;
 
-namespace SupplementStore.Domain.Entities.Baskets {
+namespace SupplementStore.Domain.Baskets {
 
     public class BasketProduct : Entity {
 

@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using SupplementStore.Application.Services;
-using SupplementStore.Domain.Entities;
+using SupplementStore.Domain;
 using SupplementStore.Infrastructure;
 using SupplementStore.Infrastructure.AppServices;
 

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq;
 
-namespace SupplementStore.Domain.Entities.Baskets {
+namespace SupplementStore.Domain.Baskets {
 
     public class UserBasketProductFilter : IFilter<BasketProduct> {
 

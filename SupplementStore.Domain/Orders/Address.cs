@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Text.RegularExpressions;
 
-namespace SupplementStore.Domain.Entities.Orders {
+namespace SupplementStore.Domain.Orders {
 
     public class Address : ValueObject<Address> {
 

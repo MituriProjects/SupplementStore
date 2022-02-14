@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using SupplementStore.Domain.Entities;
+using SupplementStore.Domain;
 using System;
 using System.Linq;
 using System.Reflection;

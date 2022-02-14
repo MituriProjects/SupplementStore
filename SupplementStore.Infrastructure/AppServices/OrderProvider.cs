@@ -1,8 +1,8 @@
 ﻿using SupplementStore.Application.Models;
 using SupplementStore.Application.Services;
-using SupplementStore.Domain.Entities;
-using SupplementStore.Domain.Entities.Orders;
-using SupplementStore.Domain.Entities.Products;
+using SupplementStore.Domain;
+using SupplementStore.Domain.Orders;
+using SupplementStore.Domain.Products;
 using System;
 using System.Linq;
 

@@ -1,7 +1,7 @@
 ﻿using SupplementStore.Application.Models;
 using SupplementStore.Application.Services;
-using SupplementStore.Domain.Entities;
-using SupplementStore.Domain.Entities.Baskets;
+using SupplementStore.Domain;
+using SupplementStore.Domain.Baskets;
 using System;
 
 namespace SupplementStore.Infrastructure.AppServices {

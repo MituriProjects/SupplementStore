@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace SupplementStore.Domain.Entities.Products {
+namespace SupplementStore.Domain.Products {
 
     public class ProductPrice : ValueObject<ProductPrice> {
 

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace SupplementStore.Domain.Entities.Orders {
+namespace SupplementStore.Domain.Orders {
 
     public class Order : Entity {
 

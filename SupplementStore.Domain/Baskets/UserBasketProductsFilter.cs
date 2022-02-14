@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 
-namespace SupplementStore.Domain.Entities.Baskets {
+namespace SupplementStore.Domain.Baskets {
 
     public class UserBasketProductsFilter : IManyFilter<BasketProduct> {
 

@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace SupplementStore.Domain.Entities.Shared {
+namespace SupplementStore.Domain.Shared {
 
     public class Quantity : ValueObject<Quantity> {
 

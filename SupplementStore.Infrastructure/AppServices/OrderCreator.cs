@@ -1,9 +1,9 @@
 ﻿using SupplementStore.Application.Args;
 using SupplementStore.Application.Models;
 using SupplementStore.Application.Services;
-using SupplementStore.Domain.Entities;
-using SupplementStore.Domain.Entities.Baskets;
-using SupplementStore.Domain.Entities.Orders;
+using SupplementStore.Domain;
+using SupplementStore.Domain.Baskets;
+using SupplementStore.Domain.Orders;
 
 namespace SupplementStore.Infrastructure.AppServices {
 

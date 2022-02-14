@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace SupplementStore.Domain.Entities {
+namespace SupplementStore.Domain {
 
     public abstract class Entity {
 

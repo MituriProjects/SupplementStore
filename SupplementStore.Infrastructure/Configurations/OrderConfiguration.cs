@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using SupplementStore.Domain.Entities.Orders;
+using SupplementStore.Domain.Orders;
 
 namespace SupplementStore.Infrastructure.Configurations {
 

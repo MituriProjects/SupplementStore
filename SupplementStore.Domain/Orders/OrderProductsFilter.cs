@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace SupplementStore.Domain.Entities.Orders {
+namespace SupplementStore.Domain.Orders {
 
     public class OrderProductsFilter : IManyFilter<OrderProduct> {
 

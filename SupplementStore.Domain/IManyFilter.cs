@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 
-namespace SupplementStore.Domain.Entities {
+namespace SupplementStore.Domain {
 
     public interface IManyFilter<TEntity>
         where TEntity : Entity {

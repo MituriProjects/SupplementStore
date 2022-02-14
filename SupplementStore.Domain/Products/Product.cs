@@ -1,4 +1,4 @@
-﻿namespace SupplementStore.Domain.Entities.Products {
+﻿namespace SupplementStore.Domain.Products {
 
     public class Product : Entity {
 

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace SupplementStore.Domain.Entities {
+namespace SupplementStore.Domain {
 
     public interface IRepository<TEntity>
         where TEntity : Entity {

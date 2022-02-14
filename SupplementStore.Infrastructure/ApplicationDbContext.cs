@@ -1,9 +1,9 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using SupplementStore.Domain.Entities.Baskets;
-using SupplementStore.Domain.Entities.Orders;
-using SupplementStore.Domain.Entities.Products;
+using SupplementStore.Domain.Baskets;
+using SupplementStore.Domain.Orders;
+using SupplementStore.Domain.Products;
 using SupplementStore.Infrastructure.Configurations;
 
 namespace SupplementStore.Infrastructure {

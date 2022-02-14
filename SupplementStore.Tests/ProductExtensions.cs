@@ -1,4 +1,4 @@
-﻿using SupplementStore.Domain.Entities.Products;
+﻿using SupplementStore.Domain.Products;
 
 namespace SupplementStore.Tests {
 

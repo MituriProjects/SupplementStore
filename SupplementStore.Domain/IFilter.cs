@@ -1,6 +1,6 @@
 ﻿using System.Linq;
 
-namespace SupplementStore.Domain.Entities {
+namespace SupplementStore.Domain {
 
     public interface IFilter<TEntity>
         where TEntity : Entity {
