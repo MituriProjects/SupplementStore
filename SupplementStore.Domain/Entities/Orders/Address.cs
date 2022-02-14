@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Text.RegularExpressions;
 
 namespace SupplementStore.Domain.Entities.Orders {
@@ -36,7 +35,7 @@ namespace SupplementStore.Domain.Entities.Orders {
         private void Validate() {
 
             if (Regex.IsMatch(PostalCode, @"^\d{2}-\d{3}$") == false)
-                throw new InvalidStateException(PostalCode);
+                throw new InvalidStateException($"Invalid Address' postal code format. Required: 00-000; Injected value: {PostalCode};");
         }
     }
 }
