@@ -4,7 +4,6 @@ using SupplementStore.Application.Services;
 using SupplementStore.Domain.Entities;
 using SupplementStore.Domain.Entities.Baskets;
 using SupplementStore.Domain.Entities.Orders;
-using System.Linq;
 
 namespace SupplementStore.Infrastructure.AppServices {
 
@@ -52,16 +51,11 @@ namespace SupplementStore.Infrastructure.AppServices {
                 BasketProductRepository.Delete(basketProduct.Id);
             }
 
-            if (order.GetBrokenRules().Count() == 0) {
+            DocumentApprover.SaveChanges();
 
-                DocumentApprover.SaveChanges();
-
-                return new OrderDetails {
-                    Id = order.Id.ToString()
-                };
-            }
-
-            return null;
+            return new OrderDetails {
+                Id = order.Id.ToString()
+            };
         }
     }
 }
