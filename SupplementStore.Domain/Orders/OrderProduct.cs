@@ -5,6 +5,8 @@ namespace SupplementStore.Domain.Orders {
 
     public class OrderProduct : Entity {
 
+        public OrderProductId OrderProductId { get; private set; } = new OrderProductId(Guid.Empty);
+
         Quantity ProductQuantity { get; set; }
 
         public Guid OrderId { get; set; }
