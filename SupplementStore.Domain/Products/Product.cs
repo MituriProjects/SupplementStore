@@ -1,6 +1,10 @@
-﻿namespace SupplementStore.Domain.Products {
+﻿using System;
+
+namespace SupplementStore.Domain.Products {
 
     public class Product : Entity {
+
+        public ProductId ProductId { get; private set; } = new ProductId(Guid.Empty);
 
         ProductName ProductName { get; set; }
 
