@@ -8,16 +8,19 @@ namespace SupplementStore.Tests {
 
     static class TestEntityHelper {
 
-        public static IEnumerable<MethodInfo> SelectSetterMethods<TEntity>(TEntity testEntity)
+        public static IEnumerable<MethodInfo> SelectSetterMethods<TEntity>(TEntity entity)
             where TEntity : Entity {
 
-            if (testEntity == null)
-                throw new ArgumentNullException(nameof(testEntity));
+            if (entity == null)
+                throw new ArgumentNullException(nameof(entity));
 
-            return testEntity
-                .GetType()
-                .GetMethods(BindingFlags.Public | BindingFlags.Instance)
-                .Where(m => m.Name.StartsWith("With"));
+            return Assembly.GetExecutingAssembly()
+                .GetTypes()
+                .Where(t => t.Name == $"{entity.GetType().Name}Extensions" || t.Name == "EntityExtensions")
+                .Select(t => t.GetMethods(BindingFlags.Public | BindingFlags.Static))
+                .SelectMany(m => m)
+                .Where(m => m.Name.StartsWith("With"))
+                .ToList();
         }
 
         public static IEnumerable<KeyValuePair<string, object>> SelectPropertyValues<TEntity>(TEntity entity)
