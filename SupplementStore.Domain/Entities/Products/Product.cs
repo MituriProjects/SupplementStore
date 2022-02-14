@@ -2,14 +2,18 @@
 
     public class Product : Entity {
 
-        public string Name { get; set; }
+        ProductName ProductName { get; set; }
+
+        public string Name {
+
+            get => ProductName.Value;
+            set => ProductName = new ProductName(value);
+        }
 
         public decimal Price { get; set; }
 
         protected override void Validate() {
 
-            if (string.IsNullOrEmpty(Name))
-                AddBrokenRule(ProductBusinessRules.NameRequired);
             if (Price <= 0)
                 AddBrokenRule(ProductBusinessRules.PriceAboveZeroRequired);
         }
