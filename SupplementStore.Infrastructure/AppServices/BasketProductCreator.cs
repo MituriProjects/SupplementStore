@@ -3,7 +3,6 @@ using SupplementStore.Domain.Entities;
 using SupplementStore.Domain.Entities.Baskets;
 using SupplementStore.Domain.Entities.Products;
 using System;
-using System.Linq;
 
 namespace SupplementStore.Infrastructure.AppServices {
 
@@ -42,27 +41,27 @@ namespace SupplementStore.Infrastructure.AppServices {
 
             if (basketProduct == null) {
 
-                basketProduct = new BasketProduct {
-                    UserId = userId,
-                    ProductId = guidProductId,
-                    Quantity = quantity
-                };
+                try {
 
-                if (IsValid(basketProduct))
-                    BasketProductRepository.Add(basketProduct);
+                    basketProduct = new BasketProduct {
+                        UserId = userId,
+                        ProductId = guidProductId,
+                        Quantity = quantity
+                    };
+                }
+                catch {
+
+                    return;
+                }
+
+                BasketProductRepository.Add(basketProduct);
             }
             else {
 
                 basketProduct.Quantity += quantity;
             }
 
-            if (IsValid(basketProduct))
-                DocumentApprover.SaveChanges();
-        }
-
-        private bool IsValid(BasketProduct basketProduct) {
-
-            return basketProduct.GetBrokenRules().Count() == 0;
+            DocumentApprover.SaveChanges();
         }
     }
 }
