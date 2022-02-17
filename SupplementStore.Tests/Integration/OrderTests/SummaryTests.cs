@@ -46,8 +46,8 @@ namespace SupplementStore.Tests.Integration.OrderTests {
             foreach (var orderProduct in orderProducts) {
 
                 contentScheme.Contains("ProductId", orderProduct.ProductId);
-                contentScheme.Contains("ProductName", products.First(e => e.Id == orderProduct.ProductId).Name);
-                contentScheme.Contains("ProductPrice", products.First(e => e.Id == orderProduct.ProductId).Price);
+                contentScheme.Contains("ProductName", products.First(e => e.ProductId == orderProduct.ProductId).Name);
+                contentScheme.Contains("ProductPrice", products.First(e => e.ProductId == orderProduct.ProductId).Price);
                 contentScheme.Contains("Quantity", orderProduct.Quantity);
             }
 
