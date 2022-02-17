@@ -1,4 +1,4 @@
-﻿using System;
+﻿using SupplementStore.Domain.Products;
 using System.Linq;
 
 namespace SupplementStore.Domain.Baskets {
@@ -7,9 +7,9 @@ namespace SupplementStore.Domain.Baskets {
 
         string UserId { get; }
 
-        Guid ProductId { get; }
+        ProductId ProductId { get; }
 
-        public UserBasketProductFilter(string userId, Guid productId) {
+        public UserBasketProductFilter(string userId, ProductId productId) {
 
             UserId = userId;
             ProductId = productId;
