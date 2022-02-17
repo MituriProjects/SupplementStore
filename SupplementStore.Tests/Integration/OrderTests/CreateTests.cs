@@ -38,7 +38,7 @@ namespace SupplementStore.Tests.Integration.OrderTests {
             var contentScheme = ContentScheme.Html();
             foreach (var basketProduct in basketProducts) {
 
-                var product = products.First(e => e.Id == basketProduct.ProductId);
+                var product = products.First(e => e.ProductId == basketProduct.ProductId);
 
                 var values = new Dictionary<string, object> {
                     { "Id", basketProduct.Id },
