@@ -43,7 +43,7 @@ namespace SupplementStore.Tests.Integration.BasketTests {
                 { "Quantity", "1"}
             }, TestData.User);
 
-            TestDocument<BasketProduct>.Single(e => e.UserId == TestData.User.Id && e.ProductId == product.Id && e.Quantity == 1);
+            TestDocument<BasketProduct>.Single(e => e.UserId == TestData.User.Id && e.ProductId == product.ProductId && e.Quantity == 1);
             TestDocumentApprover.ExamineSaveChanges();
         }
 
@@ -57,7 +57,7 @@ namespace SupplementStore.Tests.Integration.BasketTests {
                 { "Quantity", "2"}
             }, TestData.User);
 
-            TestDocument<BasketProduct>.Single(e => e.UserId == TestData.User.Id && e.ProductId == product.Id && e.Quantity == 2);
+            TestDocument<BasketProduct>.Single(e => e.UserId == TestData.User.Id && e.ProductId == product.ProductId && e.Quantity == 2);
             TestDocumentApprover.ExamineSaveChanges();
         }
 
@@ -75,8 +75,8 @@ namespace SupplementStore.Tests.Integration.BasketTests {
                 { "Quantity", "2"}
             }, TestData.User);
 
-            TestDocument<BasketProduct>.Single(e => e.UserId == TestData.User.Id && e.ProductId == product.Id && e.Quantity == 3);
-            TestDocument<BasketProduct>.Single(e => e.UserId == TestData.User.Id && e.ProductId == product.Id);
+            TestDocument<BasketProduct>.Single(e => e.UserId == TestData.User.Id && e.ProductId == product.ProductId && e.Quantity == 3);
+            TestDocument<BasketProduct>.Single(e => e.UserId == TestData.User.Id && e.ProductId == product.ProductId);
             TestDocumentApprover.ExamineSaveChanges();
         }
 
@@ -90,7 +90,7 @@ namespace SupplementStore.Tests.Integration.BasketTests {
                 { "Quantity", "1"}
             });
 
-            TestDocument<BasketProduct>.None(e => e.ProductId == product.Id);
+            TestDocument<BasketProduct>.None(e => e.ProductId == product.ProductId);
         }
 
         [TestMethod]
@@ -125,7 +125,7 @@ namespace SupplementStore.Tests.Integration.BasketTests {
                 { "Quantity", "0"}
             }, TestData.User);
 
-            TestDocument<BasketProduct>.None(e => e.UserId == TestData.User.Id && e.ProductId == product.Id);
+            TestDocument<BasketProduct>.None(e => e.UserId == TestData.User.Id && e.ProductId == product.ProductId);
         }
 
         [TestMethod]
@@ -138,7 +138,7 @@ namespace SupplementStore.Tests.Integration.BasketTests {
                 { "Quantity", "-1"}
             }, TestData.User);
 
-            TestDocument<BasketProduct>.None(e => e.UserId == TestData.User.Id && e.ProductId == product.Id);
+            TestDocument<BasketProduct>.None(e => e.UserId == TestData.User.Id && e.ProductId == product.ProductId);
         }
     }
 }
