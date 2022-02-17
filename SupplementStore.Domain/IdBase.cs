@@ -26,5 +26,10 @@ namespace SupplementStore.Domain {
                 Id
             };
         }
+
+        public override string ToString() {
+
+            return Id.ToString();
+        }
     }
 }
