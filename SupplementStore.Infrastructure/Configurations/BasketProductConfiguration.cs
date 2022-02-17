@@ -13,9 +13,10 @@ namespace SupplementStore.Infrastructure.Configurations {
                 .WithMany()
                 .HasForeignKey(e => e.UserId)
                 .IsRequired();
+            builder.Ignore(e => e.ProductId);
             builder.HasOne<Product>()
                 .WithMany()
-                .HasForeignKey(e => e.ProductId)
+                .HasForeignKey("Product_Id")
                 .IsRequired();
         }
     }
