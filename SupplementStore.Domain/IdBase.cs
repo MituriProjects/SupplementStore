@@ -5,7 +5,7 @@ namespace SupplementStore.Domain {
 
     public abstract class IdBase : ValueObject<IdBase> {
 
-        Guid Id { get; set; }
+        internal Guid Id { get; set; }
 
         protected IdBase(Guid id) {
 
