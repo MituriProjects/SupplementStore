@@ -12,13 +12,13 @@ namespace SupplementStore.Infrastructure.AppServices {
 
         IRepository<Order> OrderRepository { get; }
 
-        IRepository<OrderProduct> OrderProductRepository { get; }
+        IOrderProductRepository OrderProductRepository { get; }
 
         IProductRepository ProductRepository { get; }
 
         public OrderProvider(
             IRepository<Order> orderRepository,
-            IRepository<OrderProduct> orderProductRepository,
+            IOrderProductRepository orderProductRepository,
             IProductRepository productRepository) {
 
             OrderRepository = orderRepository;
