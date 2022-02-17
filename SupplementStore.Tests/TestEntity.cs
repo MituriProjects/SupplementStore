@@ -74,6 +74,13 @@ namespace SupplementStore.Tests {
                     continue;
                 }
 
+                if (property.PropertyType.BaseType == typeof(IdBase)) {
+
+                    property.SetValue(entity, Activator.CreateInstance(property.PropertyType, propertyActions[typeof(Guid)]));
+
+                    continue;
+                }
+
                 if (propertyActions.ContainsKey(property.PropertyType))
                     property.SetValue(entity, propertyActions[property.PropertyType]);
             }
