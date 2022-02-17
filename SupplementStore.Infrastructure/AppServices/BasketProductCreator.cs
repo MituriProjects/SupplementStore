@@ -2,20 +2,19 @@
 using SupplementStore.Domain;
 using SupplementStore.Domain.Baskets;
 using SupplementStore.Domain.Products;
-using System;
 
 namespace SupplementStore.Infrastructure.AppServices {
 
     public class BasketProductCreator : IBasketProductCreator {
 
-        IRepository<Product> ProductRepository { get; }
+        IProductRepository ProductRepository { get; }
 
         IRepository<BasketProduct> BasketProductRepository { get; }
 
         IDocumentApprover DocumentApprover { get; }
 
         public BasketProductCreator(
-            IRepository<Product> productRepository,
+            IProductRepository productRepository,
             IRepository<BasketProduct> basketProductRepository,
             IDocumentApprover documentApprover) {
 
@@ -29,15 +28,14 @@ namespace SupplementStore.Infrastructure.AppServices {
             if (string.IsNullOrEmpty(userId))
                 return;
 
-            if (Guid.TryParse(productId, out var guidProductId) == false)
-                return;
+            var productIdObject = new ProductId(productId);
 
-            var product = ProductRepository.FindBy(guidProductId);
+            var product = ProductRepository.FindBy(productIdObject);
 
             if (product == null)
                 return;
 
-            var basketProduct = BasketProductRepository.FindBy(new UserBasketProductFilter(userId, guidProductId));
+            var basketProduct = BasketProductRepository.FindBy(new UserBasketProductFilter(userId, productIdObject));
 
             if (basketProduct == null) {
 
@@ -45,7 +43,7 @@ namespace SupplementStore.Infrastructure.AppServices {
 
                     basketProduct = new BasketProduct {
                         UserId = userId,
-                        ProductId = guidProductId,
+                        ProductId = productIdObject,
                         Quantity = quantity
                     };
                 }
