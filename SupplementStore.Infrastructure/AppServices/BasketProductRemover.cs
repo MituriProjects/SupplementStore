@@ -1,7 +1,7 @@
 ﻿using SupplementStore.Application.Services;
 using SupplementStore.Domain;
 using SupplementStore.Domain.Baskets;
-using System;
+using SupplementStore.Domain.Products;
 
 namespace SupplementStore.Infrastructure.AppServices {
 
@@ -21,10 +21,7 @@ namespace SupplementStore.Infrastructure.AppServices {
 
         public void Remove(string userId, string productId) {
 
-            if (Guid.TryParse(productId, out Guid guidProductId) == false)
-                return;
-
-            var basketProduct = BasketProductRepository.FindBy(new UserBasketProductFilter(userId, guidProductId));
+            var basketProduct = BasketProductRepository.FindBy(new UserBasketProductFilter(userId, new ProductId(productId)));
 
             if (basketProduct == null)
                 return;
