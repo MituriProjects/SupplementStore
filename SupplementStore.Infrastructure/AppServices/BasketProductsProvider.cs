@@ -9,12 +9,12 @@ namespace SupplementStore.Infrastructure.AppServices {
 
     public class BasketProductsProvider : IBasketProductsProvider {
 
-        IRepository<Product> ProductRepository { get; }
+        IProductRepository ProductRepository { get; }
 
         IRepository<BasketProduct> BasketProductRepository { get; }
 
         public BasketProductsProvider(
-            IRepository<Product> productRepository,
+            IProductRepository productRepository,
             IRepository<BasketProduct> basketProductRepository) {
 
             ProductRepository = productRepository;
