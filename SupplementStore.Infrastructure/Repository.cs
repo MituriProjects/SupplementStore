@@ -8,7 +8,7 @@ namespace SupplementStore.Infrastructure {
     public class Repository<TEntity> : IRepository<TEntity>
         where TEntity : Entity {
 
-        IDocument<TEntity> Document { get; }
+        protected IDocument<TEntity> Document { get; }
 
         public Repository(IDocument<TEntity> document) {
 
