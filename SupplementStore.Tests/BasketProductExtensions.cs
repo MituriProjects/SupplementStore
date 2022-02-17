@@ -1,4 +1,5 @@
 ﻿using SupplementStore.Domain.Baskets;
+using SupplementStore.Domain.Products;
 using System;
 
 namespace SupplementStore.Tests {
@@ -14,7 +15,7 @@ namespace SupplementStore.Tests {
 
         public static BasketProduct WithProductId(this BasketProduct basketProduct, Guid productId) {
 
-            basketProduct.ProductId = productId;
+            basketProduct.ProductId = new ProductId(productId);
 
             return basketProduct;
         }
