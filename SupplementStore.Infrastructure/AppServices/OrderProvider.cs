@@ -14,12 +14,12 @@ namespace SupplementStore.Infrastructure.AppServices {
 
         IRepository<OrderProduct> OrderProductRepository { get; }
 
-        IRepository<Product> ProductRepository { get; }
+        IProductRepository ProductRepository { get; }
 
         public OrderProvider(
             IRepository<Order> orderRepository,
             IRepository<OrderProduct> orderProductRepository,
-            IRepository<Product> productRepository) {
+            IProductRepository productRepository) {
 
             OrderRepository = orderRepository;
             OrderProductRepository = orderProductRepository;
@@ -39,7 +39,7 @@ namespace SupplementStore.Infrastructure.AppServices {
             var orderProducts = OrderProductRepository.FindBy(new OrderProductsFilter(order.Id));
 
             var products = ProductRepository.Entities
-                .Where(e => orderProducts.Select(o => o.ProductId).Contains(e.Id))
+                .Where(e => orderProducts.Select(o => o.ProductId).Contains(e.ProductId))
                 .ToList();
 
             return new OrderDetails {
@@ -51,8 +51,8 @@ namespace SupplementStore.Infrastructure.AppServices {
                 CreatedOn = order.CreatedOn,
                 OrderProducts = orderProducts.Select(e => new OrderProductDetails {
                     ProductId = e.ProductId.ToString(),
-                    ProductName = products.First(p => p.Id == e.ProductId).Name,
-                    ProductPrice = products.First(p => p.Id == e.ProductId).Price,
+                    ProductName = products.First(p => p.ProductId == e.ProductId).Name,
+                    ProductPrice = products.First(p => p.ProductId == e.ProductId).Price,
                     Quantity = e.Quantity
                 }).ToList()
             };
