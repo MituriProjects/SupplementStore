@@ -1,4 +1,5 @@
-﻿using SupplementStore.Domain.Shared;
+﻿using SupplementStore.Domain.Products;
+using SupplementStore.Domain.Shared;
 using System;
 
 namespace SupplementStore.Domain.Baskets {
@@ -11,7 +12,12 @@ namespace SupplementStore.Domain.Baskets {
 
         public string UserId { get; set; }
 
-        public Guid ProductId { get; set; }
+        Guid Product_Id {
+            get => ProductId.Id;
+            set => ProductId = new ProductId(value);
+        }
+
+        public ProductId ProductId { get; set; }
 
         public int Quantity {
             get => ProductQuantity.Value;
