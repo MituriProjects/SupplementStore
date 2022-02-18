@@ -1,5 +1,4 @@
 ﻿using SupplementStore.Domain;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -22,11 +21,6 @@ namespace SupplementStore.Infrastructure {
         public void Add(TEntity entity) {
 
             Document.Add(entity);
-        }
-
-        public void Delete(Guid id) {
-
-            Document.Delete(id);
         }
 
         public TEntity FindBy(IFilter<TEntity> filter) {
