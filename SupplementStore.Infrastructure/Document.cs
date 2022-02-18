@@ -36,5 +36,10 @@ namespace SupplementStore.Infrastructure {
                 Entities.Remove(entity);
             }
         }
+
+        public void Delete(TEntity entity) {
+
+            Entities.Remove(entity);
+        }
     }
 }
