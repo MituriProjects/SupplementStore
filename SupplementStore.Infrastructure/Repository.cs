@@ -29,12 +29,6 @@ namespace SupplementStore.Infrastructure {
             Document.Delete(id);
         }
 
-        public TEntity FindBy(Guid id) {
-
-            return Document.All
-                .FirstOrDefault(e => e.Id == id);
-        }
-
         public TEntity FindBy(IFilter<TEntity> filter) {
 
             return filter.Process(Document.All);
