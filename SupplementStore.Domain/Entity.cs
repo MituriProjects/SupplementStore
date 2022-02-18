@@ -15,8 +15,7 @@ namespace SupplementStore.Domain {
 
             var entityId = GetEntityIdProperty().GetValue(this);
 
-            return (Guid)entityId.GetType()
-                .BaseType
+            return (Guid)typeof(IdBase)
                 .GetProperty("Id", BindingFlags.NonPublic | BindingFlags.Instance)
                 .GetValue(entityId);
         }
