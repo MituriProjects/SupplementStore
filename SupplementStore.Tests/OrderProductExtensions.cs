@@ -8,7 +8,7 @@ namespace SupplementStore.Tests {
 
         public static OrderProduct WithOrderId(this OrderProduct orderProduct, Guid orderId) {
 
-            orderProduct.OrderId = orderId;
+            orderProduct.OrderId = new OrderId(orderId);
 
             return orderProduct;
         }
