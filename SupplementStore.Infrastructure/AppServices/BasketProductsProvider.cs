@@ -1,6 +1,5 @@
 ﻿using SupplementStore.Application.Models;
 using SupplementStore.Application.Services;
-using SupplementStore.Domain;
 using SupplementStore.Domain.Baskets;
 using SupplementStore.Domain.Products;
 using System.Collections.Generic;
@@ -11,11 +10,11 @@ namespace SupplementStore.Infrastructure.AppServices {
 
         IProductRepository ProductRepository { get; }
 
-        IRepository<BasketProduct> BasketProductRepository { get; }
+        IBasketProductRepository BasketProductRepository { get; }
 
         public BasketProductsProvider(
             IProductRepository productRepository,
-            IRepository<BasketProduct> basketProductRepository) {
+            IBasketProductRepository basketProductRepository) {
 
             ProductRepository = productRepository;
             BasketProductRepository = basketProductRepository;
