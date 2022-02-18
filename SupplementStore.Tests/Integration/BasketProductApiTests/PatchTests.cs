@@ -13,13 +13,13 @@ namespace SupplementStore.Tests.Integration.BasketProductApiTests {
 
             var product = TestEntity.Random<Product>();
             var basketProduct = TestEntity.Random<BasketProduct>()
-                .WithProductId(product.Id);
+                .WithProductId(product.ProductId);
 
             var newQuantity = basketProduct.Quantity + 3;
 
-            await PatchAsync($"api/basketproduct/{basketProduct.Id}", new { op = "replace", path = "quantity", value = newQuantity });
+            await PatchAsync($"api/basketproduct/{basketProduct.BasketProductId}", new { op = "replace", path = "quantity", value = newQuantity });
 
-            TestDocument<BasketProduct>.Single(e => e.Id == basketProduct.Id && e.Quantity == newQuantity);
+            TestDocument<BasketProduct>.Single(e => e.BasketProductId == basketProduct.BasketProductId && e.Quantity == newQuantity);
             TestDocumentApprover.ExamineSaveChanges();
         }
     }
