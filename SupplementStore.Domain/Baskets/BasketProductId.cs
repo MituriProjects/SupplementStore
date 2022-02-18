@@ -9,5 +9,8 @@ namespace SupplementStore.Domain.Baskets {
 
         public BasketProductId(Guid id) : base(id) {
         }
+
+        public BasketProductId(string id) : base(id) {
+        }
     }
 }
