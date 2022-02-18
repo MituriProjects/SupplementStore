@@ -1,0 +1,196 @@
+﻿@model IEnumerable<UserRolesViewModel>
+
+<ul>
+
+    @foreach (var userRoles in Model) {
+
+        <li class="mb-2">
+
+            @userRoles.UserName
+
+            <form method="post" asp-controller="Role" asp-action="EditUserRoles">
+
+                <input type="hidden" name="UserId" value="@userRoles.UserId" />
+
+                <input type="hidden" name="UserName" value="@userRoles.UserName" />
+
+                @foreach (var (role, index) in userRoles.UserRoles.Select((v, i) => (v, i))) {
+
+                    <input type="hidden" name="UserRoles[@index].Key" value="@role.Key" />
+
+                    <input type="hidden" class="role-value" name="UserRoles[@index].Value" value="@role.Value.ToString()" />
+
+                    <div class="role-btn btn" data-role-base-activity="@role.Value" data-role-activity="@role.Value">@role.Key</div>
+                }
+
+                <button type="submit" class="save-btn btn btn-success mx-3">Save</button>
+
+                <div class="cancel-btn btn btn-warning mx-2">Cancel</div>
+
+            </form>
+
+        </li>
+    }
+
+</ul>
+
+<script type="text/javascript">
+
+    $(document).ready(function () {
+
+        roleButtonsManager.setup();
+    });
+
+    var roleButtonsManager = (function () {
+
+        var saveButtonSelector = ".save-btn";
+        var cancelButtonSelector = ".cancel-btn";
+        var roleButtonSelector = ".role-btn";
+        var roleValueSelector = ".role-value";
+        var roleActivatedClass = "btn-primary";
+        var roleDeactivatedClass = "btn-info";
+        var roleActivityAttribute = "data-role-activity";
+        var roleBaseActivityAttribute = "data-role-base-activity";
+
+        function setup() {
+
+            hideAllSaveButtons();
+            hideAllCancelButtons();
+            activateAllCancelButtons();
+            activateAllRoleButtons();
+        }
+
+        function hideAllSaveButtons() {
+
+            $(saveButtonSelector)
+                .hide();
+        }
+
+        function hideAllCancelButtons() {
+
+            $(cancelButtonSelector)
+                .hide();
+        }
+
+        function activateAllCancelButtons() {
+
+            $(cancelButtonSelector)
+                .click(cancelRoleChanges);
+        }
+
+        function activateAllRoleButtons() {
+
+            $(roleButtonSelector)
+                .each(assignActivityClass)
+                .click(toggleRoleValue)
+                .click(toggleRoleButton)
+                .click(announceRoleButtonToggle);
+        }
+
+        function cancelRoleChanges() {
+
+            $(this)
+                .siblings(roleButtonSelector)
+                .each(function () {
+
+                    if (hasRoleActivityChanged(this)) {
+
+                        jQuery.fn.click.call($(this));
+                    }
+                });
+        }
+
+        function assignActivityClass() {
+
+            $(this)
+                .addClass(isRoleActive(this) ? roleActivatedClass : roleDeactivatedClass);
+        }
+
+        function toggleRoleButton() {
+
+            if (isRoleActive(this)) {
+
+                $(this)
+                    .removeClass(roleActivatedClass)
+                    .addClass(roleDeactivatedClass)
+                    .attr(roleActivityAttribute, "false");
+            }
+            else {
+
+                $(this)
+                    .removeClass(roleDeactivatedClass)
+                    .addClass(roleActivatedClass)
+                    .attr(roleActivityAttribute, "true");
+            }
+        }
+
+        function toggleRoleValue() {
+
+            if (isRoleActive(this)) {
+
+                $(this)
+                    .prev(roleValueSelector)
+                    .attr("value", "false");
+            }
+            else {
+
+                $(this)
+                    .prev(roleValueSelector)
+                    .attr("value", "true");
+            }
+        }
+
+        function announceRoleButtonToggle() {
+
+            hideRelatedSaveAndCancelButtons(this);
+
+            $(this)
+                .parent()
+                .find(roleButtonSelector)
+                .each(function () {
+
+                    if (hasRoleActivityChanged(this)) {
+
+                        showRelatedSaveAndCancelButtons(this);
+                    }
+                });
+        }
+
+        function isRoleActive(element) {
+
+            return $(element).attr(roleActivityAttribute).toLowerCase() === "true";
+        }
+
+        function hasRoleActivityChanged(element) {
+
+            return isRoleActive(element) !== wasRoleInitiallyActive(element)
+        }
+
+        function wasRoleInitiallyActive(element) {
+
+            return $(element).attr(roleBaseActivityAttribute).toLowerCase() === "true";
+        }
+
+        function hideRelatedSaveAndCancelButtons(element) {
+
+            $(element)
+                .siblings(saveButtonSelector)
+                .hide()
+                .siblings(cancelButtonSelector)
+                .hide();
+        }
+
+        function showRelatedSaveAndCancelButtons(element) {
+
+            $(element)
+                .siblings(saveButtonSelector)
+                .show()
+                .siblings(cancelButtonSelector)
+                .show();
+        }
+
+        return {
+            setup
+        };
+    })();
+</script>
