@@ -8,6 +8,11 @@ namespace SupplementStore.Infrastructure.Repositories {
         public BasketProductRepository(IDocument<BasketProduct> document) : base(document) {
         }
 
+        public void Delete(BasketProductId basketProductId) {
+
+            Document.Delete(FindBy(basketProductId));
+        }
+
         public BasketProduct FindBy(BasketProductId basketProductId) {
 
             return Document.All
