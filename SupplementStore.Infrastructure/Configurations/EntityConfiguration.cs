@@ -10,7 +10,7 @@ namespace SupplementStore.Infrastructure.Configurations {
         public void Configure(EntityTypeBuilder<TEntity> builder) {
 
             builder.Ignore($"{typeof(TEntity).Name}Id");
-            builder.Property(e => e.Id).HasDefaultValueSql("newsequentialid()");
+            builder.Property("Id").HasDefaultValueSql("newsequentialid()");
 
             ConfigureEntity(builder);
         }
