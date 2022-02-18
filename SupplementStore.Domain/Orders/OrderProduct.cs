@@ -10,7 +10,12 @@ namespace SupplementStore.Domain.Orders {
 
         Quantity ProductQuantity { get; set; }
 
-        public Guid OrderId { get; set; }
+        Guid Order_Id {
+            get => OrderId.Id;
+            set => OrderId = new OrderId(value);
+        }
+
+        public OrderId OrderId { get; set; }
 
         Guid Product_Id {
             get => ProductId.Id;
