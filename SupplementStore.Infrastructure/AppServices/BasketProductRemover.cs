@@ -25,7 +25,7 @@ namespace SupplementStore.Infrastructure.AppServices {
             if (basketProduct == null)
                 return;
 
-            BasketProductRepository.Delete(basketProduct.Id);
+            BasketProductRepository.Delete(basketProduct.BasketProductId);
 
             DocumentApprover.SaveChanges();
         }
