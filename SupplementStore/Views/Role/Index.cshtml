@@ -1,0 +1,23 @@
+﻿@model IEnumerable<string>
+
+<ul>
+
+    @foreach (var role in Model) {
+
+        <li>@role</li>
+    }
+
+</ul>
+
+<hr />
+
+<form method="post" asp-controller="Role" asp-action="Create">
+
+    <div class="form-group m-2">
+        <label for="RoleName" class="mb-1">Role name:</label>
+        <input class="form-control" name="RoleName" />
+    </div>
+
+    <button type="submit" class="btn btn-primary m-2">Create</button>
+
+</form>
