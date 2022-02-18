@@ -1,14 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 
 namespace SupplementStore.Domain.Orders {
 
     public class OrderProductsFilter : IManyFilter<OrderProduct> {
 
-        Guid OrderId { get; }
+        OrderId OrderId { get; }
 
-        public OrderProductsFilter(Guid orderId) {
+        public OrderProductsFilter(OrderId orderId) {
 
             OrderId = orderId;
         }
