@@ -9,5 +9,6 @@ namespace SupplementStore.Infrastructure {
 
         void Add(TEntity entity);
         void Delete(Guid id);
+        void Delete(TEntity entity);
     }
 }
