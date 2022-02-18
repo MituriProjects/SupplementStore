@@ -21,7 +21,7 @@ namespace SupplementStore.Tests {
 
         void IDocument<TEntity>.Add(TEntity entity) {
 
-            entity.Id = Guid.NewGuid();
+            entity.SetId(Guid.NewGuid());
 
             Entities.Add(entity);
         }
