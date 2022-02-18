@@ -1,9 +1,7 @@
 ﻿using SupplementStore.Application.Models;
 using SupplementStore.Application.Services;
-using SupplementStore.Domain;
 using SupplementStore.Domain.Baskets;
 using SupplementStore.Domain.Products;
-using System;
 
 namespace SupplementStore.Infrastructure.AppServices {
 
@@ -11,11 +9,11 @@ namespace SupplementStore.Infrastructure.AppServices {
 
         IProductRepository ProductRepository { get; }
 
-        IRepository<BasketProduct> BasketProductRepository { get; }
+        IBasketProductRepository BasketProductRepository { get; }
 
         public BasketProductProvider(
             IProductRepository productRepository,
-            IRepository<BasketProduct> basketProductRepository) {
+            IBasketProductRepository basketProductRepository) {
 
             ProductRepository = productRepository;
             BasketProductRepository = basketProductRepository;
@@ -23,7 +21,7 @@ namespace SupplementStore.Infrastructure.AppServices {
 
         public BasketProductDetails Load(string id) {
 
-            var basketProduct = BasketProductRepository.FindBy(Guid.Parse(id));
+            var basketProduct = BasketProductRepository.FindBy(new BasketProductId(id));
 
             if (basketProduct == null)
                 return null;
