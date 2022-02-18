@@ -25,13 +25,13 @@ namespace SupplementStore.Tests.Integration.OrderTests {
             var products = TestEntity.Random<Product>(3);
             var basketProducts = TestEntity.Random<BasketProduct>(3);
             basketProducts[0]
-                .WithProductId(products[2].Id)
+                .WithProductId(products[2].ProductId)
                 .WithUserId(TestData.User.Id);
             basketProducts[1]
-                .WithProductId(products[0].Id)
+                .WithProductId(products[0].ProductId)
                 .WithUserId(TestData.User.Id);
             basketProducts[2]
-                .WithProductId(products[1].Id);
+                .WithProductId(products[1].ProductId);
 
             await GetAsync("/Order/Create", TestData.User);
 
@@ -41,7 +41,7 @@ namespace SupplementStore.Tests.Integration.OrderTests {
                 var product = products.First(e => e.ProductId == basketProduct.ProductId);
 
                 var values = new Dictionary<string, object> {
-                    { "Id", basketProduct.Id },
+                    { "Id", basketProduct.BasketProductId },
                     { "ProductId", basketProduct.ProductId },
                     { "ProductName", product.Name },
                     { "ProductPrice", product.Price },
@@ -91,8 +91,8 @@ namespace SupplementStore.Tests.Integration.OrderTests {
             var createdOrder = TestDocument<Order>.First(e => e.UserId == TestData.User.Id);
             TestDocument<OrderProduct>.Single(e => e.OrderId == createdOrder.OrderId && e.ProductId == basketProducts[0].ProductId && e.Quantity == basketProducts[0].Quantity);
             TestDocument<OrderProduct>.Single(e => e.OrderId == createdOrder.OrderId && e.ProductId == basketProducts[1].ProductId && e.Quantity == basketProducts[1].Quantity);
-            TestDocument<BasketProduct>.None(e => e.Id == basketProducts[0].Id);
-            TestDocument<BasketProduct>.None(e => e.Id == basketProducts[1].Id);
+            TestDocument<BasketProduct>.None(e => e.BasketProductId == basketProducts[0].BasketProductId);
+            TestDocument<BasketProduct>.None(e => e.BasketProductId == basketProducts[1].BasketProductId);
             TestDocumentApprover.ExamineSaveChanges();
         }
 
@@ -112,7 +112,7 @@ namespace SupplementStore.Tests.Integration.OrderTests {
             await PostAsync("/Order/Create", formData, TestData.User);
 
             var createdOrder = TestDocument<Order>.First(e => e.UserId == TestData.User.Id);
-            ExamineRedirect($"/Order/Summary/{createdOrder.Id}");
+            ExamineRedirect($"/Order/Summary/{createdOrder.OrderId}");
         }
 
         [TestMethod]
@@ -121,10 +121,10 @@ namespace SupplementStore.Tests.Integration.OrderTests {
             var products = TestEntity.Random<Product>(2);
             var basketProducts = TestEntity.Random<BasketProduct>(2);
             basketProducts[0]
-                .WithProductId(products[0].Id)
+                .WithProductId(products[0].ProductId)
                 .WithUserId(TestData.User.Id);
             basketProducts[1]
-                .WithProductId(products[1].Id)
+                .WithProductId(products[1].ProductId)
                 .WithUserId(TestData.User.Id);
 
             var formData = new Dictionary<string, string> {
@@ -148,10 +148,10 @@ namespace SupplementStore.Tests.Integration.OrderTests {
             var products = TestEntity.Random<Product>(2);
             var basketProducts = TestEntity.Random<BasketProduct>(2);
             basketProducts[0]
-                .WithProductId(products[0].Id)
+                .WithProductId(products[0].ProductId)
                 .WithUserId(TestData.User.Id);
             basketProducts[1]
-                .WithProductId(products[1].Id)
+                .WithProductId(products[1].ProductId)
                 .WithUserId(TestData.User.Id);
 
             var formData = new Dictionary<string, string> {
@@ -174,10 +174,10 @@ namespace SupplementStore.Tests.Integration.OrderTests {
             var products = TestEntity.Random<Product>(2);
             var basketProducts = TestEntity.Random<BasketProduct>(2);
             basketProducts[0]
-                .WithProductId(products[0].Id)
+                .WithProductId(products[0].ProductId)
                 .WithUserId(TestData.User.Id);
             basketProducts[1]
-                .WithProductId(products[1].Id)
+                .WithProductId(products[1].ProductId)
                 .WithUserId(TestData.User.Id);
 
             var formData = new Dictionary<string, string> {
@@ -200,10 +200,10 @@ namespace SupplementStore.Tests.Integration.OrderTests {
             var products = TestEntity.Random<Product>(2);
             var basketProducts = TestEntity.Random<BasketProduct>(2);
             basketProducts[0]
-                .WithProductId(products[0].Id)
+                .WithProductId(products[0].ProductId)
                 .WithUserId(TestData.User.Id);
             basketProducts[1]
-                .WithProductId(products[1].Id)
+                .WithProductId(products[1].ProductId)
                 .WithUserId(TestData.User.Id);
 
             var formData = new Dictionary<string, string> {
