@@ -89,8 +89,8 @@ namespace SupplementStore.Tests.Integration.OrderTests {
 
             TestDocument<Order>.Single(e => e.Address.Street == formData["Address"] && e.Address.PostalCode == formData["PostalCode"] && e.Address.City == formData["City"] && e.UserId == TestData.User.Id);
             var createdOrder = TestDocument<Order>.First(e => e.UserId == TestData.User.Id);
-            TestDocument<OrderProduct>.Single(e => e.OrderId == createdOrder.Id && e.ProductId == basketProducts[0].ProductId && e.Quantity == basketProducts[0].Quantity);
-            TestDocument<OrderProduct>.Single(e => e.OrderId == createdOrder.Id && e.ProductId == basketProducts[1].ProductId && e.Quantity == basketProducts[1].Quantity);
+            TestDocument<OrderProduct>.Single(e => e.OrderId == createdOrder.OrderId && e.ProductId == basketProducts[0].ProductId && e.Quantity == basketProducts[0].Quantity);
+            TestDocument<OrderProduct>.Single(e => e.OrderId == createdOrder.OrderId && e.ProductId == basketProducts[1].ProductId && e.Quantity == basketProducts[1].Quantity);
             TestDocument<BasketProduct>.None(e => e.Id == basketProducts[0].Id);
             TestDocument<BasketProduct>.None(e => e.Id == basketProducts[1].Id);
             TestDocumentApprover.ExamineSaveChanges();
