@@ -32,9 +32,7 @@ namespace SupplementStore.Tests {
 
         private static void AssignId(object entity) {
 
-            var id = Guid.NewGuid();
-
-            entity.GetType().GetProperty("Id").SetValue(entity, id);
+            ((Entity)entity).SetId(Guid.NewGuid());
         }
 
         private static void AssignPropertyValues(object entity) {
@@ -59,7 +57,7 @@ namespace SupplementStore.Tests {
 
                 if (property.PropertyType == typeof(string)) {
 
-                    property.SetValue(entity, $"{entity.GetType().Name}-{property.Name}-{entity.GetType().GetProperty("Id").GetValue(entity)}");
+                    property.SetValue(entity, $"{entity.GetType().Name}-{property.Name}-{((Entity)entity).GetId()}");
 
                     continue;
                 }
