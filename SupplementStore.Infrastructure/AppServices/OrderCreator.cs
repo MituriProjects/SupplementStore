@@ -1,7 +1,6 @@
 ﻿using SupplementStore.Application.Args;
 using SupplementStore.Application.Models;
 using SupplementStore.Application.Services;
-using SupplementStore.Domain;
 using SupplementStore.Domain.Baskets;
 using SupplementStore.Domain.Orders;
 
@@ -11,7 +10,7 @@ namespace SupplementStore.Infrastructure.AppServices {
 
         IOrderRepository OrderRepository { get; }
 
-        IRepository<BasketProduct> BasketProductRepository { get; }
+        IBasketProductRepository BasketProductRepository { get; }
 
         IOrderProductRepository OrderProductRepository { get; }
 
@@ -19,7 +18,7 @@ namespace SupplementStore.Infrastructure.AppServices {
 
         public OrderCreator(
             IOrderRepository orderRepository,
-            IRepository<BasketProduct> basketProductRepository,
+            IBasketProductRepository basketProductRepository,
             IOrderProductRepository orderProductRepository,
             IDocumentApprover documentApprover) {
 
