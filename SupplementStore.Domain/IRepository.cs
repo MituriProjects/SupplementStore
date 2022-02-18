@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace SupplementStore.Domain {
 
@@ -10,7 +9,6 @@ namespace SupplementStore.Domain {
         int Count();
 
         void Add(TEntity entity);
-        void Delete(Guid id);
 
         TEntity FindBy(IFilter<TEntity> filter);
         IEnumerable<TEntity> FindBy(IManyFilter<TEntity> filter);
