@@ -16,7 +16,7 @@ namespace SupplementStore.Tests.Integration.BasketTests {
             var products = TestEntity.Random<Product>(4);
             var basketProducts = TestEntity.Random<BasketProduct>(4);
             for (int i = 0; i < basketProducts.Length; i++)
-                basketProducts[i].WithProductId(products[i].Id);
+                basketProducts[i].WithProductId(products[i].ProductId);
             basketProducts[1].WithUserId(TestData.User.Id);
             basketProducts[3].WithUserId(TestData.User.Id);
 
@@ -28,7 +28,7 @@ namespace SupplementStore.Tests.Integration.BasketTests {
                 var product = products.First(e => e.ProductId == basketProduct.ProductId);
 
                 var values = new Dictionary<string, object> {
-                    { "Id", basketProduct.Id },
+                    { "Id", basketProduct.BasketProductId },
                     { "ProductId", basketProduct.ProductId },
                     { "ProductName", product.Name },
                     { "ProductPrice", product.Price },
