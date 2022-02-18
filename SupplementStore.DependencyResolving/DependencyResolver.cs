@@ -17,6 +17,7 @@ namespace SupplementStore.DependencyResolving {
             services.AddTransient<IDocumentApprover, DocumentApprover>();
 
             services.AddTransient(typeof(IRepository<>), typeof(Repository<>));
+            services.AddTransient<IOrderRepository, OrderRepository>();
             services.AddTransient<IOrderProductRepository, OrderProductRepository>();
             services.AddTransient<IProductRepository, ProductRepository>();
 
