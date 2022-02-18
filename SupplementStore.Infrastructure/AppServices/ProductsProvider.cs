@@ -2,7 +2,6 @@
 using SupplementStore.Application.Models;
 using SupplementStore.Application.Results;
 using SupplementStore.Application.Services;
-using SupplementStore.Domain;
 using SupplementStore.Domain.Products;
 using System.Linq;
 
@@ -10,9 +9,9 @@ namespace SupplementStore.Infrastructure.AppServices {
 
     public class ProductsProvider : IProductsProvider {
 
-        IRepository<Product> ProductRepository { get; }
+        IProductRepository ProductRepository { get; }
 
-        public ProductsProvider(IRepository<Product> productRepository) {
+        public ProductsProvider(IProductRepository productRepository) {
 
             ProductRepository = productRepository;
         }
