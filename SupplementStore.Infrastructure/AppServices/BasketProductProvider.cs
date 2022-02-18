@@ -32,7 +32,7 @@ namespace SupplementStore.Infrastructure.AppServices {
                 return null;
 
             return new BasketProductDetails {
-                Id = basketProduct.Id.ToString(),
+                Id = basketProduct.BasketProductId.ToString(),
                 ProductId = basketProduct.ProductId.ToString(),
                 ProductName = product.Name,
                 ProductPrice = product.Price,
