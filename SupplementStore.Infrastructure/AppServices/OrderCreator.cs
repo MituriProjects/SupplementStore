@@ -53,7 +53,7 @@ namespace SupplementStore.Infrastructure.AppServices {
             DocumentApprover.SaveChanges();
 
             return new OrderDetails {
-                Id = order.Id.ToString()
+                Id = order.OrderId.ToString()
             };
         }
     }
