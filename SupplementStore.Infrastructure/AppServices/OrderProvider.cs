@@ -1,6 +1,5 @@
 ﻿using SupplementStore.Application.Models;
 using SupplementStore.Application.Services;
-using SupplementStore.Domain;
 using SupplementStore.Domain.Orders;
 using SupplementStore.Domain.Products;
 using System;
@@ -10,14 +9,14 @@ namespace SupplementStore.Infrastructure.AppServices {
 
     public class OrderProvider : IOrderProvider {
 
-        IRepository<Order> OrderRepository { get; }
+        IOrderRepository OrderRepository { get; }
 
         IOrderProductRepository OrderProductRepository { get; }
 
         IProductRepository ProductRepository { get; }
 
         public OrderProvider(
-            IRepository<Order> orderRepository,
+            IOrderRepository orderRepository,
             IOrderProductRepository orderProductRepository,
             IProductRepository productRepository) {
 
@@ -28,10 +27,7 @@ namespace SupplementStore.Infrastructure.AppServices {
 
         public OrderDetails Load(string id) {
 
-            if (Guid.TryParse(id, out var guidId) == false)
-                return null;
-
-            var order = OrderRepository.FindBy(guidId);
+            var order = OrderRepository.FindBy(new OrderId(id));
 
             if (order == null)
                 return null;
