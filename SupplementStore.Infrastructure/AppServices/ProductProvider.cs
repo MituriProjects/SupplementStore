@@ -21,7 +21,7 @@ namespace SupplementStore.Infrastructure.AppServices {
                 return null;
 
             return new ProductDetails {
-                Id = product.Id.ToString(),
+                Id = product.ProductId.ToString(),
                 Name = product.Name,
                 Price = product.Price
             };
