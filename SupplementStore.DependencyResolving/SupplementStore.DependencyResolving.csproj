@@ -1,0 +1,13 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\SupplementStore.Application\SupplementStore.Application.csproj" />
+    <ProjectReference Include="..\SupplementStore.Domain\SupplementStore.Domain.csproj" />
+    <ProjectReference Include="..\SupplementStore.Infrastructure\SupplementStore.Infrastructure.csproj" />
+  </ItemGroup>
+
+</Project>

@@ -1,42 +1,38 @@
 ﻿using SupplementStore.Application.Models;
 using SupplementStore.Application.Services;
-using SupplementStore.Domain.Entities.Baskets;
-using SupplementStore.Domain.Entities.Products;
-using System;
-using System.Linq;
+using SupplementStore.Domain.Baskets;
+using SupplementStore.Domain.Products;
 
 namespace SupplementStore.Infrastructure.AppServices {
 
     public class BasketProductProvider : IBasketProductProvider {
 
-        IDocument<Product> ProductDocument { get; }
+        IProductRepository ProductRepository { get; }
 
-        IDocument<BasketProduct> BasketProductDocument { get; }
+        IBasketProductRepository BasketProductRepository { get; }
 
         public BasketProductProvider(
-            IDocument<Product> productDocument,
-            IDocument<BasketProduct> basketProductDocument) {
+            IProductRepository productRepository,
+            IBasketProductRepository basketProductRepository) {
 
-            ProductDocument = productDocument;
-            BasketProductDocument = basketProductDocument;
+            ProductRepository = productRepository;
+            BasketProductRepository = basketProductRepository;
         }
 
         public BasketProductDetails Load(string id) {
 
-            var basketProduct = BasketProductDocument.All
-                .FirstOrDefault(e => e.Id == Guid.Parse(id));
+            var basketProduct = BasketProductRepository.FindBy(new BasketProductId(id));
 
             if (basketProduct == null)
                 return null;
 
-            var product = ProductDocument.All
-                .FirstOrDefault(e => e.Id == basketProduct.ProductId);
+            var product = ProductRepository.FindBy(basketProduct.ProductId);
 
             if (product == null)
                 return null;
 
             return new BasketProductDetails {
-                Id = basketProduct.Id.ToString(),
+                Id = basketProduct.BasketProductId.ToString(),
                 ProductId = basketProduct.ProductId.ToString(),
                 ProductName = product.Name,
                 ProductPrice = product.Price,

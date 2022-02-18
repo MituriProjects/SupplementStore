@@ -42,6 +42,12 @@ namespace SupplementStore.Tests {
 
                 s = char.ToLower(s[0]) + s.Substring(1);
 
+                if (o.GetType().IsPrimitive == false
+                    && o.GetType() != typeof(decimal)) {
+
+                    o = o.ToString();
+                }
+
                 return ContentElement.Json(s, o, b);
             });
 

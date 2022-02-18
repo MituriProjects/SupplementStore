@@ -119,6 +119,8 @@ namespace SupplementStore.Tests.Integration {
 
         void AssertAgainstRedirection() {
 
+            Assert.IsNotNull(Headers, "No headers from the previous request were detected.");
+
             Assert.IsNull(Headers.Location, $"Detected unexpected redirection to '{Headers.Location}'.");
         }
 

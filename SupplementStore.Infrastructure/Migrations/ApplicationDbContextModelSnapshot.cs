@@ -180,13 +180,13 @@ namespace SupplementStore.Infrastructure.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("SupplementStore.Domain.Entities.Baskets.BasketProduct", b =>
+            modelBuilder.Entity("SupplementStore.Domain.Baskets.BasketProduct", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasDefaultValueSql("newsequentialid()");
 
-                    b.Property<Guid>("ProductId");
+                    b.Property<Guid>("Product_Id");
 
                     b.Property<int>("Quantity");
 
@@ -195,29 +195,20 @@ namespace SupplementStore.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ProductId");
+                    b.HasIndex("Product_Id");
 
                     b.HasIndex("UserId");
 
                     b.ToTable("BasketProducts");
                 });
 
-            modelBuilder.Entity("SupplementStore.Domain.Entities.Orders.Order", b =>
+            modelBuilder.Entity("SupplementStore.Domain.Orders.Order", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasDefaultValueSql("newsequentialid()");
 
-                    b.Property<string>("Address")
-                        .IsRequired();
-
-                    b.Property<string>("City")
-                        .IsRequired();
-
                     b.Property<DateTime>("CreatedOn");
-
-                    b.Property<string>("PostalCode")
-                        .IsRequired();
 
                     b.Property<string>("UserId")
                         .IsRequired();
@@ -229,28 +220,28 @@ namespace SupplementStore.Infrastructure.Migrations
                     b.ToTable("Orders");
                 });
 
-            modelBuilder.Entity("SupplementStore.Domain.Entities.Orders.OrderProduct", b =>
+            modelBuilder.Entity("SupplementStore.Domain.Orders.OrderProduct", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasDefaultValueSql("newsequentialid()");
 
-                    b.Property<Guid>("OrderId");
+                    b.Property<Guid>("Order_Id");
 
-                    b.Property<Guid>("ProductId");
+                    b.Property<Guid>("Product_Id");
 
                     b.Property<int>("Quantity");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("OrderId");
+                    b.HasIndex("Order_Id");
 
-                    b.HasIndex("ProductId");
+                    b.HasIndex("Product_Id");
 
                     b.ToTable("OrderProducts");
                 });
 
-            modelBuilder.Entity("SupplementStore.Domain.Entities.Products.Product", b =>
+            modelBuilder.Entity("SupplementStore.Domain.Products.Product", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -311,11 +302,11 @@ namespace SupplementStore.Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("SupplementStore.Domain.Entities.Baskets.BasketProduct", b =>
+            modelBuilder.Entity("SupplementStore.Domain.Baskets.BasketProduct", b =>
                 {
-                    b.HasOne("SupplementStore.Domain.Entities.Products.Product")
+                    b.HasOne("SupplementStore.Domain.Products.Product")
                         .WithMany()
-                        .HasForeignKey("ProductId")
+                        .HasForeignKey("Product_Id")
                         .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser")
@@ -324,24 +315,46 @@ namespace SupplementStore.Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("SupplementStore.Domain.Entities.Orders.Order", b =>
+            modelBuilder.Entity("SupplementStore.Domain.Orders.Order", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
+
+                    b.OwnsOne("SupplementStore.Domain.Orders.Address", "Address", b1 =>
+                        {
+                            b1.Property<Guid?>("OrderId")
+                                .ValueGeneratedOnAdd();
+
+                            b1.Property<string>("City")
+                                .IsRequired();
+
+                            b1.Property<string>("PostalCode")
+                                .IsRequired();
+
+                            b1.Property<string>("Street")
+                                .IsRequired();
+
+                            b1.ToTable("Orders");
+
+                            b1.HasOne("SupplementStore.Domain.Orders.Order")
+                                .WithOne("Address")
+                                .HasForeignKey("SupplementStore.Domain.Orders.Address", "OrderId")
+                                .OnDelete(DeleteBehavior.Cascade);
+                        });
                 });
 
-            modelBuilder.Entity("SupplementStore.Domain.Entities.Orders.OrderProduct", b =>
+            modelBuilder.Entity("SupplementStore.Domain.Orders.OrderProduct", b =>
                 {
-                    b.HasOne("SupplementStore.Domain.Entities.Orders.Order")
+                    b.HasOne("SupplementStore.Domain.Orders.Order")
                         .WithMany()
-                        .HasForeignKey("OrderId")
+                        .HasForeignKey("Order_Id")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("SupplementStore.Domain.Entities.Products.Product")
+                    b.HasOne("SupplementStore.Domain.Products.Product")
                         .WithMany()
-                        .HasForeignKey("ProductId")
+                        .HasForeignKey("Product_Id")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618

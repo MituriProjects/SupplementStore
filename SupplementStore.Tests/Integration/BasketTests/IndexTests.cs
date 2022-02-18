@@ -1,4 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using SupplementStore.Domain.Baskets;
+using SupplementStore.Domain.Products;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -11,10 +13,10 @@ namespace SupplementStore.Tests.Integration.BasketTests {
         [TestMethod]
         public async Task UserIsLoggedIn_ReturnsBasketProductDetails() {
 
-            var products = TestProduct.Random(4);
-            var basketProducts = TestBasketProduct.Random(4);
+            var products = TestEntity.Random<Product>(4);
+            var basketProducts = TestEntity.Random<BasketProduct>(4);
             for (int i = 0; i < basketProducts.Length; i++)
-                basketProducts[i].WithProductId(products[i].Id);
+                basketProducts[i].WithProductId(products[i].ProductId);
             basketProducts[1].WithUserId(TestData.User.Id);
             basketProducts[3].WithUserId(TestData.User.Id);
 
@@ -23,10 +25,10 @@ namespace SupplementStore.Tests.Integration.BasketTests {
             var contentScheme = ContentScheme.Html();
             foreach (var basketProduct in basketProducts) {
 
-                var product = products.First(e => e.Id == basketProduct.ProductId);
+                var product = products.First(e => e.ProductId == basketProduct.ProductId);
 
                 var values = new Dictionary<string, object> {
-                    { "Id", basketProduct.Id },
+                    { "Id", basketProduct.BasketProductId },
                     { "ProductId", basketProduct.ProductId },
                     { "ProductName", product.Name },
                     { "ProductPrice", product.Price },

@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using SupplementStore.Domain.Entities.Baskets;
-using SupplementStore.Domain.Entities.Products;
+using SupplementStore.Domain.Baskets;
+using SupplementStore.Domain.Products;
 
 namespace SupplementStore.Infrastructure.Configurations {
 
@@ -13,9 +13,10 @@ namespace SupplementStore.Infrastructure.Configurations {
                 .WithMany()
                 .HasForeignKey(e => e.UserId)
                 .IsRequired();
+            builder.Ignore(e => e.ProductId);
             builder.HasOne<Product>()
                 .WithMany()
-                .HasForeignKey(e => e.ProductId)
+                .HasForeignKey("Product_Id")
                 .IsRequired();
         }
     }

@@ -1,5 +1,5 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using SupplementStore.Domain.Entities;
+using SupplementStore.Domain;
 using SupplementStore.Infrastructure;
 using System;
 using System.Collections.Generic;
@@ -21,14 +21,14 @@ namespace SupplementStore.Tests {
 
         void IDocument<TEntity>.Add(TEntity entity) {
 
-            entity.Id = Guid.NewGuid();
+            entity.SetId(Guid.NewGuid());
 
-            Entities.Add(TestEntityConverter.Process(entity));
+            Entities.Add(entity);
         }
 
-        public void Delete(Guid id) {
+        public void Delete(TEntity entity) {
 
-            Entities.RemoveAll(e => e.Id.Equals(id));
+            Entities.Remove(entity);
         }
 
         public void Clear() {

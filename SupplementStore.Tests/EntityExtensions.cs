@@ -1,16 +1,23 @@
-﻿using SupplementStore.Domain.Entities;
+﻿using SupplementStore.Domain;
 using System;
+using System.Reflection;
 
 namespace SupplementStore.Tests {
 
     static class EntityExtensions {
 
-        public static TEntity WithId<TEntity>(this TEntity entity, Guid id)
-            where TEntity : Entity {
+        public static object GetId(this Entity entity) {
 
-            entity.Id = id;
+            return typeof(Entity)
+                .GetProperty("Id", BindingFlags.NonPublic | BindingFlags.Instance)
+                .GetValue(entity);
+        }
 
-            return entity;
+        public static void SetId(this Entity entity, Guid id) {
+
+            typeof(Entity)
+                .GetProperty("Id", BindingFlags.NonPublic | BindingFlags.Instance)
+                .SetValue(entity, id);
         }
     }
 }

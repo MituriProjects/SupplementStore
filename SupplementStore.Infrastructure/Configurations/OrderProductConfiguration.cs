@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using SupplementStore.Domain.Entities.Orders;
-using SupplementStore.Domain.Entities.Products;
+using SupplementStore.Domain.Orders;
+using SupplementStore.Domain.Products;
 
 namespace SupplementStore.Infrastructure.Configurations {
 
@@ -8,13 +8,15 @@ namespace SupplementStore.Infrastructure.Configurations {
 
         protected override void ConfigureEntity(EntityTypeBuilder<OrderProduct> builder) {
 
+            builder.Ignore(e => e.OrderId);
             builder.HasOne<Order>()
                 .WithMany()
-                .HasForeignKey(e => e.OrderId)
+                .HasForeignKey("Order_Id")
                 .IsRequired();
+            builder.Ignore(e => e.ProductId);
             builder.HasOne<Product>()
                 .WithMany()
-                .HasForeignKey(e => e.ProductId)
+                .HasForeignKey("Product_Id")
                 .IsRequired();
         }
     }

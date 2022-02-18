@@ -1,32 +1,31 @@
 ﻿using SupplementStore.Application.Services;
-using SupplementStore.Domain.Entities.Baskets;
-using System;
-using System.Linq;
+using SupplementStore.Domain.Baskets;
+using SupplementStore.Domain.Products;
 
 namespace SupplementStore.Infrastructure.AppServices {
 
     public class BasketProductRemover : IBasketProductRemover {
 
-        IDocument<BasketProduct> BasketProductDocument { get; }
+        IBasketProductRepository BasketProductRepository { get; }
 
         IDocumentApprover DocumentApprover { get; }
 
         public BasketProductRemover(
-            IDocument<BasketProduct> basketProductDocument,
+            IBasketProductRepository basketProductRepository,
             IDocumentApprover documentApprover) {
 
-            BasketProductDocument = basketProductDocument;
+            BasketProductRepository = basketProductRepository;
             DocumentApprover = documentApprover;
         }
 
         public void Remove(string userId, string productId) {
 
-            var basketProduct = BasketProductDocument.All.FirstOrDefault(e => e.UserId == userId && e.ProductId == Guid.Parse(productId));
+            var basketProduct = BasketProductRepository.FindBy(new UserBasketProductFilter(userId, new ProductId(productId)));
 
             if (basketProduct == null)
                 return;
 
-            BasketProductDocument.Delete(basketProduct.Id);
+            BasketProductRepository.Delete(basketProduct.BasketProductId);
 
             DocumentApprover.SaveChanges();
         }

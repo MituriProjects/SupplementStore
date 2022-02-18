@@ -1,5 +1,5 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using SupplementStore.Domain.Entities.Baskets;
+using SupplementStore.Domain.Baskets;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -32,7 +32,7 @@ namespace SupplementStore.Tests.Integration.BasketTests {
         [TestMethod]
         public async Task BasketProductExists_DeletesBasketProduct() {
 
-            var basketProduct = TestBasketProduct.Random()
+            var basketProduct = TestEntity.Random<BasketProduct>()
                 .WithUserId(TestData.User.Id);
 
             await PostAsync($"/Basket/Remove", new Dictionary<string, string> {

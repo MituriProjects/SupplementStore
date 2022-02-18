@@ -1,6 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using SupplementStore.Domain.Entities;
-using System;
+using SupplementStore.Domain;
 using System.Linq;
 using System.Reflection;
 
@@ -27,14 +26,9 @@ namespace SupplementStore.Infrastructure {
             Entities.Add(entity);
         }
 
-        public void Delete(Guid id) {
+        public void Delete(TEntity entity) {
 
-            var entity = Entities.FirstOrDefault(e => e.Id.Equals(id));
-
-            if (entity != null) {
-
-                Entities.Remove(entity);
-            }
+            Entities.Remove(entity);
         }
     }
 }

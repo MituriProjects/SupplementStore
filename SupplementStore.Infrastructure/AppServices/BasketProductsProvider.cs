@@ -1,34 +1,33 @@
 ﻿using SupplementStore.Application.Models;
 using SupplementStore.Application.Services;
-using SupplementStore.Domain.Entities.Baskets;
-using SupplementStore.Domain.Entities.Products;
+using SupplementStore.Domain.Baskets;
+using SupplementStore.Domain.Products;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace SupplementStore.Infrastructure.AppServices {
 
     public class BasketProductsProvider : IBasketProductsProvider {
 
-        IDocument<Product> ProductDocument { get; }
+        IProductRepository ProductRepository { get; }
 
-        IDocument<BasketProduct> BasketProductDocument { get; }
+        IBasketProductRepository BasketProductRepository { get; }
 
         public BasketProductsProvider(
-            IDocument<Product> productDocument,
-            IDocument<BasketProduct> basketProductDocument) {
+            IProductRepository productRepository,
+            IBasketProductRepository basketProductRepository) {
 
-            ProductDocument = productDocument;
-            BasketProductDocument = basketProductDocument;
+            ProductRepository = productRepository;
+            BasketProductRepository = basketProductRepository;
         }
 
         public IEnumerable<BasketProductDetails> Load(string userId) {
 
-            foreach (var basketProduct in BasketProductDocument.All.Where(e => e.UserId == userId).ToList()) {
+            foreach (var basketProduct in BasketProductRepository.FindBy(new UserBasketProductsFilter(userId))) {
 
-                var product = ProductDocument.All.First(e => e.Id == basketProduct.ProductId);
+                var product = ProductRepository.FindBy(basketProduct.ProductId);
 
                 yield return new BasketProductDetails {
-                    Id = basketProduct.Id.ToString(),
+                    Id = basketProduct.BasketProductId.ToString(),
                     ProductId = basketProduct.ProductId.ToString(),
                     ProductName = product.Name,
                     ProductPrice = product.Price,

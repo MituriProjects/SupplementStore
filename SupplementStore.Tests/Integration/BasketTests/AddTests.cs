@@ -1,5 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using SupplementStore.Domain.Entities.Baskets;
+using SupplementStore.Domain.Baskets;
+using SupplementStore.Domain.Products;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -35,61 +36,61 @@ namespace SupplementStore.Tests.Integration.BasketTests {
         [TestMethod]
         public async Task ProductIdIsValidAndQuantityEqualsOne_InsertsBasketProduct() {
 
-            var product = TestProduct.Random();
+            var product = TestEntity.Random<Product>();
 
             await PostAsync("/Basket/Add", new Dictionary<string, string> {
-                { "ProductId",  product.Id.ToString()},
+                { "ProductId",  product.ProductId.ToString()},
                 { "Quantity", "1"}
             }, TestData.User);
 
-            TestDocument<BasketProduct>.Single(e => e.UserId == TestData.User.Id && e.ProductId == product.Id && e.Quantity == 1);
+            TestDocument<BasketProduct>.Single(e => e.UserId == TestData.User.Id && e.ProductId == product.ProductId && e.Quantity == 1);
             TestDocumentApprover.ExamineSaveChanges();
         }
 
         [TestMethod]
         public async Task ProductIdIsValidAndQuantityEqualsTwo_InsertsBasketProducts() {
 
-            var product = TestProduct.Random();
+            var product = TestEntity.Random<Product>();
 
             await PostAsync("/Basket/Add", new Dictionary<string, string> {
-                { "ProductId",  product.Id.ToString()},
+                { "ProductId",  product.ProductId.ToString()},
                 { "Quantity", "2"}
             }, TestData.User);
 
-            TestDocument<BasketProduct>.Single(e => e.UserId == TestData.User.Id && e.ProductId == product.Id && e.Quantity == 2);
+            TestDocument<BasketProduct>.Single(e => e.UserId == TestData.User.Id && e.ProductId == product.ProductId && e.Quantity == 2);
             TestDocumentApprover.ExamineSaveChanges();
         }
 
         [TestMethod]
         public async Task ProductIdIsValidAndQuantityEqualsOneAndBasketProductExists_IncreasesBasketProductQuantity() {
 
-            var product = TestProduct.Random();
-            TestBasketProduct.Random()
+            var product = TestEntity.Random<Product>();
+            TestEntity.Random<BasketProduct>()
                 .WithUserId(TestData.User.Id)
-                .WithProductId(product.Id)
+                .WithProductId(product.ProductId)
                 .WithQuantity(1);
 
             await PostAsync("/Basket/Add", new Dictionary<string, string> {
-                { "ProductId",  product.Id.ToString()},
+                { "ProductId",  product.ProductId.ToString()},
                 { "Quantity", "2"}
             }, TestData.User);
 
-            TestDocument<BasketProduct>.Single(e => e.UserId == TestData.User.Id && e.ProductId == product.Id && e.Quantity == 3);
-            TestDocument<BasketProduct>.Single(e => e.UserId == TestData.User.Id && e.ProductId == product.Id);
+            TestDocument<BasketProduct>.Single(e => e.UserId == TestData.User.Id && e.ProductId == product.ProductId && e.Quantity == 3);
+            TestDocument<BasketProduct>.Single(e => e.UserId == TestData.User.Id && e.ProductId == product.ProductId);
             TestDocumentApprover.ExamineSaveChanges();
         }
 
         [TestMethod]
         public async Task UserIsLoggedOut_NoBasketProductCreation() {
 
-            var product = TestProduct.Random();
+            var product = TestEntity.Random<Product>();
 
             await PostAsync("/Basket/Add", new Dictionary<string, string> {
-                { "ProductId",  product.Id.ToString()},
+                { "ProductId",  product.ProductId.ToString()},
                 { "Quantity", "1"}
             });
 
-            TestDocument<BasketProduct>.None(e => e.ProductId == product.Id);
+            TestDocument<BasketProduct>.None(e => e.ProductId == product.ProductId);
         }
 
         [TestMethod]
@@ -117,27 +118,27 @@ namespace SupplementStore.Tests.Integration.BasketTests {
         [TestMethod]
         public async Task QuantityEqualsZero_NoBasketProductCreation() {
 
-            var product = TestProduct.Random();
+            var product = TestEntity.Random<Product>();
 
             await PostAsync("/Basket/Add", new Dictionary<string, string> {
-                { "ProductId",  product.Id.ToString()},
+                { "ProductId",  product.ProductId.ToString()},
                 { "Quantity", "0"}
             }, TestData.User);
 
-            TestDocument<BasketProduct>.None(e => e.UserId == TestData.User.Id && e.ProductId == product.Id);
+            TestDocument<BasketProduct>.None(e => e.UserId == TestData.User.Id && e.ProductId == product.ProductId);
         }
 
         [TestMethod]
         public async Task QuantityIsBelowZero_NoBasketProductCreation() {
 
-            var product = TestProduct.Random();
+            var product = TestEntity.Random<Product>();
 
             await PostAsync("/Basket/Add", new Dictionary<string, string> {
-                { "ProductId",  product.Id.ToString()},
+                { "ProductId",  product.ProductId.ToString()},
                 { "Quantity", "-1"}
             }, TestData.User);
 
-            TestDocument<BasketProduct>.None(e => e.UserId == TestData.User.Id && e.ProductId == product.Id);
+            TestDocument<BasketProduct>.None(e => e.UserId == TestData.User.Id && e.ProductId == product.ProductId);
         }
     }
 }

@@ -1,31 +1,30 @@
 ﻿using SupplementStore.Application.Args;
 using SupplementStore.Application.Models;
 using SupplementStore.Application.Services;
-using SupplementStore.Domain.Entities.Baskets;
-using SupplementStore.Domain.Entities.Orders;
-using System.Linq;
+using SupplementStore.Domain.Baskets;
+using SupplementStore.Domain.Orders;
 
 namespace SupplementStore.Infrastructure.AppServices {
 
     public class OrderCreator : IOrderCreator {
 
-        IDocument<Order> OrderDocument { get; }
+        IOrderRepository OrderRepository { get; }
 
-        IDocument<BasketProduct> BasketProductDocument { get; }
+        IBasketProductRepository BasketProductRepository { get; }
 
-        IDocument<OrderProduct> OrderProductDocument { get; }
+        IOrderProductRepository OrderProductRepository { get; }
 
         IDocumentApprover DocumentApprover { get; }
 
         public OrderCreator(
-            IDocument<Order> orderDocument,
-            IDocument<BasketProduct> basketProductDocument,
-            IDocument<OrderProduct> orderProductDocument,
+            IOrderRepository orderRepository,
+            IBasketProductRepository basketProductRepository,
+            IOrderProductRepository orderProductRepository,
             IDocumentApprover documentApprover) {
 
-            OrderDocument = orderDocument;
-            BasketProductDocument = basketProductDocument;
-            OrderProductDocument = orderProductDocument;
+            OrderRepository = orderRepository;
+            BasketProductRepository = basketProductRepository;
+            OrderProductRepository = orderProductRepository;
             DocumentApprover = documentApprover;
         }
 
@@ -33,36 +32,29 @@ namespace SupplementStore.Infrastructure.AppServices {
 
             var order = new Order {
                 UserId = args.UserId,
-                Address = args.Address,
-                PostalCode = args.PostalCode,
-                City = args.City
+                Address = new Address(args.Address, args.PostalCode, args.City)
             };
 
-            OrderDocument.Add(order);
+            OrderRepository.Add(order);
 
-            foreach (var basketProduct in BasketProductDocument.All.Where(e => e.UserId == args.UserId).ToList()) {
+            foreach (var basketProduct in BasketProductRepository.FindBy(new UserBasketProductsFilter(args.UserId))) {
 
                 var orderProduct = new OrderProduct {
-                    OrderId = order.Id,
+                    OrderId = order.OrderId,
                     ProductId = basketProduct.ProductId,
                     Quantity = basketProduct.Quantity
                 };
 
-                OrderProductDocument.Add(orderProduct);
+                OrderProductRepository.Add(orderProduct);
 
-                BasketProductDocument.Delete(basketProduct.Id);
+                BasketProductRepository.Delete(basketProduct.BasketProductId);
             }
 
-            if (order.GetBrokenRules().Count() == 0) {
+            DocumentApprover.SaveChanges();
 
-                DocumentApprover.SaveChanges();
-
-                return new OrderDetails {
-                    Id = order.Id.ToString()
-                };
-            }
-
-            return null;
+            return new OrderDetails {
+                Id = order.OrderId.ToString()
+            };
         }
     }
 }

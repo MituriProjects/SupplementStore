@@ -1,7 +1,7 @@
 ﻿using SupplementStore.Application.Models;
 using SupplementStore.Application.Services;
-using SupplementStore.Domain.Entities.Orders;
-using SupplementStore.Domain.Entities.Products;
+using SupplementStore.Domain.Orders;
+using SupplementStore.Domain.Products;
 using System;
 using System.Linq;
 
@@ -9,48 +9,46 @@ namespace SupplementStore.Infrastructure.AppServices {
 
     public class OrderProvider : IOrderProvider {
 
-        IDocument<Order> OrderDocument { get; }
+        IOrderRepository OrderRepository { get; }
 
-        IDocument<OrderProduct> OrderProductDocument { get; }
+        IOrderProductRepository OrderProductRepository { get; }
 
-        IDocument<Product> ProductDocument { get; }
+        IProductRepository ProductRepository { get; }
 
         public OrderProvider(
-            IDocument<Order> orderDocument,
-            IDocument<OrderProduct> orderProductDocument,
-            IDocument<Product> productDocument) {
+            IOrderRepository orderRepository,
+            IOrderProductRepository orderProductRepository,
+            IProductRepository productRepository) {
 
-            OrderDocument = orderDocument;
-            OrderProductDocument = orderProductDocument;
-            ProductDocument = productDocument;
+            OrderRepository = orderRepository;
+            OrderProductRepository = orderProductRepository;
+            ProductRepository = productRepository;
         }
 
         public OrderDetails Load(string id) {
 
-            var order = OrderDocument.All.FirstOrDefault(e => e.Id == Guid.Parse(id));
+            var order = OrderRepository.FindBy(new OrderId(id));
 
             if (order == null)
                 return null;
 
-            var orderProducts = OrderProductDocument.All
-                .Where(e => e.OrderId == order.Id)
-                .ToList();
+            var orderProducts = OrderProductRepository.FindBy(new OrderProductsFilter(order.OrderId));
 
-            var products = ProductDocument.All
-                .Where(e => orderProducts.Select(o => o.ProductId).Contains(e.Id))
+            var products = ProductRepository.Entities
+                .Where(e => orderProducts.Select(o => o.ProductId).Contains(e.ProductId))
                 .ToList();
 
             return new OrderDetails {
-                Id = order.Id.ToString(),
+                Id = order.OrderId.ToString(),
                 UserId = order.UserId,
-                Address = order.Address,
-                PostalCode = order.PostalCode,
-                City = order.City,
+                Address = order.Address.Street,
+                PostalCode = order.Address.PostalCode,
+                City = order.Address.City,
                 CreatedOn = order.CreatedOn,
                 OrderProducts = orderProducts.Select(e => new OrderProductDetails {
                     ProductId = e.ProductId.ToString(),
-                    ProductName = products.First(p => p.Id == e.ProductId).Name,
-                    ProductPrice = products.First(p => p.Id == e.ProductId).Price,
+                    ProductName = products.First(p => p.ProductId == e.ProductId).Name,
+                    ProductPrice = products.First(p => p.ProductId == e.ProductId).Price,
                     Quantity = e.Quantity
                 }).ToList()
             };

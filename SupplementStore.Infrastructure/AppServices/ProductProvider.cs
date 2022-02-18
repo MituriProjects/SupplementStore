@@ -1,32 +1,27 @@
 ﻿using SupplementStore.Application.Models;
 using SupplementStore.Application.Services;
-using SupplementStore.Domain.Entities.Products;
-using System;
-using System.Linq;
+using SupplementStore.Domain.Products;
 
 namespace SupplementStore.Infrastructure.AppServices {
 
     public class ProductProvider : IProductProvider {
 
-        IDocument<Product> ProductDocument { get; }
+        IProductRepository ProductRepository { get; }
 
-        public ProductProvider(IDocument<Product> productDocument) {
+        public ProductProvider(IProductRepository productRepository) {
 
-            ProductDocument = productDocument;
+            ProductRepository = productRepository;
         }
 
         public ProductDetails Load(string productId) {
 
-            if (Guid.TryParse(productId, out var guidProductId) == false)
-                return null;
-
-            var product = ProductDocument.All.FirstOrDefault(e => e.Id.Equals(guidProductId));
+            var product = ProductRepository.FindBy(new ProductId(productId));
 
             if (product == null)
                 return null;
 
             return new ProductDetails {
-                Id = product.Id.ToString(),
+                Id = product.ProductId.ToString(),
                 Name = product.Name,
                 Price = product.Price
             };

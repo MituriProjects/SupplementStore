@@ -2,33 +2,33 @@
 using SupplementStore.Application.Models;
 using SupplementStore.Application.Results;
 using SupplementStore.Application.Services;
-using SupplementStore.Domain.Entities.Products;
+using SupplementStore.Domain.Products;
 using System.Linq;
 
 namespace SupplementStore.Infrastructure.AppServices {
 
     public class ProductsProvider : IProductsProvider {
 
-        IDocument<Product> ProductDocument { get; }
+        IProductRepository ProductRepository { get; }
 
-        public ProductsProvider(IDocument<Product> productDocument) {
+        public ProductsProvider(IProductRepository productRepository) {
 
-            ProductDocument = productDocument;
+            ProductRepository = productRepository;
         }
 
         public ProductsProviderResult Load(ProductsProviderArgs args) {
 
-            var products = ProductDocument.All
+            var products = ProductRepository.Entities
                 .Skip(args.Skip)
                 .Take(args.Take)
                 .Select(e => new ProductDetails {
-                    Id = e.Id.ToString(),
+                    Id = e.ProductId.ToString(),
                     Name = e.Name,
                     Price = e.Price
                 });
 
             return new ProductsProviderResult {
-                AllProductsCount = ProductDocument.All.Count(),
+                AllProductsCount = ProductRepository.Count(),
                 Products = products
             };
         }

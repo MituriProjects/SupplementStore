@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using SupplementStore.Domain.Entities;
+using SupplementStore.Domain;
 
 namespace SupplementStore.Infrastructure.Configurations {
 
@@ -9,7 +9,8 @@ namespace SupplementStore.Infrastructure.Configurations {
 
         public void Configure(EntityTypeBuilder<TEntity> builder) {
 
-            builder.Property(e => e.Id).HasDefaultValueSql("newsequentialid()");
+            builder.Ignore($"{typeof(TEntity).Name}Id");
+            builder.Property("Id").HasDefaultValueSql("newsequentialid()");
 
             ConfigureEntity(builder);
         }

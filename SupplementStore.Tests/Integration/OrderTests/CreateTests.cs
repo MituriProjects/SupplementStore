@@ -1,6 +1,7 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using SupplementStore.Domain.Entities.Baskets;
-using SupplementStore.Domain.Entities.Orders;
+using SupplementStore.Domain.Baskets;
+using SupplementStore.Domain.Orders;
+using SupplementStore.Domain.Products;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -21,26 +22,26 @@ namespace SupplementStore.Tests.Integration.OrderTests {
         [TestMethod]
         public async Task Get_UserIsLoggedIn_ReturnsBasketProductDetails() {
 
-            var products = TestProduct.Random(3);
-            var basketProducts = TestBasketProduct.Random(3);
+            var products = TestEntity.Random<Product>(3);
+            var basketProducts = TestEntity.Random<BasketProduct>(3);
             basketProducts[0]
-                .WithProductId(products[2].Id)
+                .WithProductId(products[2].ProductId)
                 .WithUserId(TestData.User.Id);
             basketProducts[1]
-                .WithProductId(products[0].Id)
+                .WithProductId(products[0].ProductId)
                 .WithUserId(TestData.User.Id);
             basketProducts[2]
-                .WithProductId(products[1].Id);
+                .WithProductId(products[1].ProductId);
 
             await GetAsync("/Order/Create", TestData.User);
 
             var contentScheme = ContentScheme.Html();
             foreach (var basketProduct in basketProducts) {
 
-                var product = products.First(e => e.Id == basketProduct.ProductId);
+                var product = products.First(e => e.ProductId == basketProduct.ProductId);
 
                 var values = new Dictionary<string, object> {
-                    { "Id", basketProduct.Id },
+                    { "Id", basketProduct.BasketProductId },
                     { "ProductId", basketProduct.ProductId },
                     { "ProductName", product.Name },
                     { "ProductPrice", product.Price },
@@ -74,7 +75,7 @@ namespace SupplementStore.Tests.Integration.OrderTests {
         [TestMethod]
         public async Task Post_UserIsLoggedIn_CreatesOrderAndOrderProductsAndDeletesBasketProducts() {
 
-            var basketProducts = TestBasketProduct.Random(2);
+            var basketProducts = TestEntity.Random<BasketProduct>(2);
             basketProducts[0].WithUserId(TestData.User.Id);
             basketProducts[1].WithUserId(TestData.User.Id);
 
@@ -86,19 +87,19 @@ namespace SupplementStore.Tests.Integration.OrderTests {
 
             await PostAsync("/Order/Create", formData, TestData.User);
 
-            TestDocument<Order>.Single(e => e.Address == formData["Address"] && e.PostalCode == formData["PostalCode"] && e.City == formData["City"] && e.UserId == TestData.User.Id);
+            TestDocument<Order>.Single(e => e.Address.Street == formData["Address"] && e.Address.PostalCode == formData["PostalCode"] && e.Address.City == formData["City"] && e.UserId == TestData.User.Id);
             var createdOrder = TestDocument<Order>.First(e => e.UserId == TestData.User.Id);
-            TestDocument<OrderProduct>.Single(e => e.OrderId == createdOrder.Id && e.ProductId == basketProducts[0].ProductId && e.Quantity == basketProducts[0].Quantity);
-            TestDocument<OrderProduct>.Single(e => e.OrderId == createdOrder.Id && e.ProductId == basketProducts[1].ProductId && e.Quantity == basketProducts[1].Quantity);
-            TestDocument<BasketProduct>.None(e => e.Id == basketProducts[0].Id);
-            TestDocument<BasketProduct>.None(e => e.Id == basketProducts[1].Id);
+            TestDocument<OrderProduct>.Single(e => e.OrderId == createdOrder.OrderId && e.ProductId == basketProducts[0].ProductId && e.Quantity == basketProducts[0].Quantity);
+            TestDocument<OrderProduct>.Single(e => e.OrderId == createdOrder.OrderId && e.ProductId == basketProducts[1].ProductId && e.Quantity == basketProducts[1].Quantity);
+            TestDocument<BasketProduct>.None(e => e.BasketProductId == basketProducts[0].BasketProductId);
+            TestDocument<BasketProduct>.None(e => e.BasketProductId == basketProducts[1].BasketProductId);
             TestDocumentApprover.ExamineSaveChanges();
         }
 
         [TestMethod]
         public async Task Post_UserIsLoggedIn_RedirectsToOrderSummary() {
 
-            var basketProducts = TestBasketProduct.Random(2);
+            var basketProducts = TestEntity.Random<BasketProduct>(2);
             basketProducts[0].WithUserId(TestData.User.Id);
             basketProducts[1].WithUserId(TestData.User.Id);
 
@@ -111,15 +112,20 @@ namespace SupplementStore.Tests.Integration.OrderTests {
             await PostAsync("/Order/Create", formData, TestData.User);
 
             var createdOrder = TestDocument<Order>.First(e => e.UserId == TestData.User.Id);
-            ExamineRedirect($"/Order/Summary/{createdOrder.Id}");
+            ExamineRedirect($"/Order/Summary/{createdOrder.OrderId}");
         }
 
         [TestMethod]
         public async Task Post_PostalCodeIsInvalid_NoChangesSaved() {
 
-            var basketProducts = TestBasketProduct.Random(2);
-            basketProducts[0].WithUserId(TestData.User.Id);
-            basketProducts[1].WithUserId(TestData.User.Id);
+            var products = TestEntity.Random<Product>(2);
+            var basketProducts = TestEntity.Random<BasketProduct>(2);
+            basketProducts[0]
+                .WithProductId(products[0].ProductId)
+                .WithUserId(TestData.User.Id);
+            basketProducts[1]
+                .WithProductId(products[1].ProductId)
+                .WithUserId(TestData.User.Id);
 
             var formData = new Dictionary<string, string> {
                 { "Address", "ul. Marii Konopnickiej 11" },
@@ -139,13 +145,13 @@ namespace SupplementStore.Tests.Integration.OrderTests {
         [TestMethod]
         public async Task Post_AddressIsEmpty_NoOrderCreated() {
 
-            var products = TestProduct.Random(2);
-            var basketProducts = TestBasketProduct.Random(2);
+            var products = TestEntity.Random<Product>(2);
+            var basketProducts = TestEntity.Random<BasketProduct>(2);
             basketProducts[0]
-                .WithProductId(products[0].Id)
+                .WithProductId(products[0].ProductId)
                 .WithUserId(TestData.User.Id);
             basketProducts[1]
-                .WithProductId(products[1].Id)
+                .WithProductId(products[1].ProductId)
                 .WithUserId(TestData.User.Id);
 
             var formData = new Dictionary<string, string> {
@@ -165,13 +171,13 @@ namespace SupplementStore.Tests.Integration.OrderTests {
         [TestMethod]
         public async Task Post_PostalCodeIsEmpty_NoOrderCreated() {
 
-            var products = TestProduct.Random(2);
-            var basketProducts = TestBasketProduct.Random(2);
+            var products = TestEntity.Random<Product>(2);
+            var basketProducts = TestEntity.Random<BasketProduct>(2);
             basketProducts[0]
-                .WithProductId(products[0].Id)
+                .WithProductId(products[0].ProductId)
                 .WithUserId(TestData.User.Id);
             basketProducts[1]
-                .WithProductId(products[1].Id)
+                .WithProductId(products[1].ProductId)
                 .WithUserId(TestData.User.Id);
 
             var formData = new Dictionary<string, string> {
@@ -191,13 +197,13 @@ namespace SupplementStore.Tests.Integration.OrderTests {
         [TestMethod]
         public async Task Post_CityIsEmpty_NoOrderCreated() {
 
-            var products = TestProduct.Random(2);
-            var basketProducts = TestBasketProduct.Random(2);
+            var products = TestEntity.Random<Product>(2);
+            var basketProducts = TestEntity.Random<BasketProduct>(2);
             basketProducts[0]
-                .WithProductId(products[0].Id)
+                .WithProductId(products[0].ProductId)
                 .WithUserId(TestData.User.Id);
             basketProducts[1]
-                .WithProductId(products[1].Id)
+                .WithProductId(products[1].ProductId)
                 .WithUserId(TestData.User.Id);
 
             var formData = new Dictionary<string, string> {
