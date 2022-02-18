@@ -1,6 +1,5 @@
 ﻿using SupplementStore.Domain.Orders;
 using SupplementStore.Domain.Products;
-using System;
 
 namespace SupplementStore.Tests {
 
@@ -13,9 +12,9 @@ namespace SupplementStore.Tests {
             return orderProduct;
         }
 
-        public static OrderProduct WithProductId(this OrderProduct orderProduct, Guid productId) {
+        public static OrderProduct WithProductId(this OrderProduct orderProduct, ProductId productId) {
 
-            orderProduct.ProductId = new ProductId(productId);
+            orderProduct.ProductId = productId;
 
             return orderProduct;
         }
