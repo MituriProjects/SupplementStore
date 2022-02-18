@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using SupplementStore.Application.Services;
 using SupplementStore.Domain;
+using SupplementStore.Domain.Baskets;
 using SupplementStore.Domain.Orders;
 using SupplementStore.Domain.Products;
 using SupplementStore.Infrastructure;
@@ -17,6 +18,7 @@ namespace SupplementStore.DependencyResolving {
             services.AddTransient<IDocumentApprover, DocumentApprover>();
 
             services.AddTransient(typeof(IRepository<>), typeof(Repository<>));
+            services.AddTransient<IBasketProductRepository, BasketProductRepository>();
             services.AddTransient<IOrderRepository, OrderRepository>();
             services.AddTransient<IOrderProductRepository, OrderProductRepository>();
             services.AddTransient<IProductRepository, ProductRepository>();
