@@ -22,7 +22,7 @@ namespace SupplementStore.Infrastructure.AppServices {
                 .Skip(args.Skip)
                 .Take(args.Take)
                 .Select(e => new ProductDetails {
-                    Id = e.Id.ToString(),
+                    Id = e.ProductId.ToString(),
                     Name = e.Name,
                     Price = e.Price
                 });
