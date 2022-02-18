@@ -39,7 +39,7 @@ namespace SupplementStore.Tests.Integration.BasketTests {
             var product = TestEntity.Random<Product>();
 
             await PostAsync("/Basket/Add", new Dictionary<string, string> {
-                { "ProductId",  product.Id.ToString()},
+                { "ProductId",  product.ProductId.ToString()},
                 { "Quantity", "1"}
             }, TestData.User);
 
@@ -53,7 +53,7 @@ namespace SupplementStore.Tests.Integration.BasketTests {
             var product = TestEntity.Random<Product>();
 
             await PostAsync("/Basket/Add", new Dictionary<string, string> {
-                { "ProductId",  product.Id.ToString()},
+                { "ProductId",  product.ProductId.ToString()},
                 { "Quantity", "2"}
             }, TestData.User);
 
@@ -67,11 +67,11 @@ namespace SupplementStore.Tests.Integration.BasketTests {
             var product = TestEntity.Random<Product>();
             TestEntity.Random<BasketProduct>()
                 .WithUserId(TestData.User.Id)
-                .WithProductId(product.Id)
+                .WithProductId(product.ProductId)
                 .WithQuantity(1);
 
             await PostAsync("/Basket/Add", new Dictionary<string, string> {
-                { "ProductId",  product.Id.ToString()},
+                { "ProductId",  product.ProductId.ToString()},
                 { "Quantity", "2"}
             }, TestData.User);
 
@@ -86,7 +86,7 @@ namespace SupplementStore.Tests.Integration.BasketTests {
             var product = TestEntity.Random<Product>();
 
             await PostAsync("/Basket/Add", new Dictionary<string, string> {
-                { "ProductId",  product.Id.ToString()},
+                { "ProductId",  product.ProductId.ToString()},
                 { "Quantity", "1"}
             });
 
@@ -121,7 +121,7 @@ namespace SupplementStore.Tests.Integration.BasketTests {
             var product = TestEntity.Random<Product>();
 
             await PostAsync("/Basket/Add", new Dictionary<string, string> {
-                { "ProductId",  product.Id.ToString()},
+                { "ProductId",  product.ProductId.ToString()},
                 { "Quantity", "0"}
             }, TestData.User);
 
@@ -134,7 +134,7 @@ namespace SupplementStore.Tests.Integration.BasketTests {
             var product = TestEntity.Random<Product>();
 
             await PostAsync("/Basket/Add", new Dictionary<string, string> {
-                { "ProductId",  product.Id.ToString()},
+                { "ProductId",  product.ProductId.ToString()},
                 { "Quantity", "-1"}
             }, TestData.User);
 
