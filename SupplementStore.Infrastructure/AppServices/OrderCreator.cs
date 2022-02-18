@@ -47,7 +47,7 @@ namespace SupplementStore.Infrastructure.AppServices {
 
                 OrderProductRepository.Add(orderProduct);
 
-                BasketProductRepository.Delete(basketProduct.Id);
+                BasketProductRepository.Delete(basketProduct.BasketProductId);
             }
 
             DocumentApprover.SaveChanges();
