@@ -8,9 +8,10 @@ namespace SupplementStore.Infrastructure.Configurations {
 
         protected override void ConfigureEntity(EntityTypeBuilder<OrderProduct> builder) {
 
+            builder.Ignore(e => e.OrderId);
             builder.HasOne<Order>()
                 .WithMany()
-                .HasForeignKey(e => e.OrderId)
+                .HasForeignKey("Order_Id")
                 .IsRequired();
             builder.Ignore(e => e.ProductId);
             builder.HasOne<Product>()
