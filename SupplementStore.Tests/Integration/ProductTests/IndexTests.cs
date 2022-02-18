@@ -16,10 +16,10 @@ namespace SupplementStore.Tests.Integration.ProductTests {
             await GetAsync("/Product");
 
             Examine(ContentScheme.Html()
-                .Contains("ProductId", products[0].Id)
+                .Contains("ProductId", products[0].ProductId)
                 .Contains("ProductName", products[0].Name)
                 .Contains("ProductPrice", products[0].Price)
-                .Contains("ProductId", products[1].Id)
+                .Contains("ProductId", products[1].ProductId)
                 .Contains("ProductName", products[1].Name)
                 .Contains("ProductPrice", products[1].Price));
         }
@@ -47,13 +47,13 @@ namespace SupplementStore.Tests.Integration.ProductTests {
 
                 if (i < 2 || i == 4) {
 
-                    contentScheme.Lacks("ProductId", products[i].Id);
+                    contentScheme.Lacks("ProductId", products[i].ProductId);
                     contentScheme.Lacks("ProductName", products[i].Name);
                     contentScheme.Lacks("ProductPrice", products[i].Price);
                 }
                 else {
 
-                    contentScheme.Contains("ProductId", products[i].Id);
+                    contentScheme.Contains("ProductId", products[i].ProductId);
                     contentScheme.Contains("ProductName", products[i].Name);
                     contentScheme.Contains("ProductPrice", products[i].Price);
                 }
