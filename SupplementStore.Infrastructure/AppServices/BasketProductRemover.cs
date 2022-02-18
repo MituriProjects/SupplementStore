@@ -1,5 +1,4 @@
 ﻿using SupplementStore.Application.Services;
-using SupplementStore.Domain;
 using SupplementStore.Domain.Baskets;
 using SupplementStore.Domain.Products;
 
@@ -7,12 +6,12 @@ namespace SupplementStore.Infrastructure.AppServices {
 
     public class BasketProductRemover : IBasketProductRemover {
 
-        IRepository<BasketProduct> BasketProductRepository { get; }
+        IBasketProductRepository BasketProductRepository { get; }
 
         IDocumentApprover DocumentApprover { get; }
 
         public BasketProductRemover(
-            IRepository<BasketProduct> basketProductRepository,
+            IBasketProductRepository basketProductRepository,
             IDocumentApprover documentApprover) {
 
             BasketProductRepository = basketProductRepository;
