@@ -41,7 +41,7 @@ namespace SupplementStore.Infrastructure.AppServices {
             foreach (var basketProduct in BasketProductRepository.FindBy(new UserBasketProductsFilter(args.UserId))) {
 
                 var orderProduct = new OrderProduct {
-                    OrderId = order.Id,
+                    OrderId = order.OrderId,
                     ProductId = basketProduct.ProductId,
                     Quantity = basketProduct.Quantity
                 };
