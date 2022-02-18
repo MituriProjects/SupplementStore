@@ -36,7 +36,7 @@ namespace SupplementStore.Infrastructure.AppServices {
             if (order == null)
                 return null;
 
-            var orderProducts = OrderProductRepository.FindBy(new OrderProductsFilter(order.Id));
+            var orderProducts = OrderProductRepository.FindBy(new OrderProductsFilter(order.OrderId));
 
             var products = ProductRepository.Entities
                 .Where(e => orderProducts.Select(o => o.ProductId).Contains(e.ProductId))
