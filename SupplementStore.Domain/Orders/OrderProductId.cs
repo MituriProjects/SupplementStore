@@ -6,5 +6,8 @@ namespace SupplementStore.Domain.Orders {
 
         public OrderProductId(Guid id) : base(id) {
         }
+
+        public OrderProductId(string id) : base(id) {
+        }
     }
 }
