@@ -9,7 +9,7 @@ namespace SupplementStore.Infrastructure.AppServices {
 
     public class OrderCreator : IOrderCreator {
 
-        IRepository<Order> OrderRepository { get; }
+        IOrderRepository OrderRepository { get; }
 
         IRepository<BasketProduct> BasketProductRepository { get; }
 
@@ -18,7 +18,7 @@ namespace SupplementStore.Infrastructure.AppServices {
         IDocumentApprover DocumentApprover { get; }
 
         public OrderCreator(
-            IRepository<Order> orderRepository,
+            IOrderRepository orderRepository,
             IRepository<BasketProduct> basketProductRepository,
             IOrderProductRepository orderProductRepository,
             IDocumentApprover documentApprover) {
