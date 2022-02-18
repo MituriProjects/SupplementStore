@@ -26,11 +26,6 @@ namespace SupplementStore.Tests {
             Entities.Add(entity);
         }
 
-        public void Delete(Guid id) {
-
-            Entities.RemoveAll(e => e.Id.Equals(id));
-        }
-
         public void Delete(TEntity entity) {
 
             Entities.Remove(entity);
