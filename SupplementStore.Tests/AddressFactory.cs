@@ -7,9 +7,9 @@ namespace SupplementStore.Tests {
 
         public static Address Create(Entity entity) {
 
-            var street = $"{entity.GetType().Name}-Address-Street-{entity.GetType().GetProperty("Id").GetValue(entity)}";
+            var street = $"{entity.GetType().Name}-Address-Street-{entity.GetId()}";
             var postalCode = $"{RandomManager.Next(100).ToString("00")}-{RandomManager.Next(1000).ToString("000")}";
-            var city = $"{entity.GetType().Name}-Address-City-{entity.GetType().GetProperty("Id").GetValue(entity)}";
+            var city = $"{entity.GetType().Name}-Address-City-{entity.GetId()}";
 
             return new Address(street, postalCode, city);
         }
