@@ -12,7 +12,6 @@ namespace SupplementStore.Domain {
         void Add(TEntity entity);
         void Delete(Guid id);
 
-        TEntity FindBy(Guid id);
         TEntity FindBy(IFilter<TEntity> filter);
         IEnumerable<TEntity> FindBy(IManyFilter<TEntity> filter);
     }
