@@ -56,6 +56,11 @@ namespace SupplementStore {
             app.UseMvc(routes => {
 
                 routes.MapRoute(
+                    name: "createOwner",
+                    template: "CreateOwner/{email}",
+                    defaults: new { controller = "Owner", action = "Assign" });
+
+                routes.MapRoute(
                     name: "default",
                     template: "{controller}/{action}/{id?}",
                     defaults: new { controller = "Home", action = "Index" });
