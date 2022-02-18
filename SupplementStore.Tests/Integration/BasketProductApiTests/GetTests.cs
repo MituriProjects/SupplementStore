@@ -13,12 +13,12 @@ namespace SupplementStore.Tests.Integration.BasketProductApiTests {
 
             var product = TestEntity.Random<Product>();
             var basketProduct = TestEntity.Random<BasketProduct>()
-                .WithProductId(product.Id);
+                .WithProductId(product.ProductId);
 
-            await GetAsync($"api/basketproduct/{basketProduct.Id}");
+            await GetAsync($"api/basketproduct/{basketProduct.BasketProductId}");
 
             Examine(ContentScheme.Json()
-                .Contains("Id", basketProduct.Id)
+                .Contains("Id", basketProduct.BasketProductId)
                 .Contains("ProductId", basketProduct.ProductId)
                 .Contains("ProductName", product.Name)
                 .Contains("ProductPrice", product.Price)
