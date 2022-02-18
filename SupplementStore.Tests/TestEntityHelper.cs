@@ -35,6 +35,9 @@ namespace SupplementStore.Tests {
 
                 var propertyName = setterMethod.Name.Substring(4);
 
+                if (propertyName == "Id")
+                    continue;
+
                 var propertyValue = entity
                     .GetType()
                     .GetProperty(propertyName)
@@ -43,7 +46,7 @@ namespace SupplementStore.Tests {
                 yield return new KeyValuePair<string, object>(propertyName, propertyValue);
             }
 
-            yield return new KeyValuePair<string, object>("Id", entity.Id);
+            yield return new KeyValuePair<string, object>("Id", entity.GetId());
         }
     }
 }
