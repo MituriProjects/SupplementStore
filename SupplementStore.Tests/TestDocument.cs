@@ -31,6 +31,11 @@ namespace SupplementStore.Tests {
             Entities.RemoveAll(e => e.Id.Equals(id));
         }
 
+        public void Delete(TEntity entity) {
+
+            Entities.Remove(entity);
+        }
+
         public void Clear() {
 
             Entities = new List<TEntity>();
