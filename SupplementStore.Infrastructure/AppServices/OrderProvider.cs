@@ -39,7 +39,7 @@ namespace SupplementStore.Infrastructure.AppServices {
                 .ToList();
 
             return new OrderDetails {
-                Id = order.Id.ToString(),
+                Id = order.OrderId.ToString(),
                 UserId = order.UserId,
                 Address = order.Address.Street,
                 PostalCode = order.Address.PostalCode,
