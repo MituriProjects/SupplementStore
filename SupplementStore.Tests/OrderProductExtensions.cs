@@ -6,9 +6,9 @@ namespace SupplementStore.Tests {
 
     static class OrderProductExtensions {
 
-        public static OrderProduct WithOrderId(this OrderProduct orderProduct, Guid orderId) {
+        public static OrderProduct WithOrderId(this OrderProduct orderProduct, OrderId orderId) {
 
-            orderProduct.OrderId = new OrderId(orderId);
+            orderProduct.OrderId = orderId;
 
             return orderProduct;
         }
