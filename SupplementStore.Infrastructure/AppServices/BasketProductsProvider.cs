@@ -27,7 +27,7 @@ namespace SupplementStore.Infrastructure.AppServices {
                 var product = ProductRepository.FindBy(basketProduct.ProductId);
 
                 yield return new BasketProductDetails {
-                    Id = basketProduct.Id.ToString(),
+                    Id = basketProduct.BasketProductId.ToString(),
                     ProductId = basketProduct.ProductId.ToString(),
                     ProductName = product.Name,
                     ProductPrice = product.Price,
