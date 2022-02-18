@@ -28,16 +28,16 @@ namespace SupplementStore.Tests.Integration.OrderTests {
             var products = TestEntity.Random<Product>(2);
             var orderProducts = TestEntity.Random<OrderProduct>(2);
             orderProducts[0]
-                .WithOrderId(order.Id)
-                .WithProductId(products[0].Id);
+                .WithOrderId(order.OrderId)
+                .WithProductId(products[0].ProductId);
             orderProducts[1]
-                .WithOrderId(order.Id)
-                .WithProductId(products[1].Id);
+                .WithOrderId(order.OrderId)
+                .WithProductId(products[1].ProductId);
 
-            await GetAsync($"/Order/Summary/{order.Id}", TestData.User);
+            await GetAsync($"/Order/Summary/{order.OrderId}", TestData.User);
 
             var contentScheme = ContentScheme.Html()
-                .Contains("Id", order.Id)
+                .Contains("Id", order.OrderId)
                 .Contains("Address", order.Address.Street)
                 .Contains("PostalCode", order.Address.PostalCode)
                 .Contains("City", order.Address.City)
@@ -60,7 +60,7 @@ namespace SupplementStore.Tests.Integration.OrderTests {
             var order = TestEntity.Random<Order>()
                 .WithUserId(TestData.Users[1].Id);
 
-            await GetAsync($"/Order/Summary/{order.Id}", TestData.Users[0]);
+            await GetAsync($"/Order/Summary/{order.OrderId}", TestData.Users[0]);
 
             ExamineRedirect("/");
         }
