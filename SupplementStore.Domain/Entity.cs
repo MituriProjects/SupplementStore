@@ -6,7 +6,7 @@ namespace SupplementStore.Domain {
 
     public abstract class Entity {
 
-        public Guid Id {
+        Guid Id {
             get => GetEntityIdValue();
             set => SetEntityIdValue(value);
         }
