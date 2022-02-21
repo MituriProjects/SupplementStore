@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace SupplementStore.Application.Models {
 
@@ -18,5 +19,7 @@ namespace SupplementStore.Application.Models {
         public DateTime CreatedOn { get; set; }
 
         public IEnumerable<OrderProductDetails> OrderProducts { get; set; }
+
+        public decimal ToPay => OrderProducts.Sum(e => e.ProductPrice * e.Quantity);
     }
 }
