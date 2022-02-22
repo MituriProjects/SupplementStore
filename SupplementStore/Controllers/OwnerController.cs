@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 
@@ -19,6 +20,12 @@ namespace SupplementStore.Controllers {
         }
 
         private readonly string OwnerRoleName = "Owner";
+
+        [Authorize(Roles = "Owner")]
+        public IActionResult Index() {
+
+            return View();
+        }
 
         public async Task<IActionResult> Assign(string email) {
 
