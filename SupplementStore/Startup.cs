@@ -35,6 +35,8 @@ namespace SupplementStore {
             services.AddMvc(options => {
 
                 options.Filters.Add(new AutoValidateAntiforgeryTokenAttribute());
+
+                options.ModelBindingMessageProvider.SetAttemptedValueIsInvalidAccessor((s1, s2) => $"Wartość '{s1}' jest nieprawidłowa dla pola '{s2}'");
             });
 
             ReconfigureServices(services);
