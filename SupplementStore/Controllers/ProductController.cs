@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using SupplementStore.Application.Args;
 using SupplementStore.Application.Services;
 using SupplementStore.ViewModels.Product;
@@ -11,12 +12,20 @@ namespace SupplementStore.Controllers {
 
         IProductsProvider ProductsProvider { get; }
 
+        IProductCreator ProductCreator { get; }
+
+        IProductUpdater ProductUpdater { get; }
+
         public ProductController(
             IProductProvider productProvider,
-            IProductsProvider productsProvider) {
+            IProductsProvider productsProvider,
+            IProductCreator productCreator,
+            IProductUpdater productUpdater) {
 
             ProductProvider = productProvider;
             ProductsProvider = productsProvider;
+            ProductCreator = productCreator;
+            ProductUpdater = productUpdater;
         }
 
         public IActionResult Index(ProductIndexViewModel model) {
@@ -40,6 +49,12 @@ namespace SupplementStore.Controllers {
                 return RedirectToAction("Index");
 
             return View(product);
+        }
+
+        [Authorize(Roles = "Owner, Admin")]
+        public IActionResult Create() {
+
+            return View("Edit", new ProductEditViewModel());
         }
     }
 }
