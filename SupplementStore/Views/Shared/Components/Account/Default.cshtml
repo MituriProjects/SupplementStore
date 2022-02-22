@@ -13,6 +13,16 @@
 
 <div class="m-2 mx-4 text-end">
 
+    @if (User.IsInRole("Owner") || User.IsInRole("Admin")) {
+
+        @if (User.IsInRole("Owner")) {
+
+            <a asp-controller="Owner" asp-action="Index" class="btn btn-outline-success m-2">Owner</a>
+        }
+
+        <a asp-controller="Admin" asp-action="Index" class="btn btn-outline-success m-2">Admin</a>
+    }
+
     @if (User.Identity.IsAuthenticated) {
 
         <a asp-action="Index" asp-controller="Basket" class="btn btn-primary mx-2 p-1" style="height:38px;width:55px;">
