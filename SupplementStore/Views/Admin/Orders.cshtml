@@ -1,0 +1,63 @@
+﻿@model OrdersViewModel
+
+<environment exclude="Testing">
+
+    <ul class="list-unstyled my-4">
+
+        @foreach (var order in Model.OrderDetails) {
+
+            <li class="my-2 mx-5 p-2 bg-light">
+
+                <div>Id: @order.Id</div>
+                <div>Data utworzenia: @order.CreatedOn</div>
+                <div>Email użytkownika: @Model.UserEmails[order.UserId]</div>
+                <div>
+                    <span>Adres:</span>
+                    <span>@order.Address</span>
+                    <span>@order.City</span>
+                    <span>@order.PostalCode</span>
+                </div>
+                <div>
+                    Produkty:
+                    <ul>
+                        @foreach (var orderProduct in order.OrderProducts) {
+
+                            <li>
+                                <span>@orderProduct.ProductName</span>
+                                <span>(ilość:</span>
+                                <span>@orderProduct.Quantity)</span>
+                            </li>
+                        }
+                    </ul>
+                </div>
+                <div>Do zapłaty: @order.ToPay</div>
+
+            </li>
+        }
+
+    </ul>
+
+</environment>
+
+<environment include="Testing">
+
+    @foreach (var order in Model.OrderDetails) {
+
+        <div name="OrderId">@order.Id</div>
+        <div name="UserId">@order.UserId</div>
+        <div name="UserEmail">@Model.UserEmails[order.UserId]</div>
+        <div name="Street">@order.Address</div>
+        <div name="PostalCode">@order.PostalCode</div>
+        <div name="City">@order.City</div>
+        <div name="CreatedOn">@order.CreatedOn</div>
+
+        @foreach (var orderProduct in order.OrderProducts) {
+
+            <div name="ProductId">@orderProduct.ProductId</div>
+            <div name="ProductName">@orderProduct.ProductName</div>
+            <div name="ProductPrice">@orderProduct.ProductPrice</div>
+            <div name="Quantity">@orderProduct.Quantity</div>
+        }
+    }
+
+</environment>

@@ -2,6 +2,13 @@
 
 <environment exclude="Testing">
 
+    <div>
+        @if (User.IsInRole("Owner") || User.IsInRole("Admin")) {
+
+            <a asp-controller="Product" asp-action="Create" class="btn btn-outline-success m-2">Nowy produkt</a>
+        }
+    </div>
+
     <form method="post" asp-controller="Product" asp-action="Index" class="d-inline-block mx-2">
 
         <select asp-for="Take" class="form-select d-inline-block m-2" style="width:100px">
@@ -35,9 +42,16 @@
         @foreach (var product in Model.Products) {
 
             <li>
+
                 <a asp-controller="Product" asp-action="Details" asp-route-id="@product.Id" class="btn btn-secondary m-2">
                     @product.Name -> @product.Price.ToString()
                 </a>
+
+                @if (User.IsInRole("Owner") || User.IsInRole("Admin")) {
+
+                    <a asp-controller="Product" asp-action="Edit" asp-route-id="@product.Id" class="btn btn-outline-primary">Edytuj</a>
+                }
+
             </li>
         }
 

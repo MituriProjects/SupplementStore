@@ -1,0 +1,33 @@
+﻿@model ProductEditViewModel
+
+<environment exclude="Testing">
+
+    <form asp-controller="Product" asp-action="Edit" class="m-2">
+
+        <input type="hidden" asp-for="Id" value="@Model.Id" />
+
+        <div class="form-group m-2">
+            <label asp-for="Name"></label>
+            <input asp-for="Name" value="@Model.Name" class="form-control w-25" />
+            <span asp-validation-for="Name" class="text-danger"></span>
+        </div>
+
+        <div class="form-group m-2">
+            <label asp-for="Price"></label>
+            <input asp-for="Price" value="@Model.Price" class="form-control w-25" />
+            <span asp-validation-for="Price" class="text-danger"></span>
+        </div>
+
+        <button type="submit" class="btn btn-outline-primary m-2">Zapisz</button>
+
+    </form>
+
+</environment>
+
+<environment include="Testing">
+
+    <div name="Id">@Model.Id</div>
+    <div name="Name">@Model.Name</div>
+    <div name="Price">@Model.Price</div>
+
+</environment>
