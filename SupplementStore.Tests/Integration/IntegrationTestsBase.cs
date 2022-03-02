@@ -106,6 +106,14 @@ namespace SupplementStore.Tests.Integration {
             contentScheme.Examine(Content);
         }
 
+        protected void Examine(string exactContent) {
+
+            AssertAgainstRedirection();
+
+            if (Content != exactContent)
+                throw new AssertFailedException($"The received content does not equal the examined string. \nExpected: '{exactContent}'; \nContent: '{Content}'");
+        }
+
         protected void ExamineRedirect(string uri) {
 
             Assert.AreEqual(uri, Headers.Location?.ToString());
