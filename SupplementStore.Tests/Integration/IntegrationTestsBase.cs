@@ -78,6 +78,16 @@ namespace SupplementStore.Tests.Integration {
             Headers = response.Headers;
         }
 
+        protected async Task PostAsync(string requestUri, IdentityUser user) {
+
+            await PostAsync(requestUri, null, user);
+        }
+
+        protected async Task PostAsync(string requestUri) {
+
+            await PostAsync(requestUri, null, null);
+        }
+
         protected async Task PatchAsync(string requestUri, params object[] operations) {
 
             var jsonData = JsonConvert.SerializeObject(operations);
