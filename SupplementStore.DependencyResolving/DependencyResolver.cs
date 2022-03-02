@@ -4,6 +4,7 @@ using SupplementStore.Domain;
 using SupplementStore.Domain.Baskets;
 using SupplementStore.Domain.Orders;
 using SupplementStore.Domain.Products;
+using SupplementStore.Domain.Wishes;
 using SupplementStore.Infrastructure;
 using SupplementStore.Infrastructure.AppServices;
 using SupplementStore.Infrastructure.Repositories;
@@ -22,6 +23,7 @@ namespace SupplementStore.DependencyResolving {
             services.AddTransient<IOrderRepository, OrderRepository>();
             services.AddTransient<IOrderProductRepository, OrderProductRepository>();
             services.AddTransient<IProductRepository, ProductRepository>();
+            services.AddTransient<IWishRepository, WishRepository>();
 
             services.AddTransient<IProductProvider, ProductProvider>();
             services.AddTransient<IProductsProvider, ProductsProvider>();
