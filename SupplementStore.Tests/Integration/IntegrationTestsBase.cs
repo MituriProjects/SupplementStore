@@ -99,6 +99,17 @@ namespace SupplementStore.Tests.Integration {
             await Client.PatchAsync(requestUri, httpContent);
         }
 
+        protected async Task DeleteAsync(string requestUri, IdentityUser user = null) {
+
+            await ManageAuthentication(user);
+
+            var httpMessage = new HttpRequestMessage(HttpMethod.Delete, requestUri);
+
+            httpMessage.Headers.Add("RequestVerificationToken", await ArrangeAntiforgery());
+
+            var response = await Client.SendAsync(httpMessage);
+        }
+
         protected void Examine(ContentScheme contentScheme) {
 
             AssertAgainstRedirection();
