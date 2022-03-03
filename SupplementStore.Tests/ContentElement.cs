@@ -35,12 +35,12 @@ namespace SupplementStore.Tests {
 
         private void ThrowFound(string content) {
 
-            throw new AssertFailedException($"Found: {Value}; Content: {content}");
+            throw new AssertFailedException($"\nFound: {Value}; \nContent: {content}");
         }
 
         private void ThrowNotFound(string content) {
 
-            throw new AssertFailedException($"Not found: {Value}; Content: {content}");
+            throw new AssertFailedException($"\nNot found: {Value}; \nContent: {content}");
         }
 
         public static ContentElement Html(string name, object value, bool occurs) {
