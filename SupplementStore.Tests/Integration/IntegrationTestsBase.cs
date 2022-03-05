@@ -78,6 +78,16 @@ namespace SupplementStore.Tests.Integration {
             Headers = response.Headers;
         }
 
+        protected async Task PostAsync(string requestUri, IdentityUser user) {
+
+            await PostAsync(requestUri, null, user);
+        }
+
+        protected async Task PostAsync(string requestUri) {
+
+            await PostAsync(requestUri, null, null);
+        }
+
         protected async Task PatchAsync(string requestUri, params object[] operations) {
 
             var jsonData = JsonConvert.SerializeObject(operations);
@@ -89,11 +99,30 @@ namespace SupplementStore.Tests.Integration {
             await Client.PatchAsync(requestUri, httpContent);
         }
 
+        protected async Task DeleteAsync(string requestUri, IdentityUser user = null) {
+
+            await ManageAuthentication(user);
+
+            var httpMessage = new HttpRequestMessage(HttpMethod.Delete, requestUri);
+
+            httpMessage.Headers.Add("RequestVerificationToken", await ArrangeAntiforgery());
+
+            var response = await Client.SendAsync(httpMessage);
+        }
+
         protected void Examine(ContentScheme contentScheme) {
 
             AssertAgainstRedirection();
 
             contentScheme.Examine(Content);
+        }
+
+        protected void Examine(string exactContent) {
+
+            AssertAgainstRedirection();
+
+            if (Content != exactContent)
+                throw new AssertFailedException($"The received content does not equal the examined string. \nExpected: '{exactContent}'; \nContent: '{Content}'");
         }
 
         protected void ExamineRedirect(string uri) {

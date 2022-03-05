@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using SupplementStore.Domain.Baskets;
 using SupplementStore.Domain.Orders;
 using SupplementStore.Domain.Products;
+using SupplementStore.Domain.Wishes;
 using SupplementStore.Infrastructure.Configurations;
 
 namespace SupplementStore.Infrastructure {
@@ -21,6 +22,8 @@ namespace SupplementStore.Infrastructure {
 
         public DbSet<OrderProduct> OrderProducts { get; set; }
 
+        public DbSet<Wish> Wishes { get; set; }
+
         protected override void OnModelCreating(ModelBuilder builder) {
 
             base.OnModelCreating(builder);
@@ -29,6 +32,7 @@ namespace SupplementStore.Infrastructure {
             builder.ApplyConfiguration(new BasketProductConfiguration());
             builder.ApplyConfiguration(new OrderConfiguration());
             builder.ApplyConfiguration(new OrderProductConfiguration());
+            builder.ApplyConfiguration(new WishConfiguration());
         }
     }
 }

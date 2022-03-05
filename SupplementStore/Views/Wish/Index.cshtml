@@ -1,0 +1,85 @@
+﻿@model IEnumerable<ProductDetails>
+
+@{
+
+    var tokenSet = antiforgery.GetAndStoreTokens(Context);
+}
+
+<environment exclude="Testing">
+
+    <ul class="list-unstyled">
+
+        @foreach (var product in Model) {
+
+            <li>
+
+                <a asp-controller="Product" asp-action="Details" asp-route-id="@product.Id" class="btn btn-secondary m-2">
+                    @product.Name -> @product.Price.ToString()
+                </a>
+
+                <div class="btn btn-outline-danger wish-remove-btn" data-product-id="@product.Id">Usuń</div>
+
+            </li>
+        }
+
+    </ul>
+
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+
+            $(".wish-remove-btn")
+                .click(function () {
+
+                    sendRequest(this, "DELETE", () => {
+
+                        sendRequest(this, "GET", data => {
+
+                            if (data === false) {
+
+                                $(this)
+                                    .closest("li")
+                                    .remove();
+                            }
+                        });
+                    });
+                });
+        });
+
+        function sendRequest(wishRemoveBtn, type, successCallback) {
+
+            $.ajax(getUrl(wishRemoveBtn), {
+
+                headers: {
+                    '@tokenSet.HeaderName': '@tokenSet.RequestToken'
+                },
+                type: type,
+                success: successCallback
+            });
+        }
+
+        function getUrl(relatedElement) {
+
+            return `api/wish/${getProductId(relatedElement)}`;
+        }
+
+        function getProductId(relatedElement) {
+
+            return $(relatedElement)
+                .attr("data-product-id");
+        }
+
+    </script>
+
+</environment>
+
+<environment include="Testing">
+
+    @foreach (var product in Model) {
+
+        <div name="ProductId">@product.Id</div>
+        <div name="ProductName">@product.Name</div>
+        <div name="ProductPrice">@product.Price.ToString()</div>
+    }
+
+</environment>

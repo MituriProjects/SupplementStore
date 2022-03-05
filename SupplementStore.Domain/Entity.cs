@@ -28,7 +28,7 @@ namespace SupplementStore.Domain {
         private PropertyInfo GetEntityIdProperty() {
 
             return GetType()
-                .GetProperty($"{GetType().Name}Id")
+                .GetProperty($"{GetType().Name}Id", BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance)
                 ?? throw new NullReferenceException($"The '{GetType().FullName}' type does not have a dedicated entity id assigned.");
         }
 

@@ -1,5 +1,10 @@
 ﻿@model ProductIndexViewModel
 
+@{
+
+    var tokenSet = antiforgery.GetAndStoreTokens(Context);
+}
+
 <environment exclude="Testing">
 
     <div>
@@ -47,6 +52,16 @@
                     @product.Name -> @product.Price.ToString()
                 </a>
 
+                @if (User.Identity.IsAuthenticated) {
+
+                    <img src="~/images/emptyStar.png"
+                         alt="not in a wish list"
+                         class="wish-btn"
+                         data-product-id="@product.Id"
+                         data-wish-list-presence="false"
+                         style="cursor:pointer;" />
+                }
+
                 @if (User.IsInRole("Owner") || User.IsInRole("Admin")) {
 
                     <a asp-controller="Product" asp-action="Edit" asp-route-id="@product.Id" class="btn btn-outline-primary">Edytuj</a>
@@ -56,6 +71,84 @@
         }
 
     </ul>
+
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+
+            $(".wish-btn")
+                .each(function () {
+
+                    sendRequest(this, "GET", data => {
+
+                        if (data === true) {
+
+                            arrangeWishListInclusion(this);
+                        }
+                    });
+                });
+
+            $(".wish-btn")
+                .click(toggleWishListPresence);
+
+            function toggleWishListPresence(eventData) {
+
+                var isOnWishList = $(eventData.target)
+                    .attr("data-wish-list-presence")
+
+                if (isOnWishList === "true") {
+
+                    sendRequest(eventData.target, "DELETE", () => arrangeWishListExclusion(this));
+                }
+                else {
+
+                    sendRequest(eventData.target, "POST", () => arrangeWishListInclusion(this));
+                }
+            }
+
+            function arrangeWishListInclusion(element) {
+
+                $(element).attr({
+                    "data-wish-list-presence": true,
+                    src: "/images/filledStar.png",
+                    alt: "in a wish list"
+                });
+            }
+
+            function arrangeWishListExclusion(element) {
+
+                $(element).attr({
+                    "data-wish-list-presence": false,
+                    src: "/images/emptyStar.png",
+                    alt: "not in a wish list"
+                });
+            }
+
+            function sendRequest(wishBtn, type, successCallback) {
+
+                $.ajax(getUrl(wishBtn), {
+
+                    headers: {
+                        '@tokenSet.HeaderName': '@tokenSet.RequestToken'
+                    },
+                    type: type,
+                    success: successCallback
+                });
+            }
+
+            function getUrl(relatedElement) {
+
+                return `api/wish/${getProductId(relatedElement)}`;
+            }
+
+            function getProductId(relatedElement) {
+
+                return $(relatedElement)
+                    .attr("data-product-id");
+            }
+        });
+
+    </script>
 
 </environment>
 

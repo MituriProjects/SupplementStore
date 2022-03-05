@@ -27,6 +27,12 @@ namespace SupplementStore.Controllers {
             return new ViewViewComponentResult();
         }
 
+        [Authorize]
+        public IActionResult Index() {
+
+            return View();
+        }
+
         public IActionResult Login(string returnUrl) {
 
             ViewBag.ReturnUrl = returnUrl;

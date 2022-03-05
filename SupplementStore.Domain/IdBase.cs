@@ -7,6 +7,8 @@ namespace SupplementStore.Domain {
 
         internal Guid Id { get; set; }
 
+        public bool IsEmpty => Id == Guid.Empty;
+
         protected IdBase(Guid id) {
 
             Id = id;
