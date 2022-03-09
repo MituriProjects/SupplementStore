@@ -1,4 +1,5 @@
-﻿using SupplementStore.Domain.Products;
+﻿using SupplementStore.Domain.Opinions;
+using SupplementStore.Domain.Products;
 using SupplementStore.Domain.Shared;
 using System;
 
@@ -23,6 +24,13 @@ namespace SupplementStore.Domain.Orders {
         }
 
         public ProductId ProductId { get; set; }
+
+        Guid? Opinion_Id {
+            get => OpinionId?.Id;
+            set => OpinionId = value.HasValue ? new OpinionId(value.Value) : null;
+        }
+
+        public OpinionId OpinionId { get; set; }
 
         public int Quantity {
             get => ProductQuantity.Value;
