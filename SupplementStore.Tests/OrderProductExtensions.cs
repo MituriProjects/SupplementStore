@@ -1,4 +1,5 @@
-﻿using SupplementStore.Domain.Orders;
+﻿using SupplementStore.Domain.Opinions;
+using SupplementStore.Domain.Orders;
 using SupplementStore.Domain.Products;
 
 namespace SupplementStore.Tests {
@@ -15,6 +16,13 @@ namespace SupplementStore.Tests {
         public static OrderProduct WithProductId(this OrderProduct orderProduct, ProductId productId) {
 
             orderProduct.ProductId = productId;
+
+            return orderProduct;
+        }
+
+        public static OrderProduct WithOpinionId(this OrderProduct orderProduct, OpinionId opinionId) {
+
+            orderProduct.OpinionId = opinionId;
 
             return orderProduct;
         }
