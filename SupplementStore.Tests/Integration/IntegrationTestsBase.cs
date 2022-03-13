@@ -156,6 +156,16 @@ namespace SupplementStore.Tests.Integration {
                 $"Redirection was performed to '{Headers.Location}' instead of '/Account/AccessDenied?ReturnUrl={returnUri}'");
         }
 
+        protected void ExamineExceptionThrown<TException>()
+            where TException : Exception {
+
+            if (ExceptionThrown == null)
+                throw new AssertFailedException("No exception was detected.");
+
+            if ((ExceptionThrown is TException) == false)
+                throw new AssertFailedException($"No expected exception was detected. Expected: {typeof(TException).FullName}; Actual: {ExceptionThrown.GetType().FullName};");
+        }
+
         void AssertAgainstRedirection() {
 
             Assert.IsNotNull(Headers, "No headers from the previous request were detected.");
