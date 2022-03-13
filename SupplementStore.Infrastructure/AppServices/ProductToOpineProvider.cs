@@ -2,6 +2,7 @@
 using SupplementStore.Application.Services;
 using SupplementStore.Domain.Opinions;
 using SupplementStore.Domain.Orders;
+using SupplementStore.Domain.Products;
 using System.Linq;
 
 namespace SupplementStore.Infrastructure.AppServices {
@@ -12,15 +13,19 @@ namespace SupplementStore.Infrastructure.AppServices {
 
         IOrderProductRepository OrderProductRepository { get; }
 
+        IProductRepository ProductRepository { get; }
+
         IOpinionRepository OpinionRepository { get; }
 
         public ProductToOpineProvider(
             IOrderRepository orderRepository,
             IOrderProductRepository orderProductRepository,
+            IProductRepository productRepository,
             IOpinionRepository opinionRepository) {
 
             OrderRepository = orderRepository;
             OrderProductRepository = orderProductRepository;
+            ProductRepository = productRepository;
             OpinionRepository = opinionRepository;
         }
 
@@ -31,11 +36,20 @@ namespace SupplementStore.Infrastructure.AppServices {
             var orderProducts = OrderProductRepository.FindBy(new OrdersProductsFilter(userOrders.Select(e => e.OrderId)));
 
             var orderProduct = orderProducts
-                .Where(e => e.OpinionId == null)
-                .FirstOrDefault();
+                .FirstOrDefault(e => e.OpinionId == null);
+
+            if (orderProduct == null)
+                return ProductToOpineResult.Empty;
+
+            var product = ProductRepository.FindBy(orderProduct.ProductId);
+
+            var order = userOrders
+                .First(e => e.OrderId == orderProduct.OrderId);
 
             return new ProductToOpineResult {
-                OrderProductId = orderProduct?.OrderProductId.ToString()
+                OrderProductId = orderProduct.OrderProductId.ToString(),
+                ProductName = product.Name,
+                BuyingDate = order.CreatedOn
             };
         }
     }
