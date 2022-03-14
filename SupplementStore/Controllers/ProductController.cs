@@ -13,6 +13,8 @@ namespace SupplementStore.Controllers {
 
         IProductsProvider ProductsProvider { get; }
 
+        IProductOpinionsProvider ProductOpinionsProvider { get; }
+
         IProductCreator ProductCreator { get; }
 
         IProductUpdater ProductUpdater { get; }
@@ -20,11 +22,13 @@ namespace SupplementStore.Controllers {
         public ProductController(
             IProductProvider productProvider,
             IProductsProvider productsProvider,
+            IProductOpinionsProvider productOpinionsProvider,
             IProductCreator productCreator,
             IProductUpdater productUpdater) {
 
             ProductProvider = productProvider;
             ProductsProvider = productsProvider;
+            ProductOpinionsProvider = productOpinionsProvider;
             ProductCreator = productCreator;
             ProductUpdater = productUpdater;
         }
@@ -50,7 +54,8 @@ namespace SupplementStore.Controllers {
                 return RedirectToAction("Index");
 
             return View(new ProductDetailsViewModel {
-                Product = product
+                Product = product,
+                Opinions = ProductOpinionsProvider.Load(product.Id)
             });
         }
 
