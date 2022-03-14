@@ -44,6 +44,7 @@ namespace SupplementStore.DependencyResolving {
             services.AddTransient<IWishCreator, WishCreator>();
             services.AddTransient<IWishRemover, WishRemover>();
             services.AddTransient<IProductToOpineProvider, ProductToOpineProvider>();
+            services.AddTransient<IOpinionsProvider, OpinionsProvider>();
             services.AddTransient<IOpinionCreator, OpinionCreator>();
         }
     }
