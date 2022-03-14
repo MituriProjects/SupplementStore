@@ -1,16 +1,16 @@
-﻿@model ProductDetails
+﻿@model ProductDetailsViewModel
 
 <environment exclude="Testing">
 
-    <h3>@Model.Name</h3>
-    <h4>@Model.Price</h4>
+    <h3>@Model.Product.Name</h3>
+    <h4>@Model.Product.Price</h4>
 
     @if (User.Identity.IsAuthenticated) {
 
         <form method="post" asp-controller="Basket" asp-action="Add">
-            <input hidden name="ProductId" value="@Model.Id" />
+            <input hidden name="ProductId" value="@Model.Product.Id" />
             <input hidden name="Quantity" value="1" />
-            <input hidden name="ReturnUrl" value="/Product/Details/@Model.Id" />
+            <input hidden name="ReturnUrl" value="/Product/Details/@Model.Product.Id" />
             <button type="submit" class="btn btn-outline-primary">Add to basket</button>
         </form>
     }
@@ -19,8 +19,8 @@
 
 <environment include="Testing">
 
-    <div name="ProductId">@Model.Id</div>
-    <div name="ProductName">@Model.Name</div>
-    <div name="ProductPrice">@Model.Price.ToString()</div>
+    <div name="ProductId">@Model.Product.Id</div>
+    <div name="ProductName">@Model.Product.Name</div>
+    <div name="ProductPrice">@Model.Product.Price.ToString()</div>
 
 </environment>
