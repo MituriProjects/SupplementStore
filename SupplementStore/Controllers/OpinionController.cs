@@ -14,16 +14,30 @@ namespace SupplementStore.Controllers {
 
         IProductToOpineProvider ProductToOpineProvider { get; }
 
+        IOpinionsProvider OpinionsProvider { get; }
+
         IOpinionCreator OpinionCreator { get; }
 
         public OpinionController(
             UserManager<IdentityUser> userManager,
             IProductToOpineProvider productToOpineProvider,
+            IOpinionsProvider opinionsProvider,
             IOpinionCreator opinionCreator) {
 
             UserManager = userManager;
             ProductToOpineProvider = productToOpineProvider;
+            OpinionsProvider = opinionsProvider;
             OpinionCreator = opinionCreator;
+        }
+
+        public IActionResult Index() {
+
+            var userId = UserManager.GetUserId(HttpContext.User);
+
+            return View(new OpinionIndexViewModel {
+                IsProductToOpineWaiting = ProductToOpineProvider.Load(userId).IsEmpty == false,
+                Opinions = OpinionsProvider.Load(userId)
+            });
         }
 
         public IActionResult Create() {
