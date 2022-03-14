@@ -49,7 +49,9 @@ namespace SupplementStore.Controllers {
             if (product == null)
                 return RedirectToAction("Index");
 
-            return View(product);
+            return View(new ProductDetailsViewModel {
+                Product = product
+            });
         }
 
         [Authorize(Roles = "Owner, Admin")]
