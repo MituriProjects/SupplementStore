@@ -40,7 +40,8 @@ namespace SupplementStore.Tests {
             var propertyActions = new Dictionary<Type, object> {
                 { typeof(Guid), Guid.NewGuid() },
                 { typeof(int), RandomManager.Next(100) },
-                { typeof(decimal), RandomManager.Next(10000) / 100M }
+                { typeof(decimal), RandomManager.Next(10000) / 100M },
+                { typeof(DateTime), DateTime.Now.AddSeconds(-RandomManager.Next(10000000)) }
             };
 
             foreach (var property in entity.GetType().GetProperties()) {
