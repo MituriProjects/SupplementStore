@@ -1,4 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using SupplementStore.Domain.Opinions;
+using SupplementStore.Domain.Orders;
 using SupplementStore.Domain.Products;
 using System.Linq;
 using System.Threading.Tasks;
@@ -12,6 +14,26 @@ namespace SupplementStore.Tests.Integration.ProductTests {
         public async Task DefaultSkipAndTake_ReturnsDetailsOfProducts() {
 
             var products = TestEntity.Random<Product>(2);
+            var orderProducts = TestEntity.Random<OrderProduct>(3);
+            var opinions = TestEntity.Random<Opinion>(3);
+            opinions[0]
+                .WithGrade(new Grade(3))
+                .WithOrderProductId(orderProducts[1].OrderProductId);
+            opinions[1]
+                .WithGrade(new Grade(5))
+                .WithOrderProductId(orderProducts[2].OrderProductId);
+            opinions[2]
+                .WithGrade(new Grade(2))
+                .WithOrderProductId(orderProducts[0].OrderProductId);
+            orderProducts[0]
+                .WithProductId(products[0].ProductId)
+                .WithOpinionId(opinions[2].OpinionId);
+            orderProducts[1]
+                .WithProductId(products[1].ProductId)
+                .WithOpinionId(opinions[0].OpinionId);
+            orderProducts[2]
+                .WithProductId(products[0].ProductId)
+                .WithOpinionId(opinions[1].OpinionId);
 
             await GetAsync("/Product");
 
@@ -19,9 +41,13 @@ namespace SupplementStore.Tests.Integration.ProductTests {
                 .Contains("ProductId", products[0].ProductId)
                 .Contains("ProductName", products[0].Name)
                 .Contains("ProductPrice", products[0].Price)
+                .Contains("AverageGrade", "3,5")
+                .Contains("GradeCount", 2)
                 .Contains("ProductId", products[1].ProductId)
                 .Contains("ProductName", products[1].Name)
-                .Contains("ProductPrice", products[1].Price));
+                .Contains("ProductPrice", products[1].Price)
+                .Contains("AverageGrade", "3")
+                .Contains("GradeCount", 1));
         }
 
         [TestMethod]
@@ -39,6 +65,20 @@ namespace SupplementStore.Tests.Integration.ProductTests {
         public async Task SkipEquals2AndTakeEquals2_ReturnsDetailsOfProducts() {
 
             var products = TestEntity.Random<Product>(5);
+            var orderProducts = TestEntity.Random<OrderProduct>(2);
+            var opinions = TestEntity.Random<Opinion>(2);
+            opinions[0]
+                .WithGrade(new Grade(4))
+                .WithOrderProductId(orderProducts[0].OrderProductId);
+            opinions[1]
+                .WithGrade(new Grade(1))
+                .WithOrderProductId(orderProducts[1].OrderProductId);
+            orderProducts[0]
+                .WithProductId(products[3].ProductId)
+                .WithOpinionId(opinions[0].OpinionId);
+            orderProducts[1]
+                .WithProductId(products[1].ProductId)
+                .WithOpinionId(opinions[1].OpinionId);
 
             await GetAsync("/Product?Skip=2&Take=2");
 
@@ -50,12 +90,25 @@ namespace SupplementStore.Tests.Integration.ProductTests {
                     contentScheme.Lacks("ProductId", products[i].ProductId);
                     contentScheme.Lacks("ProductName", products[i].Name);
                     contentScheme.Lacks("ProductPrice", products[i].Price);
+                    contentScheme.Lacks("AverageGrade", 1);
                 }
                 else {
 
                     contentScheme.Contains("ProductId", products[i].ProductId);
                     contentScheme.Contains("ProductName", products[i].Name);
                     contentScheme.Contains("ProductPrice", products[i].Price);
+
+                    if (i == 2) {
+
+                        contentScheme.Contains("AverageGrade", 0);
+                        contentScheme.Contains("GradeCount", 0);
+                    }
+
+                    if (i == 3) {
+
+                        contentScheme.Contains("AverageGrade", 4);
+                        contentScheme.Contains("GradeCount", 1);
+                    }
                 }
             }
 
