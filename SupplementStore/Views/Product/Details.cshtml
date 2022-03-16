@@ -15,6 +15,23 @@
         </form>
     }
 
+    <div class="bg-info m-2 p-2 w-25">
+
+        <h4>Oceny:</h4>
+
+        @{
+
+            int CalculateGradeCount(IEnumerable<ProductOpinionDetails> productOpinions, int grade) =>
+                productOpinions.Where(e => e.Stars == grade).Count();
+        }
+
+        <div>5 gwiazdek: @CalculateGradeCount(Model.Opinions, 5)</div>
+        <div>4 gwiazdki: @CalculateGradeCount(Model.Opinions, 4)</div>
+        <div>3 gwiazdki: @CalculateGradeCount(Model.Opinions, 3)</div>
+        <div>2 gwiazdki: @CalculateGradeCount(Model.Opinions, 2)</div>
+        <div>1 gwiazdka: @CalculateGradeCount(Model.Opinions, 1)</div>
+    </div>
+
     @foreach (var opinion in Model.Opinions.Where(e => e.Text != null)) {
 
         <div class="bg-secondary text-light m-2 p-2 w-25">
