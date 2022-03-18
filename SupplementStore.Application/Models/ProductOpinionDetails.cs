@@ -2,6 +2,8 @@
 
     public class ProductOpinionDetails {
 
+        public string Id { get; set; }
+
         public int Stars { get; set; }
 
         public string Text { get; set; }
