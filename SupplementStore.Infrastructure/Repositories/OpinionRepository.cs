@@ -9,6 +9,12 @@ namespace SupplementStore.Infrastructure.Repositories {
         public OpinionRepository(IDocument<Opinion> document) : base(document) {
         }
 
+        public Opinion FindBy(OpinionId opinionId) {
+
+            return Document.All
+                .FirstOrDefault(e => e.OpinionId == opinionId);
+        }
+
         public IEnumerable<Opinion> FindBy(IEnumerable<OpinionId> opinionIds) {
 
             return Document.All
