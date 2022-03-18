@@ -1,0 +1,27 @@
+﻿@model IEnumerable<HiddenOpinionDetails>
+
+<environment exclude="Testing">
+
+    @foreach (var opinion in Model) {
+
+        <div class="bg-light m-2 p-2">
+            <div>Nazwa produktu: @opinion.ProductName</div>
+            <div>Treść opinii: @opinion.Text</div>
+            <form asp-controller="Opinion" asp-action="Show" asp-route-id="@opinion.Id">
+                <button type="submit" class="btn btn-warning my-2">Restore</button>
+            </form>
+        </div>
+    }
+
+</environment>
+
+<environment include="Testing">
+
+    @foreach (var opinion in Model) {
+
+        <div name="Id">@opinion.Id</div>
+        <div name="ProductName">@opinion.ProductName</div>
+        <div name="Text">@opinion.Text</div>
+    }
+
+</environment>
