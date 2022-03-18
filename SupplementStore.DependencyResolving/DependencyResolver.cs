@@ -52,6 +52,7 @@ namespace SupplementStore.DependencyResolving {
             services.AddTransient<IOpinionCreator, OpinionCreator>();
             services.AddTransient<IOpinionTextUpdater, OpinionTextUpdater>();
             services.AddTransient<IOpinionHider, OpinionHider>();
+            services.AddTransient<IOpinionRevealer, OpinionRevealer>();
         }
     }
 }
