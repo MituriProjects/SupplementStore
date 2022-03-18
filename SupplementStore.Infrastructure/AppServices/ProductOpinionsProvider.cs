@@ -33,7 +33,8 @@ namespace SupplementStore.Infrastructure.AppServices {
                 yield return new ProductOpinionDetails {
                     Id = opinion.OpinionId.ToString(),
                     Stars = opinion.Grade.Stars,
-                    Text = opinion.Text
+                    Text = opinion.Text,
+                    IsHidden = opinion.IsHidden
                 };
             }
         }
