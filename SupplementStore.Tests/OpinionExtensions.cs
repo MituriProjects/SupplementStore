@@ -25,5 +25,12 @@ namespace SupplementStore.Tests {
 
             return opinion;
         }
+
+        public static Opinion WithIsHidden(this Opinion opinion, bool value) {
+
+            opinion.IsHidden = value;
+
+            return opinion;
+        }
     }
 }
