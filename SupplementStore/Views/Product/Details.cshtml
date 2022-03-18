@@ -1,26 +1,71 @@
-﻿@model ProductDetails
+﻿@model ProductDetailsViewModel
 
 <environment exclude="Testing">
 
-    <h3>@Model.Name</h3>
-    <h4>@Model.Price</h4>
+    <h3>@Model.Product.Name</h3>
+    <h4>@Model.Product.Price</h4>
 
     @if (User.Identity.IsAuthenticated) {
 
         <form method="post" asp-controller="Basket" asp-action="Add">
-            <input hidden name="ProductId" value="@Model.Id" />
+            <input hidden name="ProductId" value="@Model.Product.Id" />
             <input hidden name="Quantity" value="1" />
-            <input hidden name="ReturnUrl" value="/Product/Details/@Model.Id" />
+            <input hidden name="ReturnUrl" value="/Product/Details/@Model.Product.Id" />
             <button type="submit" class="btn btn-outline-primary">Add to basket</button>
         </form>
+    }
+
+    <div class="bg-info m-2 p-2 w-25">
+
+        <h4>Oceny:</h4>
+
+        @{
+
+            int CalculateGradeCount(IEnumerable<ProductOpinionDetails> productOpinions, int grade) =>
+                productOpinions.Where(e => e.Stars == grade).Count();
+        }
+
+        <div>5 gwiazdek: @CalculateGradeCount(Model.Opinions, 5)</div>
+        <div>4 gwiazdki: @CalculateGradeCount(Model.Opinions, 4)</div>
+        <div>3 gwiazdki: @CalculateGradeCount(Model.Opinions, 3)</div>
+        <div>2 gwiazdki: @CalculateGradeCount(Model.Opinions, 2)</div>
+        <div>1 gwiazdka: @CalculateGradeCount(Model.Opinions, 1)</div>
+    </div>
+
+    @foreach (var opinion in Model.Opinions.Where(e => e.Text != null && e.IsHidden == false)) {
+
+        <div class="bg-secondary text-light m-2 p-2 w-25">
+
+            <div class="mb-1">Ocena: @opinion.Stars</div>
+
+            <div>@opinion.Text</div>
+
+            @if (User.IsInRole("Owner") || User.IsInRole("Admin")) {
+
+                <div class="mt-1">
+                    <form asp-controller="Opinion" asp-action="Hide" asp-route-id="@opinion.Id">
+                        <a asp-controller="Opinion" asp-action="Edit" asp-route-id="@opinion.Id" class="btn btn-warning">Edit</a>
+                        <button type="submit" class="btn btn-danger mx-1">Hide</button>
+                    </form>
+                </div>
+            }
+
+        </div>
     }
 
 </environment>
 
 <environment include="Testing">
 
-    <div name="ProductId">@Model.Id</div>
-    <div name="ProductName">@Model.Name</div>
-    <div name="ProductPrice">@Model.Price.ToString()</div>
+    <div name="ProductId">@Model.Product.Id</div>
+    <div name="ProductName">@Model.Product.Name</div>
+    <div name="ProductPrice">@Model.Product.Price.ToString()</div>
+
+    @foreach (var opinion in Model.Opinions) {
+
+        <div name="OpinionStars">@opinion.Stars</div>
+        <div name="OpinionText">@opinion.Text</div>
+        <div name="OpinionIsHidden">@opinion.IsHidden</div>
+    }
 
 </environment>

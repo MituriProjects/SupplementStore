@@ -14,13 +14,17 @@ namespace SupplementStore.Controllers {
 
         IOrdersProvider OrdersProvider { get; }
 
+        IHiddenOpinionsProvider HiddenOpinionsProvider { get; }
+
         UserManager<IdentityUser> UserManager { get; }
 
         public AdminController(
             IOrdersProvider ordersProvider,
+            IHiddenOpinionsProvider hiddenOpinionsProvider,
             UserManager<IdentityUser> userManager) {
 
             OrdersProvider = ordersProvider;
+            HiddenOpinionsProvider = hiddenOpinionsProvider;
             UserManager = userManager;
         }
 
@@ -44,6 +48,11 @@ namespace SupplementStore.Controllers {
                 OrderDetails = orderDetails,
                 UserEmails = UserEmails
             });
+        }
+
+        public IActionResult HiddenOpinions() {
+
+            return View(HiddenOpinionsProvider.Load());
         }
     }
 }

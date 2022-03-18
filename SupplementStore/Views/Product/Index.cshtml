@@ -52,6 +52,15 @@
                     @product.Name -> @product.Price.ToString()
                 </a>
 
+                @{
+
+                    var productGrade = Model.ProductGrades[product.Id];
+                }
+
+                <span>Ocena:</span>
+                <span>@productGrade.Average</span>
+                <span>(@productGrade.Count)</span>
+
                 @if (User.Identity.IsAuthenticated) {
 
                     <img src="~/images/emptyStar.png"
@@ -161,6 +170,11 @@
         <div name="ProductId">@product.Id</div>
         <div name="ProductName">@product.Name</div>
         <div name="ProductPrice">@product.Price.ToString()</div>
+
+        var productGrade = Model.ProductGrades[product.Id];
+
+        <div name="AverageGrade">@productGrade.Average</div>
+        <div name="GradeCount">@productGrade.Count</div>
     }
 
 </environment>

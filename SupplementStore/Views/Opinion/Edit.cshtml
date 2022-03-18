@@ -1,0 +1,26 @@
+﻿@model OpinionEditViewModel
+
+<environment exclude="Testing">
+
+    <form method="post" asp-controller="Opinion" asp-action="Edit" class="m-2">
+
+        <input type="hidden" asp-for="Id" value="@Model.Id" />
+
+        <div class="form-group m-2">
+            <label asp-for="Text"></label>
+            <textarea asp-for="Text" class="form-control w-25" rows="4">@Model.Text</textarea>
+            <span asp-validation-for="Text" class="text-danger"></span>
+        </div>
+
+        <button type="submit" class="btn btn-outline-primary m-2">Zapisz</button>
+
+    </form>
+
+</environment>
+
+<environment include="Testing">
+
+    <div name="Id">@Model.Id</div>
+    <div name="Text">@Model.Text</div>
+
+</environment>

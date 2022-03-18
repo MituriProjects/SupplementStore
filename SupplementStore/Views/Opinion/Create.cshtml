@@ -1,0 +1,106 @@
+﻿@model OpinionCreateViewModel
+
+<environment exclude="Testing">
+
+    <h4 class="m-3">@Model.ProductName (zakupiono: @Model.BuyingDate)</h4>
+
+    <form asp-controller="Opinion" asp-action="Create" class="m-2">
+
+        <input type="hidden" asp-for="OrderProductId" value="@Model.OrderProductId" />
+        <input type="hidden" asp-for="Stars" value="@Model.Stars" id="opinion-selected-stars" />
+
+        <div id="opinion-stars">
+            @for (int i = 1; i < 6; i++) {
+
+                <span><img src="~/images/emptyStar.png" class="opinion-star opinion-empty-star" data-opinion-star-position="@i" style="display:none; cursor:pointer;" /></span>
+                <span><img src="~/images/filledStar.png" class="opinion-star opinion-filled-star" data-opinion-star-position="@i" style="cursor:pointer;" /></span>
+            }
+        </div>
+
+        <div class="form-group m-2">
+            <label asp-for="Text"></label>
+            <textarea asp-for="Text" class="form-control w-25" rows="4">@Model.Text</textarea>
+            <span asp-validation-for="Text" class="text-danger"></span>
+        </div>
+
+        <button type="submit" class="btn btn-outline-primary m-2">Zatwierdź</button>
+
+    </form>
+
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+
+            var initialStarsCount = $("#opinion-selected-stars").attr("value");
+
+            adjustStarsVisibility(initialStarsCount);
+
+            $(".opinion-star")
+                .mouseenter(function () {
+
+                    var mouseEnterStarPosition = $(this).attr("data-opinion-star-position");
+
+                    adjustStarsVisibility(mouseEnterStarPosition);
+                })
+                .click(function () {
+
+                    var mouseClickStarPosition = $(this).attr("data-opinion-star-position");
+
+                    $("#opinion-selected-stars")
+                        .attr("value", mouseClickStarPosition);
+                });
+
+
+            $("#opinion-stars")
+                .mouseleave(function () {
+
+                    var selectedStarsCount = $("#opinion-selected-stars").attr("value");
+
+                    adjustStarsVisibility(selectedStarsCount);
+                });
+
+            function adjustStarsVisibility(starPosition) {
+
+                $(".opinion-filled-star")
+                    .each(function () {
+
+                        var filledStarPosition = $(this).attr("data-opinion-star-position");
+
+                        if (filledStarPosition <= starPosition) {
+
+                            $(this).show();
+                        }
+                        else {
+
+                            $(this).hide();
+                        }
+                    });
+
+                $(".opinion-empty-star")
+                    .each(function () {
+
+                        var emptyStarPosition = $(this).attr("data-opinion-star-position");
+
+                        if (starPosition < emptyStarPosition) {
+
+                            $(this).show();
+                        }
+                        else {
+
+                            $(this).hide();
+                        }
+                    });
+            }
+        });
+
+    </script>
+
+</environment>
+
+<environment include="Testing">
+
+    <div name="OrderProductId">@Model.OrderProductId</div>
+    <div name="ProductName">@Model.ProductName</div>
+    <div name="BuyingDate">@Model.BuyingDate</div>
+
+</environment>

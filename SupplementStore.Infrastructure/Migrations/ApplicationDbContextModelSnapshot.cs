@@ -202,6 +202,26 @@ namespace SupplementStore.Infrastructure.Migrations
                     b.ToTable("BasketProducts");
                 });
 
+            modelBuilder.Entity("SupplementStore.Domain.Opinions.Opinion", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasDefaultValueSql("newsequentialid()");
+
+                    b.Property<bool>("IsHidden");
+
+                    b.Property<Guid>("OrderProduct_Id");
+
+                    b.Property<string>("Text");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("OrderProduct_Id")
+                        .IsUnique();
+
+                    b.ToTable("Opinions");
+                });
+
             modelBuilder.Entity("SupplementStore.Domain.Orders.Order", b =>
                 {
                     b.Property<Guid>("Id")
@@ -226,6 +246,8 @@ namespace SupplementStore.Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasDefaultValueSql("newsequentialid()");
 
+                    b.Property<Guid?>("Opinion_Id");
+
                     b.Property<Guid>("Order_Id");
 
                     b.Property<Guid>("Product_Id");
@@ -233,6 +255,10 @@ namespace SupplementStore.Infrastructure.Migrations
                     b.Property<int>("Quantity");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("Opinion_Id")
+                        .IsUnique()
+                        .HasFilter("[Opinion_Id] IS NOT NULL");
 
                     b.HasIndex("Order_Id");
 
@@ -335,6 +361,29 @@ namespace SupplementStore.Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
+            modelBuilder.Entity("SupplementStore.Domain.Opinions.Opinion", b =>
+                {
+                    b.HasOne("SupplementStore.Domain.Orders.OrderProduct")
+                        .WithOne()
+                        .HasForeignKey("SupplementStore.Domain.Opinions.Opinion", "OrderProduct_Id")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.OwnsOne("SupplementStore.Domain.Opinions.Grade", "Grade", b1 =>
+                        {
+                            b1.Property<Guid?>("OpinionId")
+                                .ValueGeneratedOnAdd();
+
+                            b1.Property<int>("Stars");
+
+                            b1.ToTable("Opinions");
+
+                            b1.HasOne("SupplementStore.Domain.Opinions.Opinion")
+                                .WithOne("Grade")
+                                .HasForeignKey("SupplementStore.Domain.Opinions.Grade", "OpinionId")
+                                .OnDelete(DeleteBehavior.Cascade);
+                        });
+                });
+
             modelBuilder.Entity("SupplementStore.Domain.Orders.Order", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser")
@@ -367,6 +416,10 @@ namespace SupplementStore.Infrastructure.Migrations
 
             modelBuilder.Entity("SupplementStore.Domain.Orders.OrderProduct", b =>
                 {
+                    b.HasOne("SupplementStore.Domain.Opinions.Opinion")
+                        .WithOne()
+                        .HasForeignKey("SupplementStore.Domain.Orders.OrderProduct", "Opinion_Id");
+
                     b.HasOne("SupplementStore.Domain.Orders.Order")
                         .WithMany()
                         .HasForeignKey("Order_Id")

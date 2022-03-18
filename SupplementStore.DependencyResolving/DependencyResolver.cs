@@ -2,6 +2,7 @@
 using SupplementStore.Application.Services;
 using SupplementStore.Domain;
 using SupplementStore.Domain.Baskets;
+using SupplementStore.Domain.Opinions;
 using SupplementStore.Domain.Orders;
 using SupplementStore.Domain.Products;
 using SupplementStore.Domain.Wishes;
@@ -24,6 +25,7 @@ namespace SupplementStore.DependencyResolving {
             services.AddTransient<IOrderProductRepository, OrderProductRepository>();
             services.AddTransient<IProductRepository, ProductRepository>();
             services.AddTransient<IWishRepository, WishRepository>();
+            services.AddTransient<IOpinionRepository, OpinionRepository>();
 
             services.AddTransient<IProductProvider, ProductProvider>();
             services.AddTransient<IProductsProvider, ProductsProvider>();
@@ -41,6 +43,16 @@ namespace SupplementStore.DependencyResolving {
             services.AddTransient<IWishesProvider, WishesProvider>();
             services.AddTransient<IWishCreator, WishCreator>();
             services.AddTransient<IWishRemover, WishRemover>();
+            services.AddTransient<IProductToOpineProvider, ProductToOpineProvider>();
+            services.AddTransient<IOpinionProductProvider, OpinionProductProvider>();
+            services.AddTransient<IProductOpinionsProvider, ProductOpinionsProvider>();
+            services.AddTransient<IOpinionProvider, OpinionProvider>();
+            services.AddTransient<IOpinionsProvider, OpinionsProvider>();
+            services.AddTransient<IHiddenOpinionsProvider, HiddenOpinionsProvider>();
+            services.AddTransient<IOpinionCreator, OpinionCreator>();
+            services.AddTransient<IOpinionTextUpdater, OpinionTextUpdater>();
+            services.AddTransient<IOpinionHider, OpinionHider>();
+            services.AddTransient<IOpinionRevealer, OpinionRevealer>();
         }
     }
 }

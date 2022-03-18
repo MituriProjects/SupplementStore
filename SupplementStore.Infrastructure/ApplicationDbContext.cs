@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using SupplementStore.Domain.Baskets;
+using SupplementStore.Domain.Opinions;
 using SupplementStore.Domain.Orders;
 using SupplementStore.Domain.Products;
 using SupplementStore.Domain.Wishes;
@@ -24,6 +25,8 @@ namespace SupplementStore.Infrastructure {
 
         public DbSet<Wish> Wishes { get; set; }
 
+        public DbSet<Opinion> Opinions { get; set; }
+
         protected override void OnModelCreating(ModelBuilder builder) {
 
             base.OnModelCreating(builder);
@@ -33,6 +36,7 @@ namespace SupplementStore.Infrastructure {
             builder.ApplyConfiguration(new OrderConfiguration());
             builder.ApplyConfiguration(new OrderProductConfiguration());
             builder.ApplyConfiguration(new WishConfiguration());
+            builder.ApplyConfiguration(new OpinionConfiguration());
         }
     }
 }

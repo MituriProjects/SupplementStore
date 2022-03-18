@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using SupplementStore.Domain.Opinions;
 using SupplementStore.Domain.Orders;
 using SupplementStore.Domain.Products;
 
@@ -18,6 +19,10 @@ namespace SupplementStore.Infrastructure.Configurations {
                 .WithMany()
                 .HasForeignKey("Product_Id")
                 .IsRequired();
+            builder.Ignore(e => e.OpinionId);
+            builder.HasOne<Opinion>()
+                .WithOne()
+                .HasForeignKey<OrderProduct>("Opinion_Id");
         }
     }
 }

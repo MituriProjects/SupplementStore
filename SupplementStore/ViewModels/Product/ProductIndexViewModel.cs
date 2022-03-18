@@ -12,5 +12,7 @@ namespace SupplementStore.ViewModels.Product {
         public int AllProductsCount { get; set; }
 
         public IEnumerable<ProductDetails> Products { get; set; }
+
+        public Dictionary<string, ProductGrade> ProductGrades { get; set; } = new Dictionary<string, ProductGrade>();
     }
 }

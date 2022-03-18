@@ -42,6 +42,7 @@ namespace SupplementStore.Tests.Integration {
         public void Setup() {
 
             Content = "";
+            ExceptionThrown = null;
 
             TestDocumentApprover.ClearDocuments();
         }
@@ -51,6 +52,8 @@ namespace SupplementStore.Tests.Integration {
         HttpResponseHeaders Headers { get; set; }
 
         string Content { get; set; }
+
+        Exception ExceptionThrown { get; set; }
 
         protected async Task GetAsync(string requestUri, IdentityUser user = null) {
 
@@ -71,11 +74,18 @@ namespace SupplementStore.Tests.Integration {
 
             var formContent = new FormUrlEncodedContent(formData);
 
-            var response = await Client.PostAsync(requestUri, formContent);
+            try {
 
-            Content = await response.Content.ReadAsStringAsync();
+                var response = await Client.PostAsync(requestUri, formContent);
 
-            Headers = response.Headers;
+                Content = await response.Content.ReadAsStringAsync();
+
+                Headers = response.Headers;
+            }
+            catch (Exception e) {
+
+                ExceptionThrown = e;
+            }
         }
 
         protected async Task PostAsync(string requestUri, IdentityUser user) {
@@ -144,6 +154,16 @@ namespace SupplementStore.Tests.Integration {
 
             Assert.IsTrue(Headers.Location.ToString().EndsWith($"/Account/AccessDenied?ReturnUrl={ Uri.EscapeDataString(returnUri) }", StringComparison.OrdinalIgnoreCase),
                 $"Redirection was performed to '{Headers.Location}' instead of '/Account/AccessDenied?ReturnUrl={returnUri}'");
+        }
+
+        protected void ExamineExceptionThrown<TException>()
+            where TException : Exception {
+
+            if (ExceptionThrown == null)
+                throw new AssertFailedException("No exception was detected.");
+
+            if ((ExceptionThrown is TException) == false)
+                throw new AssertFailedException($"No expected exception was detected. Expected: {typeof(TException).FullName}; Actual: {ExceptionThrown.GetType().FullName};");
         }
 
         void AssertAgainstRedirection() {
