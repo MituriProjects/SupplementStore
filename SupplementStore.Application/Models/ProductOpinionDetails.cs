@@ -7,5 +7,7 @@
         public int Stars { get; set; }
 
         public string Text { get; set; }
+
+        public bool IsHidden { get; set; }
     }
 }
