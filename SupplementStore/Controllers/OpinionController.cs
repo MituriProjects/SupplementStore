@@ -26,6 +26,8 @@ namespace SupplementStore.Controllers {
 
         IOpinionHider OpinionHider { get; }
 
+        IOpinionRevealer OpinionRevealer { get; }
+
         public OpinionController(
             UserManager<IdentityUser> userManager,
             IProductToOpineProvider productToOpineProvider,
@@ -34,7 +36,8 @@ namespace SupplementStore.Controllers {
             IOpinionsProvider opinionsProvider,
             IOpinionCreator opinionCreator,
             IOpinionTextUpdater opinionTextUpdater,
-            IOpinionHider opinionHider) {
+            IOpinionHider opinionHider,
+            IOpinionRevealer opinionRevealer) {
 
             UserManager = userManager;
             ProductToOpineProvider = productToOpineProvider;
@@ -44,6 +47,7 @@ namespace SupplementStore.Controllers {
             OpinionCreator = opinionCreator;
             OpinionTextUpdater = opinionTextUpdater;
             OpinionHider = opinionHider;
+            OpinionRevealer = opinionRevealer;
         }
 
         public IActionResult Index() {
@@ -115,6 +119,15 @@ namespace SupplementStore.Controllers {
             var product = OpinionProductProvider.Load(id);
 
             return RedirectToAction("Details", "Product", new { product.Id });
+        }
+
+        [HttpPost]
+        [Authorize(Roles = "Owner, Admin")]
+        public IActionResult Show(string id) {
+
+            OpinionRevealer.Reveal(id);
+
+            return RedirectToAction("HiddenOpinions", "Admin");
         }
     }
 }
