@@ -14,20 +14,32 @@ namespace SupplementStore.Controllers {
 
         IProductToOpineProvider ProductToOpineProvider { get; }
 
+        IOpinionProductProvider OpinionProductProvider { get; }
+
+        IOpinionProvider OpinionProvider { get; }
+
         IOpinionsProvider OpinionsProvider { get; }
 
         IOpinionCreator OpinionCreator { get; }
 
+        IOpinionTextUpdater OpinionTextUpdater { get; }
+
         public OpinionController(
             UserManager<IdentityUser> userManager,
             IProductToOpineProvider productToOpineProvider,
+            IOpinionProductProvider opinionProductProvider,
+            IOpinionProvider opinionProvider,
             IOpinionsProvider opinionsProvider,
-            IOpinionCreator opinionCreator) {
+            IOpinionCreator opinionCreator,
+            IOpinionTextUpdater opinionTextUpdater) {
 
             UserManager = userManager;
             ProductToOpineProvider = productToOpineProvider;
+            OpinionProductProvider = opinionProductProvider;
+            OpinionProvider = opinionProvider;
             OpinionsProvider = opinionsProvider;
             OpinionCreator = opinionCreator;
+            OpinionTextUpdater = opinionTextUpdater;
         }
 
         public IActionResult Index() {
@@ -66,6 +78,28 @@ namespace SupplementStore.Controllers {
             });
 
             return RedirectToAction(nameof(Create));
+        }
+
+        [Authorize(Roles = "Owner, Admin")]
+        public IActionResult Edit(string id) {
+
+            var opinion = OpinionProvider.Load(id);
+
+            return View(new OpinionEditViewModel {
+                Id = opinion.Id,
+                Text = opinion.Text
+            });
+        }
+
+        [HttpPost]
+        [Authorize(Roles = "Owner, Admin")]
+        public IActionResult Edit(OpinionEditViewModel model) {
+
+            OpinionTextUpdater.Update(model.Id, model.Text);
+
+            var product = OpinionProductProvider.Load(model.Id);
+
+            return RedirectToAction("Details", "Product", new { product.Id });
         }
     }
 }
