@@ -32,7 +32,7 @@
         <div>1 gwiazdka: @CalculateGradeCount(Model.Opinions, 1)</div>
     </div>
 
-    @foreach (var opinion in Model.Opinions.Where(e => e.Text != null)) {
+    @foreach (var opinion in Model.Opinions.Where(e => e.Text != null && e.IsHidden == false)) {
 
         <div class="bg-secondary text-light m-2 p-2 w-25">
 
