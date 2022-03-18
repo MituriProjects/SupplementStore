@@ -35,8 +35,16 @@
     @foreach (var opinion in Model.Opinions.Where(e => e.Text != null)) {
 
         <div class="bg-secondary text-light m-2 p-2 w-25">
+
             <div class="mb-1">Ocena: @opinion.Stars</div>
+
             <div>@opinion.Text</div>
+
+            @if (User.IsInRole("Owner") || User.IsInRole("Admin")) {
+
+                <a asp-controller="Opinion" asp-action="Edit" asp-route-id="@opinion.Id" class="btn btn-warning mt-1">Edit</a>
+            }
+
         </div>
     }
 
