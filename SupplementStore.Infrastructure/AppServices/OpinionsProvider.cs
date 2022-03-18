@@ -44,6 +44,7 @@ namespace SupplementStore.Infrastructure.AppServices {
                     .First(e => e.OpinionId == opinion.OpinionId);
 
                 yield return new OpinionDetails {
+                    Id = opinion.OpinionId.ToString(),
                     ProductName = ProductRepository.FindBy(orderProduct.ProductId).Name,
                     BuyingDate = userOrders.First(e => e.OrderId == orderProduct.OrderId).CreatedOn,
                     Stars = opinion.Grade.Stars,
