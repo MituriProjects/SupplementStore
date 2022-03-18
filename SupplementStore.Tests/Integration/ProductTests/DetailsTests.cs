@@ -17,7 +17,8 @@ namespace SupplementStore.Tests.Integration.ProductTests {
             var orderProducts = TestEntity.Random<OrderProduct>(3);
             var opinions = TestEntity.Random<Opinion>(2);
             opinions[0]
-                .WithOrderProductId(orderProducts[0].OrderProductId);
+                .WithOrderProductId(orderProducts[0].OrderProductId)
+                .WithIsHidden(true);
             opinions[1]
                 .WithOrderProductId(orderProducts[1].OrderProductId);
             orderProducts[0]
@@ -35,8 +36,10 @@ namespace SupplementStore.Tests.Integration.ProductTests {
                 .Contains("ProductPrice", products[1].Price)
                 .Contains("OpinionStars", opinions[0].Grade.Stars)
                 .Contains("OpinionText", opinions[0].Text)
+                .Contains("OpinionIsHidden", opinions[0].IsHidden)
                 .Contains("OpinionStars", opinions[1].Grade.Stars)
-                .Contains("OpinionText", opinions[1].Text));
+                .Contains("OpinionText", opinions[1].Text)
+                .Contains("OpinionIsHidden", opinions[1].IsHidden));
         }
 
         [TestMethod]
