@@ -42,7 +42,12 @@
 
             @if (User.IsInRole("Owner") || User.IsInRole("Admin")) {
 
-                <a asp-controller="Opinion" asp-action="Edit" asp-route-id="@opinion.Id" class="btn btn-warning mt-1">Edit</a>
+                <div class="mt-1">
+                    <form asp-controller="Opinion" asp-action="Hide" asp-route-id="@opinion.Id">
+                        <a asp-controller="Opinion" asp-action="Edit" asp-route-id="@opinion.Id" class="btn btn-warning">Edit</a>
+                        <button type="submit" class="btn btn-danger mx-1">Hide</button>
+                    </form>
+                </div>
             }
 
         </div>
