@@ -31,6 +31,7 @@ namespace SupplementStore.Infrastructure.AppServices {
             foreach (var opinion in opinions) {
 
                 yield return new ProductOpinionDetails {
+                    Id = opinion.OpinionId.ToString(),
                     Stars = opinion.Grade.Stars,
                     Text = opinion.Text
                 };
