@@ -24,6 +24,8 @@ namespace SupplementStore.Controllers {
 
         IOpinionTextUpdater OpinionTextUpdater { get; }
 
+        IOpinionHider OpinionHider { get; }
+
         public OpinionController(
             UserManager<IdentityUser> userManager,
             IProductToOpineProvider productToOpineProvider,
@@ -31,7 +33,8 @@ namespace SupplementStore.Controllers {
             IOpinionProvider opinionProvider,
             IOpinionsProvider opinionsProvider,
             IOpinionCreator opinionCreator,
-            IOpinionTextUpdater opinionTextUpdater) {
+            IOpinionTextUpdater opinionTextUpdater,
+            IOpinionHider opinionHider) {
 
             UserManager = userManager;
             ProductToOpineProvider = productToOpineProvider;
@@ -40,6 +43,7 @@ namespace SupplementStore.Controllers {
             OpinionsProvider = opinionsProvider;
             OpinionCreator = opinionCreator;
             OpinionTextUpdater = opinionTextUpdater;
+            OpinionHider = opinionHider;
         }
 
         public IActionResult Index() {
@@ -98,6 +102,17 @@ namespace SupplementStore.Controllers {
             OpinionTextUpdater.Update(model.Id, model.Text);
 
             var product = OpinionProductProvider.Load(model.Id);
+
+            return RedirectToAction("Details", "Product", new { product.Id });
+        }
+
+        [HttpPost]
+        [Authorize(Roles = "Owner, Admin")]
+        public IActionResult Hide(string id) {
+
+            OpinionHider.Hide(id);
+
+            var product = OpinionProductProvider.Load(id);
 
             return RedirectToAction("Details", "Product", new { product.Id });
         }
