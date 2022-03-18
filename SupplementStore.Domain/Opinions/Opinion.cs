@@ -17,5 +17,7 @@ namespace SupplementStore.Domain.Opinions {
         public string Text { get; set; }
 
         public Grade Grade { get; set; }
+
+        public bool IsHidden { get; set; }
     }
 }
