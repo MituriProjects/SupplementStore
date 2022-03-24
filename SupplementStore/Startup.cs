@@ -36,6 +36,7 @@ namespace SupplementStore {
 
             services.AddTransient(typeof(Lazy<>), typeof(LazyWrapper<>));
 
+            services.AddTransient<RoleDirector>();
             services.AddTransient<OwnerManager>();
             services.AddTransient<AdminManager>();
 
