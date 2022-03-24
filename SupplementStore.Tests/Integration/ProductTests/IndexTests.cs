@@ -18,13 +18,13 @@ namespace SupplementStore.Tests.Integration.ProductTests {
             var opinions = TestEntity.Random<Opinion>(3);
             opinions[0]
                 .WithGrade(new Grade(3))
-                .WithOrderProductId(orderProducts[1].OrderProductId);
+                .WithOrderProductId(orderProducts[1]);
             opinions[1]
                 .WithGrade(new Grade(5))
-                .WithOrderProductId(orderProducts[2].OrderProductId);
+                .WithOrderProductId(orderProducts[2]);
             opinions[2]
                 .WithGrade(new Grade(2))
-                .WithOrderProductId(orderProducts[0].OrderProductId);
+                .WithOrderProductId(orderProducts[0]);
             orderProducts[0]
                 .WithProductId(products[0].ProductId)
                 .WithOpinionId(opinions[2].OpinionId);
@@ -69,10 +69,10 @@ namespace SupplementStore.Tests.Integration.ProductTests {
             var opinions = TestEntity.Random<Opinion>(2);
             opinions[0]
                 .WithGrade(new Grade(4))
-                .WithOrderProductId(orderProducts[0].OrderProductId);
+                .WithOrderProductId(orderProducts[0]);
             opinions[1]
                 .WithGrade(new Grade(1))
-                .WithOrderProductId(orderProducts[1].OrderProductId);
+                .WithOrderProductId(orderProducts[1]);
             orderProducts[0]
                 .WithProductId(products[3].ProductId)
                 .WithOpinionId(opinions[0].OpinionId);
