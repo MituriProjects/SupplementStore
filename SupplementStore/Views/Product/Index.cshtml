@@ -8,7 +8,7 @@
 <environment exclude="Testing">
 
     <div>
-        @if (User.IsInRole("Owner") || User.IsInRole("Admin")) {
+        @if (User.IsInRole("Admin")) {
 
             <a asp-controller="Product" asp-action="Create" class="btn btn-outline-success m-2">Nowy produkt</a>
         }
@@ -71,7 +71,7 @@
                          style="cursor:pointer;" />
                 }
 
-                @if (User.IsInRole("Owner") || User.IsInRole("Admin")) {
+                @if (User.IsInRole("Admin")) {
 
                     <a asp-controller="Product" asp-action="Edit" asp-route-id="@product.Id" class="btn btn-outline-primary">Edytuj</a>
                 }
