@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using SupplementStore.Controllers.Services;
 using SupplementStore.DependencyResolving;
 using SupplementStore.Infrastructure;
 using System;
@@ -34,6 +35,8 @@ namespace SupplementStore {
             DependencyResolver.Install(services);
 
             services.AddTransient(typeof(Lazy<>), typeof(LazyWrapper<>));
+
+            services.AddTransient<OwnerManager>();
 
             services.AddMvc(options => {
 
