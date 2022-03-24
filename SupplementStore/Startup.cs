@@ -7,6 +7,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using SupplementStore.DependencyResolving;
 using SupplementStore.Infrastructure;
+using System;
 
 namespace SupplementStore {
 
@@ -31,6 +32,8 @@ namespace SupplementStore {
                 .AddDefaultTokenProviders();
 
             DependencyResolver.Install(services);
+
+            services.AddTransient(typeof(Lazy<>), typeof(LazyWrapper<>));
 
             services.AddMvc(options => {
 
