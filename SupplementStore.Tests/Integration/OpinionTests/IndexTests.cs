@@ -40,10 +40,10 @@ namespace SupplementStore.Tests.Integration.OpinionTests {
             var opinions = TestEntity.Random<Opinion>(2);
             opinions[0]
                 .WithGrade(new Grade(2))
-                .WithOrderProductId(orderProducts[0].OrderProductId);
+                .WithOrderProductId(orderProducts[0]);
             opinions[1]
                 .WithGrade(new Grade(3))
-                .WithOrderProductId(orderProducts[1].OrderProductId);
+                .WithOrderProductId(orderProducts[1]);
             orderProducts[0]
                 .WithOpinionId(opinions[0].OpinionId);
             orderProducts[1]
