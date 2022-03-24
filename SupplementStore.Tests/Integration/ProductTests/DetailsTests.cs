@@ -17,10 +17,10 @@ namespace SupplementStore.Tests.Integration.ProductTests {
             var orderProducts = TestEntity.Random<OrderProduct>(3);
             var opinions = TestEntity.Random<Opinion>(2);
             opinions[0]
-                .WithOrderProductId(orderProducts[0].OrderProductId)
+                .WithOrderProductId(orderProducts[0])
                 .WithIsHidden(true);
             opinions[1]
-                .WithOrderProductId(orderProducts[1].OrderProductId);
+                .WithOrderProductId(orderProducts[1]);
             orderProducts[0]
                 .WithProductId(products[1].ProductId)
                 .WithOpinionId(opinions[0].OpinionId);
