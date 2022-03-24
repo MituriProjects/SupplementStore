@@ -5,9 +5,9 @@ namespace SupplementStore.Tests {
 
     static class OpinionExtensions {
 
-        public static Opinion WithOrderProductId(this Opinion opinion, OrderProductId orderProductId) {
+        public static Opinion WithOrderProductId(this Opinion opinion, OrderProduct orderProduct) {
 
-            opinion.OrderProductId = orderProductId;
+            opinion.OrderProductId = orderProduct.OrderProductId;
 
             return opinion;
         }
