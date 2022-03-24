@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace SupplementStore.Controllers {
 
-    [Authorize(Roles = "Owner, Admin")]
+    [Authorize(Roles = "Admin")]
     public class AdminController : Controller {
 
         IOrdersProvider OrdersProvider { get; }
