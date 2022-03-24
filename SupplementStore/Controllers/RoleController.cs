@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using SupplementStore.Controllers.Services;
 using SupplementStore.ViewModels.Role;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,12 +16,16 @@ namespace SupplementStore.Controllers {
 
         UserManager<IdentityUser> UserManager { get; }
 
+        RoleDirector RoleDirector { get; }
+
         public RoleController(
             RoleManager<IdentityRole> roleManager,
-            UserManager<IdentityUser> userManager) {
+            UserManager<IdentityUser> userManager,
+            RoleDirector roleDirector) {
 
             RoleManager = roleManager;
             UserManager = userManager;
+            RoleDirector = roleDirector;
         }
 
         public IActionResult Index() {
@@ -65,33 +70,9 @@ namespace SupplementStore.Controllers {
         }
 
         [HttpPost]
-        public async Task<IActionResult> EditUserRoles(UserRolesViewModel userRolesViewModel) {
+        public async Task<IActionResult> EditUserRoles(UserRolesViewModel model) {
 
-            var user = UserManager.Users.SingleOrDefault(u => u.Id == userRolesViewModel.UserId);
-
-            foreach (var role in userRolesViewModel.UserRoles) {
-
-                if (role.Value) {
-
-                    await UserManager.AddToRoleAsync(user, role.Key);
-                }
-                else {
-
-                    if (role.Key == "Owner") {
-
-                        var ownerUsers = await UserManager.GetUsersInRoleAsync(role.Key);
-
-                        if (ownerUsers.Count > 1) {
-
-                            await UserManager.RemoveFromRoleAsync(user, role.Key);
-                        }
-                    }
-                    else {
-
-                        await UserManager.RemoveFromRoleAsync(user, role.Key);
-                    }
-                }
-            }
+            await RoleDirector.ManageAsync(model.UserId, model.UserRoles);
 
             return RedirectToAction(nameof(Users));
         }
