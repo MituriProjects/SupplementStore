@@ -35,7 +35,7 @@ namespace SupplementStore.Tests {
         public static IdentityUser User => Users[0];
 
         public static IDictionary<string, IEnumerable<string>> UserRoles = Owners
-            .ToDictionary(g => g.Email, g => new string[] { Roles[0] }.AsEnumerable())
+            .ToDictionary(g => g.Email, g => new string[] { Roles[0], Roles[1] }.AsEnumerable())
             .Concat(Admins
             .ToDictionary(g => g.Email, g => new string[] { Roles[1] }.AsEnumerable()))
             .Concat(Users
