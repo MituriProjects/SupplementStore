@@ -32,13 +32,13 @@ namespace SupplementStore.Tests.Integration.AdminTests {
             var orderProducts = TestEntity.Random<OrderProduct>(3);
             var opinions = TestEntity.Random<Opinion>(3);
             opinions[0]
-                .WithOrderProductId(orderProducts[0].OrderProductId)
+                .WithOrderProductId(orderProducts[0])
                 .WithIsHidden(true);
             opinions[1]
-                .WithOrderProductId(orderProducts[1].OrderProductId)
+                .WithOrderProductId(orderProducts[1])
                 .WithIsHidden(false);
             opinions[2]
-                .WithOrderProductId(orderProducts[2].OrderProductId)
+                .WithOrderProductId(orderProducts[2])
                 .WithIsHidden(true);
             orderProducts[0]
                 .WithOpinionId(opinions[0].OpinionId)
