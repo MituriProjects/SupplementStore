@@ -73,13 +73,13 @@ namespace SupplementStore.Controllers {
             });
         }
 
-        [Authorize(Roles = "Owner, Admin")]
+        [Authorize(Roles = "Admin")]
         public IActionResult Create() {
 
             return View("Edit", new ProductEditViewModel());
         }
 
-        [Authorize(Roles = "Owner, Admin")]
+        [Authorize(Roles = "Admin")]
         public IActionResult Edit(string id) {
 
             var product = ProductProvider.Load(id);
@@ -92,7 +92,7 @@ namespace SupplementStore.Controllers {
         }
 
         [HttpPost]
-        [Authorize(Roles = "Owner, Admin")]
+        [Authorize(Roles = "Admin")]
         public IActionResult Edit(ProductEditViewModel model) {
 
             if (ModelState.IsValid == false)
