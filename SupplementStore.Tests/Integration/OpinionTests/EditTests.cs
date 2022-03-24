@@ -39,7 +39,7 @@ namespace SupplementStore.Tests.Integration.OpinionTests {
             var order = TestEntity.Random<Order>();
             var orderProduct = TestEntity.Random<OrderProduct>();
             var opinion = TestEntity.Random<Opinion>()
-                .WithOrderProductId(orderProduct.OrderProductId);
+                .WithOrderProductId(orderProduct);
             orderProduct
                 .WithOpinionId(opinion.OpinionId)
                 .WithOrderId(order.OrderId)
@@ -84,7 +84,7 @@ namespace SupplementStore.Tests.Integration.OpinionTests {
             var product = TestEntity.Random<Product>();
             var orderProduct = TestEntity.Random<OrderProduct>();
             var opinion = TestEntity.Random<Opinion>()
-                .WithOrderProductId(orderProduct.OrderProductId);
+                .WithOrderProductId(orderProduct);
             orderProduct
                 .WithOpinionId(opinion.OpinionId)
                 .WithProductId(product.ProductId);
@@ -105,7 +105,7 @@ namespace SupplementStore.Tests.Integration.OpinionTests {
             var product = TestEntity.Random<Product>();
             var orderProduct = TestEntity.Random<OrderProduct>();
             var opinion = TestEntity.Random<Opinion>()
-                .WithOrderProductId(orderProduct.OrderProductId);
+                .WithOrderProductId(orderProduct);
             orderProduct
                 .WithOpinionId(opinion.OpinionId)
                 .WithProductId(product.ProductId);
