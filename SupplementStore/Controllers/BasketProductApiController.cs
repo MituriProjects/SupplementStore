@@ -6,7 +6,7 @@ using SupplementStore.Application.Services;
 namespace SupplementStore.Controllers {
 
     [Route("api/basketproduct")]
-    public class BasketProductApiController : Controller {
+    public class BasketProductApiController : ControllerBase {
 
         IBasketProductProvider BasketProductProvider { get; }
 
