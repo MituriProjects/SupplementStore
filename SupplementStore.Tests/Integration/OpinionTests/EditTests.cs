@@ -41,7 +41,7 @@ namespace SupplementStore.Tests.Integration.OpinionTests {
             var opinion = TestEntity.Random<Opinion>()
                 .WithOrderProductId(orderProduct);
             orderProduct
-                .WithOpinionId(opinion.OpinionId)
+                .WithOpinionId(opinion)
                 .WithOrderId(order)
                 .WithProductId(product);
 
@@ -86,7 +86,7 @@ namespace SupplementStore.Tests.Integration.OpinionTests {
             var opinion = TestEntity.Random<Opinion>()
                 .WithOrderProductId(orderProduct);
             orderProduct
-                .WithOpinionId(opinion.OpinionId)
+                .WithOpinionId(opinion)
                 .WithProductId(product);
 
             var formData = new Dictionary<string, string> {
@@ -107,7 +107,7 @@ namespace SupplementStore.Tests.Integration.OpinionTests {
             var opinion = TestEntity.Random<Opinion>()
                 .WithOrderProductId(orderProduct);
             orderProduct
-                .WithOpinionId(opinion.OpinionId)
+                .WithOpinionId(opinion)
                 .WithProductId(product);
 
             var formData = new Dictionary<string, string> {
