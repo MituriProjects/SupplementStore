@@ -40,7 +40,7 @@ namespace SupplementStore.Tests.Integration.OpinionTests {
                 .WithOrderProductId(orderProduct);
             orderProduct
                 .WithOpinionId(opinion.OpinionId)
-                .WithProductId(product.ProductId);
+                .WithProductId(product);
 
             await PostAsync($"/Opinion/Hide/{opinion.OpinionId}", TestData.Admin);
 
@@ -56,7 +56,7 @@ namespace SupplementStore.Tests.Integration.OpinionTests {
                 .WithOrderProductId(orderProduct);
             orderProduct
                 .WithOpinionId(opinion.OpinionId)
-                .WithProductId(product.ProductId);
+                .WithProductId(product);
 
             await PostAsync($"/Opinion/Hide/{opinion.OpinionId}", TestData.Admin);
 
