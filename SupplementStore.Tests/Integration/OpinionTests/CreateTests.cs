@@ -32,13 +32,13 @@ namespace SupplementStore.Tests.Integration.OpinionTests {
             var orderProducts = TestEntity.Random<OrderProduct>(3);
             orderProducts[0]
                 .WithOrderId(orders[0])
-                .WithProductId(products[0].ProductId);
+                .WithProductId(products[0]);
             orderProducts[1]
                 .WithOrderId(orders[0])
-                .WithProductId(products[1].ProductId);
+                .WithProductId(products[1]);
             orderProducts[2]
                 .WithOrderId(orders[1])
-                .WithProductId(products[1].ProductId)
+                .WithProductId(products[1])
                 .WithOpinionId(null);
 
             await GetAsync("/Opinion/Create", TestData.User);
@@ -57,7 +57,7 @@ namespace SupplementStore.Tests.Integration.OpinionTests {
                 .WithUserId(TestData.User.Id);
             var orderProduct = TestEntity.Random<OrderProduct>()
                 .WithOrderId(order)
-                .WithProductId(product.ProductId);
+                .WithProductId(product);
 
             await GetAsync("/Opinion/Create", TestData.User);
 
@@ -84,7 +84,7 @@ namespace SupplementStore.Tests.Integration.OpinionTests {
                 .WithUserId(TestData.User.Id);
             var orderProduct = TestEntity.Random<OrderProduct>()
                 .WithOrderId(order)
-                .WithProductId(product.ProductId)
+                .WithProductId(product)
                 .WithOpinionId(null);
 
             var formData = new Dictionary<string, string> {
@@ -106,7 +106,7 @@ namespace SupplementStore.Tests.Integration.OpinionTests {
                 .WithUserId(TestData.User.Id);
             var orderProduct = TestEntity.Random<OrderProduct>()
                 .WithOrderId(order)
-                .WithProductId(product.ProductId)
+                .WithProductId(product)
                 .WithOpinionId(null);
 
             var formData = new Dictionary<string, string> {
@@ -149,7 +149,7 @@ namespace SupplementStore.Tests.Integration.OpinionTests {
                 .WithUserId(TestData.User.Id);
             var orderProduct = TestEntity.Random<OrderProduct>()
                 .WithOrderId(order)
-                .WithProductId(product.ProductId)
+                .WithProductId(product)
                 .WithOpinionId(null);
 
             var formData = new Dictionary<string, string> {
@@ -173,7 +173,7 @@ namespace SupplementStore.Tests.Integration.OpinionTests {
             var opinion = TestEntity.Random<Opinion>();
             var orderProduct = TestEntity.Random<OrderProduct>()
                 .WithOrderId(order)
-                .WithProductId(product.ProductId)
+                .WithProductId(product)
                 .WithOpinionId(opinion.OpinionId);
             var orderProductOpinionId = orderProduct.OpinionId;
 
@@ -198,7 +198,7 @@ namespace SupplementStore.Tests.Integration.OpinionTests {
                 .WithUserId(TestData.User.Id);
             var orderProduct = TestEntity.Random<OrderProduct>()
                 .WithOrderId(order)
-                .WithProductId(product.ProductId)
+                .WithProductId(product)
                 .WithOpinionId(null);
 
             var formData = new Dictionary<string, string> {
@@ -222,7 +222,7 @@ namespace SupplementStore.Tests.Integration.OpinionTests {
                 .WithUserId(TestData.User.Id);
             var orderProduct = TestEntity.Random<OrderProduct>()
                 .WithOrderId(order)
-                .WithProductId(product.ProductId)
+                .WithProductId(product)
                 .WithOpinionId(null);
 
             var formData = new Dictionary<string, string> {
