@@ -14,7 +14,7 @@ namespace SupplementStore.Domain.Baskets {
 
         public IEnumerable<BasketProduct> Process(IQueryable<BasketProduct> entities) {
 
-            return entities.Where(e => e.UserId == UserId).ToList();
+            return entities.Where(e => e.UserId == UserId);
         }
     }
 }
