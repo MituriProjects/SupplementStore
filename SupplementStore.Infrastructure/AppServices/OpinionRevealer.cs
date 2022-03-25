@@ -7,14 +7,14 @@ namespace SupplementStore.Infrastructure.AppServices {
 
         IOpinionRepository OpinionRepository { get; }
 
-        IDocumentApprover DocumentApprover { get; }
+        IDomainApprover DomainApprover { get; }
 
         public OpinionRevealer(
             IOpinionRepository opinionRepository,
-            IDocumentApprover documentApprover) {
+            IDomainApprover domainApprover) {
 
             OpinionRepository = opinionRepository;
-            DocumentApprover = documentApprover;
+            DomainApprover = domainApprover;
         }
 
         public void Reveal(string opinionId) {
@@ -26,7 +26,7 @@ namespace SupplementStore.Infrastructure.AppServices {
 
             opinion.IsHidden = false;
 
-            DocumentApprover.SaveChanges();
+            DomainApprover.SaveChanges();
         }
     }
 }

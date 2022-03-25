@@ -11,16 +11,16 @@ namespace SupplementStore.Infrastructure.AppServices {
 
         IOpinionRepository OpinionRepository { get; }
 
-        IDocumentApprover DocumentApprover { get; }
+        IDomainApprover DomainApprover { get; }
 
         public OpinionCreator(
             IOrderProductRepository orderProductRepository,
             IOpinionRepository opinionRepository,
-            IDocumentApprover documentApprover) {
+            IDomainApprover domainApprover) {
 
             OrderProductRepository = orderProductRepository;
             OpinionRepository = opinionRepository;
-            DocumentApprover = documentApprover;
+            DomainApprover = domainApprover;
         }
 
         public void Create(OpinionCreatorArgs args) {
@@ -43,7 +43,7 @@ namespace SupplementStore.Infrastructure.AppServices {
 
             orderProduct.OpinionId = opinion.OpinionId;
 
-            DocumentApprover.SaveChanges();
+            DomainApprover.SaveChanges();
         }
     }
 }

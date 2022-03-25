@@ -10,16 +10,16 @@ namespace SupplementStore.Infrastructure.AppServices {
 
         IBasketProductRepository BasketProductRepository { get; }
 
-        IDocumentApprover DocumentApprover { get; }
+        IDomainApprover DomainApprover { get; }
 
         public BasketProductCreator(
             IProductRepository productRepository,
             IBasketProductRepository basketProductRepository,
-            IDocumentApprover documentApprover) {
+            IDomainApprover domainApprover) {
 
             ProductRepository = productRepository;
             BasketProductRepository = basketProductRepository;
-            DocumentApprover = documentApprover;
+            DomainApprover = domainApprover;
         }
 
         public void Create(string userId, string productId, int quantity) {
@@ -58,7 +58,7 @@ namespace SupplementStore.Infrastructure.AppServices {
                 basketProduct.Quantity += quantity;
             }
 
-            DocumentApprover.SaveChanges();
+            DomainApprover.SaveChanges();
         }
     }
 }

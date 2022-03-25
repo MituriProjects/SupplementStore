@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace SupplementStore.Tests {
 
-    class TestDocumentApprover : IDocumentApprover {
+    class TestDocumentApprover : IDomainApprover {
 
         static IEnumerable<object> OnSaveChangesValues { get; set; }
 

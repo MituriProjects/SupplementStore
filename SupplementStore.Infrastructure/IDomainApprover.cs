@@ -1,6 +1,6 @@
 ﻿namespace SupplementStore.Infrastructure {
 
-    public interface IDocumentApprover {
+    public interface IDomainApprover {
         void SaveChanges();
     }
 }

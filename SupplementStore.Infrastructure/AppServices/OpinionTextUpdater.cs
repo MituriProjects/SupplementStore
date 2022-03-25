@@ -7,14 +7,14 @@ namespace SupplementStore.Infrastructure.AppServices {
 
         IOpinionRepository OpinionRepository { get; }
 
-        IDocumentApprover DocumentApprover { get; }
+        IDomainApprover DomainApprover { get; }
 
         public OpinionTextUpdater(
             IOpinionRepository opinionRepository,
-            IDocumentApprover documentApprover) {
+            IDomainApprover domainApprover) {
 
             OpinionRepository = opinionRepository;
-            DocumentApprover = documentApprover;
+            DomainApprover = domainApprover;
         }
 
         public void Update(string opinionId, string text) {
@@ -26,7 +26,7 @@ namespace SupplementStore.Infrastructure.AppServices {
 
             opinion.Text = text;
 
-            DocumentApprover.SaveChanges();
+            DomainApprover.SaveChanges();
         }
     }
 }

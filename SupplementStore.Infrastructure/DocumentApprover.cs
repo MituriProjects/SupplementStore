@@ -1,6 +1,6 @@
 ﻿namespace SupplementStore.Infrastructure {
 
-    public class DocumentApprover : IDocumentApprover {
+    public class DocumentApprover : IDomainApprover {
 
         ApplicationDbContext DbContext { get; }
 

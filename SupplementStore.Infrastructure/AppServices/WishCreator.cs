@@ -10,16 +10,16 @@ namespace SupplementStore.Infrastructure.AppServices {
 
         IWishRepository WishRepository { get; }
 
-        IDocumentApprover DocumentApprover { get; }
+        IDomainApprover DomainApprover { get; }
 
         public WishCreator(
             IProductRepository productRepository,
             IWishRepository wishRepository,
-            IDocumentApprover documentApprover) {
+            IDomainApprover domainApprover) {
 
             ProductRepository = productRepository;
             WishRepository = wishRepository;
-            DocumentApprover = documentApprover;
+            DomainApprover = domainApprover;
         }
 
         public void Create(string userId, string productId) {
@@ -39,7 +39,7 @@ namespace SupplementStore.Infrastructure.AppServices {
                 ProductId = new ProductId(productId)
             });
 
-            DocumentApprover.SaveChanges();
+            DomainApprover.SaveChanges();
         }
     }
 }

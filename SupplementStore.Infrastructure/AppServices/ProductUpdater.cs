@@ -8,14 +8,14 @@ namespace SupplementStore.Infrastructure.AppServices {
 
         IProductRepository ProductRepository { get; }
 
-        IDocumentApprover DocumentApprover { get; }
+        IDomainApprover DomainApprover { get; }
 
         public ProductUpdater(
             IProductRepository productRepository,
-            IDocumentApprover documentApprover) {
+            IDomainApprover domainApprover) {
 
             ProductRepository = productRepository;
-            DocumentApprover = documentApprover;
+            DomainApprover = domainApprover;
         }
 
         public void Update(ProductDetails productDetails) {
@@ -28,7 +28,7 @@ namespace SupplementStore.Infrastructure.AppServices {
             product.Name = productDetails.Name;
             product.Price = productDetails.Price;
 
-            DocumentApprover.SaveChanges();
+            DomainApprover.SaveChanges();
         }
     }
 }

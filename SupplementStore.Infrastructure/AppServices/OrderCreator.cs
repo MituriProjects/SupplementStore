@@ -14,18 +14,18 @@ namespace SupplementStore.Infrastructure.AppServices {
 
         IOrderProductRepository OrderProductRepository { get; }
 
-        IDocumentApprover DocumentApprover { get; }
+        IDomainApprover DomainApprover { get; }
 
         public OrderCreator(
             IOrderRepository orderRepository,
             IBasketProductRepository basketProductRepository,
             IOrderProductRepository orderProductRepository,
-            IDocumentApprover documentApprover) {
+            IDomainApprover domainApprover) {
 
             OrderRepository = orderRepository;
             BasketProductRepository = basketProductRepository;
             OrderProductRepository = orderProductRepository;
-            DocumentApprover = documentApprover;
+            DomainApprover = domainApprover;
         }
 
         public OrderDetails Create(OrderCreatorArgs args) {
@@ -50,7 +50,7 @@ namespace SupplementStore.Infrastructure.AppServices {
                 BasketProductRepository.Delete(basketProduct.BasketProductId);
             }
 
-            DocumentApprover.SaveChanges();
+            DomainApprover.SaveChanges();
 
             return new OrderDetails {
                 Id = order.OrderId.ToString()
