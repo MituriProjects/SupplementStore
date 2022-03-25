@@ -7,7 +7,7 @@ namespace SupplementStore.Domain.Opinions {
 
         public IEnumerable<Opinion> Process(IQueryable<Opinion> entities) {
 
-            return entities.Where(e => e.IsHidden).ToList();
+            return entities.Where(e => e.IsHidden);
         }
     }
 }
