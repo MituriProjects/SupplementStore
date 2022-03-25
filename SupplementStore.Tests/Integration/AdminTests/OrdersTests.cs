@@ -36,16 +36,16 @@ namespace SupplementStore.Tests.Integration.AdminTests {
                 .WithUserId(TestData.Users[1].Id);
             var orderProducts = TestEntity.Random<OrderProduct>(4);
             orderProducts[0]
-                .WithProductId(products[1].ProductId)
+                .WithProductId(products[1])
                 .WithOrderId(orders[1]);
             orderProducts[1]
-                .WithProductId(products[2].ProductId)
+                .WithProductId(products[2])
                 .WithOrderId(orders[0]);
             orderProducts[2]
-                .WithProductId(products[0].ProductId)
+                .WithProductId(products[0])
                 .WithOrderId(orders[0]);
             orderProducts[3]
-                .WithProductId(products[2].ProductId)
+                .WithProductId(products[2])
                 .WithOrderId(orders[1]);
 
             await GetAsync("/Admin/Orders", TestData.Admin);
