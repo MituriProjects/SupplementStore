@@ -43,7 +43,7 @@ namespace SupplementStore.Tests.Integration.OpinionTests {
             orderProduct
                 .WithOpinionId(opinion.OpinionId)
                 .WithOrderId(order)
-                .WithProductId(product.ProductId);
+                .WithProductId(product);
 
             await GetAsync($"/Opinion/Edit/{opinion.OpinionId}", TestData.Admin);
 
@@ -87,7 +87,7 @@ namespace SupplementStore.Tests.Integration.OpinionTests {
                 .WithOrderProductId(orderProduct);
             orderProduct
                 .WithOpinionId(opinion.OpinionId)
-                .WithProductId(product.ProductId);
+                .WithProductId(product);
 
             var formData = new Dictionary<string, string> {
                 { "Id", opinion.OpinionId.ToString() },
@@ -108,7 +108,7 @@ namespace SupplementStore.Tests.Integration.OpinionTests {
                 .WithOrderProductId(orderProduct);
             orderProduct
                 .WithOpinionId(opinion.OpinionId)
-                .WithProductId(product.ProductId);
+                .WithProductId(product);
 
             var formData = new Dictionary<string, string> {
                 { "Id", opinion.OpinionId.ToString() },
