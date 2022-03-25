@@ -12,7 +12,7 @@ using SupplementStore.Infrastructure.Repositories;
 
 namespace SupplementStore.DependencyResolving {
 
-    public static class DependencyResolver {
+    public static class AppDependencyResolver {
 
         public static void Install(IServiceCollection services) {
 

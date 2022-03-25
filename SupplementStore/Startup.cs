@@ -32,7 +32,7 @@ namespace SupplementStore {
             }).AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
 
-            DependencyResolver.Install(services);
+            AppDependencyResolver.Install(services);
 
             services.AddTransient(typeof(Lazy<>), typeof(LazyWrapper<>));
 
