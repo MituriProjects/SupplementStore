@@ -28,10 +28,10 @@ namespace SupplementStore.Tests.Integration.OrderTests {
             var products = TestEntity.Random<Product>(2);
             var orderProducts = TestEntity.Random<OrderProduct>(2);
             orderProducts[0]
-                .WithOrderId(order.OrderId)
+                .WithOrderId(order)
                 .WithProductId(products[0].ProductId);
             orderProducts[1]
-                .WithOrderId(order.OrderId)
+                .WithOrderId(order)
                 .WithProductId(products[1].ProductId);
 
             await GetAsync($"/Order/Summary/{order.OrderId}", TestData.User);
