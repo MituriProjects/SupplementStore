@@ -45,9 +45,9 @@ namespace SupplementStore.Tests.Integration.OpinionTests {
                 .WithGrade(new Grade(3))
                 .WithOrderProductId(orderProducts[1]);
             orderProducts[0]
-                .WithOpinionId(opinions[0].OpinionId);
+                .WithOpinionId(opinions[0]);
             orderProducts[1]
-                .WithOpinionId(opinions[1].OpinionId);
+                .WithOpinionId(opinions[1]);
 
             await GetAsync("/Opinion", TestData.User);
 
