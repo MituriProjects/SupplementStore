@@ -39,7 +39,7 @@ namespace SupplementStore.Tests.Integration.OpinionTests {
             var opinion = TestEntity.Random<Opinion>()
                 .WithOrderProductId(orderProduct);
             orderProduct
-                .WithOpinionId(opinion.OpinionId)
+                .WithOpinionId(opinion)
                 .WithProductId(product);
 
             await PostAsync($"/Opinion/Hide/{opinion.OpinionId}", TestData.Admin);
@@ -55,7 +55,7 @@ namespace SupplementStore.Tests.Integration.OpinionTests {
             var opinion = TestEntity.Random<Opinion>()
                 .WithOrderProductId(orderProduct);
             orderProduct
-                .WithOpinionId(opinion.OpinionId)
+                .WithOpinionId(opinion)
                 .WithProductId(product);
 
             await PostAsync($"/Opinion/Hide/{opinion.OpinionId}", TestData.Admin);
