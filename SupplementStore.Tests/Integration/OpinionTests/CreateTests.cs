@@ -174,7 +174,7 @@ namespace SupplementStore.Tests.Integration.OpinionTests {
             var orderProduct = TestEntity.Random<OrderProduct>()
                 .WithOrderId(order)
                 .WithProductId(product)
-                .WithOpinionId(opinion.OpinionId);
+                .WithOpinionId(opinion);
             var orderProductOpinionId = orderProduct.OpinionId;
 
             var formData = new Dictionary<string, string> {
