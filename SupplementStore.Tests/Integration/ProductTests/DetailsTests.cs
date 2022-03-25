@@ -22,10 +22,10 @@ namespace SupplementStore.Tests.Integration.ProductTests {
             opinions[1]
                 .WithOrderProductId(orderProducts[1]);
             orderProducts[0]
-                .WithProductId(products[1].ProductId)
+                .WithProductId(products[1])
                 .WithOpinionId(opinions[0].OpinionId);
             orderProducts[1]
-                .WithProductId(products[1].ProductId)
+                .WithProductId(products[1])
                 .WithOpinionId(opinions[1].OpinionId);
 
             await GetAsync($"/Product/Details/{products[1].ProductId}");
