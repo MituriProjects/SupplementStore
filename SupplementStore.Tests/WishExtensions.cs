@@ -12,9 +12,9 @@ namespace SupplementStore.Tests {
             return wish;
         }
 
-        public static Wish WithProductId(this Wish wish, ProductId productId) {
+        public static Wish WithProductId(this Wish wish, Product product) {
 
-            wish.ProductId = productId;
+            wish.ProductId = product.ProductId;
 
             return wish;
         }
