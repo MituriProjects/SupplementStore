@@ -20,9 +20,9 @@ namespace SupplementStore.Tests {
             return orderProduct;
         }
 
-        public static OrderProduct WithOpinionId(this OrderProduct orderProduct, OpinionId opinionId) {
+        public static OrderProduct WithOpinionId(this OrderProduct orderProduct, Opinion opinion) {
 
-            orderProduct.OpinionId = opinionId;
+            orderProduct.OpinionId = opinion?.OpinionId;
 
             return orderProduct;
         }
