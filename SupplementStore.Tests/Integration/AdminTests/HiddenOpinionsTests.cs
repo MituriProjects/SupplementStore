@@ -42,13 +42,13 @@ namespace SupplementStore.Tests.Integration.AdminTests {
                 .WithIsHidden(true);
             orderProducts[0]
                 .WithOpinionId(opinions[0].OpinionId)
-                .WithProductId(products[0].ProductId);
+                .WithProductId(products[0]);
             orderProducts[1]
                 .WithOpinionId(opinions[1].OpinionId)
-                .WithProductId(products[1].ProductId);
+                .WithProductId(products[1]);
             orderProducts[2]
                 .WithOpinionId(opinions[2].OpinionId)
-                .WithProductId(products[1].ProductId);
+                .WithProductId(products[1]);
 
             await GetAsync("/Admin/HiddenOpinions", TestData.Admin);
 
