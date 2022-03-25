@@ -14,7 +14,7 @@ namespace SupplementStore.Domain.Orders {
 
         public IEnumerable<OrderProduct> Process(IQueryable<OrderProduct> entities) {
 
-            return entities.Where(e => e.OrderId == OrderId).ToList();
+            return entities.Where(e => e.OrderId == OrderId);
         }
     }
 }
