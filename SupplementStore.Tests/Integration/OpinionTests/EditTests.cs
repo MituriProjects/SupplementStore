@@ -42,7 +42,7 @@ namespace SupplementStore.Tests.Integration.OpinionTests {
                 .WithOrderProductId(orderProduct);
             orderProduct
                 .WithOpinionId(opinion.OpinionId)
-                .WithOrderId(order.OrderId)
+                .WithOrderId(order)
                 .WithProductId(product.ProductId);
 
             await GetAsync($"/Opinion/Edit/{opinion.OpinionId}", TestData.Admin);
