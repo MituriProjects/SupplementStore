@@ -27,13 +27,13 @@ namespace SupplementStore.Tests.Integration.ProductTests {
                 .WithOrderProductId(orderProducts[0]);
             orderProducts[0]
                 .WithProductId(products[0])
-                .WithOpinionId(opinions[2].OpinionId);
+                .WithOpinionId(opinions[2]);
             orderProducts[1]
                 .WithProductId(products[1])
-                .WithOpinionId(opinions[0].OpinionId);
+                .WithOpinionId(opinions[0]);
             orderProducts[2]
                 .WithProductId(products[0])
-                .WithOpinionId(opinions[1].OpinionId);
+                .WithOpinionId(opinions[1]);
 
             await GetAsync("/Product");
 
@@ -75,10 +75,10 @@ namespace SupplementStore.Tests.Integration.ProductTests {
                 .WithOrderProductId(orderProducts[1]);
             orderProducts[0]
                 .WithProductId(products[3])
-                .WithOpinionId(opinions[0].OpinionId);
+                .WithOpinionId(opinions[0]);
             orderProducts[1]
                 .WithProductId(products[1])
-                .WithOpinionId(opinions[1].OpinionId);
+                .WithOpinionId(opinions[1]);
 
             await GetAsync("/Product?Skip=2&Take=2");
 
