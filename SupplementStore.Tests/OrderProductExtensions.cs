@@ -13,9 +13,9 @@ namespace SupplementStore.Tests {
             return orderProduct;
         }
 
-        public static OrderProduct WithProductId(this OrderProduct orderProduct, ProductId productId) {
+        public static OrderProduct WithProductId(this OrderProduct orderProduct, Product product) {
 
-            orderProduct.ProductId = productId;
+            orderProduct.ProductId = product.ProductId;
 
             return orderProduct;
         }
