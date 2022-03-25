@@ -28,13 +28,13 @@ namespace SupplementStore.Tests.Integration.OpinionTests {
                 .WithUserId(TestData.User.Id);
             var orderProducts = TestEntity.Random<OrderProduct>(3);
             orderProducts[0]
-                .WithOrderId(orders[0].OrderId)
+                .WithOrderId(orders[0])
                 .WithProductId(products[0].ProductId);
             orderProducts[1]
-                .WithOrderId(orders[0].OrderId)
+                .WithOrderId(orders[0])
                 .WithProductId(products[1].ProductId);
             orderProducts[2]
-                .WithOrderId(orders[1].OrderId)
+                .WithOrderId(orders[1])
                 .WithProductId(products[2].ProductId)
                 .WithOpinionId(null);
             var opinions = TestEntity.Random<Opinion>(2);
