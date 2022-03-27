@@ -13,6 +13,6 @@ namespace SupplementStore.ViewModels.Product {
 
         public IEnumerable<ProductDetails> Products { get; set; }
 
-        public Dictionary<string, ProductGrade> ProductGrades { get; set; } = new Dictionary<string, ProductGrade>();
+        public Dictionary<string, ProductRating> ProductRatings { get; set; } = new Dictionary<string, ProductRating>();
     }
 }

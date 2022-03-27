@@ -39,10 +39,10 @@ namespace SupplementStore.Tests.Integration.OpinionTests {
                 .WithOpinionId(null);
             var opinions = TestEntity.Random<Opinion>(2);
             opinions[0]
-                .WithGrade(new Grade(2))
+                .WithRating(new Rating(2))
                 .WithOrderProductId(orderProducts[0]);
             opinions[1]
-                .WithGrade(new Grade(3))
+                .WithRating(new Rating(3))
                 .WithOrderProductId(orderProducts[1]);
             orderProducts[0]
                 .WithOpinionId(opinions[0]);
@@ -54,10 +54,10 @@ namespace SupplementStore.Tests.Integration.OpinionTests {
             Examine(ContentScheme.Html()
                 .Contains("IsProductToOpineWaiting", true)
                 .Contains("ProductName", products[0].Name)
-                .Contains("Stars", opinions[0].Grade.Stars)
+                .Contains("Stars", opinions[0].Rating.Stars)
                 .Contains("Text", opinions[0].Text)
                 .Contains("ProductName", products[1].Name)
-                .Contains("Stars", opinions[1].Grade.Stars)
+                .Contains("Stars", opinions[1].Rating.Stars)
                 .Contains("Text", opinions[1].Text)
                 .Contains("BuyingDate", orders[0].CreatedOn)
                 .Lacks("ProductName", products[2].Name)

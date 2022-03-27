@@ -1,6 +1,6 @@
 ﻿namespace SupplementStore.ViewModels.Product {
 
-    public class ProductGrade {
+    public class ProductRating {
 
         public double Average { get; set; }
 

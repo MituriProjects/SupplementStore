@@ -13,7 +13,7 @@ namespace SupplementStore.Infrastructure.Configurations {
                 .WithOne()
                 .HasForeignKey<Opinion>("OrderProduct_Id")
                 .IsRequired();
-            builder.OwnsOne(e => e.Grade);
+            builder.OwnsOne(e => e.Rating);
         }
     }
 }

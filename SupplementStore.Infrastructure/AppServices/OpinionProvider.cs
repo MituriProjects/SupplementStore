@@ -42,7 +42,7 @@ namespace SupplementStore.Infrastructure.AppServices {
                 Id = opinion.OpinionId.ToString(),
                 ProductName = product.Name,
                 BuyingDate = order.CreatedOn,
-                Stars = opinion.Grade.Stars,
+                Stars = opinion.Rating.Stars,
                 Text = opinion.Text
             };
         }

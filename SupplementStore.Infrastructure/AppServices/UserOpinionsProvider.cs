@@ -47,7 +47,7 @@ namespace SupplementStore.Infrastructure.AppServices {
                     Id = opinion.OpinionId.ToString(),
                     ProductName = ProductRepository.FindBy(orderProduct.ProductId).Name,
                     BuyingDate = userOrders.First(e => e.OrderId == orderProduct.OrderId).CreatedOn,
-                    Stars = opinion.Grade.Stars,
+                    Stars = opinion.Rating.Stars,
                     Text = opinion.Text
                 };
             }

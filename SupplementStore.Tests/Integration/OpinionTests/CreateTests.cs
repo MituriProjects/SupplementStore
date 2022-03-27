@@ -117,7 +117,7 @@ namespace SupplementStore.Tests.Integration.OpinionTests {
 
             await PostAsync("/Opinion/Create", formData, TestData.User);
 
-            var createdOpinion = TestDocument<Opinion>.First(e => e.Text == "OpinionText" && e.Grade.Stars == 2 && e.OrderProductId == orderProduct.OrderProductId);
+            var createdOpinion = TestDocument<Opinion>.First(e => e.Text == "OpinionText" && e.Rating.Stars == 2 && e.OrderProductId == orderProduct.OrderProductId);
             TestDocument<OrderProduct>.Single(e => e.OrderProductId == orderProduct.OrderProductId && e.OpinionId == createdOpinion.OpinionId);
             TestDocumentApprover.ExamineSaveChanges();
         }
@@ -137,7 +137,7 @@ namespace SupplementStore.Tests.Integration.OpinionTests {
 
             await PostAsync("/Opinion/Create", formData, TestData.User);
 
-            TestDocument<Opinion>.None(e => e.Text == "OpinionText" && e.Grade.Stars == 2);
+            TestDocument<Opinion>.None(e => e.Text == "OpinionText" && e.Rating.Stars == 2);
             TestDocumentApprover.ExamineNoChangesSaved();
         }
 
@@ -160,7 +160,7 @@ namespace SupplementStore.Tests.Integration.OpinionTests {
 
             await PostAsync("/Opinion/Create", formData, TestData.User);
 
-            TestDocument<Opinion>.None(e => e.Text == "OpinionText" && e.Grade.Stars == 2);
+            TestDocument<Opinion>.None(e => e.Text == "OpinionText" && e.Rating.Stars == 2);
             TestDocumentApprover.ExamineNoChangesSaved();
         }
 
@@ -185,7 +185,7 @@ namespace SupplementStore.Tests.Integration.OpinionTests {
 
             await PostAsync("/Opinion/Create", formData, TestData.User);
 
-            TestDocument<Opinion>.None(e => e.Text == "OpinionText" && e.Grade.Stars == 2 && e.OrderProductId == orderProduct.OrderProductId);
+            TestDocument<Opinion>.None(e => e.Text == "OpinionText" && e.Rating.Stars == 2 && e.OrderProductId == orderProduct.OrderProductId);
             Assert.AreEqual(orderProductOpinionId, orderProduct.OpinionId, "OrderProduct's OpinionId has changed.");
             TestDocumentApprover.ExamineNoChangesSaved();
         }
@@ -210,7 +210,7 @@ namespace SupplementStore.Tests.Integration.OpinionTests {
             await PostAsync("/Opinion/Create", formData, TestData.User);
 
             ExamineExceptionThrown<InvalidStateException>();
-            TestDocument<Opinion>.None(e => e.Text == "OpinionText" && e.Grade.Stars == 0 && e.OrderProductId == orderProduct.OrderProductId);
+            TestDocument<Opinion>.None(e => e.Text == "OpinionText" && e.Rating.Stars == 0 && e.OrderProductId == orderProduct.OrderProductId);
             TestDocumentApprover.ExamineNoChangesSaved();
         }
 
@@ -234,7 +234,7 @@ namespace SupplementStore.Tests.Integration.OpinionTests {
             await PostAsync("/Opinion/Create", formData, TestData.User);
 
             ExamineExceptionThrown<InvalidStateException>();
-            TestDocument<Opinion>.None(e => e.Text == "OpinionText" && e.Grade.Stars == 6 && e.OrderProductId == orderProduct.OrderProductId);
+            TestDocument<Opinion>.None(e => e.Text == "OpinionText" && e.Rating.Stars == 6 && e.OrderProductId == orderProduct.OrderProductId);
             TestDocumentApprover.ExamineNoChangesSaved();
         }
     }

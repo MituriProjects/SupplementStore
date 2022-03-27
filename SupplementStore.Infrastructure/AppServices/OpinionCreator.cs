@@ -36,7 +36,7 @@ namespace SupplementStore.Infrastructure.AppServices {
             var opinion = new Opinion {
                 OrderProductId = new OrderProductId(args.OrderProductId),
                 Text = args.Text,
-                Grade = new Grade(args.Stars)
+                Rating = new Rating(args.Stars)
             };
 
             OpinionRepository.Add(opinion);

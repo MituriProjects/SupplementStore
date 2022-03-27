@@ -2,14 +2,14 @@
 
 namespace SupplementStore.Domain.Opinions {
 
-    public class Grade : ValueObject<Grade> {
+    public class Rating : ValueObject<Rating> {
 
         public int Stars { get; private set; }
 
-        private Grade() {
+        private Rating() {
         }
 
-        public Grade(int stars) {
+        public Rating(int stars) {
 
             Stars = stars;
 
@@ -24,9 +24,9 @@ namespace SupplementStore.Domain.Opinions {
         private void Validate() {
 
             if (Stars < 1)
-                throw new InvalidStateException("A Grade's Stars count must not be lesser than 1.");
+                throw new InvalidStateException("A Rating's Stars count must not be lesser than 1.");
             if (Stars > 5)
-                throw new InvalidStateException("A Grade's Stars count must not be greater than 5.");
+                throw new InvalidStateException("A Rating's Stars count must not be greater than 5.");
         }
     }
 }

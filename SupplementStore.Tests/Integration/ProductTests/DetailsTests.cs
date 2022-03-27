@@ -34,10 +34,10 @@ namespace SupplementStore.Tests.Integration.ProductTests {
                 .Contains("ProductId", products[1].ProductId)
                 .Contains("ProductName", products[1].Name)
                 .Contains("ProductPrice", products[1].Price)
-                .Contains("OpinionStars", opinions[0].Grade.Stars)
+                .Contains("OpinionStars", opinions[0].Rating.Stars)
                 .Contains("OpinionText", opinions[0].Text)
                 .Contains("OpinionIsHidden", opinions[0].IsHidden)
-                .Contains("OpinionStars", opinions[1].Grade.Stars)
+                .Contains("OpinionStars", opinions[1].Rating.Stars)
                 .Contains("OpinionText", opinions[1].Text)
                 .Contains("OpinionIsHidden", opinions[1].IsHidden));
         }

@@ -51,7 +51,7 @@ namespace SupplementStore.Controllers {
 
                 var opinions = ProductOpinionsProvider.Load(product.Id);
 
-                model.ProductGrades[product.Id] = new ProductGrade {
+                model.ProductRatings[product.Id] = new ProductRating {
                     Average = opinions.Count() == 0 ? 0 : Math.Round(opinions.Average(e => e.Stars), 2),
                     Count = opinions.Count()
                 };
