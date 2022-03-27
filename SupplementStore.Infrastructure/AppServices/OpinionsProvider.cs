@@ -8,7 +8,7 @@ using System.Linq;
 
 namespace SupplementStore.Infrastructure.AppServices {
 
-    public class OpinionsProvider : IOpinionsProvider {
+    public class OpinionsProvider : IUserOpinionsProvider {
 
         IOrderRepository OrderRepository { get; }
 

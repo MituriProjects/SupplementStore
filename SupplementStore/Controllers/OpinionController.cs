@@ -18,7 +18,7 @@ namespace SupplementStore.Controllers {
 
         IOpinionProvider OpinionProvider { get; }
 
-        IOpinionsProvider OpinionsProvider { get; }
+        IUserOpinionsProvider OpinionsProvider { get; }
 
         IOpinionCreator OpinionCreator { get; }
 
@@ -33,7 +33,7 @@ namespace SupplementStore.Controllers {
             IProductToOpineProvider productToOpineProvider,
             IOpinionProductProvider opinionProductProvider,
             IOpinionProvider opinionProvider,
-            IOpinionsProvider opinionsProvider,
+            IUserOpinionsProvider opinionsProvider,
             IOpinionCreator opinionCreator,
             IOpinionTextUpdater opinionTextUpdater,
             IOpinionHider opinionHider,
