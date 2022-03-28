@@ -2,6 +2,7 @@
 using SupplementStore.Application.Services;
 using SupplementStore.Domain.Baskets;
 using SupplementStore.Domain.Products;
+using SupplementStore.Infrastructure.AppModels;
 using System.Collections.Generic;
 
 namespace SupplementStore.Infrastructure.AppServices {
@@ -26,13 +27,7 @@ namespace SupplementStore.Infrastructure.AppServices {
 
                 var product = ProductRepository.FindBy(basketProduct.ProductId);
 
-                yield return new BasketProductDetails {
-                    Id = basketProduct.BasketProductId.ToString(),
-                    ProductId = basketProduct.ProductId.ToString(),
-                    ProductName = product.Name,
-                    ProductPrice = product.Price,
-                    Quantity = basketProduct.Quantity
-                };
+                yield return BasketProductDetailsFactory.Create(basketProduct, product);
             }
         }
     }
