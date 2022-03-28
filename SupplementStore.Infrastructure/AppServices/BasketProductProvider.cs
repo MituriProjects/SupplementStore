@@ -2,6 +2,7 @@
 using SupplementStore.Application.Services;
 using SupplementStore.Domain.Baskets;
 using SupplementStore.Domain.Products;
+using SupplementStore.Infrastructure.AppModels;
 
 namespace SupplementStore.Infrastructure.AppServices {
 
@@ -31,13 +32,7 @@ namespace SupplementStore.Infrastructure.AppServices {
             if (product == null)
                 return null;
 
-            return new BasketProductDetails {
-                Id = basketProduct.BasketProductId.ToString(),
-                ProductId = basketProduct.ProductId.ToString(),
-                ProductName = product.Name,
-                ProductPrice = product.Price,
-                Quantity = basketProduct.Quantity
-            };
+            return BasketProductDetailsFactory.Create(basketProduct, product);
         }
     }
 }
