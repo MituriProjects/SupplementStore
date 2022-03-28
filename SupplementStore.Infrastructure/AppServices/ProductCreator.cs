@@ -1,6 +1,7 @@
 ﻿using SupplementStore.Application.Models;
 using SupplementStore.Application.Services;
 using SupplementStore.Domain.Products;
+using SupplementStore.Infrastructure.AppModels;
 
 namespace SupplementStore.Infrastructure.AppServices {
 
@@ -29,11 +30,7 @@ namespace SupplementStore.Infrastructure.AppServices {
 
             DomainApprover.SaveChanges();
 
-            return new ProductDetails {
-                Id = product.ProductId.ToString(),
-                Name = product.Name,
-                Price = product.Price
-            };
+            return ProductDetailsFactory.Create(product);
         }
     }
 }
