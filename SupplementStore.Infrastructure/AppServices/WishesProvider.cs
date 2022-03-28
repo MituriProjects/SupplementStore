@@ -2,6 +2,7 @@
 using SupplementStore.Application.Services;
 using SupplementStore.Domain.Products;
 using SupplementStore.Domain.Wishes;
+using SupplementStore.Infrastructure.AppModels;
 using System.Collections.Generic;
 
 namespace SupplementStore.Infrastructure.AppServices {
@@ -28,11 +29,7 @@ namespace SupplementStore.Infrastructure.AppServices {
 
                 var product = ProductRepository.FindBy(wish.ProductId);
 
-                yield return new ProductDetails {
-                    Id = product.ProductId.ToString(),
-                    Name = product.Name,
-                    Price = product.Price
-                };
+                yield return ProductDetailsFactory.Create(product);
             }
         }
     }
