@@ -3,6 +3,7 @@ using SupplementStore.Application.Services;
 using SupplementStore.Domain.Opinions;
 using SupplementStore.Domain.Orders;
 using SupplementStore.Domain.Products;
+using SupplementStore.Infrastructure.AppModels;
 
 namespace SupplementStore.Infrastructure.AppServices {
 
@@ -38,13 +39,7 @@ namespace SupplementStore.Infrastructure.AppServices {
 
             var product = ProductRepository.FindBy(purchase.ProductId);
 
-            return new OpinionDetails {
-                Id = opinion.OpinionId.ToString(),
-                ProductName = product.Name,
-                BuyingDate = order.CreatedOn,
-                Stars = opinion.Rating.Stars,
-                Text = opinion.Text
-            };
+            return OpinionDetailsFactory.Create(opinion, product, order);
         }
     }
 }
