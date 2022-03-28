@@ -2,6 +2,7 @@
 using SupplementStore.Application.Services;
 using SupplementStore.Domain.Orders;
 using SupplementStore.Domain.Products;
+using SupplementStore.Infrastructure.AppModels;
 using System;
 using System.Linq;
 
@@ -38,20 +39,7 @@ namespace SupplementStore.Infrastructure.AppServices {
                 .Where(e => purchases.Select(o => o.ProductId).Contains(e.ProductId))
                 .ToList();
 
-            return new OrderDetails {
-                Id = order.OrderId.ToString(),
-                UserId = order.UserId,
-                Address = order.Address.Street,
-                PostalCode = order.Address.PostalCode,
-                City = order.Address.City,
-                CreatedOn = order.CreatedOn,
-                Purchases = purchases.Select(e => new PurchaseDetails {
-                    ProductId = e.ProductId.ToString(),
-                    ProductName = products.First(p => p.ProductId == e.ProductId).Name,
-                    ProductPrice = products.First(p => p.ProductId == e.ProductId).Price,
-                    Quantity = e.Quantity
-                }).ToList()
-            };
+            return OrderDetailsFactory.Create(order, PurchaseDetailsFactory.Create(purchases, products));
         }
     }
 }
