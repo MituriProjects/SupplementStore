@@ -12,7 +12,7 @@ namespace SupplementStore.Infrastructure.AppServices {
 
         IOrderRepository OrderRepository { get; }
 
-        IOrderProductRepository OrderProductRepository { get; }
+        IPurchaseRepository PurchaseRepository { get; }
 
         IProductRepository ProductRepository { get; }
 
@@ -20,12 +20,12 @@ namespace SupplementStore.Infrastructure.AppServices {
 
         public UserOpinionsProvider(
             IOrderRepository orderRepository,
-            IOrderProductRepository orderProductRepository,
+            IPurchaseRepository purchaseRepository,
             IProductRepository productRepository,
             IOpinionRepository opinionRepository) {
 
             OrderRepository = orderRepository;
-            OrderProductRepository = orderProductRepository;
+            PurchaseRepository = purchaseRepository;
             ProductRepository = productRepository;
             OpinionRepository = opinionRepository;
         }
@@ -34,19 +34,19 @@ namespace SupplementStore.Infrastructure.AppServices {
 
             var userOrders = OrderRepository.FindBy(new UserOrdersFilter(userId));
 
-            var orderProducts = OrderProductRepository.FindBy(new OrdersProductsFilter(userOrders.Select(e => e.OrderId)));
+            var ordersPurchases = PurchaseRepository.FindBy(new OrdersPurchasesFilter(userOrders.Select(e => e.OrderId)));
 
-            var opinions = OpinionRepository.FindBy(orderProducts.Select(e => e.OpinionId));
+            var opinions = OpinionRepository.FindBy(ordersPurchases.Select(e => e.OpinionId));
 
             foreach (var opinion in opinions) {
 
-                var orderProduct = orderProducts
+                var purchase = ordersPurchases
                     .First(e => e.OpinionId == opinion.OpinionId);
 
                 yield return new OpinionDetails {
                     Id = opinion.OpinionId.ToString(),
-                    ProductName = ProductRepository.FindBy(orderProduct.ProductId).Name,
-                    BuyingDate = userOrders.First(e => e.OrderId == orderProduct.OrderId).CreatedOn,
+                    ProductName = ProductRepository.FindBy(purchase.ProductId).Name,
+                    BuyingDate = userOrders.First(e => e.OrderId == purchase.OrderId).CreatedOn,
                     Stars = opinion.Rating.Stars,
                     Text = opinion.Text
                 };

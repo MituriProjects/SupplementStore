@@ -3,16 +3,16 @@ using System.Linq;
 
 namespace SupplementStore.Domain.Orders {
 
-    public class OrdersProductsFilter : IManyFilter<OrderProduct> {
+    public class OrdersPurchasesFilter : IManyFilter<Purchase> {
 
         IEnumerable<OrderId> OrderIds { get; }
 
-        public OrdersProductsFilter(IEnumerable<OrderId> orderIds) {
+        public OrdersPurchasesFilter(IEnumerable<OrderId> orderIds) {
 
             OrderIds = orderIds;
         }
 
-        public IEnumerable<OrderProduct> Process(IQueryable<OrderProduct> entities) {
+        public IEnumerable<Purchase> Process(IQueryable<Purchase> entities) {
 
             return entities.Where(e => OrderIds.Contains(e.OrderId));
         }

@@ -4,16 +4,16 @@ using System.Linq;
 
 namespace SupplementStore.Domain.Orders {
 
-    public class ProductOrderProductsFilter : IManyFilter<OrderProduct> {
+    public class ProductPurchasesFilter : IManyFilter<Purchase> {
 
         ProductId ProductId { get; }
 
-        public ProductOrderProductsFilter(ProductId productId) {
+        public ProductPurchasesFilter(ProductId productId) {
 
             ProductId = productId;
         }
 
-        public IEnumerable<OrderProduct> Process(IQueryable<OrderProduct> entities) {
+        public IEnumerable<Purchase> Process(IQueryable<Purchase> entities) {
 
             return entities.Where(e => e.ProductId == ProductId);
         }

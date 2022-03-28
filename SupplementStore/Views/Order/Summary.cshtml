@@ -4,14 +4,14 @@
 
     <ul class="list-unstyled">
 
-        @foreach (var orderProduct in Model.OrderProducts) {
+        @foreach (var purchase in Model.Purchases) {
 
             <li class="bg-info w-25 m-2">
-                <span>@orderProduct.ProductName</span>
+                <span>@purchase.ProductName</span>
                 <span> -- </span>
-                <span class="quantity">@orderProduct.Quantity</span>
+                <span class="quantity">@purchase.Quantity</span>
                 <span> -- </span>
-                <span class="cost">@(orderProduct.Quantity * orderProduct.ProductPrice)</span>
+                <span class="cost">@(purchase.Quantity * purchase.ProductPrice)</span>
             </li>
         }
 
@@ -20,9 +20,9 @@
     @{
         var costSummary = 0M;
 
-        foreach (var orderProduct in Model.OrderProducts) {
+        foreach (var purchase in Model.Purchases) {
 
-            costSummary += orderProduct.ProductPrice * orderProduct.Quantity;
+            costSummary += purchase.ProductPrice * purchase.Quantity;
         }
     }
 
@@ -48,12 +48,12 @@
     <div name="City">@Model.City</div>
     <div name="CreatedOn">@Model.CreatedOn</div>
 
-    @foreach (var productDetails in Model.OrderProducts) {
+    @foreach (var purchase in Model.Purchases) {
 
-        <div name="ProductId">@productDetails.ProductId</div>
-        <div name="ProductName">@productDetails.ProductName</div>
-        <div name="ProductPrice">@productDetails.ProductPrice</div>
-        <div name="Quantity">@productDetails.Quantity</div>
+        <div name="ProductId">@purchase.ProductId</div>
+        <div name="ProductName">@purchase.ProductName</div>
+        <div name="ProductPrice">@purchase.ProductPrice</div>
+        <div name="Quantity">@purchase.Quantity</div>
     }
 
 </environment>

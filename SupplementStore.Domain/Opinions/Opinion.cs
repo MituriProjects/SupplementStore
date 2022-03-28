@@ -7,12 +7,12 @@ namespace SupplementStore.Domain.Opinions {
 
         public OpinionId OpinionId { get; private set; } = new OpinionId(Guid.Empty);
 
-        Guid OrderProduct_Id {
-            get => OrderProductId.Id;
-            set => OrderProductId = new OrderProductId(value);
+        Guid Purchase_Id {
+            get => PurchaseId.Id;
+            set => PurchaseId = new PurchaseId(value);
         }
 
-        public OrderProductId OrderProductId { get; set; }
+        public PurchaseId PurchaseId { get; set; }
 
         public string Text { get; set; }
 

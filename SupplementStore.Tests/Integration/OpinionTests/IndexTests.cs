@@ -26,27 +26,27 @@ namespace SupplementStore.Tests.Integration.OpinionTests {
                 .WithUserId(TestData.User.Id);
             orders[1]
                 .WithUserId(TestData.User.Id);
-            var orderProducts = TestEntity.Random<OrderProduct>(3);
-            orderProducts[0]
+            var purchases = TestEntity.Random<Purchase>(3);
+            purchases[0]
                 .WithOrderId(orders[0])
                 .WithProductId(products[0]);
-            orderProducts[1]
+            purchases[1]
                 .WithOrderId(orders[0])
                 .WithProductId(products[1]);
-            orderProducts[2]
+            purchases[2]
                 .WithOrderId(orders[1])
                 .WithProductId(products[2])
                 .WithOpinionId(null);
             var opinions = TestEntity.Random<Opinion>(2);
             opinions[0]
                 .WithRating(new Rating(2))
-                .WithOrderProductId(orderProducts[0]);
+                .WithPurchaseId(purchases[0]);
             opinions[1]
                 .WithRating(new Rating(3))
-                .WithOrderProductId(orderProducts[1]);
-            orderProducts[0]
+                .WithPurchaseId(purchases[1]);
+            purchases[0]
                 .WithOpinionId(opinions[0]);
-            orderProducts[1]
+            purchases[1]
                 .WithOpinionId(opinions[1]);
 
             await GetAsync("/Opinion", TestData.User);

@@ -14,24 +14,24 @@ namespace SupplementStore.Tests.Integration.ProductTests {
         public async Task DefaultSkipAndTake_ReturnsDetailsOfProducts() {
 
             var products = TestEntity.Random<Product>(2);
-            var orderProducts = TestEntity.Random<OrderProduct>(3);
+            var purchases = TestEntity.Random<Purchase>(3);
             var opinions = TestEntity.Random<Opinion>(3);
             opinions[0]
                 .WithRating(new Rating(3))
-                .WithOrderProductId(orderProducts[1]);
+                .WithPurchaseId(purchases[1]);
             opinions[1]
                 .WithRating(new Rating(5))
-                .WithOrderProductId(orderProducts[2]);
+                .WithPurchaseId(purchases[2]);
             opinions[2]
                 .WithRating(new Rating(2))
-                .WithOrderProductId(orderProducts[0]);
-            orderProducts[0]
+                .WithPurchaseId(purchases[0]);
+            purchases[0]
                 .WithProductId(products[0])
                 .WithOpinionId(opinions[2]);
-            orderProducts[1]
+            purchases[1]
                 .WithProductId(products[1])
                 .WithOpinionId(opinions[0]);
-            orderProducts[2]
+            purchases[2]
                 .WithProductId(products[0])
                 .WithOpinionId(opinions[1]);
 
@@ -65,18 +65,18 @@ namespace SupplementStore.Tests.Integration.ProductTests {
         public async Task SkipEquals2AndTakeEquals2_ReturnsDetailsOfProducts() {
 
             var products = TestEntity.Random<Product>(5);
-            var orderProducts = TestEntity.Random<OrderProduct>(2);
+            var purchases = TestEntity.Random<Purchase>(2);
             var opinions = TestEntity.Random<Opinion>(2);
             opinions[0]
                 .WithRating(new Rating(4))
-                .WithOrderProductId(orderProducts[0]);
+                .WithPurchaseId(purchases[0]);
             opinions[1]
                 .WithRating(new Rating(1))
-                .WithOrderProductId(orderProducts[1]);
-            orderProducts[0]
+                .WithPurchaseId(purchases[1]);
+            purchases[0]
                 .WithProductId(products[3])
                 .WithOpinionId(opinions[0]);
-            orderProducts[1]
+            purchases[1]
                 .WithProductId(products[1])
                 .WithOpinionId(opinions[1]);
 

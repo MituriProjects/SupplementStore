@@ -20,12 +20,12 @@
                 <div>
                     Produkty:
                     <ul>
-                        @foreach (var orderProduct in order.OrderProducts) {
+                        @foreach (var purchase in order.Purchases) {
 
                             <li>
-                                <span>@orderProduct.ProductName</span>
+                                <span>@purchase.ProductName</span>
                                 <span>(ilość:</span>
-                                <span>@orderProduct.Quantity)</span>
+                                <span>@purchase.Quantity)</span>
                             </li>
                         }
                     </ul>
@@ -51,12 +51,12 @@
         <div name="City">@order.City</div>
         <div name="CreatedOn">@order.CreatedOn</div>
 
-        @foreach (var orderProduct in order.OrderProducts) {
+        @foreach (var purchase in order.Purchases) {
 
-            <div name="ProductId">@orderProduct.ProductId</div>
-            <div name="ProductName">@orderProduct.ProductName</div>
-            <div name="ProductPrice">@orderProduct.ProductPrice</div>
-            <div name="Quantity">@orderProduct.Quantity</div>
+            <div name="ProductId">@purchase.ProductId</div>
+            <div name="ProductName">@purchase.ProductName</div>
+            <div name="ProductPrice">@purchase.ProductPrice</div>
+            <div name="Quantity">@purchase.Quantity</div>
         }
     }
 

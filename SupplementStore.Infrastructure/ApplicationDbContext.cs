@@ -21,7 +21,7 @@ namespace SupplementStore.Infrastructure {
 
         public DbSet<Order> Orders { get; set; }
 
-        public DbSet<OrderProduct> OrderProducts { get; set; }
+        public DbSet<Purchase> Purchases { get; set; }
 
         public DbSet<Wish> Wishes { get; set; }
 
@@ -34,7 +34,7 @@ namespace SupplementStore.Infrastructure {
             builder.ApplyConfiguration(new ProductConfiguration());
             builder.ApplyConfiguration(new BasketProductConfiguration());
             builder.ApplyConfiguration(new OrderConfiguration());
-            builder.ApplyConfiguration(new OrderProductConfiguration());
+            builder.ApplyConfiguration(new PurchaseConfiguration());
             builder.ApplyConfiguration(new WishConfiguration());
             builder.ApplyConfiguration(new OpinionConfiguration());
         }

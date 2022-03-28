@@ -26,11 +26,11 @@ namespace SupplementStore.Tests.Integration.OrderTests {
             var order = TestEntity.Random<Order>()
                 .WithUserId(TestData.User.Id);
             var products = TestEntity.Random<Product>(2);
-            var orderProducts = TestEntity.Random<OrderProduct>(2);
-            orderProducts[0]
+            var purchases = TestEntity.Random<Purchase>(2);
+            purchases[0]
                 .WithOrderId(order)
                 .WithProductId(products[0]);
-            orderProducts[1]
+            purchases[1]
                 .WithOrderId(order)
                 .WithProductId(products[1]);
 
@@ -43,12 +43,12 @@ namespace SupplementStore.Tests.Integration.OrderTests {
                 .Contains("City", order.Address.City)
                 .Contains("CreatedOn", order.CreatedOn);
 
-            foreach (var orderProduct in orderProducts) {
+            foreach (var purchase in purchases) {
 
-                contentScheme.Contains("ProductId", orderProduct.ProductId);
-                contentScheme.Contains("ProductName", products.First(e => e.ProductId == orderProduct.ProductId).Name);
-                contentScheme.Contains("ProductPrice", products.First(e => e.ProductId == orderProduct.ProductId).Price);
-                contentScheme.Contains("Quantity", orderProduct.Quantity);
+                contentScheme.Contains("ProductId", purchase.ProductId);
+                contentScheme.Contains("ProductName", products.First(e => e.ProductId == purchase.ProductId).Name);
+                contentScheme.Contains("ProductPrice", products.First(e => e.ProductId == purchase.ProductId).Price);
+                contentScheme.Contains("Quantity", purchase.Quantity);
             }
 
             Examine(contentScheme);

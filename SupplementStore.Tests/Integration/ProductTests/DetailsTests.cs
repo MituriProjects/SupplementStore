@@ -14,17 +14,17 @@ namespace SupplementStore.Tests.Integration.ProductTests {
         public async Task IdIsValid_ReturnsProductDetails() {
 
             var products = TestEntity.Random<Product>(3);
-            var orderProducts = TestEntity.Random<OrderProduct>(3);
+            var purchases = TestEntity.Random<Purchase>(3);
             var opinions = TestEntity.Random<Opinion>(2);
             opinions[0]
-                .WithOrderProductId(orderProducts[0])
+                .WithPurchaseId(purchases[0])
                 .WithIsHidden(true);
             opinions[1]
-                .WithOrderProductId(orderProducts[1]);
-            orderProducts[0]
+                .WithPurchaseId(purchases[1]);
+            purchases[0]
                 .WithProductId(products[1])
                 .WithOpinionId(opinions[0]);
-            orderProducts[1]
+            purchases[1]
                 .WithProductId(products[1])
                 .WithOpinionId(opinions[1]);
 

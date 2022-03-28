@@ -10,7 +10,7 @@ namespace SupplementStore.Infrastructure.AppServices {
 
         IOrderRepository OrderRepository { get; }
 
-        IOrderProductRepository OrderProductRepository { get; }
+        IPurchaseRepository PurchaseRepository { get; }
 
         IProductRepository ProductRepository { get; }
 
@@ -18,12 +18,12 @@ namespace SupplementStore.Infrastructure.AppServices {
 
         public OpinionProvider(
             IOrderRepository orderRepository,
-            IOrderProductRepository orderProductRepository,
+            IPurchaseRepository purchaseRepository,
             IProductRepository productRepository,
             IOpinionRepository opinionRepository) {
 
             OrderRepository = orderRepository;
-            OrderProductRepository = orderProductRepository;
+            PurchaseRepository = purchaseRepository;
             ProductRepository = productRepository;
             OpinionRepository = opinionRepository;
         }
@@ -32,11 +32,11 @@ namespace SupplementStore.Infrastructure.AppServices {
 
             var opinion = OpinionRepository.FindBy(new OpinionId(opinionId));
 
-            var orderProduct = OrderProductRepository.FindBy(opinion.OrderProductId);
+            var purchase = PurchaseRepository.FindBy(opinion.PurchaseId);
 
-            var order = OrderRepository.FindBy(orderProduct.OrderId);
+            var order = OrderRepository.FindBy(purchase.OrderId);
 
-            var product = ProductRepository.FindBy(orderProduct.ProductId);
+            var product = ProductRepository.FindBy(purchase.ProductId);
 
             return new OpinionDetails {
                 Id = opinion.OpinionId.ToString(),

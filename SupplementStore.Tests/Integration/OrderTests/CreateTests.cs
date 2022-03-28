@@ -73,7 +73,7 @@ namespace SupplementStore.Tests.Integration.OrderTests {
         }
 
         [TestMethod]
-        public async Task Post_UserIsLoggedIn_CreatesOrderAndOrderProductsAndDeletesBasketProducts() {
+        public async Task Post_UserIsLoggedIn_CreatesOrderAndPurchasesAndDeletesBasketProducts() {
 
             var basketProducts = TestEntity.Random<BasketProduct>(2);
             basketProducts[0].WithUserId(TestData.User.Id);
@@ -89,8 +89,8 @@ namespace SupplementStore.Tests.Integration.OrderTests {
 
             TestDocument<Order>.Single(e => e.Address.Street == formData["Address"] && e.Address.PostalCode == formData["PostalCode"] && e.Address.City == formData["City"] && e.UserId == TestData.User.Id);
             var createdOrder = TestDocument<Order>.First(e => e.UserId == TestData.User.Id);
-            TestDocument<OrderProduct>.Single(e => e.OrderId == createdOrder.OrderId && e.ProductId == basketProducts[0].ProductId && e.Quantity == basketProducts[0].Quantity);
-            TestDocument<OrderProduct>.Single(e => e.OrderId == createdOrder.OrderId && e.ProductId == basketProducts[1].ProductId && e.Quantity == basketProducts[1].Quantity);
+            TestDocument<Purchase>.Single(e => e.OrderId == createdOrder.OrderId && e.ProductId == basketProducts[0].ProductId && e.Quantity == basketProducts[0].Quantity);
+            TestDocument<Purchase>.Single(e => e.OrderId == createdOrder.OrderId && e.ProductId == basketProducts[1].ProductId && e.Quantity == basketProducts[1].Quantity);
             TestDocument<BasketProduct>.None(e => e.BasketProductId == basketProducts[0].BasketProductId);
             TestDocument<BasketProduct>.None(e => e.BasketProductId == basketProducts[1].BasketProductId);
             TestDocumentApprover.ExamineSaveChanges();

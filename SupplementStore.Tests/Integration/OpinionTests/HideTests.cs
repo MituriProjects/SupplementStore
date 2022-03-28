@@ -35,10 +35,10 @@ namespace SupplementStore.Tests.Integration.OpinionTests {
         public async Task UserIsAuthorized_RedirectsToProductDetails() {
 
             var product = TestEntity.Random<Product>();
-            var orderProduct = TestEntity.Random<OrderProduct>();
+            var purchase = TestEntity.Random<Purchase>();
             var opinion = TestEntity.Random<Opinion>()
-                .WithOrderProductId(orderProduct);
-            orderProduct
+                .WithPurchaseId(purchase);
+            purchase
                 .WithOpinionId(opinion)
                 .WithProductId(product);
 
@@ -51,10 +51,10 @@ namespace SupplementStore.Tests.Integration.OpinionTests {
         public async Task OpinionIdIsValid_HidesOpinion() {
 
             var product = TestEntity.Random<Product>();
-            var orderProduct = TestEntity.Random<OrderProduct>();
+            var purchase = TestEntity.Random<Purchase>();
             var opinion = TestEntity.Random<Opinion>()
-                .WithOrderProductId(orderProduct);
-            orderProduct
+                .WithPurchaseId(purchase);
+            purchase
                 .WithOpinionId(opinion)
                 .WithProductId(product);
 

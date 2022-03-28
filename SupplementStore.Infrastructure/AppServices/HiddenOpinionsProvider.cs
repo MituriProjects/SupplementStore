@@ -11,17 +11,17 @@ namespace SupplementStore.Infrastructure.AppServices {
 
         IOpinionRepository OpinionRepository { get; }
 
-        IOrderProductRepository OrderProductRepository { get; }
+        IPurchaseRepository PurchaseRepository { get; }
 
         IProductRepository ProductRepository { get; }
 
         public HiddenOpinionsProvider(
             IOpinionRepository opinionRepository,
-            IOrderProductRepository orderProductRepository,
+            IPurchaseRepository purchaseRepository,
             IProductRepository productRepository) {
 
             OpinionRepository = opinionRepository;
-            OrderProductRepository = orderProductRepository;
+            PurchaseRepository = purchaseRepository;
             ProductRepository = productRepository;
         }
 
@@ -29,9 +29,9 @@ namespace SupplementStore.Infrastructure.AppServices {
 
             foreach (var opinion in OpinionRepository.FindBy(new HiddenOpinionsFilter())) {
 
-                var orderProduct = OrderProductRepository.FindBy(opinion.OrderProductId);
+                var purchase = PurchaseRepository.FindBy(opinion.PurchaseId);
 
-                var product = ProductRepository.FindBy(orderProduct.ProductId);
+                var product = ProductRepository.FindBy(purchase.ProductId);
 
                 yield return new HiddenOpinionDetails {
                     Id = opinion.OpinionId.ToString(),

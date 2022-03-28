@@ -70,7 +70,7 @@ namespace SupplementStore.Controllers {
                 return RedirectToAction("Index");
 
             return View(new OpinionCreateViewModel {
-                OrderProductId = productToOpine.OrderProductId,
+                PurchaseId = productToOpine.PurchaseId,
                 ProductName = productToOpine.ProductName,
                 BuyingDate = productToOpine.BuyingDate
             });
@@ -80,7 +80,7 @@ namespace SupplementStore.Controllers {
         public IActionResult Create(OpinionCreateViewModel model) {
 
             OpinionCreator.Create(new OpinionCreatorArgs {
-                OrderProductId = model.OrderProductId,
+                PurchaseId = model.PurchaseId,
                 Text = model.Text,
                 Stars = model.Stars
             });

@@ -37,10 +37,10 @@ namespace SupplementStore.Tests.Integration.OpinionTests {
 
             var product = TestEntity.Random<Product>();
             var order = TestEntity.Random<Order>();
-            var orderProduct = TestEntity.Random<OrderProduct>();
+            var purchase = TestEntity.Random<Purchase>();
             var opinion = TestEntity.Random<Opinion>()
-                .WithOrderProductId(orderProduct);
-            orderProduct
+                .WithPurchaseId(purchase);
+            purchase
                 .WithOpinionId(opinion)
                 .WithOrderId(order)
                 .WithProductId(product);
@@ -82,10 +82,10 @@ namespace SupplementStore.Tests.Integration.OpinionTests {
         public async Task Post_UserIsAuthorized_RedirectsToProductDetails() {
 
             var product = TestEntity.Random<Product>();
-            var orderProduct = TestEntity.Random<OrderProduct>();
+            var purchase = TestEntity.Random<Purchase>();
             var opinion = TestEntity.Random<Opinion>()
-                .WithOrderProductId(orderProduct);
-            orderProduct
+                .WithPurchaseId(purchase);
+            purchase
                 .WithOpinionId(opinion)
                 .WithProductId(product);
 
@@ -103,10 +103,10 @@ namespace SupplementStore.Tests.Integration.OpinionTests {
         public async Task Post_OpinionIdIsValid_UpdatesOpinionText() {
 
             var product = TestEntity.Random<Product>();
-            var orderProduct = TestEntity.Random<OrderProduct>();
+            var purchase = TestEntity.Random<Purchase>();
             var opinion = TestEntity.Random<Opinion>()
-                .WithOrderProductId(orderProduct);
-            orderProduct
+                .WithPurchaseId(purchase);
+            purchase
                 .WithOpinionId(opinion)
                 .WithProductId(product);
 

@@ -12,19 +12,19 @@ namespace SupplementStore.Infrastructure.AppServices {
 
         IBasketProductRepository BasketProductRepository { get; }
 
-        IOrderProductRepository OrderProductRepository { get; }
+        IPurchaseRepository PurchaseRepository { get; }
 
         IDomainApprover DomainApprover { get; }
 
         public OrderCreator(
             IOrderRepository orderRepository,
             IBasketProductRepository basketProductRepository,
-            IOrderProductRepository orderProductRepository,
+            IPurchaseRepository purchaseRepository,
             IDomainApprover domainApprover) {
 
             OrderRepository = orderRepository;
             BasketProductRepository = basketProductRepository;
-            OrderProductRepository = orderProductRepository;
+            PurchaseRepository = purchaseRepository;
             DomainApprover = domainApprover;
         }
 
@@ -39,13 +39,13 @@ namespace SupplementStore.Infrastructure.AppServices {
 
             foreach (var basketProduct in BasketProductRepository.FindBy(new UserBasketProductsFilter(args.UserId))) {
 
-                var orderProduct = new OrderProduct {
+                var purchase = new Purchase {
                     OrderId = order.OrderId,
                     ProductId = basketProduct.ProductId,
                     Quantity = basketProduct.Quantity
                 };
 
-                OrderProductRepository.Add(orderProduct);
+                PurchaseRepository.Add(purchase);
 
                 BasketProductRepository.Delete(basketProduct.BasketProductId);
             }

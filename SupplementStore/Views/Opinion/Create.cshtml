@@ -6,7 +6,7 @@
 
     <form asp-controller="Opinion" asp-action="Create" class="m-2">
 
-        <input type="hidden" asp-for="OrderProductId" value="@Model.OrderProductId" />
+        <input type="hidden" asp-for="PurchaseId" value="@Model.PurchaseId" />
         <input type="hidden" asp-for="Stars" value="@Model.Stars" id="opinion-selected-stars" />
 
         <div id="opinion-stars">
@@ -99,7 +99,7 @@
 
 <environment include="Testing">
 
-    <div name="OrderProductId">@Model.OrderProductId</div>
+    <div name="PurchaseId">@Model.PurchaseId</div>
     <div name="ProductName">@Model.ProductName</div>
     <div name="BuyingDate">@Model.BuyingDate</div>
 

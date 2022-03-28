@@ -8,10 +8,10 @@ namespace SupplementStore.Infrastructure.Configurations {
 
         protected override void ConfigureEntity(EntityTypeBuilder<Opinion> builder) {
 
-            builder.Ignore(e => e.OrderProductId);
-            builder.HasOne<OrderProduct>()
+            builder.Ignore(e => e.PurchaseId);
+            builder.HasOne<Purchase>()
                 .WithOne()
-                .HasForeignKey<Opinion>("OrderProduct_Id")
+                .HasForeignKey<Opinion>("Purchase_Id")
                 .IsRequired();
             builder.OwnsOne(e => e.Rating);
         }

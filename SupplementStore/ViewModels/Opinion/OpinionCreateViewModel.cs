@@ -5,7 +5,7 @@ namespace SupplementStore.ViewModels.Opinion {
 
     public class OpinionCreateViewModel {
 
-        public string OrderProductId { get; set; }
+        public string PurchaseId { get; set; }
 
         public string ProductName { get; set; }
 
