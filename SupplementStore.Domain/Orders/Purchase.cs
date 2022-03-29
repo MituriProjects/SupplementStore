@@ -5,9 +5,9 @@ using System;
 
 namespace SupplementStore.Domain.Orders {
 
-    public class OrderProduct : Entity {
+    public class Purchase : Entity {
 
-        public OrderProductId OrderProductId { get; private set; } = new OrderProductId(Guid.Empty);
+        public PurchaseId PurchaseId { get; private set; } = new PurchaseId(Guid.Empty);
 
         Quantity ProductQuantity { get; set; }
 

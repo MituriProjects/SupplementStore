@@ -3,29 +3,30 @@ using SupplementStore.Application.Services;
 using SupplementStore.Domain.Opinions;
 using SupplementStore.Domain.Orders;
 using SupplementStore.Domain.Products;
+using SupplementStore.Infrastructure.AppModels;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace SupplementStore.Infrastructure.AppServices {
 
-    public class OpinionsProvider : IOpinionsProvider {
+    public class UserOpinionsProvider : IUserOpinionsProvider {
 
         IOrderRepository OrderRepository { get; }
 
-        IOrderProductRepository OrderProductRepository { get; }
+        IPurchaseRepository PurchaseRepository { get; }
 
         IProductRepository ProductRepository { get; }
 
         IOpinionRepository OpinionRepository { get; }
 
-        public OpinionsProvider(
+        public UserOpinionsProvider(
             IOrderRepository orderRepository,
-            IOrderProductRepository orderProductRepository,
+            IPurchaseRepository purchaseRepository,
             IProductRepository productRepository,
             IOpinionRepository opinionRepository) {
 
             OrderRepository = orderRepository;
-            OrderProductRepository = orderProductRepository;
+            PurchaseRepository = purchaseRepository;
             ProductRepository = productRepository;
             OpinionRepository = opinionRepository;
         }
@@ -34,22 +35,20 @@ namespace SupplementStore.Infrastructure.AppServices {
 
             var userOrders = OrderRepository.FindBy(new UserOrdersFilter(userId));
 
-            var orderProducts = OrderProductRepository.FindBy(new OrdersProductsFilter(userOrders.Select(e => e.OrderId)));
+            var ordersPurchases = PurchaseRepository.FindBy(new OrdersPurchasesFilter(userOrders.Select(e => e.OrderId)));
 
-            var opinions = OpinionRepository.FindBy(orderProducts.Select(e => e.OpinionId));
+            var opinions = OpinionRepository.FindBy(ordersPurchases.Select(e => e.OpinionId));
 
             foreach (var opinion in opinions) {
 
-                var orderProduct = orderProducts
+                var purchase = ordersPurchases
                     .First(e => e.OpinionId == opinion.OpinionId);
 
-                yield return new OpinionDetails {
-                    Id = opinion.OpinionId.ToString(),
-                    ProductName = ProductRepository.FindBy(orderProduct.ProductId).Name,
-                    BuyingDate = userOrders.First(e => e.OrderId == orderProduct.OrderId).CreatedOn,
-                    Stars = opinion.Grade.Stars,
-                    Text = opinion.Text
-                };
+                var product = ProductRepository.FindBy(purchase.ProductId);
+
+                var order = userOrders.First(e => e.OrderId == purchase.OrderId);
+
+                yield return OpinionDetailsFactory.Create(opinion, product, order);
             }
         }
     }

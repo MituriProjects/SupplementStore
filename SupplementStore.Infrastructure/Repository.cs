@@ -30,7 +30,7 @@ namespace SupplementStore.Infrastructure {
 
         public IEnumerable<TEntity> FindBy(IManyFilter<TEntity> filter) {
 
-            return filter.Process(Document.All);
+            return filter.Process(Document.All).ToList();
         }
     }
 }

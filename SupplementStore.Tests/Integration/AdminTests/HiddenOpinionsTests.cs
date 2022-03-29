@@ -29,26 +29,26 @@ namespace SupplementStore.Tests.Integration.AdminTests {
         public async Task UserIsAuthorized_ReturnsHiddenOpiniondetails() {
 
             var products = TestEntity.Random<Product>(2);
-            var orderProducts = TestEntity.Random<OrderProduct>(3);
+            var purchases = TestEntity.Random<Purchase>(3);
             var opinions = TestEntity.Random<Opinion>(3);
             opinions[0]
-                .WithOrderProductId(orderProducts[0].OrderProductId)
+                .WithPurchaseId(purchases[0])
                 .WithIsHidden(true);
             opinions[1]
-                .WithOrderProductId(orderProducts[1].OrderProductId)
+                .WithPurchaseId(purchases[1])
                 .WithIsHidden(false);
             opinions[2]
-                .WithOrderProductId(orderProducts[2].OrderProductId)
+                .WithPurchaseId(purchases[2])
                 .WithIsHidden(true);
-            orderProducts[0]
-                .WithOpinionId(opinions[0].OpinionId)
-                .WithProductId(products[0].ProductId);
-            orderProducts[1]
-                .WithOpinionId(opinions[1].OpinionId)
-                .WithProductId(products[1].ProductId);
-            orderProducts[2]
-                .WithOpinionId(opinions[2].OpinionId)
-                .WithProductId(products[1].ProductId);
+            purchases[0]
+                .WithOpinionId(opinions[0])
+                .WithProductId(products[0]);
+            purchases[1]
+                .WithOpinionId(opinions[1])
+                .WithProductId(products[1]);
+            purchases[2]
+                .WithOpinionId(opinions[2])
+                .WithProductId(products[1]);
 
             await GetAsync("/Admin/HiddenOpinions", TestData.Admin);
 

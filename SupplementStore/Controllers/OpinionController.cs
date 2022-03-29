@@ -18,7 +18,7 @@ namespace SupplementStore.Controllers {
 
         IOpinionProvider OpinionProvider { get; }
 
-        IOpinionsProvider OpinionsProvider { get; }
+        IUserOpinionsProvider OpinionsProvider { get; }
 
         IOpinionCreator OpinionCreator { get; }
 
@@ -33,7 +33,7 @@ namespace SupplementStore.Controllers {
             IProductToOpineProvider productToOpineProvider,
             IOpinionProductProvider opinionProductProvider,
             IOpinionProvider opinionProvider,
-            IOpinionsProvider opinionsProvider,
+            IUserOpinionsProvider opinionsProvider,
             IOpinionCreator opinionCreator,
             IOpinionTextUpdater opinionTextUpdater,
             IOpinionHider opinionHider,
@@ -70,7 +70,7 @@ namespace SupplementStore.Controllers {
                 return RedirectToAction("Index");
 
             return View(new OpinionCreateViewModel {
-                OrderProductId = productToOpine.OrderProductId,
+                PurchaseId = productToOpine.PurchaseId,
                 ProductName = productToOpine.ProductName,
                 BuyingDate = productToOpine.BuyingDate
             });
@@ -80,7 +80,7 @@ namespace SupplementStore.Controllers {
         public IActionResult Create(OpinionCreateViewModel model) {
 
             OpinionCreator.Create(new OpinionCreatorArgs {
-                OrderProductId = model.OrderProductId,
+                PurchaseId = model.PurchaseId,
                 Text = model.Text,
                 Stars = model.Stars
             });
@@ -88,7 +88,7 @@ namespace SupplementStore.Controllers {
             return RedirectToAction(nameof(Create));
         }
 
-        [Authorize(Roles = "Owner, Admin")]
+        [Authorize(Roles = "Admin")]
         public IActionResult Edit(string id) {
 
             var opinion = OpinionProvider.Load(id);
@@ -100,7 +100,7 @@ namespace SupplementStore.Controllers {
         }
 
         [HttpPost]
-        [Authorize(Roles = "Owner, Admin")]
+        [Authorize(Roles = "Admin")]
         public IActionResult Edit(OpinionEditViewModel model) {
 
             OpinionTextUpdater.Update(model.Id, model.Text);
@@ -111,7 +111,7 @@ namespace SupplementStore.Controllers {
         }
 
         [HttpPost]
-        [Authorize(Roles = "Owner, Admin")]
+        [Authorize(Roles = "Admin")]
         public IActionResult Hide(string id) {
 
             OpinionHider.Hide(id);
@@ -122,7 +122,7 @@ namespace SupplementStore.Controllers {
         }
 
         [HttpPost]
-        [Authorize(Roles = "Owner, Admin")]
+        [Authorize(Roles = "Admin")]
         public IActionResult Show(string id) {
 
             OpinionRevealer.Reveal(id);

@@ -34,19 +34,19 @@ namespace SupplementStore.Tests.Integration.AdminTests {
                 .WithUserId(TestData.Users[0].Id);
             orders[1]
                 .WithUserId(TestData.Users[1].Id);
-            var orderProducts = TestEntity.Random<OrderProduct>(4);
-            orderProducts[0]
-                .WithProductId(products[1].ProductId)
-                .WithOrderId(orders[1].OrderId);
-            orderProducts[1]
-                .WithProductId(products[2].ProductId)
-                .WithOrderId(orders[0].OrderId);
-            orderProducts[2]
-                .WithProductId(products[0].ProductId)
-                .WithOrderId(orders[0].OrderId);
-            orderProducts[3]
-                .WithProductId(products[2].ProductId)
-                .WithOrderId(orders[1].OrderId);
+            var purchases = TestEntity.Random<Purchase>(4);
+            purchases[0]
+                .WithProductId(products[1])
+                .WithOrderId(orders[1]);
+            purchases[1]
+                .WithProductId(products[2])
+                .WithOrderId(orders[0]);
+            purchases[2]
+                .WithProductId(products[0])
+                .WithOrderId(orders[0]);
+            purchases[3]
+                .WithProductId(products[2])
+                .WithOrderId(orders[1]);
 
             await GetAsync("/Admin/Orders", TestData.Admin);
 
@@ -61,12 +61,12 @@ namespace SupplementStore.Tests.Integration.AdminTests {
                 contentScheme.Contains("City", order.Address.City);
                 contentScheme.Contains("CreatedOn", order.CreatedOn);
 
-                foreach (var orderProduct in orderProducts.Where(e => e.OrderId == order.OrderId)) {
+                foreach (var purchase in purchases.Where(e => e.OrderId == order.OrderId)) {
 
-                    contentScheme.Contains("ProductId", orderProduct.ProductId);
-                    contentScheme.Contains("ProductName", products.First(e => e.ProductId == orderProduct.ProductId).Name);
-                    contentScheme.Contains("ProductPrice", products.First(e => e.ProductId == orderProduct.ProductId).Price);
-                    contentScheme.Contains("Quantity", orderProduct.Quantity);
+                    contentScheme.Contains("ProductId", purchase.ProductId);
+                    contentScheme.Contains("ProductName", products.First(e => e.ProductId == purchase.ProductId).Name);
+                    contentScheme.Contains("ProductPrice", products.First(e => e.ProductId == purchase.ProductId).Price);
+                    contentScheme.Contains("Quantity", purchase.Quantity);
                 }
             }
 

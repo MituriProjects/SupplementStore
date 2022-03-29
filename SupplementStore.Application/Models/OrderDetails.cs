@@ -18,8 +18,8 @@ namespace SupplementStore.Application.Models {
 
         public DateTime CreatedOn { get; set; }
 
-        public IEnumerable<OrderProductDetails> OrderProducts { get; set; }
+        public IEnumerable<PurchaseDetails> Purchases { get; set; }
 
-        public decimal ToPay => OrderProducts.Sum(e => e.ProductPrice * e.Quantity);
+        public decimal ToPay => Purchases.Sum(e => e.ProductPrice * e.Quantity);
     }
 }

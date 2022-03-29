@@ -14,19 +14,19 @@ namespace SupplementStore.Tests.Integration.ProductTests {
         public async Task IdIsValid_ReturnsProductDetails() {
 
             var products = TestEntity.Random<Product>(3);
-            var orderProducts = TestEntity.Random<OrderProduct>(3);
+            var purchases = TestEntity.Random<Purchase>(3);
             var opinions = TestEntity.Random<Opinion>(2);
             opinions[0]
-                .WithOrderProductId(orderProducts[0].OrderProductId)
+                .WithPurchaseId(purchases[0])
                 .WithIsHidden(true);
             opinions[1]
-                .WithOrderProductId(orderProducts[1].OrderProductId);
-            orderProducts[0]
-                .WithProductId(products[1].ProductId)
-                .WithOpinionId(opinions[0].OpinionId);
-            orderProducts[1]
-                .WithProductId(products[1].ProductId)
-                .WithOpinionId(opinions[1].OpinionId);
+                .WithPurchaseId(purchases[1]);
+            purchases[0]
+                .WithProductId(products[1])
+                .WithOpinionId(opinions[0]);
+            purchases[1]
+                .WithProductId(products[1])
+                .WithOpinionId(opinions[1]);
 
             await GetAsync($"/Product/Details/{products[1].ProductId}");
 
@@ -34,10 +34,10 @@ namespace SupplementStore.Tests.Integration.ProductTests {
                 .Contains("ProductId", products[1].ProductId)
                 .Contains("ProductName", products[1].Name)
                 .Contains("ProductPrice", products[1].Price)
-                .Contains("OpinionStars", opinions[0].Grade.Stars)
+                .Contains("OpinionStars", opinions[0].Rating.Stars)
                 .Contains("OpinionText", opinions[0].Text)
                 .Contains("OpinionIsHidden", opinions[0].IsHidden)
-                .Contains("OpinionStars", opinions[1].Grade.Stars)
+                .Contains("OpinionStars", opinions[1].Rating.Stars)
                 .Contains("OpinionText", opinions[1].Text)
                 .Contains("OpinionIsHidden", opinions[1].IsHidden));
         }

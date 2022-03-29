@@ -1,6 +1,7 @@
 ﻿using SupplementStore.Application.Models;
 using SupplementStore.Application.Services;
 using SupplementStore.Domain.Products;
+using SupplementStore.Infrastructure.AppModels;
 
 namespace SupplementStore.Infrastructure.AppServices {
 
@@ -8,14 +9,14 @@ namespace SupplementStore.Infrastructure.AppServices {
 
         IProductRepository ProductRepository { get; }
 
-        IDocumentApprover DocumentApprover { get; }
+        IDomainApprover DomainApprover { get; }
 
         public ProductCreator(
             IProductRepository productRepository,
-            IDocumentApprover documentApprover) {
+            IDomainApprover domainApprover) {
 
             ProductRepository = productRepository;
-            DocumentApprover = documentApprover;
+            DomainApprover = domainApprover;
         }
 
         public ProductDetails Create(string name, decimal price) {
@@ -27,13 +28,9 @@ namespace SupplementStore.Infrastructure.AppServices {
 
             ProductRepository.Add(product);
 
-            DocumentApprover.SaveChanges();
+            DomainApprover.SaveChanges();
 
-            return new ProductDetails {
-                Id = product.ProductId.ToString(),
-                Name = product.Name,
-                Price = product.Price
-            };
+            return ProductDetailsFactory.Create(product);
         }
     }
 }

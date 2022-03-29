@@ -14,7 +14,7 @@ namespace SupplementStore.Tests.Integration.WishApiTests {
             var product = TestEntity.Random<Product>();
             var wish = TestEntity.Random<Wish>();
             wish
-                .WithProductId(product.ProductId)
+                .WithProductId(product)
                 .WithUserId(TestData.User.Id);
 
             await DeleteAsync($"api/wish/{product.ProductId}", TestData.User);

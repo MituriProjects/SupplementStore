@@ -2,7 +2,7 @@
 
     public class OpinionCreatorArgs {
 
-        public string OrderProductId { get; set; }
+        public string PurchaseId { get; set; }
 
         public string Text { get; set; }
 

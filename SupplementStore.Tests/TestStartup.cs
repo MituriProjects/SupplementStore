@@ -23,7 +23,7 @@ namespace SupplementStore.Tests {
         protected override void ReconfigureServices(IServiceCollection services) {
 
             services.AddTransient(typeof(IDocument<>), typeof(TestDocument<>));
-            services.AddTransient(typeof(IDocumentApprover), typeof(TestDocumentApprover));
+            services.AddTransient(typeof(IDomainApprover), typeof(TestDocumentApprover));
         }
 
         protected override void Reconfigure(IApplicationBuilder app, IHostingEnvironment env) {

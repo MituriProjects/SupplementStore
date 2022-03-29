@@ -210,13 +210,13 @@ namespace SupplementStore.Infrastructure.Migrations
 
                     b.Property<bool>("IsHidden");
 
-                    b.Property<Guid>("OrderProduct_Id");
+                    b.Property<Guid>("Purchase_Id");
 
                     b.Property<string>("Text");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("OrderProduct_Id")
+                    b.HasIndex("Purchase_Id")
                         .IsUnique();
 
                     b.ToTable("Opinions");
@@ -240,7 +240,7 @@ namespace SupplementStore.Infrastructure.Migrations
                     b.ToTable("Orders");
                 });
 
-            modelBuilder.Entity("SupplementStore.Domain.Orders.OrderProduct", b =>
+            modelBuilder.Entity("SupplementStore.Domain.Orders.Purchase", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -264,7 +264,7 @@ namespace SupplementStore.Infrastructure.Migrations
 
                     b.HasIndex("Product_Id");
 
-                    b.ToTable("OrderProducts");
+                    b.ToTable("Purchases");
                 });
 
             modelBuilder.Entity("SupplementStore.Domain.Products.Product", b =>
@@ -363,12 +363,12 @@ namespace SupplementStore.Infrastructure.Migrations
 
             modelBuilder.Entity("SupplementStore.Domain.Opinions.Opinion", b =>
                 {
-                    b.HasOne("SupplementStore.Domain.Orders.OrderProduct")
+                    b.HasOne("SupplementStore.Domain.Orders.Purchase")
                         .WithOne()
-                        .HasForeignKey("SupplementStore.Domain.Opinions.Opinion", "OrderProduct_Id")
+                        .HasForeignKey("SupplementStore.Domain.Opinions.Opinion", "Purchase_Id")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.OwnsOne("SupplementStore.Domain.Opinions.Grade", "Grade", b1 =>
+                    b.OwnsOne("SupplementStore.Domain.Opinions.Rating", "Rating", b1 =>
                         {
                             b1.Property<Guid?>("OpinionId")
                                 .ValueGeneratedOnAdd();
@@ -378,8 +378,8 @@ namespace SupplementStore.Infrastructure.Migrations
                             b1.ToTable("Opinions");
 
                             b1.HasOne("SupplementStore.Domain.Opinions.Opinion")
-                                .WithOne("Grade")
-                                .HasForeignKey("SupplementStore.Domain.Opinions.Grade", "OpinionId")
+                                .WithOne("Rating")
+                                .HasForeignKey("SupplementStore.Domain.Opinions.Rating", "OpinionId")
                                 .OnDelete(DeleteBehavior.Cascade);
                         });
                 });
@@ -414,11 +414,11 @@ namespace SupplementStore.Infrastructure.Migrations
                         });
                 });
 
-            modelBuilder.Entity("SupplementStore.Domain.Orders.OrderProduct", b =>
+            modelBuilder.Entity("SupplementStore.Domain.Orders.Purchase", b =>
                 {
                     b.HasOne("SupplementStore.Domain.Opinions.Opinion")
                         .WithOne()
-                        .HasForeignKey("SupplementStore.Domain.Orders.OrderProduct", "Opinion_Id");
+                        .HasForeignKey("SupplementStore.Domain.Orders.Purchase", "Opinion_Id");
 
                     b.HasOne("SupplementStore.Domain.Orders.Order")
                         .WithMany()

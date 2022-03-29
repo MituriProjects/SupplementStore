@@ -10,29 +10,29 @@ namespace SupplementStore.Infrastructure.AppServices {
 
     public class ProductOpinionsProvider : IProductOpinionsProvider {
 
-        IOrderProductRepository OrderProductRepository { get; }
+        IPurchaseRepository PurchaseRepository { get; }
 
         IOpinionRepository OpinionRepository { get; }
 
         public ProductOpinionsProvider(
-            IOrderProductRepository orderProductRepository,
+            IPurchaseRepository purchaseRepository,
             IOpinionRepository opinionRepository) {
 
-            OrderProductRepository = orderProductRepository;
+            PurchaseRepository = purchaseRepository;
             OpinionRepository = opinionRepository;
         }
 
         public IEnumerable<ProductOpinionDetails> Load(string productId) {
 
-            var orderProducts = OrderProductRepository.FindBy(new ProductOrderProductsFilter(new ProductId(productId)));
+            var purchases = PurchaseRepository.FindBy(new ProductPurchasesFilter(new ProductId(productId)));
 
-            var opinions = OpinionRepository.FindBy(orderProducts.Select(e => e.OpinionId));
+            var opinions = OpinionRepository.FindBy(purchases.Select(e => e.OpinionId));
 
             foreach (var opinion in opinions) {
 
                 yield return new ProductOpinionDetails {
                     Id = opinion.OpinionId.ToString(),
-                    Stars = opinion.Grade.Stars,
+                    Stars = opinion.Rating.Stars,
                     Text = opinion.Text,
                     IsHidden = opinion.IsHidden
                 };

@@ -5,8 +5,10 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using SupplementStore.Controllers.Services;
 using SupplementStore.DependencyResolving;
 using SupplementStore.Infrastructure;
+using System;
 
 namespace SupplementStore {
 
@@ -30,7 +32,13 @@ namespace SupplementStore {
             }).AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
 
-            DependencyResolver.Install(services);
+            AppDependencyResolver.Install(services);
+
+            services.AddTransient(typeof(Lazy<>), typeof(LazyWrapper<>));
+
+            services.AddTransient<RoleDirector>();
+            services.AddTransient<OwnerManager>();
+            services.AddTransient<AdminManager>();
 
             services.AddMvc(options => {
 

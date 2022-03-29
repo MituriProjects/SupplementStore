@@ -5,9 +5,9 @@ using SupplementStore.Domain.Products;
 
 namespace SupplementStore.Infrastructure.Configurations {
 
-    class OrderProductConfiguration : EntityConfiguration<OrderProduct> {
+    class PurchaseConfiguration : EntityConfiguration<Purchase> {
 
-        protected override void ConfigureEntity(EntityTypeBuilder<OrderProduct> builder) {
+        protected override void ConfigureEntity(EntityTypeBuilder<Purchase> builder) {
 
             builder.Ignore(e => e.OrderId);
             builder.HasOne<Order>()
@@ -22,7 +22,7 @@ namespace SupplementStore.Infrastructure.Configurations {
             builder.Ignore(e => e.OpinionId);
             builder.HasOne<Opinion>()
                 .WithOne()
-                .HasForeignKey<OrderProduct>("Opinion_Id");
+                .HasForeignKey<Purchase>("Opinion_Id");
         }
     }
 }

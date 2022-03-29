@@ -21,15 +21,15 @@
 
         @{
 
-            int CalculateGradeCount(IEnumerable<ProductOpinionDetails> productOpinions, int grade) =>
-                productOpinions.Where(e => e.Stars == grade).Count();
+            int CalculateRatingCount(IEnumerable<ProductOpinionDetails> productOpinions, int rating) =>
+                productOpinions.Where(e => e.Stars == rating).Count();
         }
 
-        <div>5 gwiazdek: @CalculateGradeCount(Model.Opinions, 5)</div>
-        <div>4 gwiazdki: @CalculateGradeCount(Model.Opinions, 4)</div>
-        <div>3 gwiazdki: @CalculateGradeCount(Model.Opinions, 3)</div>
-        <div>2 gwiazdki: @CalculateGradeCount(Model.Opinions, 2)</div>
-        <div>1 gwiazdka: @CalculateGradeCount(Model.Opinions, 1)</div>
+        <div>5 gwiazdek: @CalculateRatingCount(Model.Opinions, 5)</div>
+        <div>4 gwiazdki: @CalculateRatingCount(Model.Opinions, 4)</div>
+        <div>3 gwiazdki: @CalculateRatingCount(Model.Opinions, 3)</div>
+        <div>2 gwiazdki: @CalculateRatingCount(Model.Opinions, 2)</div>
+        <div>1 gwiazdka: @CalculateRatingCount(Model.Opinions, 1)</div>
     </div>
 
     @foreach (var opinion in Model.Opinions.Where(e => e.Text != null && e.IsHidden == false)) {
@@ -40,7 +40,7 @@
 
             <div>@opinion.Text</div>
 
-            @if (User.IsInRole("Owner") || User.IsInRole("Admin")) {
+            @if (User.IsInRole("Admin")) {
 
                 <div class="mt-1">
                     <form asp-controller="Opinion" asp-action="Hide" asp-route-id="@opinion.Id">

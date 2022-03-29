@@ -8,7 +8,7 @@
 <environment exclude="Testing">
 
     <div>
-        @if (User.IsInRole("Owner") || User.IsInRole("Admin")) {
+        @if (User.IsInRole("Admin")) {
 
             <a asp-controller="Product" asp-action="Create" class="btn btn-outline-success m-2">Nowy produkt</a>
         }
@@ -54,12 +54,12 @@
 
                 @{
 
-                    var productGrade = Model.ProductGrades[product.Id];
+                    var productRating = Model.ProductRatings[product.Id];
                 }
 
                 <span>Ocena:</span>
-                <span>@productGrade.Average</span>
-                <span>(@productGrade.Count)</span>
+                <span>@productRating.Average</span>
+                <span>(@productRating.Count)</span>
 
                 @if (User.Identity.IsAuthenticated) {
 
@@ -71,7 +71,7 @@
                          style="cursor:pointer;" />
                 }
 
-                @if (User.IsInRole("Owner") || User.IsInRole("Admin")) {
+                @if (User.IsInRole("Admin")) {
 
                     <a asp-controller="Product" asp-action="Edit" asp-route-id="@product.Id" class="btn btn-outline-primary">Edytuj</a>
                 }
@@ -171,10 +171,10 @@
         <div name="ProductName">@product.Name</div>
         <div name="ProductPrice">@product.Price.ToString()</div>
 
-        var productGrade = Model.ProductGrades[product.Id];
+        var productRating = Model.ProductRatings[product.Id];
 
-        <div name="AverageGrade">@productGrade.Average</div>
-        <div name="GradeCount">@productGrade.Count</div>
+        <div name="AverageRating">@productRating.Average</div>
+        <div name="RatingCount">@productRating.Count</div>
     }
 
 </environment>

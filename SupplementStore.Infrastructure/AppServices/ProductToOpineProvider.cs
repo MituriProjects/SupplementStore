@@ -11,7 +11,7 @@ namespace SupplementStore.Infrastructure.AppServices {
 
         IOrderRepository OrderRepository { get; }
 
-        IOrderProductRepository OrderProductRepository { get; }
+        IPurchaseRepository PurchaseRepository { get; }
 
         IProductRepository ProductRepository { get; }
 
@@ -19,12 +19,12 @@ namespace SupplementStore.Infrastructure.AppServices {
 
         public ProductToOpineProvider(
             IOrderRepository orderRepository,
-            IOrderProductRepository orderProductRepository,
+            IPurchaseRepository purchaseRepository,
             IProductRepository productRepository,
             IOpinionRepository opinionRepository) {
 
             OrderRepository = orderRepository;
-            OrderProductRepository = orderProductRepository;
+            PurchaseRepository = purchaseRepository;
             ProductRepository = productRepository;
             OpinionRepository = opinionRepository;
         }
@@ -33,21 +33,21 @@ namespace SupplementStore.Infrastructure.AppServices {
 
             var userOrders = OrderRepository.FindBy(new UserOrdersFilter(userId));
 
-            var orderProducts = OrderProductRepository.FindBy(new OrdersProductsFilter(userOrders.Select(e => e.OrderId)));
+            var ordersPurchases = PurchaseRepository.FindBy(new OrdersPurchasesFilter(userOrders.Select(e => e.OrderId)));
 
-            var orderProduct = orderProducts
+            var purchase = ordersPurchases
                 .FirstOrDefault(e => e.OpinionId == null);
 
-            if (orderProduct == null)
+            if (purchase == null)
                 return ProductToOpineResult.Empty;
 
-            var product = ProductRepository.FindBy(orderProduct.ProductId);
+            var product = ProductRepository.FindBy(purchase.ProductId);
 
             var order = userOrders
-                .First(e => e.OrderId == orderProduct.OrderId);
+                .First(e => e.OrderId == purchase.OrderId);
 
             return new ProductToOpineResult {
-                OrderProductId = orderProduct.OrderProductId.ToString(),
+                PurchaseId = purchase.PurchaseId.ToString(),
                 ProductName = product.Name,
                 BuyingDate = order.CreatedOn
             };

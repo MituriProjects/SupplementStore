@@ -51,7 +51,7 @@ namespace SupplementStore.Controllers {
 
                 var opinions = ProductOpinionsProvider.Load(product.Id);
 
-                model.ProductGrades[product.Id] = new ProductGrade {
+                model.ProductRatings[product.Id] = new ProductRating {
                     Average = opinions.Count() == 0 ? 0 : Math.Round(opinions.Average(e => e.Stars), 2),
                     Count = opinions.Count()
                 };
@@ -73,13 +73,13 @@ namespace SupplementStore.Controllers {
             });
         }
 
-        [Authorize(Roles = "Owner, Admin")]
+        [Authorize(Roles = "Admin")]
         public IActionResult Create() {
 
             return View("Edit", new ProductEditViewModel());
         }
 
-        [Authorize(Roles = "Owner, Admin")]
+        [Authorize(Roles = "Admin")]
         public IActionResult Edit(string id) {
 
             var product = ProductProvider.Load(id);
@@ -92,7 +92,7 @@ namespace SupplementStore.Controllers {
         }
 
         [HttpPost]
-        [Authorize(Roles = "Owner, Admin")]
+        [Authorize(Roles = "Admin")]
         public IActionResult Edit(ProductEditViewModel model) {
 
             if (ModelState.IsValid == false)

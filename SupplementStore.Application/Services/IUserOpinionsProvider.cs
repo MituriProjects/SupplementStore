@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace SupplementStore.Application.Services {
 
-    public interface IOpinionsProvider {
+    public interface IUserOpinionsProvider {
         IEnumerable<OpinionDetails> Load(string userId);
     }
 }

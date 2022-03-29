@@ -6,7 +6,7 @@ namespace SupplementStore.Application.Results {
 
         public bool IsEmpty { get; set; }
 
-        public string OrderProductId { get; set; }
+        public string PurchaseId { get; set; }
 
         public string ProductName { get; set; }
 

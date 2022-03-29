@@ -12,20 +12,20 @@ namespace SupplementStore.Infrastructure.AppServices {
 
         IBasketProductRepository BasketProductRepository { get; }
 
-        IOrderProductRepository OrderProductRepository { get; }
+        IPurchaseRepository PurchaseRepository { get; }
 
-        IDocumentApprover DocumentApprover { get; }
+        IDomainApprover DomainApprover { get; }
 
         public OrderCreator(
             IOrderRepository orderRepository,
             IBasketProductRepository basketProductRepository,
-            IOrderProductRepository orderProductRepository,
-            IDocumentApprover documentApprover) {
+            IPurchaseRepository purchaseRepository,
+            IDomainApprover domainApprover) {
 
             OrderRepository = orderRepository;
             BasketProductRepository = basketProductRepository;
-            OrderProductRepository = orderProductRepository;
-            DocumentApprover = documentApprover;
+            PurchaseRepository = purchaseRepository;
+            DomainApprover = domainApprover;
         }
 
         public OrderDetails Create(OrderCreatorArgs args) {
@@ -39,18 +39,18 @@ namespace SupplementStore.Infrastructure.AppServices {
 
             foreach (var basketProduct in BasketProductRepository.FindBy(new UserBasketProductsFilter(args.UserId))) {
 
-                var orderProduct = new OrderProduct {
+                var purchase = new Purchase {
                     OrderId = order.OrderId,
                     ProductId = basketProduct.ProductId,
                     Quantity = basketProduct.Quantity
                 };
 
-                OrderProductRepository.Add(orderProduct);
+                PurchaseRepository.Add(purchase);
 
                 BasketProductRepository.Delete(basketProduct.BasketProductId);
             }
 
-            DocumentApprover.SaveChanges();
+            DomainApprover.SaveChanges();
 
             return new OrderDetails {
                 Id = order.OrderId.ToString()

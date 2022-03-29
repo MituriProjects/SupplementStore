@@ -8,14 +8,14 @@ namespace SupplementStore.Infrastructure.AppServices {
 
         IBasketProductRepository BasketProductRepository { get; }
 
-        IDocumentApprover DocumentApprover { get; }
+        IDomainApprover DomainApprover { get; }
 
         public BasketProductRemover(
             IBasketProductRepository basketProductRepository,
-            IDocumentApprover documentApprover) {
+            IDomainApprover domainApprover) {
 
             BasketProductRepository = basketProductRepository;
-            DocumentApprover = documentApprover;
+            DomainApprover = domainApprover;
         }
 
         public void Remove(string userId, string productId) {
@@ -27,7 +27,7 @@ namespace SupplementStore.Infrastructure.AppServices {
 
             BasketProductRepository.Delete(basketProduct.BasketProductId);
 
-            DocumentApprover.SaveChanges();
+            DomainApprover.SaveChanges();
         }
     }
 }

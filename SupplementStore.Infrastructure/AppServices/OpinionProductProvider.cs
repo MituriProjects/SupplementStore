@@ -3,34 +3,31 @@ using SupplementStore.Application.Services;
 using SupplementStore.Domain.Opinions;
 using SupplementStore.Domain.Orders;
 using SupplementStore.Domain.Products;
+using SupplementStore.Infrastructure.AppModels;
 
 namespace SupplementStore.Infrastructure.AppServices {
 
     public class OpinionProductProvider : IOpinionProductProvider {
 
-        IOrderProductRepository OrderProductRepository { get; }
+        IPurchaseRepository PurchaseRepository { get; }
 
         IProductRepository ProductRepository { get; }
 
         public OpinionProductProvider(
-            IOrderProductRepository orderProductRepository,
+            IPurchaseRepository purchaseRepository,
             IProductRepository productRepository) {
 
-            OrderProductRepository = orderProductRepository;
+            PurchaseRepository = purchaseRepository;
             ProductRepository = productRepository;
         }
 
         public ProductDetails Load(string opinionId) {
 
-            var orderProduct = OrderProductRepository.FindBy(new OpinionOrderProductFilter(new OpinionId(opinionId)));
+            var purchase = PurchaseRepository.FindBy(new OpinionPurchaseFilter(new OpinionId(opinionId)));
 
-            var product = ProductRepository.FindBy(orderProduct.ProductId);
+            var product = ProductRepository.FindBy(purchase.ProductId);
 
-            return new ProductDetails {
-                Id = product.ProductId.ToString(),
-                Name = product.Name,
-                Price = product.Price
-            };
+            return ProductDetailsFactory.Create(product);
         }
     }
 }

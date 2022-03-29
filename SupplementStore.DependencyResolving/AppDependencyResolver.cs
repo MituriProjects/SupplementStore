@@ -12,17 +12,17 @@ using SupplementStore.Infrastructure.Repositories;
 
 namespace SupplementStore.DependencyResolving {
 
-    public static class DependencyResolver {
+    public static class AppDependencyResolver {
 
         public static void Install(IServiceCollection services) {
 
             services.AddTransient(typeof(IDocument<>), typeof(Document<>));
-            services.AddTransient<IDocumentApprover, DocumentApprover>();
+            services.AddTransient<IDomainApprover, DocumentApprover>();
 
             services.AddTransient(typeof(IRepository<>), typeof(Repository<>));
             services.AddTransient<IBasketProductRepository, BasketProductRepository>();
             services.AddTransient<IOrderRepository, OrderRepository>();
-            services.AddTransient<IOrderProductRepository, OrderProductRepository>();
+            services.AddTransient<IPurchaseRepository, PurchaseRepository>();
             services.AddTransient<IProductRepository, ProductRepository>();
             services.AddTransient<IWishRepository, WishRepository>();
             services.AddTransient<IOpinionRepository, OpinionRepository>();
@@ -47,7 +47,7 @@ namespace SupplementStore.DependencyResolving {
             services.AddTransient<IOpinionProductProvider, OpinionProductProvider>();
             services.AddTransient<IProductOpinionsProvider, ProductOpinionsProvider>();
             services.AddTransient<IOpinionProvider, OpinionProvider>();
-            services.AddTransient<IOpinionsProvider, OpinionsProvider>();
+            services.AddTransient<IUserOpinionsProvider, UserOpinionsProvider>();
             services.AddTransient<IHiddenOpinionsProvider, HiddenOpinionsProvider>();
             services.AddTransient<IOpinionCreator, OpinionCreator>();
             services.AddTransient<IOpinionTextUpdater, OpinionTextUpdater>();

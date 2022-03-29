@@ -2,6 +2,7 @@
 using SupplementStore.Application.Services;
 using SupplementStore.Domain.Orders;
 using SupplementStore.Domain.Products;
+using SupplementStore.Infrastructure.AppModels;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -11,17 +12,17 @@ namespace SupplementStore.Infrastructure.AppServices {
 
         IOrderRepository OrderRepository { get; }
 
-        IOrderProductRepository OrderProductRepository { get; }
+        IPurchaseRepository PurchaseRepository { get; }
 
         IProductRepository ProductRepository { get; }
 
         public OrdersProvider(
             IOrderRepository orderRepository,
-            IOrderProductRepository orderProductRepository,
+            IPurchaseRepository purchaseRepository,
             IProductRepository productRepository) {
 
             OrderRepository = orderRepository;
-            OrderProductRepository = orderProductRepository;
+            PurchaseRepository = purchaseRepository;
             ProductRepository = productRepository;
         }
 
@@ -29,28 +30,15 @@ namespace SupplementStore.Infrastructure.AppServices {
 
             var orders = OrderRepository.Entities.ToList();
 
-            var ordersProducts = OrderProductRepository.FindBy(new OrdersProductsFilter(orders.Select(e => e.OrderId)));
+            var ordersPurchases = PurchaseRepository.FindBy(new OrdersPurchasesFilter(orders.Select(e => e.OrderId)));
 
             var products = ProductRepository.Entities
-                .Where(e => ordersProducts.Select(o => o.ProductId).Contains(e.ProductId))
+                .Where(e => ordersPurchases.Select(o => o.ProductId).Contains(e.ProductId))
                 .ToList();
 
             foreach (var order in orders) {
 
-                yield return new OrderDetails {
-                    Id = order.OrderId.ToString(),
-                    UserId = order.UserId,
-                    Address = order.Address.Street,
-                    PostalCode = order.Address.PostalCode,
-                    City = order.Address.City,
-                    CreatedOn = order.CreatedOn,
-                    OrderProducts = ordersProducts.Where(e => e.OrderId == order.OrderId).Select(e => new OrderProductDetails {
-                        ProductId = e.ProductId.ToString(),
-                        ProductName = products.First(p => p.ProductId == e.ProductId).Name,
-                        ProductPrice = products.First(p => p.ProductId == e.ProductId).Price,
-                        Quantity = e.Quantity
-                    }).ToList()
-                };
+                yield return OrderDetailsFactory.Create(order, PurchaseDetailsFactory.Create(ordersPurchases, products));
             }
         }
     }

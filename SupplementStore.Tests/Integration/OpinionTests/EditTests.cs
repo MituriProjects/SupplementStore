@@ -37,13 +37,13 @@ namespace SupplementStore.Tests.Integration.OpinionTests {
 
             var product = TestEntity.Random<Product>();
             var order = TestEntity.Random<Order>();
-            var orderProduct = TestEntity.Random<OrderProduct>();
+            var purchase = TestEntity.Random<Purchase>();
             var opinion = TestEntity.Random<Opinion>()
-                .WithOrderProductId(orderProduct.OrderProductId);
-            orderProduct
-                .WithOpinionId(opinion.OpinionId)
-                .WithOrderId(order.OrderId)
-                .WithProductId(product.ProductId);
+                .WithPurchaseId(purchase);
+            purchase
+                .WithOpinionId(opinion)
+                .WithOrderId(order)
+                .WithProductId(product);
 
             await GetAsync($"/Opinion/Edit/{opinion.OpinionId}", TestData.Admin);
 
@@ -82,12 +82,12 @@ namespace SupplementStore.Tests.Integration.OpinionTests {
         public async Task Post_UserIsAuthorized_RedirectsToProductDetails() {
 
             var product = TestEntity.Random<Product>();
-            var orderProduct = TestEntity.Random<OrderProduct>();
+            var purchase = TestEntity.Random<Purchase>();
             var opinion = TestEntity.Random<Opinion>()
-                .WithOrderProductId(orderProduct.OrderProductId);
-            orderProduct
-                .WithOpinionId(opinion.OpinionId)
-                .WithProductId(product.ProductId);
+                .WithPurchaseId(purchase);
+            purchase
+                .WithOpinionId(opinion)
+                .WithProductId(product);
 
             var formData = new Dictionary<string, string> {
                 { "Id", opinion.OpinionId.ToString() },
@@ -103,12 +103,12 @@ namespace SupplementStore.Tests.Integration.OpinionTests {
         public async Task Post_OpinionIdIsValid_UpdatesOpinionText() {
 
             var product = TestEntity.Random<Product>();
-            var orderProduct = TestEntity.Random<OrderProduct>();
+            var purchase = TestEntity.Random<Purchase>();
             var opinion = TestEntity.Random<Opinion>()
-                .WithOrderProductId(orderProduct.OrderProductId);
-            orderProduct
-                .WithOpinionId(opinion.OpinionId)
-                .WithProductId(product.ProductId);
+                .WithPurchaseId(purchase);
+            purchase
+                .WithOpinionId(opinion)
+                .WithProductId(product);
 
             var formData = new Dictionary<string, string> {
                 { "Id", opinion.OpinionId.ToString() },

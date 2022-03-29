@@ -7,43 +7,43 @@ namespace SupplementStore.Infrastructure.AppServices {
 
     public class OpinionCreator : IOpinionCreator {
 
-        IOrderProductRepository OrderProductRepository { get; }
+        IPurchaseRepository PurchaseRepository { get; }
 
         IOpinionRepository OpinionRepository { get; }
 
-        IDocumentApprover DocumentApprover { get; }
+        IDomainApprover DomainApprover { get; }
 
         public OpinionCreator(
-            IOrderProductRepository orderProductRepository,
+            IPurchaseRepository purchaseRepository,
             IOpinionRepository opinionRepository,
-            IDocumentApprover documentApprover) {
+            IDomainApprover domainApprover) {
 
-            OrderProductRepository = orderProductRepository;
+            PurchaseRepository = purchaseRepository;
             OpinionRepository = opinionRepository;
-            DocumentApprover = documentApprover;
+            DomainApprover = domainApprover;
         }
 
         public void Create(OpinionCreatorArgs args) {
 
-            var orderProduct = OrderProductRepository.FindBy(new OrderProductId(args.OrderProductId));
+            var purchase = PurchaseRepository.FindBy(new PurchaseId(args.PurchaseId));
 
-            if (orderProduct == null)
+            if (purchase == null)
                 return;
 
-            if (orderProduct.OpinionId != null)
+            if (purchase.OpinionId != null)
                 return;
 
             var opinion = new Opinion {
-                OrderProductId = new OrderProductId(args.OrderProductId),
+                PurchaseId = new PurchaseId(args.PurchaseId),
                 Text = args.Text,
-                Grade = new Grade(args.Stars)
+                Rating = new Rating(args.Stars)
             };
 
             OpinionRepository.Add(opinion);
 
-            orderProduct.OpinionId = opinion.OpinionId;
+            purchase.OpinionId = opinion.OpinionId;
 
-            DocumentApprover.SaveChanges();
+            DomainApprover.SaveChanges();
         }
     }
 }

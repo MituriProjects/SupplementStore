@@ -35,12 +35,12 @@ namespace SupplementStore.Tests.Integration.OpinionTests {
         public async Task UserIsAuthorized_RedirectsToProductDetails() {
 
             var product = TestEntity.Random<Product>();
-            var orderProduct = TestEntity.Random<OrderProduct>();
+            var purchase = TestEntity.Random<Purchase>();
             var opinion = TestEntity.Random<Opinion>()
-                .WithOrderProductId(orderProduct.OrderProductId);
-            orderProduct
-                .WithOpinionId(opinion.OpinionId)
-                .WithProductId(product.ProductId);
+                .WithPurchaseId(purchase);
+            purchase
+                .WithOpinionId(opinion)
+                .WithProductId(product);
 
             await PostAsync($"/Opinion/Hide/{opinion.OpinionId}", TestData.Admin);
 
@@ -51,12 +51,12 @@ namespace SupplementStore.Tests.Integration.OpinionTests {
         public async Task OpinionIdIsValid_HidesOpinion() {
 
             var product = TestEntity.Random<Product>();
-            var orderProduct = TestEntity.Random<OrderProduct>();
+            var purchase = TestEntity.Random<Purchase>();
             var opinion = TestEntity.Random<Opinion>()
-                .WithOrderProductId(orderProduct.OrderProductId);
-            orderProduct
-                .WithOpinionId(opinion.OpinionId)
-                .WithProductId(product.ProductId);
+                .WithPurchaseId(purchase);
+            purchase
+                .WithOpinionId(opinion)
+                .WithProductId(product);
 
             await PostAsync($"/Opinion/Hide/{opinion.OpinionId}", TestData.Admin);
 

@@ -1,6 +1,6 @@
 ﻿namespace SupplementStore.Application.Models {
 
-    public class OrderProductDetails {
+    public class PurchaseDetails {
 
         public string ProductId { get; set; }
 

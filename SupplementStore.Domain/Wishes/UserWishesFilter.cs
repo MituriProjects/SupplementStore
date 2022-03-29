@@ -14,7 +14,7 @@ namespace SupplementStore.Domain.Wishes {
 
         public IEnumerable<Wish> Process(IQueryable<Wish> entities) {
 
-            return entities.Where(e => e.UserId == UserId).ToList();
+            return entities.Where(e => e.UserId == UserId);
         }
     }
 }

@@ -14,26 +14,26 @@ namespace SupplementStore.Tests.Integration.ProductTests {
         public async Task DefaultSkipAndTake_ReturnsDetailsOfProducts() {
 
             var products = TestEntity.Random<Product>(2);
-            var orderProducts = TestEntity.Random<OrderProduct>(3);
+            var purchases = TestEntity.Random<Purchase>(3);
             var opinions = TestEntity.Random<Opinion>(3);
             opinions[0]
-                .WithGrade(new Grade(3))
-                .WithOrderProductId(orderProducts[1].OrderProductId);
+                .WithRating(new Rating(3))
+                .WithPurchaseId(purchases[1]);
             opinions[1]
-                .WithGrade(new Grade(5))
-                .WithOrderProductId(orderProducts[2].OrderProductId);
+                .WithRating(new Rating(5))
+                .WithPurchaseId(purchases[2]);
             opinions[2]
-                .WithGrade(new Grade(2))
-                .WithOrderProductId(orderProducts[0].OrderProductId);
-            orderProducts[0]
-                .WithProductId(products[0].ProductId)
-                .WithOpinionId(opinions[2].OpinionId);
-            orderProducts[1]
-                .WithProductId(products[1].ProductId)
-                .WithOpinionId(opinions[0].OpinionId);
-            orderProducts[2]
-                .WithProductId(products[0].ProductId)
-                .WithOpinionId(opinions[1].OpinionId);
+                .WithRating(new Rating(2))
+                .WithPurchaseId(purchases[0]);
+            purchases[0]
+                .WithProductId(products[0])
+                .WithOpinionId(opinions[2]);
+            purchases[1]
+                .WithProductId(products[1])
+                .WithOpinionId(opinions[0]);
+            purchases[2]
+                .WithProductId(products[0])
+                .WithOpinionId(opinions[1]);
 
             await GetAsync("/Product");
 
@@ -41,13 +41,13 @@ namespace SupplementStore.Tests.Integration.ProductTests {
                 .Contains("ProductId", products[0].ProductId)
                 .Contains("ProductName", products[0].Name)
                 .Contains("ProductPrice", products[0].Price)
-                .Contains("AverageGrade", "3,5")
-                .Contains("GradeCount", 2)
+                .Contains("AverageRating", "3,5")
+                .Contains("RatingCount", 2)
                 .Contains("ProductId", products[1].ProductId)
                 .Contains("ProductName", products[1].Name)
                 .Contains("ProductPrice", products[1].Price)
-                .Contains("AverageGrade", "3")
-                .Contains("GradeCount", 1));
+                .Contains("AverageRating", "3")
+                .Contains("RatingCount", 1));
         }
 
         [TestMethod]
@@ -65,20 +65,20 @@ namespace SupplementStore.Tests.Integration.ProductTests {
         public async Task SkipEquals2AndTakeEquals2_ReturnsDetailsOfProducts() {
 
             var products = TestEntity.Random<Product>(5);
-            var orderProducts = TestEntity.Random<OrderProduct>(2);
+            var purchases = TestEntity.Random<Purchase>(2);
             var opinions = TestEntity.Random<Opinion>(2);
             opinions[0]
-                .WithGrade(new Grade(4))
-                .WithOrderProductId(orderProducts[0].OrderProductId);
+                .WithRating(new Rating(4))
+                .WithPurchaseId(purchases[0]);
             opinions[1]
-                .WithGrade(new Grade(1))
-                .WithOrderProductId(orderProducts[1].OrderProductId);
-            orderProducts[0]
-                .WithProductId(products[3].ProductId)
-                .WithOpinionId(opinions[0].OpinionId);
-            orderProducts[1]
-                .WithProductId(products[1].ProductId)
-                .WithOpinionId(opinions[1].OpinionId);
+                .WithRating(new Rating(1))
+                .WithPurchaseId(purchases[1]);
+            purchases[0]
+                .WithProductId(products[3])
+                .WithOpinionId(opinions[0]);
+            purchases[1]
+                .WithProductId(products[1])
+                .WithOpinionId(opinions[1]);
 
             await GetAsync("/Product?Skip=2&Take=2");
 
@@ -90,7 +90,7 @@ namespace SupplementStore.Tests.Integration.ProductTests {
                     contentScheme.Lacks("ProductId", products[i].ProductId);
                     contentScheme.Lacks("ProductName", products[i].Name);
                     contentScheme.Lacks("ProductPrice", products[i].Price);
-                    contentScheme.Lacks("AverageGrade", 1);
+                    contentScheme.Lacks("AverageRating", 1);
                 }
                 else {
 
@@ -100,14 +100,14 @@ namespace SupplementStore.Tests.Integration.ProductTests {
 
                     if (i == 2) {
 
-                        contentScheme.Contains("AverageGrade", 0);
-                        contentScheme.Contains("GradeCount", 0);
+                        contentScheme.Contains("AverageRating", 0);
+                        contentScheme.Contains("RatingCount", 0);
                     }
 
                     if (i == 3) {
 
-                        contentScheme.Contains("AverageGrade", 4);
-                        contentScheme.Contains("GradeCount", 1);
+                        contentScheme.Contains("AverageRating", 4);
+                        contentScheme.Contains("RatingCount", 1);
                     }
                 }
             }

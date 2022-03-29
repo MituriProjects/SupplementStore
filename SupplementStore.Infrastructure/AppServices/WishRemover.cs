@@ -8,21 +8,21 @@ namespace SupplementStore.Infrastructure.AppServices {
 
         IWishRepository WishRepository { get; }
 
-        IDocumentApprover DocumentApprover { get; }
+        IDomainApprover DomainApprover { get; }
 
         public WishRemover(
             IWishRepository wishRepository,
-            IDocumentApprover documentApprover) {
+            IDomainApprover domainApprover) {
 
             WishRepository = wishRepository;
-            DocumentApprover = documentApprover;
+            DomainApprover = domainApprover;
         }
 
         public void Remove(string userId, string productId) {
 
             WishRepository.Delete(userId, new ProductId(productId));
 
-            DocumentApprover.SaveChanges();
+            DomainApprover.SaveChanges();
         }
     }
 }

@@ -8,14 +8,14 @@ namespace SupplementStore.Infrastructure.AppServices {
 
         IBasketProductRepository BasketProductRepository { get; }
 
-        IDocumentApprover DocumentApprover { get; }
+        IDomainApprover DomainApprover { get; }
 
         public BasketProductUpdater(
             IBasketProductRepository basketProductRepository,
-            IDocumentApprover documentApprover) {
+            IDomainApprover domainApprover) {
 
             BasketProductRepository = basketProductRepository;
-            DocumentApprover = documentApprover;
+            DomainApprover = domainApprover;
         }
 
         public void Update(BasketProductDetails basketProductDetails) {
@@ -27,7 +27,7 @@ namespace SupplementStore.Infrastructure.AppServices {
 
             basketProduct.Quantity = basketProductDetails.Quantity;
 
-            DocumentApprover.SaveChanges();
+            DomainApprover.SaveChanges();
         }
     }
 }

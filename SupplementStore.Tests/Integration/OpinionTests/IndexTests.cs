@@ -26,38 +26,38 @@ namespace SupplementStore.Tests.Integration.OpinionTests {
                 .WithUserId(TestData.User.Id);
             orders[1]
                 .WithUserId(TestData.User.Id);
-            var orderProducts = TestEntity.Random<OrderProduct>(3);
-            orderProducts[0]
-                .WithOrderId(orders[0].OrderId)
-                .WithProductId(products[0].ProductId);
-            orderProducts[1]
-                .WithOrderId(orders[0].OrderId)
-                .WithProductId(products[1].ProductId);
-            orderProducts[2]
-                .WithOrderId(orders[1].OrderId)
-                .WithProductId(products[2].ProductId)
+            var purchases = TestEntity.Random<Purchase>(3);
+            purchases[0]
+                .WithOrderId(orders[0])
+                .WithProductId(products[0]);
+            purchases[1]
+                .WithOrderId(orders[0])
+                .WithProductId(products[1]);
+            purchases[2]
+                .WithOrderId(orders[1])
+                .WithProductId(products[2])
                 .WithOpinionId(null);
             var opinions = TestEntity.Random<Opinion>(2);
             opinions[0]
-                .WithGrade(new Grade(2))
-                .WithOrderProductId(orderProducts[0].OrderProductId);
+                .WithRating(new Rating(2))
+                .WithPurchaseId(purchases[0]);
             opinions[1]
-                .WithGrade(new Grade(3))
-                .WithOrderProductId(orderProducts[1].OrderProductId);
-            orderProducts[0]
-                .WithOpinionId(opinions[0].OpinionId);
-            orderProducts[1]
-                .WithOpinionId(opinions[1].OpinionId);
+                .WithRating(new Rating(3))
+                .WithPurchaseId(purchases[1]);
+            purchases[0]
+                .WithOpinionId(opinions[0]);
+            purchases[1]
+                .WithOpinionId(opinions[1]);
 
             await GetAsync("/Opinion", TestData.User);
 
             Examine(ContentScheme.Html()
                 .Contains("IsProductToOpineWaiting", true)
                 .Contains("ProductName", products[0].Name)
-                .Contains("Stars", opinions[0].Grade.Stars)
+                .Contains("Stars", opinions[0].Rating.Stars)
                 .Contains("Text", opinions[0].Text)
                 .Contains("ProductName", products[1].Name)
-                .Contains("Stars", opinions[1].Grade.Stars)
+                .Contains("Stars", opinions[1].Rating.Stars)
                 .Contains("Text", opinions[1].Text)
                 .Contains("BuyingDate", orders[0].CreatedOn)
                 .Lacks("ProductName", products[2].Name)
