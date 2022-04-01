@@ -8,6 +8,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -79,6 +80,35 @@ namespace SupplementStore.Tests.Integration {
             try {
 
                 var response = await Client.PostAsync(requestUri, formContent);
+
+                Content = await response.Content.ReadAsStringAsync();
+
+                Headers = response.Headers;
+            }
+            catch (Exception e) {
+
+                ExceptionThrown = e;
+            }
+        }
+
+        protected async Task PostAsync(string requestUri, Dictionary<string, string> formData, FormFileData formFileData, IdentityUser user = null) {
+
+            await ManageAuthentication(user);
+
+            var content = new MultipartFormDataContent {
+                { new StreamContent(new MemoryStream(formFileData.Bytes)), formFileData.Name, formFileData.FileName }
+            };
+
+            formData = await ArrangeAntiforgeryFormData(formData);
+
+            foreach (var dataPiece in formData) {
+
+                content.Add(new StringContent(dataPiece.Value), dataPiece.Key);
+            }
+
+            try {
+
+                var response = await Client.PostAsync(requestUri, content);
 
                 Content = await response.Content.ReadAsStringAsync();
 
