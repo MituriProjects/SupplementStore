@@ -45,6 +45,8 @@ namespace SupplementStore.Tests.Integration {
             ExceptionThrown = null;
 
             TestDocumentApprover.ClearDocuments();
+
+            Mocks.Reset();
         }
 
         IdentityUser User { get; set; }
