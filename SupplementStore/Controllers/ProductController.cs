@@ -1,11 +1,14 @@
 ﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using SupplementStore.Application.Args;
 using SupplementStore.Application.Models;
 using SupplementStore.Application.Services;
+using SupplementStore.Controllers.Services;
 using SupplementStore.ViewModels.Product;
 using System;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace SupplementStore.Controllers {
 
@@ -21,18 +24,26 @@ namespace SupplementStore.Controllers {
 
         IProductUpdater ProductUpdater { get; }
 
+        IProductImageCreator ProductImageCreator { get; }
+
+        IFileWriter FileWriter { get; }
+
         public ProductController(
             IProductProvider productProvider,
             IProductsProvider productsProvider,
             IProductOpinionsProvider productOpinionsProvider,
             IProductCreator productCreator,
-            IProductUpdater productUpdater) {
+            IProductUpdater productUpdater,
+            IProductImageCreator productImageCreator,
+            IFileWriter fileWriter) {
 
             ProductProvider = productProvider;
             ProductsProvider = productsProvider;
             ProductOpinionsProvider = productOpinionsProvider;
             ProductCreator = productCreator;
             ProductUpdater = productUpdater;
+            ProductImageCreator = productImageCreator;
+            FileWriter = fileWriter;
         }
 
         public IActionResult Index(ProductIndexViewModel model) {
@@ -112,6 +123,20 @@ namespace SupplementStore.Controllers {
             });
 
             return RedirectToAction(nameof(Details), new { model.Id });
+        }
+
+        [HttpPost]
+        [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> AddImage(string productId, IFormFile file) {
+
+            var productImageCreatorResult = ProductImageCreator.Create(productId, file.FileName);
+
+            if (productImageCreatorResult.Success) {
+
+                await FileWriter.ProcessAsync(file, "productImages", productId);
+            }
+
+            return RedirectToAction(nameof(Details), new { Id = productId });
         }
     }
 }
