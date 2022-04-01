@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using SupplementStore.Controllers.Services;
 using SupplementStore.Infrastructure;
 
 namespace SupplementStore.Tests {
@@ -24,6 +25,8 @@ namespace SupplementStore.Tests {
 
             services.AddTransient(typeof(IDocument<>), typeof(TestDocument<>));
             services.AddTransient(typeof(IDomainApprover), typeof(TestDocumentApprover));
+
+            services.AddTransient(typeof(IFileWriter), s => Mocks.FileWriterMock.Object);
         }
 
         protected override void Reconfigure(IApplicationBuilder app, IHostingEnvironment env) {
