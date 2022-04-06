@@ -13,9 +13,20 @@
                 if (image.index == 0) {
 
                     <li data-image-index="@image.index">
+
                         <img src="~/productImages/@Model.Product.Id/@image.value"
                              alt="product image titled @image.value"
                              width="150" />
+
+                        @if (User.IsInRole("Admin")) {
+
+                            <form asp-controller="Product" asp-action="RemoveImage">
+                                <input hidden name="ProductId" value="@Model.Product.Id" />
+                                <input hidden name="ImageName" value="@image.value" />
+                                <button type="submit" class="btn btn-outline-primary" title="Usuń">&#x1F5D1</button>
+                            </form>
+                        }
+
                     </li>
                 }
                 else {
@@ -28,11 +39,21 @@
 
                         @if (User.IsInRole("Admin")) {
 
-                            <form asp-controller="Product" asp-action="SetImageAsMain">
-                                <input hidden name="ProductId" value="@Model.Product.Id" />
-                                <input hidden name="ImageName" value="@image.value" />
-                                <button type="submit" class="btn btn-outline-primary" title="Ustaw jako główny">&#x272A</button>
-                            </form>
+                            <div>
+
+                                <form asp-controller="Product" asp-action="SetImageAsMain" class="d-inline-block">
+                                    <input hidden name="ProductId" value="@Model.Product.Id" />
+                                    <input hidden name="ImageName" value="@image.value" />
+                                    <button type="submit" class="btn btn-outline-primary" title="Ustaw jako główny">&#x272A</button>
+                                </form>
+
+                                <form asp-controller="Product" asp-action="RemoveImage" class="d-inline-block">
+                                    <input hidden name="ProductId" value="@Model.Product.Id" />
+                                    <input hidden name="ImageName" value="@image.value" />
+                                    <button type="submit" class="btn btn-outline-primary" title="Usuń">&#x1F5D1</button>
+                                </form>
+
+                            </div>
                         }
 
                     </li>
