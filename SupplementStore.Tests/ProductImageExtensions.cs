@@ -17,5 +17,12 @@ namespace SupplementStore.Tests {
 
             return productImage;
         }
+
+        public static ProductImage WithIsMain(this ProductImage productImage, bool isMain) {
+
+            productImage.IsMain = isMain;
+
+            return productImage;
+        }
     }
 }
