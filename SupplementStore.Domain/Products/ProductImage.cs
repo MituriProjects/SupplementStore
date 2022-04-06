@@ -14,5 +14,7 @@ namespace SupplementStore.Domain.Products {
         public ProductId ProductId { get; set; }
 
         public string Name { get; set; }
+
+        public bool IsMain { get; set; }
     }
 }
