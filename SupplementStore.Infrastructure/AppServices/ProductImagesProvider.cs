@@ -20,7 +20,8 @@ namespace SupplementStore.Infrastructure.AppServices {
             return ProductImageRepository
                 .FindBy(new ProductImagesFilter(new ProductId(productId)))
                 .Select(e => new ProductImageDetails {
-                    Name = e.Name
+                    Name = e.Name,
+                    IsMain = e.IsMain
                 })
                 .ToList();
         }
