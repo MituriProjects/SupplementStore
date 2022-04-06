@@ -29,6 +29,11 @@ namespace SupplementStore.Infrastructure.AppServices {
             if (product == null)
                 return ProductImageCreatorResult.Failed;
 
+            var productImage = ProductImageRepository.FindBy(new ProductImageFilter(product.ProductId, imageName));
+
+            if (productImage != null)
+                return ProductImageCreatorResult.Failed;
+
             ProductImageRepository.Add(new ProductImage {
                 ProductId = new ProductId(productId),
                 Name = imageName

@@ -107,5 +107,40 @@ namespace SupplementStore.Tests.Integration.ProductTests {
 
             Mocks.FileWriterMock.Verify(m => m.ProcessAsync(It.Is<IFormFile>(f => f.FileName == "test.txt"), "productImages", formData["ProductId"]), Times.Never);
         }
+
+        [TestMethod]
+        public async Task ProductImageExists_NoProductImageCreation() {
+
+            var product = TestEntity.Random<Product>();
+            var productImage = TestEntity.Random<ProductImage>()
+                .WithProductId(product);
+
+            var formFileData = new FormFileData("This is a test file", "File", productImage.Name);
+            var formData = new Dictionary<string, string> {
+                { "ProductId", product.ProductId.ToString() }
+            };
+
+            await PostAsync("/Product/AddImage", formData, formFileData, TestData.Admin);
+
+            TestDocument<ProductImage>.Single(e => e.ProductId == new ProductId(formData["ProductId"]) && e.Name == formFileData.FileName);
+            TestDocumentApprover.ExamineNoChangesSaved();
+        }
+
+        [TestMethod]
+        public async Task ProductImageExists_NoFileDataProcessingByFileWriter() {
+
+            var product = TestEntity.Random<Product>();
+            var productImage = TestEntity.Random<ProductImage>()
+                .WithProductId(product);
+
+            var formFileData = new FormFileData("This is a test file", "File", productImage.Name);
+            var formData = new Dictionary<string, string> {
+                { "ProductId", product.ProductId.ToString() }
+            };
+
+            await PostAsync("/Product/AddImage", formData, formFileData, TestData.Admin);
+
+            Mocks.FileWriterMock.Verify(m => m.ProcessAsync(It.Is<IFormFile>(f => f.FileName == productImage.Name), "productImages", formData["ProductId"]), Times.Never);
+        }
     }
 }
