@@ -198,6 +198,12 @@ namespace SupplementStore.Tests.Integration {
                 throw new AssertFailedException($"No expected exception was detected. Expected: {typeof(TException).FullName}; Actual: {ExceptionThrown.GetType().FullName};");
         }
 
+        protected void ExamineNoExceptionThrown() {
+
+            if (ExceptionThrown != null)
+                throw new AssertFailedException($"Exception was thrown. \nException: {ExceptionThrown}");
+        }
+
         void AssertAgainstRedirection() {
 
             Assert.IsNotNull(Headers, "No headers from the previous request were detected.");
