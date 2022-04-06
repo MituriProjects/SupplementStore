@@ -28,6 +28,8 @@ namespace SupplementStore.Controllers {
 
         IProductImageCreator ProductImageCreator { get; }
 
+        IMainProductImageAppointer MainProductImageAppointer { get; }
+
         IFileWriter FileWriter { get; }
 
         public ProductController(
@@ -38,6 +40,7 @@ namespace SupplementStore.Controllers {
             IProductUpdater productUpdater,
             IProductImagesProvider productImagesProvider,
             IProductImageCreator productImageCreator,
+            IMainProductImageAppointer mainProductImageAppointer,
             IFileWriter fileWriter) {
 
             ProductProvider = productProvider;
@@ -47,6 +50,7 @@ namespace SupplementStore.Controllers {
             ProductUpdater = productUpdater;
             ProductImagesProvider = productImagesProvider;
             ProductImageCreator = productImageCreator;
+            MainProductImageAppointer = mainProductImageAppointer;
             FileWriter = fileWriter;
         }
 
@@ -143,6 +147,15 @@ namespace SupplementStore.Controllers {
 
                 await FileWriter.ProcessAsync(file, "productImages", productId);
             }
+
+            return RedirectToAction(nameof(Details), new { Id = productId });
+        }
+
+        [HttpPost]
+        [Authorize(Roles = "Admin")]
+        public IActionResult SetImageAsMain(string productId, string imageName) {
+
+            MainProductImageAppointer.Perform(productId, imageName);
 
             return RedirectToAction(nameof(Details), new { Id = productId });
         }
