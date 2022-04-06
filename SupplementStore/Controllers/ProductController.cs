@@ -28,6 +28,8 @@ namespace SupplementStore.Controllers {
 
         IProductImageCreator ProductImageCreator { get; }
 
+        IProductImageRemover ProductImageRemover { get; }
+
         IMainProductImageAppointer MainProductImageAppointer { get; }
 
         IFileWriter FileWriter { get; }
@@ -40,6 +42,7 @@ namespace SupplementStore.Controllers {
             IProductUpdater productUpdater,
             IProductImagesProvider productImagesProvider,
             IProductImageCreator productImageCreator,
+            IProductImageRemover productImageRemover,
             IMainProductImageAppointer mainProductImageAppointer,
             IFileWriter fileWriter) {
 
@@ -50,6 +53,7 @@ namespace SupplementStore.Controllers {
             ProductUpdater = productUpdater;
             ProductImagesProvider = productImagesProvider;
             ProductImageCreator = productImageCreator;
+            ProductImageRemover = productImageRemover;
             MainProductImageAppointer = mainProductImageAppointer;
             FileWriter = fileWriter;
         }
@@ -156,6 +160,20 @@ namespace SupplementStore.Controllers {
         public IActionResult SetImageAsMain(string productId, string imageName) {
 
             MainProductImageAppointer.Perform(productId, imageName);
+
+            return RedirectToAction(nameof(Details), new { Id = productId });
+        }
+
+        [HttpPost]
+        [Authorize(Roles = "Admin")]
+        public IActionResult RemoveImage(string productId, string imageName) {
+
+            var productImageRemoverResult = ProductImageRemover.Remove(productId, imageName);
+
+            if (productImageRemoverResult.Success) {
+
+                FileWriter.Delete(imageName, "productImages", productId);
+            }
 
             return RedirectToAction(nameof(Details), new { Id = productId });
         }
