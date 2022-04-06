@@ -14,6 +14,15 @@ namespace SupplementStore.Tests.Integration.ProductTests {
         public async Task IdIsValid_ReturnsProductDetails() {
 
             var products = TestEntity.Random<Product>(3);
+            var productImages = TestEntity.Random<ProductImage>(4);
+            productImages[0]
+                .WithProductId(products[1]);
+            productImages[1]
+                .WithProductId(products[2]);
+            productImages[2]
+                .WithProductId(products[0]);
+            productImages[3]
+                .WithProductId(products[1]);
             var purchases = TestEntity.Random<Purchase>(3);
             var opinions = TestEntity.Random<Opinion>(2);
             opinions[0]
@@ -34,6 +43,8 @@ namespace SupplementStore.Tests.Integration.ProductTests {
                 .Contains("ProductId", products[1].ProductId)
                 .Contains("ProductName", products[1].Name)
                 .Contains("ProductPrice", products[1].Price)
+                .Contains("ProductImage(0)", productImages[0].Name)
+                .Contains("ProductImage(1)", productImages[3].Name)
                 .Contains("OpinionStars", opinions[0].Rating.Stars)
                 .Contains("OpinionText", opinions[0].Text)
                 .Contains("OpinionIsHidden", opinions[0].IsHidden)

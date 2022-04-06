@@ -24,6 +24,8 @@ namespace SupplementStore.Controllers {
 
         IProductUpdater ProductUpdater { get; }
 
+        IProductImagesProvider ProductImagesProvider { get; }
+
         IProductImageCreator ProductImageCreator { get; }
 
         IFileWriter FileWriter { get; }
@@ -34,6 +36,7 @@ namespace SupplementStore.Controllers {
             IProductOpinionsProvider productOpinionsProvider,
             IProductCreator productCreator,
             IProductUpdater productUpdater,
+            IProductImagesProvider productImagesProvider,
             IProductImageCreator productImageCreator,
             IFileWriter fileWriter) {
 
@@ -42,6 +45,7 @@ namespace SupplementStore.Controllers {
             ProductOpinionsProvider = productOpinionsProvider;
             ProductCreator = productCreator;
             ProductUpdater = productUpdater;
+            ProductImagesProvider = productImagesProvider;
             ProductImageCreator = productImageCreator;
             FileWriter = fileWriter;
         }
@@ -80,7 +84,8 @@ namespace SupplementStore.Controllers {
 
             return View(new ProductDetailsViewModel {
                 Product = product,
-                Opinions = ProductOpinionsProvider.Load(product.Id)
+                Opinions = ProductOpinionsProvider.Load(product.Id),
+                Images = ProductImagesProvider.Load(product.Id).Select(e => e.Name)
             });
         }
 
