@@ -25,5 +25,21 @@ namespace SupplementStore.Controllers.Services {
                 await formFile.CopyToAsync(stream);
             }
         }
+
+        public void Delete(string fileName, params string[] pathPieces) {
+
+            var allPathPieces = new string[pathPieces.Length + 3];
+            allPathPieces[0] = Directory.GetCurrentDirectory();
+            allPathPieces[1] = "wwwroot";
+            Array.Copy(pathPieces, 0, allPathPieces, 2, pathPieces.Length);
+            allPathPieces[allPathPieces.Length - 1] = fileName;
+
+            var path = Path.Combine(allPathPieces);
+
+            if (File.Exists(path)) {
+
+                File.Delete(path);
+            }
+        }
     }
 }
