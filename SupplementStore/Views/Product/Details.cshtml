@@ -2,6 +2,38 @@
 
 <environment exclude="Testing">
 
+    <div class="d-flex align-items-center mx-2" style="height:170px;">
+
+        <div id="btn-prev-image" class="d-inline-block btn btn-info py-4 px-0 invisible" style="height:90px; width:40px;"><p class="h3" style="width:14px;">&#x300A</p></div>
+
+        <ul id="image-list" class="list-unstyled d-inline-block mx-1" data-image-count="@Model.Images.Count()">
+
+            @foreach (var image in Model.Images.Select((value, index) => new { value, index })) {
+
+                if (image.index == 0) {
+
+                    <li data-image-index="@image.index">
+                        <img src="~/productImages/@Model.Product.Id/@image.value"
+                             alt="product image titled @image.value"
+                             width="150" />
+                    </li>
+                }
+                else {
+
+                    <li data-image-index="@image.index" style="display:none;">
+                        <img src="~/productImages/@Model.Product.Id/@image.value"
+                             alt="product image titled @image.value"
+                             width="150" />
+                    </li>
+                }
+            }
+
+        </ul>
+
+        <div id="btn-next-image" class="d-inline-block btn btn-info py-4" style="height:90px; width:40px;"><p class="h3">&#x300B</p></div>
+
+    </div>
+
     <h3>@Model.Product.Name</h3>
     <h4>@Model.Product.Price</h4>
 
@@ -73,6 +105,76 @@
         </form>
     }
 
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+
+            var imageCount = Number($("#image-list")
+                .attr("data-image-count"));
+
+            if (imageCount <= 1) {
+
+                $("#btn-next-image")
+                    .addClass("invisible");
+            }
+
+            $("#btn-next-image")
+                .click(function () {
+
+                    var shownImage = $("#image-list")
+                        .find("li:visible")
+                        .first();
+
+                    var shownImageIndex = Number(shownImage
+                        .attr("data-image-index"));
+
+                    var nextImage = shownImage
+                        .next();
+
+                    shownImage.hide();
+
+                    nextImage.show();
+
+                    $("#btn-prev-image")
+                        .removeClass("invisible");
+
+                    if (shownImageIndex + 2 == imageCount) {
+
+                        $("#btn-next-image")
+                            .addClass("invisible");
+                    }
+                });
+
+            $("#btn-prev-image")
+                .click(function () {
+
+                    var shownImage = $("#image-list")
+                        .find("li:visible")
+                        .first();
+
+                    var shownImageIndex = Number(shownImage
+                        .attr("data-image-index"));
+
+                    var prevImage = shownImage
+                        .prev();
+
+                    shownImage.hide();
+
+                    prevImage.show();
+
+                    $("#btn-next-image")
+                        .removeClass("invisible");
+
+                    if (shownImageIndex == 1) {
+
+                        $("#btn-prev-image")
+                            .addClass("invisible");
+                    }
+                });
+        });
+
+    </script>
+
 </environment>
 
 <environment include="Testing">
@@ -80,6 +182,11 @@
     <div name="ProductId">@Model.Product.Id</div>
     <div name="ProductName">@Model.Product.Name</div>
     <div name="ProductPrice">@Model.Product.Price.ToString()</div>
+
+    @foreach (var image in Model.Images.Select((value, index) => new { value, index })) {
+
+        <div name="ProductImage(@image.index)">@image.value</div>
+    }
 
     @foreach (var opinion in Model.Opinions) {
 
