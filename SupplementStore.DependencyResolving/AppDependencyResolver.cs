@@ -34,6 +34,7 @@ namespace SupplementStore.DependencyResolving {
             services.AddTransient<IProductUpdater, ProductUpdater>();
             services.AddTransient<IProductImagesProvider, ProductImagesProvider>();
             services.AddTransient<IProductImageCreator, ProductImageCreator>();
+            services.AddTransient<IMainProductImageAppointer, MainProductImageAppointer>();
             services.AddTransient<IBasketProductProvider, BasketProductProvider>();
             services.AddTransient<IBasketProductsProvider, BasketProductsProvider>();
             services.AddTransient<IBasketProductCreator, BasketProductCreator>();
