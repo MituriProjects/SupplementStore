@@ -22,7 +22,8 @@ namespace SupplementStore.Tests.Integration.ProductTests {
             productImages[2]
                 .WithProductId(products[0]);
             productImages[3]
-                .WithProductId(products[1]);
+                .WithProductId(products[1])
+                .WithIsMain(true);
             var purchases = TestEntity.Random<Purchase>(3);
             var opinions = TestEntity.Random<Opinion>(2);
             opinions[0]
@@ -43,8 +44,8 @@ namespace SupplementStore.Tests.Integration.ProductTests {
                 .Contains("ProductId", products[1].ProductId)
                 .Contains("ProductName", products[1].Name)
                 .Contains("ProductPrice", products[1].Price)
-                .Contains("ProductImage(0)", productImages[0].Name)
-                .Contains("ProductImage(1)", productImages[3].Name)
+                .Contains("ProductImage(0)", productImages[3].Name)
+                .Contains("ProductImage(1)", productImages[0].Name)
                 .Contains("OpinionStars", opinions[0].Rating.Stars)
                 .Contains("OpinionText", opinions[0].Text)
                 .Contains("OpinionIsHidden", opinions[0].IsHidden)

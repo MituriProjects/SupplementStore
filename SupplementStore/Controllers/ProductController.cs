@@ -85,7 +85,7 @@ namespace SupplementStore.Controllers {
             return View(new ProductDetailsViewModel {
                 Product = product,
                 Opinions = ProductOpinionsProvider.Load(product.Id),
-                Images = ProductImagesProvider.Load(product.Id).Select(e => e.Name)
+                Images = ProductImagesProvider.Load(product.Id).OrderByDescending(e => e.IsMain).Select(e => e.Name)
             });
         }
 
