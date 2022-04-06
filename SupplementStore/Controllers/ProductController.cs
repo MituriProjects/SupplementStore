@@ -129,6 +129,9 @@ namespace SupplementStore.Controllers {
         [Authorize(Roles = "Admin")]
         public async Task<IActionResult> AddImage(string productId, IFormFile file) {
 
+            if (file == null)
+                return RedirectToAction(nameof(Details), new { Id = productId });
+
             var productImageCreatorResult = ProductImageCreator.Create(productId, file.FileName);
 
             if (productImageCreatorResult.Success) {
