@@ -21,9 +21,20 @@
                 else {
 
                     <li data-image-index="@image.index" style="display:none;">
+
                         <img src="~/productImages/@Model.Product.Id/@image.value"
                              alt="product image titled @image.value"
                              width="150" />
+
+                        @if (User.IsInRole("Admin")) {
+
+                            <form asp-controller="Product" asp-action="SetImageAsMain">
+                                <input hidden name="ProductId" value="@Model.Product.Id" />
+                                <input hidden name="ImageName" value="@image.value" />
+                                <button type="submit" class="btn btn-outline-primary" title="Ustaw jako główny">&#x272A</button>
+                            </form>
+                        }
+
                     </li>
                 }
             }
