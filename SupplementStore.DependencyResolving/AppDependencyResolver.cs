@@ -28,6 +28,8 @@ namespace SupplementStore.DependencyResolving {
             services.AddTransient<IWishRepository, WishRepository>();
             services.AddTransient<IOpinionRepository, OpinionRepository>();
 
+            services.AddTransient<BasketProductManager>();
+
             services.AddTransient<IProductProvider, ProductProvider>();
             services.AddTransient<IProductsProvider, ProductsProvider>();
             services.AddTransient<IProductCreator, ProductCreator>();
