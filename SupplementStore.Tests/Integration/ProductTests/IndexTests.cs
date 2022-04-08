@@ -14,6 +14,13 @@ namespace SupplementStore.Tests.Integration.ProductTests {
         public async Task DefaultSkipAndTake_ReturnsDetailsOfProducts() {
 
             var products = TestEntity.Random<Product>(2);
+            var productImages = TestEntity.Random<ProductImage>(2);
+            productImages[0]
+                .WithProductId(products[0])
+                .WithIsMain(true);
+            productImages[1]
+                .WithProductId(products[1])
+                .WithIsMain(true);
             var purchases = TestEntity.Random<Purchase>(3);
             var opinions = TestEntity.Random<Opinion>(3);
             opinions[0]
@@ -41,11 +48,13 @@ namespace SupplementStore.Tests.Integration.ProductTests {
                 .Contains("ProductId", products[0].ProductId)
                 .Contains("ProductName", products[0].Name)
                 .Contains("ProductPrice", products[0].Price)
+                .Contains("ProductMainImage", productImages[0].Name)
                 .Contains("AverageRating", "3,5")
                 .Contains("RatingCount", 2)
                 .Contains("ProductId", products[1].ProductId)
                 .Contains("ProductName", products[1].Name)
                 .Contains("ProductPrice", products[1].Price)
+                .Contains("ProductMainImage", productImages[1].Name)
                 .Contains("AverageRating", "3")
                 .Contains("RatingCount", 1));
         }
@@ -65,6 +74,22 @@ namespace SupplementStore.Tests.Integration.ProductTests {
         public async Task SkipEquals2AndTakeEquals2_ReturnsDetailsOfProducts() {
 
             var products = TestEntity.Random<Product>(5);
+            var productImages = TestEntity.Random<ProductImage>(5);
+            productImages[0]
+                .WithProductId(products[0])
+                .WithIsMain(true);
+            productImages[1]
+                .WithProductId(products[1])
+                .WithIsMain(true);
+            productImages[2]
+                .WithProductId(products[2])
+                .WithIsMain(true);
+            productImages[3]
+                .WithProductId(products[3])
+                .WithIsMain(true);
+            productImages[4]
+                .WithProductId(products[4])
+                .WithIsMain(true);
             var purchases = TestEntity.Random<Purchase>(2);
             var opinions = TestEntity.Random<Opinion>(2);
             opinions[0]
@@ -90,6 +115,7 @@ namespace SupplementStore.Tests.Integration.ProductTests {
                     contentScheme.Lacks("ProductId", products[i].ProductId);
                     contentScheme.Lacks("ProductName", products[i].Name);
                     contentScheme.Lacks("ProductPrice", products[i].Price);
+                    contentScheme.Lacks("ProductMainImage", productImages[i].Name);
                     contentScheme.Lacks("AverageRating", 1);
                 }
                 else {
@@ -97,6 +123,7 @@ namespace SupplementStore.Tests.Integration.ProductTests {
                     contentScheme.Contains("ProductId", products[i].ProductId);
                     contentScheme.Contains("ProductName", products[i].Name);
                     contentScheme.Contains("ProductPrice", products[i].Price);
+                    contentScheme.Contains("ProductMainImage", productImages[i].Name);
 
                     if (i == 2) {
 
