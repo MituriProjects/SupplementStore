@@ -1,8 +1,8 @@
 ﻿using SupplementStore.Application.Args;
-using SupplementStore.Application.Models;
 using SupplementStore.Application.Results;
 using SupplementStore.Application.Services;
 using SupplementStore.Domain.Products;
+using SupplementStore.Infrastructure.ModelMapping;
 using System.Linq;
 
 namespace SupplementStore.Infrastructure.AppServices {
@@ -26,12 +26,7 @@ namespace SupplementStore.Infrastructure.AppServices {
             var products = ProductRepository.Entities
                 .Skip(args.Skip)
                 .Take(args.Take)
-                .Select(e => new ProductDetails {
-                    Id = e.ProductId.ToString(),
-                    Name = e.Name,
-                    Price = e.Price,
-                    MainImage = ProductImageRepository.FindBy(new MainProductImageFilter(e.ProductId))?.Name
-                });
+                .Select(e => e.ToDetails(ProductImageRepository.FindBy(new MainProductImageFilter(e.ProductId))));
 
             return new ProductsProviderResult {
                 AllProductsCount = ProductRepository.Count(),
