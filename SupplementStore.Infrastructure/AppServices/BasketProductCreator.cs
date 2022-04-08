@@ -1,62 +1,25 @@
 ﻿using SupplementStore.Application.Services;
 using SupplementStore.Domain.Baskets;
-using SupplementStore.Domain.Products;
 
 namespace SupplementStore.Infrastructure.AppServices {
 
     public class BasketProductCreator : IBasketProductCreator {
 
-        IProductRepository ProductRepository { get; }
-
-        IBasketProductRepository BasketProductRepository { get; }
+        BasketProductManager BasketProductManager { get; }
 
         IDomainApprover DomainApprover { get; }
 
         public BasketProductCreator(
-            IProductRepository productRepository,
-            IBasketProductRepository basketProductRepository,
+            BasketProductManager basketProductManager,
             IDomainApprover domainApprover) {
 
-            ProductRepository = productRepository;
-            BasketProductRepository = basketProductRepository;
+            BasketProductManager = basketProductManager;
             DomainApprover = domainApprover;
         }
 
         public void Create(string userId, string productId, int quantity) {
 
-            if (string.IsNullOrEmpty(userId))
-                return;
-
-            var productIdObject = new ProductId(productId);
-
-            var product = ProductRepository.FindBy(productIdObject);
-
-            if (product == null)
-                return;
-
-            var basketProduct = BasketProductRepository.FindBy(new UserBasketProductFilter(userId, productIdObject));
-
-            if (basketProduct == null) {
-
-                try {
-
-                    basketProduct = new BasketProduct {
-                        UserId = userId,
-                        ProductId = productIdObject,
-                        Quantity = quantity
-                    };
-                }
-                catch {
-
-                    return;
-                }
-
-                BasketProductRepository.Add(basketProduct);
-            }
-            else {
-
-                basketProduct.Quantity += quantity;
-            }
+            BasketProductManager.Adjust(userId, productId, quantity);
 
             DomainApprover.SaveChanges();
         }
