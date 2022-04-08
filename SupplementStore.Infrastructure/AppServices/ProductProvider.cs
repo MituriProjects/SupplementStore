@@ -1,7 +1,7 @@
 ﻿using SupplementStore.Application.Models;
 using SupplementStore.Application.Services;
 using SupplementStore.Domain.Products;
-using SupplementStore.Infrastructure.AppModels;
+using SupplementStore.Infrastructure.ModelMapping;
 
 namespace SupplementStore.Infrastructure.AppServices {
 
@@ -21,7 +21,7 @@ namespace SupplementStore.Infrastructure.AppServices {
             if (product == null)
                 return null;
 
-            return ProductDetailsFactory.Create(product);
+            return product.ToDetails();
         }
     }
 }
