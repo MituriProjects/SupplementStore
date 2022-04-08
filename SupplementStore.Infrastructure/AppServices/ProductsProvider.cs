@@ -11,9 +11,14 @@ namespace SupplementStore.Infrastructure.AppServices {
 
         IProductRepository ProductRepository { get; }
 
-        public ProductsProvider(IProductRepository productRepository) {
+        IProductImageRepository ProductImageRepository { get; }
+
+        public ProductsProvider(
+            IProductRepository productRepository,
+            IProductImageRepository productImageRepository) {
 
             ProductRepository = productRepository;
+            ProductImageRepository = productImageRepository;
         }
 
         public ProductsProviderResult Load(ProductsProviderArgs args) {
@@ -24,7 +29,8 @@ namespace SupplementStore.Infrastructure.AppServices {
                 .Select(e => new ProductDetails {
                     Id = e.ProductId.ToString(),
                     Name = e.Name,
-                    Price = e.Price
+                    Price = e.Price,
+                    MainImage = ProductImageRepository.FindBy(new MainProductImageFilter(e.ProductId))?.Name
                 });
 
             return new ProductsProviderResult {

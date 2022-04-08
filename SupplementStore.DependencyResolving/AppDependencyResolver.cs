@@ -24,6 +24,7 @@ namespace SupplementStore.DependencyResolving {
             services.AddTransient<IOrderRepository, OrderRepository>();
             services.AddTransient<IPurchaseRepository, PurchaseRepository>();
             services.AddTransient<IProductRepository, ProductRepository>();
+            services.AddTransient<IProductImageRepository, ProductImageRepository>();
             services.AddTransient<IWishRepository, WishRepository>();
             services.AddTransient<IOpinionRepository, OpinionRepository>();
 
@@ -31,6 +32,10 @@ namespace SupplementStore.DependencyResolving {
             services.AddTransient<IProductsProvider, ProductsProvider>();
             services.AddTransient<IProductCreator, ProductCreator>();
             services.AddTransient<IProductUpdater, ProductUpdater>();
+            services.AddTransient<IProductImagesProvider, ProductImagesProvider>();
+            services.AddTransient<IProductImageCreator, ProductImageCreator>();
+            services.AddTransient<IProductImageRemover, ProductImageRemover>();
+            services.AddTransient<IMainProductImageAppointer, MainProductImageAppointer>();
             services.AddTransient<IBasketProductProvider, BasketProductProvider>();
             services.AddTransient<IBasketProductsProvider, BasketProductsProvider>();
             services.AddTransient<IBasketProductCreator, BasketProductCreator>();

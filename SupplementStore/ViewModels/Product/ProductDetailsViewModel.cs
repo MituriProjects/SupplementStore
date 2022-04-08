@@ -8,5 +8,7 @@ namespace SupplementStore.ViewModels.Product {
         public ProductDetails Product { get; set; }
 
         public IEnumerable<ProductOpinionDetails> Opinions { get; set; }
+
+        public IEnumerable<string> Images { get; set; }
     }
 }

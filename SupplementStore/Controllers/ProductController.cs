@@ -1,11 +1,14 @@
 ﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using SupplementStore.Application.Args;
 using SupplementStore.Application.Models;
 using SupplementStore.Application.Services;
+using SupplementStore.Controllers.Services;
 using SupplementStore.ViewModels.Product;
 using System;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace SupplementStore.Controllers {
 
@@ -21,18 +24,38 @@ namespace SupplementStore.Controllers {
 
         IProductUpdater ProductUpdater { get; }
 
+        IProductImagesProvider ProductImagesProvider { get; }
+
+        IProductImageCreator ProductImageCreator { get; }
+
+        IProductImageRemover ProductImageRemover { get; }
+
+        IMainProductImageAppointer MainProductImageAppointer { get; }
+
+        IFileWriter FileWriter { get; }
+
         public ProductController(
             IProductProvider productProvider,
             IProductsProvider productsProvider,
             IProductOpinionsProvider productOpinionsProvider,
             IProductCreator productCreator,
-            IProductUpdater productUpdater) {
+            IProductUpdater productUpdater,
+            IProductImagesProvider productImagesProvider,
+            IProductImageCreator productImageCreator,
+            IProductImageRemover productImageRemover,
+            IMainProductImageAppointer mainProductImageAppointer,
+            IFileWriter fileWriter) {
 
             ProductProvider = productProvider;
             ProductsProvider = productsProvider;
             ProductOpinionsProvider = productOpinionsProvider;
             ProductCreator = productCreator;
             ProductUpdater = productUpdater;
+            ProductImagesProvider = productImagesProvider;
+            ProductImageCreator = productImageCreator;
+            ProductImageRemover = productImageRemover;
+            MainProductImageAppointer = mainProductImageAppointer;
+            FileWriter = fileWriter;
         }
 
         public IActionResult Index(ProductIndexViewModel model) {
@@ -69,7 +92,8 @@ namespace SupplementStore.Controllers {
 
             return View(new ProductDetailsViewModel {
                 Product = product,
-                Opinions = ProductOpinionsProvider.Load(product.Id)
+                Opinions = ProductOpinionsProvider.Load(product.Id),
+                Images = ProductImagesProvider.Load(product.Id).OrderByDescending(e => e.IsMain).Select(e => e.Name)
             });
         }
 
@@ -112,6 +136,46 @@ namespace SupplementStore.Controllers {
             });
 
             return RedirectToAction(nameof(Details), new { model.Id });
+        }
+
+        [HttpPost]
+        [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> AddImage(string productId, IFormFile file) {
+
+            if (file == null)
+                return RedirectToAction(nameof(Details), new { Id = productId });
+
+            var productImageCreatorResult = ProductImageCreator.Create(productId, file.FileName);
+
+            if (productImageCreatorResult.Success) {
+
+                await FileWriter.ProcessAsync(file, "productImages", productId);
+            }
+
+            return RedirectToAction(nameof(Details), new { Id = productId });
+        }
+
+        [HttpPost]
+        [Authorize(Roles = "Admin")]
+        public IActionResult SetImageAsMain(string productId, string imageName) {
+
+            MainProductImageAppointer.Perform(productId, imageName);
+
+            return RedirectToAction(nameof(Details), new { Id = productId });
+        }
+
+        [HttpPost]
+        [Authorize(Roles = "Admin")]
+        public IActionResult RemoveImage(string productId, string imageName) {
+
+            var productImageRemoverResult = ProductImageRemover.Remove(productId, imageName);
+
+            if (productImageRemoverResult.Success) {
+
+                FileWriter.Delete(imageName, "productImages", productId);
+            }
+
+            return RedirectToAction(nameof(Details), new { Id = productId });
         }
     }
 }
