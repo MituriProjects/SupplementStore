@@ -1,54 +1,28 @@
 ﻿using SupplementStore.Application.Args;
 using SupplementStore.Application.Models;
 using SupplementStore.Application.Services;
-using SupplementStore.Domain.Baskets;
 using SupplementStore.Domain.Orders;
+using SupplementStore.Infrastructure.ArgsMapping;
 
 namespace SupplementStore.Infrastructure.AppServices {
 
     public class OrderCreator : IOrderCreator {
 
-        IOrderRepository OrderRepository { get; }
-
-        IBasketProductRepository BasketProductRepository { get; }
-
-        IPurchaseRepository PurchaseRepository { get; }
+        OrderFactory OrderFactory { get; }
 
         IDomainApprover DomainApprover { get; }
 
         public OrderCreator(
-            IOrderRepository orderRepository,
-            IBasketProductRepository basketProductRepository,
-            IPurchaseRepository purchaseRepository,
+            OrderFactory orderFactory,
             IDomainApprover domainApprover) {
 
-            OrderRepository = orderRepository;
-            BasketProductRepository = basketProductRepository;
-            PurchaseRepository = purchaseRepository;
+            OrderFactory = orderFactory;
             DomainApprover = domainApprover;
         }
 
         public OrderDetails Create(OrderCreatorArgs args) {
 
-            var order = new Order {
-                UserId = args.UserId,
-                Address = new Address(args.Address, args.PostalCode, args.City)
-            };
-
-            OrderRepository.Add(order);
-
-            foreach (var basketProduct in BasketProductRepository.FindBy(new UserBasketProductsFilter(args.UserId))) {
-
-                var purchase = new Purchase {
-                    OrderId = order.OrderId,
-                    ProductId = basketProduct.ProductId,
-                    Quantity = basketProduct.Quantity
-                };
-
-                PurchaseRepository.Add(purchase);
-
-                BasketProductRepository.Delete(basketProduct.BasketProductId);
-            }
+            var order = OrderFactory.Create(args.ToOrderFactoryArgs());
 
             DomainApprover.SaveChanges();
 
