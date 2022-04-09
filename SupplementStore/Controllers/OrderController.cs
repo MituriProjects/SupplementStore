@@ -12,7 +12,7 @@ namespace SupplementStore.Controllers {
 
         UserManager<IdentityUser> UserManager { get; }
 
-        IBasketProductsProvider BasketProductsProvider { get; }
+        IBasketProductService BasketProductService { get; }
 
         IOrderCreator OrderCreator { get; }
 
@@ -20,12 +20,12 @@ namespace SupplementStore.Controllers {
 
         public OrderController(
             UserManager<IdentityUser> userManager,
-            IBasketProductsProvider basketProductsProvider,
+            IBasketProductService basketProductService,
             IOrderCreator orderCreator,
             IOrderProvider orderProvider) {
 
             UserManager = userManager;
-            BasketProductsProvider = basketProductsProvider;
+            BasketProductService = basketProductService;
             OrderCreator = orderCreator;
             OrderProvider = orderProvider;
         }
@@ -35,7 +35,7 @@ namespace SupplementStore.Controllers {
             var userId = UserManager.GetUserId(HttpContext.User);
 
             return View(new OrderCreateViewModel {
-                BasketProducts = BasketProductsProvider.Load(userId)
+                BasketProducts = BasketProductService.LoadMany(userId)
             });
         }
 
@@ -46,7 +46,7 @@ namespace SupplementStore.Controllers {
 
             if (ModelState.IsValid == false) {
 
-                model.BasketProducts = BasketProductsProvider.Load(userId);
+                model.BasketProducts = BasketProductService.LoadMany(userId);
 
                 return View(model);
             }
@@ -62,7 +62,7 @@ namespace SupplementStore.Controllers {
 
                 ModelState.AddModelError(string.Empty, "The creation of an order failed.");
 
-                model.BasketProducts = BasketProductsProvider.Load(userId);
+                model.BasketProducts = BasketProductService.LoadMany(userId);
 
                 return View(model);
             }
