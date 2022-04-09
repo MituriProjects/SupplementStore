@@ -14,20 +14,16 @@ namespace SupplementStore.Controllers {
 
         IBasketProductService BasketProductService { get; }
 
-        IOrderCreator OrderCreator { get; }
-
-        IOrderProvider OrderProvider { get; }
+        IOrderService OrderService { get; }
 
         public OrderController(
             UserManager<IdentityUser> userManager,
             IBasketProductService basketProductService,
-            IOrderCreator orderCreator,
-            IOrderProvider orderProvider) {
+            IOrderService orderService) {
 
             UserManager = userManager;
             BasketProductService = basketProductService;
-            OrderCreator = orderCreator;
-            OrderProvider = orderProvider;
+            OrderService = orderService;
         }
 
         public IActionResult Create() {
@@ -51,7 +47,7 @@ namespace SupplementStore.Controllers {
                 return View(model);
             }
 
-            var order = OrderCreator.Create(new OrderCreatorArgs {
+            var order = OrderService.Create(new OrderCreatorArgs {
                 UserId = userId,
                 Address = model.Address,
                 PostalCode = model.PostalCode,
@@ -72,7 +68,7 @@ namespace SupplementStore.Controllers {
 
         public IActionResult Summary(string id) {
 
-            var orderDetails = OrderProvider.Load(id);
+            var orderDetails = OrderService.Load(id);
 
             var userId = UserManager.GetUserId(HttpContext.User);
 
