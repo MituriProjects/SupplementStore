@@ -12,18 +12,18 @@ namespace SupplementStore.Controllers {
     [Authorize(Roles = "Admin")]
     public class AdminController : Controller {
 
-        IOrdersProvider OrdersProvider { get; }
+        IOrderService OrderService { get; }
 
         IHiddenOpinionsProvider HiddenOpinionsProvider { get; }
 
         UserManager<IdentityUser> UserManager { get; }
 
         public AdminController(
-            IOrdersProvider ordersProvider,
+            IOrderService orderService,
             IHiddenOpinionsProvider hiddenOpinionsProvider,
             UserManager<IdentityUser> userManager) {
 
-            OrdersProvider = ordersProvider;
+            OrderService = orderService;
             HiddenOpinionsProvider = hiddenOpinionsProvider;
             UserManager = userManager;
         }
@@ -35,7 +35,7 @@ namespace SupplementStore.Controllers {
 
         public async Task<IActionResult> Orders() {
 
-            var orderDetails = OrdersProvider.Load();
+            var orderDetails = OrderService.LoadMany();
 
             Dictionary<string, string> UserEmails = new Dictionary<string, string>();
 
