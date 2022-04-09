@@ -40,7 +40,6 @@ namespace SupplementStore.DependencyResolving {
             services.AddTransient<IProductImageRemover, ProductImageRemover>();
             services.AddTransient<IMainProductImageAppointer, MainProductImageAppointer>();
             services.AddTransient<IBasketProductService, BasketProductService>();
-            services.AddTransient<IBasketProductUpdater, BasketProductUpdater>();
             services.AddTransient<IBasketProductRemover, BasketProductRemover>();
             services.AddTransient<IOrderCreator, OrderCreator>();
             services.AddTransient<IOrderProvider, OrderProvider>();
