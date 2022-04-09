@@ -9,6 +9,7 @@ using SupplementStore.Domain.Wishes;
 using SupplementStore.Infrastructure;
 using SupplementStore.Infrastructure.AppServices;
 using SupplementStore.Infrastructure.AppServices.BasketProduct;
+using SupplementStore.Infrastructure.AppServices.Order;
 using SupplementStore.Infrastructure.Repositories;
 
 namespace SupplementStore.DependencyResolving {
@@ -41,6 +42,7 @@ namespace SupplementStore.DependencyResolving {
             services.AddTransient<IProductImageRemover, ProductImageRemover>();
             services.AddTransient<IMainProductImageAppointer, MainProductImageAppointer>();
             services.AddTransient<IBasketProductService, BasketProductService>();
+            services.AddTransient<IOrderService, OrderService>();
             services.AddTransient<IOrderCreator, OrderCreator>();
             services.AddTransient<IOrderProvider, OrderProvider>();
             services.AddTransient<IOrdersProvider, OrdersProvider>();
