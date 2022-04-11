@@ -1,6 +1,6 @@
 ﻿using SupplementStore.Application.Models;
 using SupplementStore.Domain.Baskets;
-using SupplementStore.Infrastructure.AppModels;
+using SupplementStore.Infrastructure.ModelMapping;
 using System.Collections.Generic;
 
 namespace SupplementStore.Infrastructure.AppServices.BasketProduct {
@@ -13,7 +13,7 @@ namespace SupplementStore.Infrastructure.AppServices.BasketProduct {
 
                 var product = ProductRepository.FindBy(basketProduct.ProductId);
 
-                yield return BasketProductDetailsFactory.Create(basketProduct, product);
+                yield return basketProduct.ToDetails(product);
             }
         }
     }
