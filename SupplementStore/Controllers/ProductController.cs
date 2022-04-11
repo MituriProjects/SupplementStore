@@ -16,29 +16,17 @@ namespace SupplementStore.Controllers {
 
         IProductService ProductService { get; }
 
-        IProductImagesProvider ProductImagesProvider { get; }
-
-        IProductImageCreator ProductImageCreator { get; }
-
-        IProductImageRemover ProductImageRemover { get; }
-
-        IMainProductImageAppointer MainProductImageAppointer { get; }
+        IProductImageService ProductImageService { get; }
 
         IFileWriter FileWriter { get; }
 
         public ProductController(
             IProductService productService,
-            IProductImagesProvider productImagesProvider,
-            IProductImageCreator productImageCreator,
-            IProductImageRemover productImageRemover,
-            IMainProductImageAppointer mainProductImageAppointer,
+            IProductImageService productImageService,
             IFileWriter fileWriter) {
 
             ProductService = productService;
-            ProductImagesProvider = productImagesProvider;
-            ProductImageCreator = productImageCreator;
-            ProductImageRemover = productImageRemover;
-            MainProductImageAppointer = mainProductImageAppointer;
+            ProductImageService = productImageService;
             FileWriter = fileWriter;
         }
 
@@ -77,7 +65,7 @@ namespace SupplementStore.Controllers {
             return View(new ProductDetailsViewModel {
                 Product = product,
                 Opinions = ProductService.LoadOpinions(product.Id),
-                Images = ProductImagesProvider.Load(product.Id).OrderByDescending(e => e.IsMain).Select(e => e.Name)
+                Images = ProductImageService.LoadMany(product.Id).OrderByDescending(e => e.IsMain).Select(e => e.Name)
             });
         }
 
@@ -129,7 +117,7 @@ namespace SupplementStore.Controllers {
             if (file == null)
                 return RedirectToAction(nameof(Details), new { Id = productId });
 
-            var productImageCreatorResult = ProductImageCreator.Create(productId, file.FileName);
+            var productImageCreatorResult = ProductImageService.Create(productId, file.FileName);
 
             if (productImageCreatorResult.Success) {
 
@@ -143,7 +131,7 @@ namespace SupplementStore.Controllers {
         [Authorize(Roles = "Admin")]
         public IActionResult SetImageAsMain(string productId, string imageName) {
 
-            MainProductImageAppointer.Perform(productId, imageName);
+            ProductImageService.AppointMain(productId, imageName);
 
             return RedirectToAction(nameof(Details), new { Id = productId });
         }
@@ -152,7 +140,7 @@ namespace SupplementStore.Controllers {
         [Authorize(Roles = "Admin")]
         public IActionResult RemoveImage(string productId, string imageName) {
 
-            var productImageRemoverResult = ProductImageRemover.Remove(productId, imageName);
+            var productImageRemoverResult = ProductImageService.Remove(productId, imageName);
 
             if (productImageRemoverResult.Success) {
 
