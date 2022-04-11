@@ -1,6 +1,6 @@
 ﻿using SupplementStore.Application.Models;
 using SupplementStore.Domain.Opinions;
-using SupplementStore.Infrastructure.AppModels;
+using SupplementStore.Infrastructure.ModelMapping;
 
 namespace SupplementStore.Infrastructure.AppServices.Opinions {
 
@@ -16,7 +16,7 @@ namespace SupplementStore.Infrastructure.AppServices.Opinions {
 
             var product = ProductRepository.FindBy(purchase.ProductId);
 
-            return OpinionDetailsFactory.Create(opinion, product, order);
+            return opinion.ToDetails(product, order);
         }
     }
 }
