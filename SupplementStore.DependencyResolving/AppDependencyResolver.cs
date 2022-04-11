@@ -41,7 +41,6 @@ namespace SupplementStore.DependencyResolving {
             services.AddTransient<IBasketProductService, BasketProductService>();
             services.AddTransient<IOrderService, OrderService>();
             services.AddTransient<IWishService, WishService>();
-            services.AddTransient<IWishProvider, WishProvider>();
             services.AddTransient<IWishesProvider, WishesProvider>();
             services.AddTransient<IWishCreator, WishCreator>();
             services.AddTransient<IWishRemover, WishRemover>();
