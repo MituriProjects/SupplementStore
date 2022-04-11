@@ -1,6 +1,6 @@
 ﻿using SupplementStore.Application.Models;
 using SupplementStore.Domain.Wishes;
-using SupplementStore.Infrastructure.AppModels;
+using SupplementStore.Infrastructure.ModelMapping;
 using System.Collections.Generic;
 
 namespace SupplementStore.Infrastructure.AppServices.Wishes {
@@ -15,7 +15,7 @@ namespace SupplementStore.Infrastructure.AppServices.Wishes {
 
                 var product = ProductRepository.FindBy(wish.ProductId);
 
-                yield return ProductDetailsFactory.Create(product);
+                yield return product.ToDetails();
             }
         }
     }
