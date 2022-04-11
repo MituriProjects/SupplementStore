@@ -1,6 +1,5 @@
 ﻿using SupplementStore.Application.Models;
 using SupplementStore.Domain.Orders;
-using SupplementStore.Infrastructure.AppModels;
 using SupplementStore.Infrastructure.ModelMapping;
 using System;
 using System.Collections.Generic;
@@ -22,7 +21,7 @@ namespace SupplementStore.Infrastructure.AppServices.Order {
 
             foreach (var order in orders) {
 
-                yield return OrderDetailsFactory.Create(order, ordersPurchases.ToDetails(products));
+                yield return order.ToDetails(ordersPurchases.ToDetails(products));
             }
         }
     }
