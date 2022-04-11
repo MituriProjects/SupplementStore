@@ -14,15 +14,7 @@ namespace SupplementStore.Controllers {
 
     public class ProductController : Controller {
 
-        IProductProvider ProductProvider { get; }
-
-        IProductsProvider ProductsProvider { get; }
-
-        IProductOpinionsProvider ProductOpinionsProvider { get; }
-
-        IProductCreator ProductCreator { get; }
-
-        IProductUpdater ProductUpdater { get; }
+        IProductService ProductService { get; }
 
         IProductImagesProvider ProductImagesProvider { get; }
 
@@ -35,22 +27,14 @@ namespace SupplementStore.Controllers {
         IFileWriter FileWriter { get; }
 
         public ProductController(
-            IProductProvider productProvider,
-            IProductsProvider productsProvider,
-            IProductOpinionsProvider productOpinionsProvider,
-            IProductCreator productCreator,
-            IProductUpdater productUpdater,
+            IProductService productService,
             IProductImagesProvider productImagesProvider,
             IProductImageCreator productImageCreator,
             IProductImageRemover productImageRemover,
             IMainProductImageAppointer mainProductImageAppointer,
             IFileWriter fileWriter) {
 
-            ProductProvider = productProvider;
-            ProductsProvider = productsProvider;
-            ProductOpinionsProvider = productOpinionsProvider;
-            ProductCreator = productCreator;
-            ProductUpdater = productUpdater;
+            ProductService = productService;
             ProductImagesProvider = productImagesProvider;
             ProductImageCreator = productImageCreator;
             ProductImageRemover = productImageRemover;
@@ -62,7 +46,7 @@ namespace SupplementStore.Controllers {
 
             model = model ?? new ProductIndexViewModel();
 
-            var loadedProducts = ProductsProvider.Load(new ProductsProviderArgs {
+            var loadedProducts = ProductService.LoadMany(new ProductsProviderArgs {
                 Skip = model.Skip,
                 Take = model.Take
             });
@@ -72,7 +56,7 @@ namespace SupplementStore.Controllers {
 
             foreach (var product in model.Products) {
 
-                var opinions = ProductOpinionsProvider.Load(product.Id);
+                var opinions = ProductService.LoadOpinions(product.Id);
 
                 model.ProductRatings[product.Id] = new ProductRating {
                     Average = opinions.Count() == 0 ? 0 : Math.Round(opinions.Average(e => e.Stars), 2),
@@ -85,14 +69,14 @@ namespace SupplementStore.Controllers {
 
         public IActionResult Details(string id) {
 
-            var product = ProductProvider.Load(id);
+            var product = ProductService.Load(id);
 
             if (product == null)
                 return RedirectToAction("Index");
 
             return View(new ProductDetailsViewModel {
                 Product = product,
-                Opinions = ProductOpinionsProvider.Load(product.Id),
+                Opinions = ProductService.LoadOpinions(product.Id),
                 Images = ProductImagesProvider.Load(product.Id).OrderByDescending(e => e.IsMain).Select(e => e.Name)
             });
         }
@@ -106,7 +90,7 @@ namespace SupplementStore.Controllers {
         [Authorize(Roles = "Admin")]
         public IActionResult Edit(string id) {
 
-            var product = ProductProvider.Load(id);
+            var product = ProductService.Load(id);
 
             return View(new ProductEditViewModel {
                 Id = product.Id,
@@ -124,12 +108,12 @@ namespace SupplementStore.Controllers {
 
             if (string.IsNullOrEmpty(model.Id)) {
 
-                var productDetails = ProductCreator.Create(model.Name, model.Price.Value);
+                var productDetails = ProductService.Create(model.Name, model.Price.Value);
 
                 return RedirectToAction(nameof(Details), new { productDetails.Id });
             }
 
-            ProductUpdater.Update(new ProductDetails {
+            ProductService.Update(new ProductDetails {
                 Id = model.Id,
                 Name = model.Name,
                 Price = model.Price.Value
