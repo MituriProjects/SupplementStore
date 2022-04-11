@@ -1,6 +1,6 @@
 ﻿using SupplementStore.Application.Models;
 using SupplementStore.Domain.Baskets;
-using SupplementStore.Infrastructure.AppModels;
+using SupplementStore.Infrastructure.ModelMapping;
 
 namespace SupplementStore.Infrastructure.AppServices.BasketProduct {
 
@@ -15,7 +15,7 @@ namespace SupplementStore.Infrastructure.AppServices.BasketProduct {
 
             var product = ProductRepository.FindBy(basketProduct.ProductId);
 
-            return BasketProductDetailsFactory.Create(basketProduct, product);
+            return basketProduct.ToDetails(product);
         }
     }
 }
