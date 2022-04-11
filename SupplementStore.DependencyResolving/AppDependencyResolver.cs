@@ -10,6 +10,7 @@ using SupplementStore.Infrastructure;
 using SupplementStore.Infrastructure.AppServices;
 using SupplementStore.Infrastructure.AppServices.BasketProduct;
 using SupplementStore.Infrastructure.AppServices.Order;
+using SupplementStore.Infrastructure.AppServices.ProductImages;
 using SupplementStore.Infrastructure.AppServices.Products;
 using SupplementStore.Infrastructure.Repositories;
 
@@ -35,6 +36,7 @@ namespace SupplementStore.DependencyResolving {
             services.AddTransient<OrderFactory>();
 
             services.AddTransient<IProductService, ProductService>();
+            services.AddTransient<IProductImageService, ProductImageService>();
             services.AddTransient<IProductImagesProvider, ProductImagesProvider>();
             services.AddTransient<IProductImageCreator, ProductImageCreator>();
             services.AddTransient<IProductImageRemover, ProductImageRemover>();
