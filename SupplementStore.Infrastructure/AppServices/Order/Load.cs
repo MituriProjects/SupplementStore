@@ -1,6 +1,5 @@
 ﻿using SupplementStore.Application.Models;
 using SupplementStore.Domain.Orders;
-using SupplementStore.Infrastructure.AppModels;
 using SupplementStore.Infrastructure.ModelMapping;
 using System;
 using System.Linq;
@@ -22,7 +21,7 @@ namespace SupplementStore.Infrastructure.AppServices.Order {
                 .Where(e => purchases.Select(o => o.ProductId).Contains(e.ProductId))
                 .ToList();
 
-            return OrderDetailsFactory.Create(order, purchases.ToDetails(products));
+            return order.ToDetails(purchases.ToDetails(products));
         }
     }
 }
