@@ -1,6 +1,6 @@
 ﻿using SupplementStore.Application.Models;
 using SupplementStore.Domain.Orders;
-using SupplementStore.Infrastructure.AppModels;
+using SupplementStore.Infrastructure.ModelMapping;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -25,7 +25,7 @@ namespace SupplementStore.Infrastructure.AppServices.Opinions {
 
                 var order = userOrders.First(e => e.OrderId == purchase.OrderId);
 
-                yield return OpinionDetailsFactory.Create(opinion, product, order);
+                yield return opinion.ToDetails(product, order);
             }
         }
     }
