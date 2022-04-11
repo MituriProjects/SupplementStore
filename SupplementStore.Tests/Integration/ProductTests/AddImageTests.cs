@@ -78,7 +78,7 @@ namespace SupplementStore.Tests.Integration.ProductTests {
 
             await PostAsync("/Product/AddImage", formData, formFileData, TestData.Admin);
 
-            Mocks.FileManagerMock.Verify(m => m.ProcessAsync(It.Is<IFormFile>(f => f.FileName == "test.txt"), "productImages", formData["ProductId"]), Times.Once);
+            Mocks.FileManagerMock.Verify(m => m.SaveAsync(It.Is<IFormFile>(f => f.FileName == "test.txt"), "productImages", formData["ProductId"]), Times.Once);
         }
 
         [TestMethod]
@@ -105,7 +105,7 @@ namespace SupplementStore.Tests.Integration.ProductTests {
 
             await PostAsync("/Product/AddImage", formData, formFileData, TestData.Admin);
 
-            Mocks.FileManagerMock.Verify(m => m.ProcessAsync(It.Is<IFormFile>(f => f.FileName == "test.txt"), "productImages", formData["ProductId"]), Times.Never);
+            Mocks.FileManagerMock.Verify(m => m.SaveAsync(It.Is<IFormFile>(f => f.FileName == "test.txt"), "productImages", formData["ProductId"]), Times.Never);
         }
 
         [TestMethod]
@@ -140,7 +140,7 @@ namespace SupplementStore.Tests.Integration.ProductTests {
 
             await PostAsync("/Product/AddImage", formData, formFileData, TestData.Admin);
 
-            Mocks.FileManagerMock.Verify(m => m.ProcessAsync(It.Is<IFormFile>(f => f.FileName == productImage.Name), "productImages", formData["ProductId"]), Times.Never);
+            Mocks.FileManagerMock.Verify(m => m.SaveAsync(It.Is<IFormFile>(f => f.FileName == productImage.Name), "productImages", formData["ProductId"]), Times.Never);
         }
     }
 }

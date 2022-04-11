@@ -121,7 +121,7 @@ namespace SupplementStore.Controllers {
 
             if (productImageCreatorResult.Success) {
 
-                await FileWriter.ProcessAsync(file, "productImages", productId);
+                await FileWriter.SaveAsync(file, "productImages", productId);
             }
 
             return RedirectToAction(nameof(Details), new { Id = productId });

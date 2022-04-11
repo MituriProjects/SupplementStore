@@ -7,7 +7,7 @@ namespace SupplementStore.Controllers.Services {
 
     public class FileManager : IFileManager {
 
-        public async Task ProcessAsync(IFormFile formFile, params string[] pathPieces) {
+        public async Task SaveAsync(IFormFile formFile, params string[] pathPieces) {
 
             var allPathPieces = new string[pathPieces.Length + 2];
             allPathPieces[0] = Directory.GetCurrentDirectory();
