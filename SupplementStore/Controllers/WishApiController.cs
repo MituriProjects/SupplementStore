@@ -10,22 +10,14 @@ namespace SupplementStore.Controllers {
 
         UserManager<IdentityUser> UserManager { get; }
 
-        IWishProvider WishProvider { get; }
-
-        IWishCreator WishCreator { get; }
-
-        IWishRemover WishRemover { get; }
+        IWishService WishService { get; }
 
         public WishApiController(
             UserManager<IdentityUser> userManager,
-            IWishProvider wishProvider,
-            IWishCreator wishCreator,
-            IWishRemover wishRemover) {
+            IWishService wishService) {
 
             UserManager = userManager;
-            WishProvider = wishProvider;
-            WishCreator = wishCreator;
-            WishRemover = wishRemover;
+            WishService = wishService;
         }
 
         [HttpGet("{id}")]
@@ -36,7 +28,7 @@ namespace SupplementStore.Controllers {
             if (userId == null)
                 return false;
 
-            return WishProvider.Load(userId, id);
+            return WishService.IsOnWishList(userId, id);
         }
 
         [HttpPost("{id}")]
@@ -47,7 +39,7 @@ namespace SupplementStore.Controllers {
             if (userId == null)
                 return;
 
-            WishCreator.Create(userId, id);
+            WishService.Create(userId, id);
         }
 
         [HttpDelete("{id}")]
@@ -58,7 +50,7 @@ namespace SupplementStore.Controllers {
             if (userId == null)
                 return;
 
-            WishRemover.Remove(userId, id);
+            WishService.Remove(userId, id);
         }
     }
 }
