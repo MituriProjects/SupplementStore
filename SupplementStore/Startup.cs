@@ -39,7 +39,7 @@ namespace SupplementStore {
             services.AddTransient<RoleDirector>();
             services.AddTransient<OwnerManager>();
             services.AddTransient<AdminManager>();
-            services.AddTransient<IFileWriter, FileWriter>();
+            services.AddTransient<IFileManager, FileWriter>();
 
             services.AddMvc(options => {
 

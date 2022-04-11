@@ -26,7 +26,7 @@ namespace SupplementStore.Tests {
             services.AddTransient(typeof(IDocument<>), typeof(TestDocument<>));
             services.AddTransient(typeof(IDomainApprover), typeof(TestDocumentApprover));
 
-            services.AddTransient(typeof(IFileWriter), s => Mocks.FileWriterMock.Object);
+            services.AddTransient(typeof(IFileManager), s => Mocks.FileManagerMock.Object);
         }
 
         protected override void Reconfigure(IApplicationBuilder app, IHostingEnvironment env) {

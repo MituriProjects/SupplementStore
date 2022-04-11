@@ -18,12 +18,12 @@ namespace SupplementStore.Controllers {
 
         IProductImageService ProductImageService { get; }
 
-        IFileWriter FileWriter { get; }
+        IFileManager FileWriter { get; }
 
         public ProductController(
             IProductService productService,
             IProductImageService productImageService,
-            IFileWriter fileWriter) {
+            IFileManager fileWriter) {
 
             ProductService = productService;
             ProductImageService = productImageService;

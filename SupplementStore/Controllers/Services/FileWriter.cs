@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace SupplementStore.Controllers.Services {
 
-    public class FileWriter : IFileWriter {
+    public class FileWriter : IFileManager {
 
         public async Task ProcessAsync(IFormFile formFile, params string[] pathPieces) {
 

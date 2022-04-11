@@ -85,7 +85,7 @@ namespace SupplementStore.Tests.Integration.ProductTests {
 
             await PostAsync("/Product/RemoveImage", formData, TestData.Admin);
 
-            Mocks.FileWriterMock.Verify(m => m.Delete(productImage.Name, "productImages", formData["ProductId"]), Times.Once);
+            Mocks.FileManagerMock.Verify(m => m.Delete(productImage.Name, "productImages", formData["ProductId"]), Times.Once);
         }
 
         [TestMethod]
@@ -119,7 +119,7 @@ namespace SupplementStore.Tests.Integration.ProductTests {
 
             await PostAsync("/Product/RemoveImage", formData, TestData.Admin);
 
-            Mocks.FileWriterMock.Verify(m => m.Delete(productImage.Name, "productImages", formData["ProductId"]), Times.Never);
+            Mocks.FileManagerMock.Verify(m => m.Delete(productImage.Name, "productImages", formData["ProductId"]), Times.Never);
         }
 
         [TestMethod]
@@ -153,7 +153,7 @@ namespace SupplementStore.Tests.Integration.ProductTests {
 
             await PostAsync("/Product/RemoveImage", formData, TestData.Admin);
 
-            Mocks.FileWriterMock.Verify(m => m.Delete(formData["ImageName"], "productImages", formData["ProductId"]), Times.Never);
+            Mocks.FileManagerMock.Verify(m => m.Delete(formData["ImageName"], "productImages", formData["ProductId"]), Times.Never);
         }
     }
 }
