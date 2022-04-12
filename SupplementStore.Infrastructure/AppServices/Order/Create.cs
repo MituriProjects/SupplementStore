@@ -1,6 +1,7 @@
 ﻿using SupplementStore.Application.Args;
 using SupplementStore.Application.Models;
 using SupplementStore.Infrastructure.ArgsMapping;
+using SupplementStore.Infrastructure.ModelMapping;
 
 namespace SupplementStore.Infrastructure.AppServices.Order {
 
@@ -12,9 +13,7 @@ namespace SupplementStore.Infrastructure.AppServices.Order {
 
             DomainApprover.SaveChanges();
 
-            return new OrderDetails {
-                Id = order.OrderId.ToString()
-            };
+            return order.ToDetails();
         }
     }
 }
