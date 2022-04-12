@@ -16,17 +16,17 @@ namespace SupplementStore.Tests {
 
         public static void ExamineSaveChanges() {
 
-            Assert.IsNotNull(OnSaveChangesValues, "No call to the IDocumentApprover's SaveChanges method was detected.");
+            Assert.IsNotNull(OnSaveChangesValues, "No call to the IDomainApprover's SaveChanges method was detected.");
 
             var onExaminationValues = TestDocumentSet.GetValues();
 
             Assert.IsTrue(Enumerable.SequenceEqual(OnSaveChangesValues, onExaminationValues),
-                "TestDocumentApprover has detected changes made after the call to the IDocumentApprover's SaveChanges method.");
+                "TestDocumentApprover has detected changes made after the call to the IDomainApprover's SaveChanges method.");
         }
 
         public static void ExamineNoChangesSaved() {
 
-            Assert.IsNull(OnSaveChangesValues, "The call to the IDocumentApprover's SaveChanges method was detected.");
+            Assert.IsNull(OnSaveChangesValues, "The call to the IDomainApprover's SaveChanges method was detected.");
         }
 
         public static void ClearDocuments() {
