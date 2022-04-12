@@ -2,7 +2,7 @@
 
 namespace SupplementStore.ViewModels.Account {
 
-    public class RegisterViewModel {
+    public class RegisterVM {
 
         [Required]
         [EmailAddress]

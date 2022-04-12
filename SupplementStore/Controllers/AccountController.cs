@@ -73,7 +73,7 @@ namespace SupplementStore.Controllers {
         }
 
         [HttpPost]
-        public async Task<IActionResult> Register(RegisterViewModel model, string returnUrl) {
+        public async Task<IActionResult> Register(RegisterVM model, string returnUrl) {
 
             if (ModelState.IsValid) {
 
