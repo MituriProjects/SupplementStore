@@ -2,7 +2,7 @@
 
 namespace SupplementStore.ViewModels.Product {
 
-    public class ProductEditViewModel {
+    public class ProductEditVM {
 
         public string Id { get; set; }
 
