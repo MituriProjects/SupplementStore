@@ -44,7 +44,7 @@ namespace SupplementStore.Controllers {
                 UserEmails[userId] = (await UserManager.FindByIdAsync(userId)).Email;
             }
 
-            return View(new OrdersViewModel {
+            return View(new OrdersVM {
                 OrderDetails = orderDetails,
                 UserEmails = UserEmails
             });
