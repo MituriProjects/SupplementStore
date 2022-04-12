@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace SupplementStore.ViewModels.Opinion {
 
-    public class OpinionCreateViewModel {
+    public class OpinionCreateVM {
 
         public string PurchaseId { get; set; }
 
