@@ -6,7 +6,7 @@ namespace SupplementStore.Infrastructure.ModelMapping {
 
     static class OrderExtensions {
 
-        public static OrderDetails ToDetails(this Order order, IEnumerable<PurchaseDetails> purchaseDetailsCollection) {
+        public static OrderDetails ToDetails(this Order order, IEnumerable<PurchaseDetails> purchaseDetailsCollection = null) {
 
             return new OrderDetails {
                 Id = order.OrderId.ToString(),
@@ -15,7 +15,7 @@ namespace SupplementStore.Infrastructure.ModelMapping {
                 PostalCode = order.Address.PostalCode,
                 City = order.Address.City,
                 CreatedOn = order.CreatedOn,
-                Purchases = purchaseDetailsCollection
+                Purchases = purchaseDetailsCollection ?? new List<PurchaseDetails>()
             };
         }
     }
