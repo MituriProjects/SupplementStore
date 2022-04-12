@@ -30,9 +30,9 @@ namespace SupplementStore.Controllers {
             FileWriter = fileWriter;
         }
 
-        public IActionResult Index(ProductIndexViewModel model) {
+        public IActionResult Index(ProductIndexVM model) {
 
-            model = model ?? new ProductIndexViewModel();
+            model = model ?? new ProductIndexVM();
 
             var loadedProducts = ProductService.LoadMany(new ProductsProviderArgs {
                 Skip = model.Skip,
