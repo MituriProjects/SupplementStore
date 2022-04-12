@@ -62,7 +62,7 @@ namespace SupplementStore.Controllers {
             if (product == null)
                 return RedirectToAction("Index");
 
-            return View(new ProductDetailsViewModel {
+            return View(new ProductDetailsVM {
                 Product = product,
                 Opinions = ProductService.LoadOpinions(product.Id),
                 Images = ProductImageService.LoadMany(product.Id).OrderByDescending(e => e.IsMain).Select(e => e.Name)
