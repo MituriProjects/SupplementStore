@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace SupplementStore.ViewModels.Order {
 
-    public class OrderCreateViewModel {
+    public class OrderCreateVM {
 
         public IEnumerable<BasketProductDetails> BasketProducts { get; set; }
 

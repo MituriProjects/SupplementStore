@@ -30,13 +30,13 @@ namespace SupplementStore.Controllers {
 
             var userId = UserManager.GetUserId(HttpContext.User);
 
-            return View(new OrderCreateViewModel {
+            return View(new OrderCreateVM {
                 BasketProducts = BasketProductService.LoadMany(userId)
             });
         }
 
         [HttpPost]
-        public IActionResult Create(OrderCreateViewModel model) {
+        public IActionResult Create(OrderCreateVM model) {
 
             var userId = UserManager.GetUserId(HttpContext.User);
 
