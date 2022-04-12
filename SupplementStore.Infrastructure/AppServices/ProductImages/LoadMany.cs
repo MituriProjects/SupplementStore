@@ -1,7 +1,7 @@
 ﻿using SupplementStore.Application.Models;
 using SupplementStore.Domain.Products;
+using SupplementStore.Infrastructure.ModelMapping;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace SupplementStore.Infrastructure.AppServices.ProductImages {
 
@@ -11,11 +11,7 @@ namespace SupplementStore.Infrastructure.AppServices.ProductImages {
 
             return ProductImageRepository
                 .FindBy(new ProductImagesFilter(new ProductId(productId)))
-                .Select(e => new ProductImageDetails {
-                    Name = e.Name,
-                    IsMain = e.IsMain
-                })
-                .ToList();
+                .ToDetails();
         }
     }
 }
