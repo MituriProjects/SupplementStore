@@ -169,7 +169,11 @@ namespace SupplementStore.Tests.Integration {
 
         protected void ExamineRedirect(string uri) {
 
-            Assert.AreEqual(uri, Headers.Location?.ToString());
+            if (Headers.Location == null)
+                throw new AssertFailedException($"No redirection was detected. \nExpected: '{uri}'");
+
+            if (Headers.Location.ToString() != uri)
+                throw new AssertFailedException($"An unexpected redirection was detected. \nExpected: '{uri}'; \nActual: '{Headers.Location}'");
         }
 
         protected void ExamineAuthRedirect(string returnUri) {
