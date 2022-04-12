@@ -2,7 +2,7 @@
 
 namespace SupplementStore.ViewModels.Role {
 
-    public class UserRolesViewModel {
+    public class UserRolesVM {
 
         public string UserId { get; set; }
 
