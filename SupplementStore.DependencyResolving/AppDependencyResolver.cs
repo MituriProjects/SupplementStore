@@ -13,6 +13,7 @@ using SupplementStore.Infrastructure.AppServices.Order;
 using SupplementStore.Infrastructure.AppServices.ProductImages;
 using SupplementStore.Infrastructure.AppServices.Products;
 using SupplementStore.Infrastructure.AppServices.Wishes;
+using SupplementStore.Infrastructure.Documentation;
 using SupplementStore.Infrastructure.Repositories;
 
 namespace SupplementStore.DependencyResolving {

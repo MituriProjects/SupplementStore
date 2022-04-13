@@ -1,4 +1,4 @@
-﻿namespace SupplementStore.Infrastructure {
+﻿namespace SupplementStore.Infrastructure.Documentation {
 
     public class DocumentApprover : IDomainApprover {
 

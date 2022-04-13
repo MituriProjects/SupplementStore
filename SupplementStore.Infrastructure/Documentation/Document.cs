@@ -3,7 +3,7 @@ using SupplementStore.Domain;
 using System.Linq;
 using System.Reflection;
 
-namespace SupplementStore.Infrastructure {
+namespace SupplementStore.Infrastructure.Documentation {
 
     public class Document<TEntity> : IDocument<TEntity>
         where TEntity : Entity {
