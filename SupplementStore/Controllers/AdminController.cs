@@ -12,19 +12,19 @@ namespace SupplementStore.Controllers {
     [Authorize(Roles = "Admin")]
     public class AdminController : Controller {
 
-        IOrdersProvider OrdersProvider { get; }
+        IOrderService OrderService { get; }
 
-        IHiddenOpinionsProvider HiddenOpinionsProvider { get; }
+        IOpinionService OpinionService { get; }
 
         UserManager<IdentityUser> UserManager { get; }
 
         public AdminController(
-            IOrdersProvider ordersProvider,
-            IHiddenOpinionsProvider hiddenOpinionsProvider,
+            IOrderService orderService,
+            IOpinionService opinionService,
             UserManager<IdentityUser> userManager) {
 
-            OrdersProvider = ordersProvider;
-            HiddenOpinionsProvider = hiddenOpinionsProvider;
+            OrderService = orderService;
+            OpinionService = opinionService;
             UserManager = userManager;
         }
 
@@ -35,7 +35,7 @@ namespace SupplementStore.Controllers {
 
         public async Task<IActionResult> Orders() {
 
-            var orderDetails = OrdersProvider.Load();
+            var orderDetails = OrderService.LoadMany();
 
             Dictionary<string, string> UserEmails = new Dictionary<string, string>();
 
@@ -44,7 +44,7 @@ namespace SupplementStore.Controllers {
                 UserEmails[userId] = (await UserManager.FindByIdAsync(userId)).Email;
             }
 
-            return View(new OrdersViewModel {
+            return View(new OrdersVM {
                 OrderDetails = orderDetails,
                 UserEmails = UserEmails
             });
@@ -52,7 +52,7 @@ namespace SupplementStore.Controllers {
 
         public IActionResult HiddenOpinions() {
 
-            return View(HiddenOpinionsProvider.Load());
+            return View(OpinionService.LoadHidden());
         }
     }
 }

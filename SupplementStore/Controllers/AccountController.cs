@@ -41,7 +41,7 @@ namespace SupplementStore.Controllers {
         }
 
         [HttpPost]
-        public async Task<IActionResult> Login(LoginViewModel details, string returnUrl) {
+        public async Task<IActionResult> Login(LoginVM details, string returnUrl) {
 
             if (ModelState.IsValid) {
 
@@ -59,7 +59,7 @@ namespace SupplementStore.Controllers {
                     }
                 }
 
-                ModelState.AddModelError(nameof(LoginViewModel.Email), "Invalid user or password");
+                ModelState.AddModelError(nameof(LoginVM.Email), "Invalid user or password");
             }
 
             return View(details);
@@ -73,7 +73,7 @@ namespace SupplementStore.Controllers {
         }
 
         [HttpPost]
-        public async Task<IActionResult> Register(RegisterViewModel model, string returnUrl) {
+        public async Task<IActionResult> Register(RegisterVM model, string returnUrl) {
 
             if (ModelState.IsValid) {
 

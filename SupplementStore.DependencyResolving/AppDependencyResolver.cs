@@ -7,7 +7,13 @@ using SupplementStore.Domain.Orders;
 using SupplementStore.Domain.Products;
 using SupplementStore.Domain.Wishes;
 using SupplementStore.Infrastructure;
-using SupplementStore.Infrastructure.AppServices;
+using SupplementStore.Infrastructure.AppServices.BasketProduct;
+using SupplementStore.Infrastructure.AppServices.Opinions;
+using SupplementStore.Infrastructure.AppServices.Order;
+using SupplementStore.Infrastructure.AppServices.ProductImages;
+using SupplementStore.Infrastructure.AppServices.Products;
+using SupplementStore.Infrastructure.AppServices.Wishes;
+using SupplementStore.Infrastructure.Documentation;
 using SupplementStore.Infrastructure.Repositories;
 
 namespace SupplementStore.DependencyResolving {
@@ -28,36 +34,15 @@ namespace SupplementStore.DependencyResolving {
             services.AddTransient<IWishRepository, WishRepository>();
             services.AddTransient<IOpinionRepository, OpinionRepository>();
 
-            services.AddTransient<IProductProvider, ProductProvider>();
-            services.AddTransient<IProductsProvider, ProductsProvider>();
-            services.AddTransient<IProductCreator, ProductCreator>();
-            services.AddTransient<IProductUpdater, ProductUpdater>();
-            services.AddTransient<IProductImagesProvider, ProductImagesProvider>();
-            services.AddTransient<IProductImageCreator, ProductImageCreator>();
-            services.AddTransient<IProductImageRemover, ProductImageRemover>();
-            services.AddTransient<IMainProductImageAppointer, MainProductImageAppointer>();
-            services.AddTransient<IBasketProductProvider, BasketProductProvider>();
-            services.AddTransient<IBasketProductsProvider, BasketProductsProvider>();
-            services.AddTransient<IBasketProductCreator, BasketProductCreator>();
-            services.AddTransient<IBasketProductUpdater, BasketProductUpdater>();
-            services.AddTransient<IBasketProductRemover, BasketProductRemover>();
-            services.AddTransient<IOrderCreator, OrderCreator>();
-            services.AddTransient<IOrderProvider, OrderProvider>();
-            services.AddTransient<IOrdersProvider, OrdersProvider>();
-            services.AddTransient<IWishProvider, WishProvider>();
-            services.AddTransient<IWishesProvider, WishesProvider>();
-            services.AddTransient<IWishCreator, WishCreator>();
-            services.AddTransient<IWishRemover, WishRemover>();
-            services.AddTransient<IProductToOpineProvider, ProductToOpineProvider>();
-            services.AddTransient<IOpinionProductProvider, OpinionProductProvider>();
-            services.AddTransient<IProductOpinionsProvider, ProductOpinionsProvider>();
-            services.AddTransient<IOpinionProvider, OpinionProvider>();
-            services.AddTransient<IUserOpinionsProvider, UserOpinionsProvider>();
-            services.AddTransient<IHiddenOpinionsProvider, HiddenOpinionsProvider>();
-            services.AddTransient<IOpinionCreator, OpinionCreator>();
-            services.AddTransient<IOpinionTextUpdater, OpinionTextUpdater>();
-            services.AddTransient<IOpinionHider, OpinionHider>();
-            services.AddTransient<IOpinionRevealer, OpinionRevealer>();
+            services.AddTransient<BasketProductManager>();
+            services.AddTransient<OrderFactory>();
+
+            services.AddTransient<IProductService, ProductService>();
+            services.AddTransient<IProductImageService, ProductImageService>();
+            services.AddTransient<IBasketProductService, BasketProductService>();
+            services.AddTransient<IOrderService, OrderService>();
+            services.AddTransient<IWishService, WishService>();
+            services.AddTransient<IOpinionService, OpinionService>();
         }
     }
 }

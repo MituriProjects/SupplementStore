@@ -14,55 +14,27 @@ namespace SupplementStore.Controllers {
 
     public class ProductController : Controller {
 
-        IProductProvider ProductProvider { get; }
+        IProductService ProductService { get; }
 
-        IProductsProvider ProductsProvider { get; }
+        IProductImageService ProductImageService { get; }
 
-        IProductOpinionsProvider ProductOpinionsProvider { get; }
-
-        IProductCreator ProductCreator { get; }
-
-        IProductUpdater ProductUpdater { get; }
-
-        IProductImagesProvider ProductImagesProvider { get; }
-
-        IProductImageCreator ProductImageCreator { get; }
-
-        IProductImageRemover ProductImageRemover { get; }
-
-        IMainProductImageAppointer MainProductImageAppointer { get; }
-
-        IFileWriter FileWriter { get; }
+        IFileManager FileWriter { get; }
 
         public ProductController(
-            IProductProvider productProvider,
-            IProductsProvider productsProvider,
-            IProductOpinionsProvider productOpinionsProvider,
-            IProductCreator productCreator,
-            IProductUpdater productUpdater,
-            IProductImagesProvider productImagesProvider,
-            IProductImageCreator productImageCreator,
-            IProductImageRemover productImageRemover,
-            IMainProductImageAppointer mainProductImageAppointer,
-            IFileWriter fileWriter) {
+            IProductService productService,
+            IProductImageService productImageService,
+            IFileManager fileWriter) {
 
-            ProductProvider = productProvider;
-            ProductsProvider = productsProvider;
-            ProductOpinionsProvider = productOpinionsProvider;
-            ProductCreator = productCreator;
-            ProductUpdater = productUpdater;
-            ProductImagesProvider = productImagesProvider;
-            ProductImageCreator = productImageCreator;
-            ProductImageRemover = productImageRemover;
-            MainProductImageAppointer = mainProductImageAppointer;
+            ProductService = productService;
+            ProductImageService = productImageService;
             FileWriter = fileWriter;
         }
 
-        public IActionResult Index(ProductIndexViewModel model) {
+        public IActionResult Index(ProductIndexVM model) {
 
-            model = model ?? new ProductIndexViewModel();
+            model = model ?? new ProductIndexVM();
 
-            var loadedProducts = ProductsProvider.Load(new ProductsProviderArgs {
+            var loadedProducts = ProductService.LoadMany(new ProductsProviderArgs {
                 Skip = model.Skip,
                 Take = model.Take
             });
@@ -72,7 +44,7 @@ namespace SupplementStore.Controllers {
 
             foreach (var product in model.Products) {
 
-                var opinions = ProductOpinionsProvider.Load(product.Id);
+                var opinions = ProductService.LoadOpinions(product.Id);
 
                 model.ProductRatings[product.Id] = new ProductRating {
                     Average = opinions.Count() == 0 ? 0 : Math.Round(opinions.Average(e => e.Stars), 2),
@@ -85,30 +57,30 @@ namespace SupplementStore.Controllers {
 
         public IActionResult Details(string id) {
 
-            var product = ProductProvider.Load(id);
+            var product = ProductService.Load(id);
 
             if (product == null)
                 return RedirectToAction("Index");
 
-            return View(new ProductDetailsViewModel {
+            return View(new ProductDetailsVM {
                 Product = product,
-                Opinions = ProductOpinionsProvider.Load(product.Id),
-                Images = ProductImagesProvider.Load(product.Id).OrderByDescending(e => e.IsMain).Select(e => e.Name)
+                Opinions = ProductService.LoadOpinions(product.Id),
+                Images = ProductImageService.LoadMany(product.Id).OrderByDescending(e => e.IsMain).Select(e => e.Name)
             });
         }
 
         [Authorize(Roles = "Admin")]
         public IActionResult Create() {
 
-            return View("Edit", new ProductEditViewModel());
+            return View("Edit", new ProductEditVM());
         }
 
         [Authorize(Roles = "Admin")]
         public IActionResult Edit(string id) {
 
-            var product = ProductProvider.Load(id);
+            var product = ProductService.Load(id);
 
-            return View(new ProductEditViewModel {
+            return View(new ProductEditVM {
                 Id = product.Id,
                 Name = product.Name,
                 Price = product.Price
@@ -117,19 +89,19 @@ namespace SupplementStore.Controllers {
 
         [HttpPost]
         [Authorize(Roles = "Admin")]
-        public IActionResult Edit(ProductEditViewModel model) {
+        public IActionResult Edit(ProductEditVM model) {
 
             if (ModelState.IsValid == false)
                 return View(model);
 
             if (string.IsNullOrEmpty(model.Id)) {
 
-                var productDetails = ProductCreator.Create(model.Name, model.Price.Value);
+                var productDetails = ProductService.Create(model.Name, model.Price.Value);
 
                 return RedirectToAction(nameof(Details), new { productDetails.Id });
             }
 
-            ProductUpdater.Update(new ProductDetails {
+            ProductService.Update(new ProductDetails {
                 Id = model.Id,
                 Name = model.Name,
                 Price = model.Price.Value
@@ -145,11 +117,11 @@ namespace SupplementStore.Controllers {
             if (file == null)
                 return RedirectToAction(nameof(Details), new { Id = productId });
 
-            var productImageCreatorResult = ProductImageCreator.Create(productId, file.FileName);
+            var productImageCreatorResult = ProductImageService.Create(productId, file.FileName);
 
             if (productImageCreatorResult.Success) {
 
-                await FileWriter.ProcessAsync(file, "productImages", productId);
+                await FileWriter.SaveAsync(file, "productImages", productId);
             }
 
             return RedirectToAction(nameof(Details), new { Id = productId });
@@ -159,7 +131,7 @@ namespace SupplementStore.Controllers {
         [Authorize(Roles = "Admin")]
         public IActionResult SetImageAsMain(string productId, string imageName) {
 
-            MainProductImageAppointer.Perform(productId, imageName);
+            ProductImageService.AppointMain(productId, imageName);
 
             return RedirectToAction(nameof(Details), new { Id = productId });
         }
@@ -168,7 +140,7 @@ namespace SupplementStore.Controllers {
         [Authorize(Roles = "Admin")]
         public IActionResult RemoveImage(string productId, string imageName) {
 
-            var productImageRemoverResult = ProductImageRemover.Remove(productId, imageName);
+            var productImageRemoverResult = ProductImageService.Remove(productId, imageName);
 
             if (productImageRemoverResult.Success) {
 

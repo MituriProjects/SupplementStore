@@ -10,29 +10,21 @@ namespace SupplementStore.Controllers {
 
         UserManager<IdentityUser> UserManager { get; }
 
-        IBasketProductsProvider BasketProductsProvider { get; }
-
-        IBasketProductCreator BasketProductCreator { get; }
-
-        IBasketProductRemover BasketProductRemover { get; }
+        IBasketProductService BasketProductService { get; }
 
         public BasketController(
             UserManager<IdentityUser> userManager,
-            IBasketProductsProvider basketProductsProvider,
-            IBasketProductCreator basketProductCreator,
-            IBasketProductRemover basketProductRemover) {
+            IBasketProductService basketProductService) {
 
             UserManager = userManager;
-            BasketProductsProvider = basketProductsProvider;
-            BasketProductCreator = basketProductCreator;
-            BasketProductRemover = basketProductRemover;
+            BasketProductService = basketProductService;
         }
 
         public IActionResult Index() {
 
             var userId = UserManager.GetUserId(HttpContext.User);
 
-            return View(BasketProductsProvider.Load(userId));
+            return View(BasketProductService.LoadMany(userId));
         }
 
         [HttpPost]
@@ -40,7 +32,7 @@ namespace SupplementStore.Controllers {
 
             var userId = UserManager.GetUserId(HttpContext.User);
 
-            BasketProductCreator.Create(userId, productId, quantity);
+            BasketProductService.Create(userId, productId, quantity);
 
             return LocalRedirect(returnUrl ?? "/Basket");
         }
@@ -50,7 +42,7 @@ namespace SupplementStore.Controllers {
 
             var userId = UserManager.GetUserId(HttpContext.User);
 
-            BasketProductRemover.Remove(userId, productId);
+            BasketProductService.Remove(userId, productId);
 
             return RedirectToAction("Index");
         }

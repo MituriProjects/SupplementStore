@@ -12,46 +12,42 @@ namespace SupplementStore.Controllers {
 
         UserManager<IdentityUser> UserManager { get; }
 
-        IBasketProductsProvider BasketProductsProvider { get; }
+        IBasketProductService BasketProductService { get; }
 
-        IOrderCreator OrderCreator { get; }
-
-        IOrderProvider OrderProvider { get; }
+        IOrderService OrderService { get; }
 
         public OrderController(
             UserManager<IdentityUser> userManager,
-            IBasketProductsProvider basketProductsProvider,
-            IOrderCreator orderCreator,
-            IOrderProvider orderProvider) {
+            IBasketProductService basketProductService,
+            IOrderService orderService) {
 
             UserManager = userManager;
-            BasketProductsProvider = basketProductsProvider;
-            OrderCreator = orderCreator;
-            OrderProvider = orderProvider;
+            BasketProductService = basketProductService;
+            OrderService = orderService;
         }
 
         public IActionResult Create() {
 
             var userId = UserManager.GetUserId(HttpContext.User);
 
-            return View(new OrderCreateViewModel {
-                BasketProducts = BasketProductsProvider.Load(userId)
+            return View(new OrderCreateVM {
+                BasketProducts = BasketProductService.LoadMany(userId)
             });
         }
 
         [HttpPost]
-        public IActionResult Create(OrderCreateViewModel model) {
+        public IActionResult Create(OrderCreateVM model) {
 
             var userId = UserManager.GetUserId(HttpContext.User);
 
             if (ModelState.IsValid == false) {
 
-                model.BasketProducts = BasketProductsProvider.Load(userId);
+                model.BasketProducts = BasketProductService.LoadMany(userId);
 
                 return View(model);
             }
 
-            var order = OrderCreator.Create(new OrderCreatorArgs {
+            var order = OrderService.Create(new OrderCreatorArgs {
                 UserId = userId,
                 Address = model.Address,
                 PostalCode = model.PostalCode,
@@ -62,7 +58,7 @@ namespace SupplementStore.Controllers {
 
                 ModelState.AddModelError(string.Empty, "The creation of an order failed.");
 
-                model.BasketProducts = BasketProductsProvider.Load(userId);
+                model.BasketProducts = BasketProductService.LoadMany(userId);
 
                 return View(model);
             }
@@ -72,7 +68,7 @@ namespace SupplementStore.Controllers {
 
         public IActionResult Summary(string id) {
 
-            var orderDetails = OrderProvider.Load(id);
+            var orderDetails = OrderService.Load(id);
 
             var userId = UserManager.GetUserId(HttpContext.User);
 

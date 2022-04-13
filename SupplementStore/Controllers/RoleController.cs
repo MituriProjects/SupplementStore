@@ -48,7 +48,7 @@ namespace SupplementStore.Controllers {
 
             var roles = RoleManager.Roles.Select(r => r.Name);
 
-            var userRolesViewModel = UserManager.Users.Select(u => new UserRolesViewModel {
+            var userRolesViewModel = UserManager.Users.Select(u => new UserRolesVM {
                 UserId = u.Id,
                 UserName = u.UserName,
                 UserRoles = new Dictionary<string, bool>(roles.Select(r => KeyValuePair.Create(r, false)))
@@ -70,7 +70,7 @@ namespace SupplementStore.Controllers {
         }
 
         [HttpPost]
-        public async Task<IActionResult> EditUserRoles(UserRolesViewModel model) {
+        public async Task<IActionResult> EditUserRoles(UserRolesVM model) {
 
             await RoleDirector.ManageAsync(model.UserId, model.UserRoles);
 

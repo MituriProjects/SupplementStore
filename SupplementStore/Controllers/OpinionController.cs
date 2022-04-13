@@ -12,51 +12,23 @@ namespace SupplementStore.Controllers {
 
         UserManager<IdentityUser> UserManager { get; }
 
-        IProductToOpineProvider ProductToOpineProvider { get; }
-
-        IOpinionProductProvider OpinionProductProvider { get; }
-
-        IOpinionProvider OpinionProvider { get; }
-
-        IUserOpinionsProvider OpinionsProvider { get; }
-
-        IOpinionCreator OpinionCreator { get; }
-
-        IOpinionTextUpdater OpinionTextUpdater { get; }
-
-        IOpinionHider OpinionHider { get; }
-
-        IOpinionRevealer OpinionRevealer { get; }
+        IOpinionService OpinionService { get; }
 
         public OpinionController(
             UserManager<IdentityUser> userManager,
-            IProductToOpineProvider productToOpineProvider,
-            IOpinionProductProvider opinionProductProvider,
-            IOpinionProvider opinionProvider,
-            IUserOpinionsProvider opinionsProvider,
-            IOpinionCreator opinionCreator,
-            IOpinionTextUpdater opinionTextUpdater,
-            IOpinionHider opinionHider,
-            IOpinionRevealer opinionRevealer) {
+            IOpinionService opinionService) {
 
             UserManager = userManager;
-            ProductToOpineProvider = productToOpineProvider;
-            OpinionProductProvider = opinionProductProvider;
-            OpinionProvider = opinionProvider;
-            OpinionsProvider = opinionsProvider;
-            OpinionCreator = opinionCreator;
-            OpinionTextUpdater = opinionTextUpdater;
-            OpinionHider = opinionHider;
-            OpinionRevealer = opinionRevealer;
+            OpinionService = opinionService;
         }
 
         public IActionResult Index() {
 
             var userId = UserManager.GetUserId(HttpContext.User);
 
-            return View(new OpinionIndexViewModel {
-                IsProductToOpineWaiting = ProductToOpineProvider.Load(userId).IsEmpty == false,
-                Opinions = OpinionsProvider.Load(userId)
+            return View(new OpinionIndexVM {
+                IsProductToOpineWaiting = OpinionService.LoadProductToOpine(userId).IsEmpty == false,
+                Opinions = OpinionService.LoadMany(userId)
             });
         }
 
@@ -64,12 +36,12 @@ namespace SupplementStore.Controllers {
 
             var userId = UserManager.GetUserId(HttpContext.User);
 
-            var productToOpine = ProductToOpineProvider.Load(userId);
+            var productToOpine = OpinionService.LoadProductToOpine(userId);
 
             if (productToOpine.IsEmpty)
                 return RedirectToAction("Index");
 
-            return View(new OpinionCreateViewModel {
+            return View(new OpinionCreateVM {
                 PurchaseId = productToOpine.PurchaseId,
                 ProductName = productToOpine.ProductName,
                 BuyingDate = productToOpine.BuyingDate
@@ -77,9 +49,9 @@ namespace SupplementStore.Controllers {
         }
 
         [HttpPost]
-        public IActionResult Create(OpinionCreateViewModel model) {
+        public IActionResult Create(OpinionCreateVM model) {
 
-            OpinionCreator.Create(new OpinionCreatorArgs {
+            OpinionService.Create(new OpinionCreatorArgs {
                 PurchaseId = model.PurchaseId,
                 Text = model.Text,
                 Stars = model.Stars
@@ -91,9 +63,9 @@ namespace SupplementStore.Controllers {
         [Authorize(Roles = "Admin")]
         public IActionResult Edit(string id) {
 
-            var opinion = OpinionProvider.Load(id);
+            var opinion = OpinionService.Load(id);
 
-            return View(new OpinionEditViewModel {
+            return View(new OpinionEditVM {
                 Id = opinion.Id,
                 Text = opinion.Text
             });
@@ -101,11 +73,11 @@ namespace SupplementStore.Controllers {
 
         [HttpPost]
         [Authorize(Roles = "Admin")]
-        public IActionResult Edit(OpinionEditViewModel model) {
+        public IActionResult Edit(OpinionEditVM model) {
 
-            OpinionTextUpdater.Update(model.Id, model.Text);
+            OpinionService.UpdateText(model.Id, model.Text);
 
-            var product = OpinionProductProvider.Load(model.Id);
+            var product = OpinionService.LoadOpinionProduct(model.Id);
 
             return RedirectToAction("Details", "Product", new { product.Id });
         }
@@ -114,9 +86,9 @@ namespace SupplementStore.Controllers {
         [Authorize(Roles = "Admin")]
         public IActionResult Hide(string id) {
 
-            OpinionHider.Hide(id);
+            OpinionService.Hide(id);
 
-            var product = OpinionProductProvider.Load(id);
+            var product = OpinionService.LoadOpinionProduct(id);
 
             return RedirectToAction("Details", "Product", new { product.Id });
         }
@@ -125,7 +97,7 @@ namespace SupplementStore.Controllers {
         [Authorize(Roles = "Admin")]
         public IActionResult Show(string id) {
 
-            OpinionRevealer.Reveal(id);
+            OpinionService.Reveal(id);
 
             return RedirectToAction("HiddenOpinions", "Admin");
         }

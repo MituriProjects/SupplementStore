@@ -10,21 +10,21 @@ namespace SupplementStore.Controllers {
 
         UserManager<IdentityUser> UserManager { get; }
 
-        IWishesProvider WishesProvider { get; }
+        IWishService WishService { get; }
 
         public WishController(
             UserManager<IdentityUser> userManager,
-            IWishesProvider wishesProvider) {
+            IWishService wishService) {
 
             UserManager = userManager;
-            WishesProvider = wishesProvider;
+            WishService = wishService;
         }
 
         public IActionResult Index() {
 
             var userId = UserManager.GetUserId(HttpContext.User);
 
-            return View(WishesProvider.Load(userId));
+            return View(WishService.LoadMany(userId));
         }
     }
 }

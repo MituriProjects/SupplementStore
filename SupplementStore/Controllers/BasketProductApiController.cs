@@ -9,22 +9,17 @@ namespace SupplementStore.Controllers {
     [Route("api/basketproduct")]
     public class BasketProductApiController : ControllerBase {
 
-        IBasketProductProvider BasketProductProvider { get; }
+        IBasketProductService BasketProductService { get; }
 
-        IBasketProductUpdater BasketProductUpdater { get; }
+        public BasketProductApiController(IBasketProductService basketProductService) {
 
-        public BasketProductApiController(
-            IBasketProductProvider basketProductProvider,
-            IBasketProductUpdater basketProductUpdater) {
-
-            BasketProductProvider = basketProductProvider;
-            BasketProductUpdater = basketProductUpdater;
+            BasketProductService = basketProductService;
         }
 
         [HttpGet("{id}")]
         public BasketProductDetails Get(string id) {
 
-            return BasketProductProvider.Load(id);
+            return BasketProductService.Load(id);
         }
 
         [HttpPatch("{id}")]
@@ -37,7 +32,7 @@ namespace SupplementStore.Controllers {
 
             patchDocument.ApplyTo(basketProduct);
 
-            BasketProductUpdater.Update(basketProduct);
+            BasketProductService.Update(basketProduct);
 
             return Ok();
         }
