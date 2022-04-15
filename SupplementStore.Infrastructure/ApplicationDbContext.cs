@@ -15,6 +15,8 @@ namespace SupplementStore.Infrastructure {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options) { }
 
+        public DbSet<Domain.Addresses.Address> Addresses { get; set; }
+
         public DbSet<Product> Products { get; set; }
 
         public DbSet<ProductImage> ProductImages { get; set; }
@@ -33,6 +35,7 @@ namespace SupplementStore.Infrastructure {
 
             base.OnModelCreating(builder);
 
+            builder.ApplyConfiguration(new AddressConfiguration());
             builder.ApplyConfiguration(new ProductConfiguration());
             builder.ApplyConfiguration(new ProductImageConfiguration());
             builder.ApplyConfiguration(new BasketProductConfiguration());
