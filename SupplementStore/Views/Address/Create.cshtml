@@ -1,0 +1,39 @@
+﻿@model CreateVM
+
+<environment exclude="Testing">
+
+    <h3 class="m-2">Nowy adres:</h3>
+
+    <form method="post" asp-controller="Address" asp-action="Create" class="m-2 w-25">
+
+        <div class="form-group">
+            <label asp-for="Street" class="my-1"></label>
+            <input asp-for="Street" class="form-control" />
+            <div style="height:20px;"><span asp-validation-for="Street" class="text-danger small text-decoration-underline"></span></div>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="PostalCode" class="my-1"></label>
+            <input asp-for="PostalCode" class="form-control" />
+            <div style="height:20px;"><span asp-validation-for="PostalCode" class="text-danger small text-decoration-underline"></span></div>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="City" class="my-1"></label>
+            <input asp-for="City" class="form-control" />
+            <div style="height:20px;"><span asp-validation-for="City" class="text-danger small text-decoration-underline"></span></div>
+        </div>
+
+        <button type="submit" class="btn btn-success my-3">Zatwierdź</button>
+
+    </form>
+
+</environment>
+
+<environment include="Testing">
+
+    <div name="Street">@Model.Street</div>
+    <div name="PostalCode">@Model.PostalCode</div>
+    <div name="City">@Model.City</div>
+
+</environment>
