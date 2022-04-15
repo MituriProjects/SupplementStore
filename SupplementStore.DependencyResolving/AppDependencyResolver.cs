@@ -8,6 +8,7 @@ using SupplementStore.Domain.Orders;
 using SupplementStore.Domain.Products;
 using SupplementStore.Domain.Wishes;
 using SupplementStore.Infrastructure;
+using SupplementStore.Infrastructure.AppServices.Addresses;
 using SupplementStore.Infrastructure.AppServices.BasketProduct;
 using SupplementStore.Infrastructure.AppServices.Opinions;
 using SupplementStore.Infrastructure.AppServices.Order;
@@ -40,6 +41,7 @@ namespace SupplementStore.DependencyResolving {
             services.AddTransient<BasketProductManager>();
             services.AddTransient<OrderFactory>();
 
+            services.AddTransient<IAddressService, AddressService>();
             services.AddTransient<IProductService, ProductService>();
             services.AddTransient<IProductImageService, ProductImageService>();
             services.AddTransient<IBasketProductService, BasketProductService>();
