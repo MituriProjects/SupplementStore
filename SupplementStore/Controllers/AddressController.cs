@@ -22,6 +22,13 @@ namespace SupplementStore.Controllers {
             AddressService = addressService;
         }
 
+        public IActionResult Index() {
+
+            var userId = UserManager.GetUserId(HttpContext.User);
+
+            return View(AddressService.LoadMany(userId));
+        }
+
         public IActionResult Create() {
 
             return View(new CreateVM());
