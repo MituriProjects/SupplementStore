@@ -53,5 +53,39 @@ namespace SupplementStore.Controllers {
 
             return RedirectToAction("Index");
         }
+
+        public IActionResult Edit(string id) {
+
+            var address = AddressService.Load(id);
+
+            if (address == null)
+                return RedirectToAction(nameof(Index));
+
+            return View(new EditVM {
+                Id = address.Id,
+                Street = address.Street,
+                PostalCode = address.PostalCode,
+                City = address.City
+            });
+        }
+
+        [HttpPost]
+        public IActionResult Edit(EditVM model) {
+
+            if (ModelState.IsValid == false)
+                return View(model);
+
+            var userId = UserManager.GetUserId(HttpContext.User);
+
+            AddressService.Update(new AddressUpdateArgs {
+                Id = model.Id,
+                UserId = userId,
+                Street = model.Street,
+                PostalCode = model.PostalCode,
+                City = model.City
+            });
+
+            return RedirectToAction(nameof(Index));
+        }
     }
 }
