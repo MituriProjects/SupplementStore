@@ -12,6 +12,9 @@
                 <div>@address.PostalCode</div>
                 <div>@address.City</div>
             </div>
+            <div>
+                <a asp-controller="Address" asp-action="Edit" asp-route-id="@address.Id" class="btn btn-outline-primary mt-2">Edytuj</a>
+            </div>
         </div>
     }
 
