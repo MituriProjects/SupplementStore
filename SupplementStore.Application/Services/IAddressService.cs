@@ -8,5 +8,6 @@ namespace SupplementStore.Application.Services {
         AddressDetails Load(string addressId);
         IEnumerable<AddressDetails> LoadMany(string userId);
         void Create(AddressCreateArgs args);
+        void Update(AddressUpdateArgs args);
     }
 }
