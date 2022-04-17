@@ -87,5 +87,15 @@ namespace SupplementStore.Controllers {
 
             return RedirectToAction(nameof(Index));
         }
+
+        [HttpPost]
+        public IActionResult Delete(string id) {
+
+            var userId = UserManager.GetUserId(HttpContext.User);
+
+            AddressService.Hide(userId, id);
+
+            return RedirectToAction(nameof(Index));
+        }
     }
 }
