@@ -18,5 +18,8 @@ namespace SupplementStore.ViewModels.Order {
 
         [Required]
         public string City { get; set; }
+
+        [Display(Name = "Zapisz adres")]
+        public bool IsAddressToBeSaved { get; set; }
     }
 }
