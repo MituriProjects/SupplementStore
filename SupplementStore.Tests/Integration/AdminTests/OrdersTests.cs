@@ -1,4 +1,5 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using SupplementStore.Domain.Addresses;
 using SupplementStore.Domain.Orders;
 using SupplementStore.Domain.Products;
 using System.Linq;
@@ -29,11 +30,14 @@ namespace SupplementStore.Tests.Integration.AdminTests {
         public async Task UserIsAuthorized_ReturnsOrderDetails() {
 
             var products = TestEntity.Random<Product>(3);
+            var addresses = TestEntity.Random<Address>(2);
             var orders = TestEntity.Random<Order>(2);
             orders[0]
-                .WithUserId(TestData.Users[0].Id);
+                .WithUserId(TestData.Users[0].Id)
+                .WithAddressId(addresses[0]);
             orders[1]
-                .WithUserId(TestData.Users[1].Id);
+                .WithUserId(TestData.Users[1].Id)
+                .WithAddressId(addresses[1]);
             var purchases = TestEntity.Random<Purchase>(4);
             purchases[0]
                 .WithProductId(products[1])
@@ -56,10 +60,13 @@ namespace SupplementStore.Tests.Integration.AdminTests {
                 contentScheme.Contains("OrderId", order.OrderId);
                 contentScheme.Contains("UserId", order.UserId);
                 contentScheme.Contains("UserEmail", TestData.Users.First(e => e.Id == order.UserId).Email);
-                contentScheme.Contains("Street", order.Address.Street);
-                contentScheme.Contains("PostalCode", order.Address.PostalCode);
-                contentScheme.Contains("City", order.Address.City);
                 contentScheme.Contains("CreatedOn", order.CreatedOn);
+
+                var orderAddress = addresses.First(e => e.AddressId == order.AddressId);
+
+                contentScheme.Contains("Street", orderAddress.Street);
+                contentScheme.Contains("PostalCode", orderAddress.PostalCode.Value);
+                contentScheme.Contains("City", orderAddress.City);
 
                 foreach (var purchase in purchases.Where(e => e.OrderId == order.OrderId)) {
 
