@@ -102,6 +102,191 @@ namespace SupplementStore.Tests.Integration.OrderTests {
         }
 
         [TestMethod]
+        public async Task Post_UserAddressExists_CreatesOrderWithExistingAddress() {
+
+            var basketProduct = TestEntity.Random<BasketProduct>()
+                .WithUserId(TestData.User.Id);
+            var address = TestEntity.Random<Address>()
+                .WithUserId(TestData.User.Id)
+                .WithStreet("Lotnicza 39/4")
+                .WithPostalCode(new PostalCode("22-726"))
+                .WithCity("Legnica");
+
+            var formData = new Dictionary<string, string> {
+                { "Address", address.Street },
+                { "PostalCode", address.PostalCode.Value },
+                { "City", address.City }
+            };
+
+            await PostAsync("/Order/Create", formData, TestData.User);
+
+            TestDocument<Address>.Single(e =>
+                e.Street == formData["Address"]
+                && e.PostalCode.Value == formData["PostalCode"]
+                && e.City == formData["City"]
+                && e.UserId == TestData.User.Id);
+            TestDocument<Order>.Single(e => e.UserId == TestData.User.Id && e.AddressId == address.AddressId);
+            TestDocumentApprover.ExamineSaveChanges();
+        }
+
+        [TestMethod]
+        public async Task Post_AddressDoesNotExistAndIsNotToBeSaved_CreatesOrderAndSetsAddressAsHidden() {
+
+            var basketProduct = TestEntity.Random<BasketProduct>()
+               .WithUserId(TestData.User.Id);
+
+            var formData = new Dictionary<string, string> {
+                { "Address", "Rycerska 11/5" },
+                { "PostalCode", "11-459" },
+                { "City", "Leszno" },
+                { "IsAddressToBeSaved", "false" }
+            };
+
+            await PostAsync("/Order/Create", formData, TestData.User);
+
+            TestDocument<Address>.Single(e =>
+                e.Street == formData["Address"]
+                && e.PostalCode.Value == formData["PostalCode"]
+                && e.City == formData["City"]
+                && e.UserId == TestData.User.Id
+                && e.IsHidden);
+            var createdAddress = TestDocument<Address>.First(e =>
+                e.Street == formData["Address"]
+                && e.PostalCode.Value == formData["PostalCode"]
+                && e.City == formData["City"]
+                && e.UserId == TestData.User.Id
+                && e.IsHidden);
+            TestDocument<Order>.Single(e => e.UserId == TestData.User.Id && e.AddressId == createdAddress.AddressId);
+            TestDocumentApprover.ExamineSaveChanges();
+        }
+
+        [TestMethod]
+        public async Task Post_UserAddressDoesNotExist_CreatesOrderAndAddress() {
+
+            var basketProduct = TestEntity.Random<BasketProduct>()
+                .WithUserId(TestData.Users[0].Id);
+            var address = TestEntity.Random<Address>()
+                .WithUserId(TestData.Users[1].Id)
+                .WithStreet("Lotnicza 39/4")
+                .WithPostalCode(new PostalCode("22-726"))
+                .WithCity("Legnica");
+
+            var formData = new Dictionary<string, string> {
+                { "Address", address.Street },
+                { "PostalCode", address.PostalCode.Value },
+                { "City", address.City }
+            };
+
+            await PostAsync("/Order/Create", formData, TestData.Users[0]);
+
+            TestDocument<Address>.Single(e =>
+                e.Street == formData["Address"]
+                && e.PostalCode.Value == formData["PostalCode"]
+                && e.City == formData["City"]
+                && e.UserId == TestData.Users[1].Id);
+            var createdAddress = TestDocument<Address>.First(e =>
+                e.Street == formData["Address"]
+                && e.PostalCode.Value == formData["PostalCode"]
+                && e.City == formData["City"]
+                && e.UserId == TestData.Users[0].Id);
+            TestDocument<Order>.Single(e => e.UserId == TestData.Users[0].Id && e.AddressId == createdAddress.AddressId);
+            TestDocumentApprover.ExamineSaveChanges();
+        }
+
+        [TestMethod]
+        public async Task Post_AddressIsHiddenAndIsToBeSaved_CreatesOrderAndSetsAddressAsNotHidden() {
+
+            var basketProduct = TestEntity.Random<BasketProduct>()
+                .WithUserId(TestData.User.Id);
+            var address = TestEntity.Random<Address>()
+                .WithUserId(TestData.User.Id)
+                .WithStreet("Hutnicza 34/10")
+                .WithPostalCode(new PostalCode("14-141"))
+                .WithCity("Gniezno")
+                .WithIsHidden(true);
+
+            var formData = new Dictionary<string, string> {
+                { "Address", address.Street },
+                { "PostalCode", address.PostalCode.Value },
+                { "City", address.City },
+                { "IsAddressToBeSaved", "true" }
+            };
+
+            await PostAsync("/Order/Create", formData, TestData.User);
+
+            TestDocument<Address>.Single(e =>
+                e.Street == formData["Address"]
+                && e.PostalCode.Value == formData["PostalCode"]
+                && e.City == formData["City"]
+                && e.UserId == TestData.User.Id
+                && e.IsHidden == false);
+            TestDocument<Order>.Single(e => e.UserId == TestData.User.Id && e.AddressId == address.AddressId);
+            TestDocumentApprover.ExamineSaveChanges();
+        }
+
+        [TestMethod]
+        public async Task Post_AddressIsHiddenAndIsNotToBeSaved_CreatesOrderAndLeavesAddressAsHidden() {
+
+            var basketProduct = TestEntity.Random<BasketProduct>()
+                .WithUserId(TestData.User.Id);
+            var address = TestEntity.Random<Address>()
+                .WithUserId(TestData.User.Id)
+                .WithStreet("Karpacka 6/12")
+                .WithPostalCode(new PostalCode("55-113"))
+                .WithCity("Walcz")
+                .WithIsHidden(true);
+
+            var formData = new Dictionary<string, string> {
+                { "Address", address.Street },
+                { "PostalCode", address.PostalCode.Value },
+                { "City", address.City },
+                { "IsAddressToBeSaved", "false" }
+            };
+
+            await PostAsync("/Order/Create", formData, TestData.User);
+
+            TestDocument<Address>.Single(e =>
+                e.Street == formData["Address"]
+                && e.PostalCode.Value == formData["PostalCode"]
+                && e.City == formData["City"]
+                && e.UserId == TestData.User.Id
+                && e.IsHidden == true);
+            TestDocument<Order>.Single(e => e.UserId == TestData.User.Id && e.AddressId == address.AddressId);
+            TestDocumentApprover.ExamineSaveChanges();
+        }
+
+        [TestMethod]
+        public async Task Post_AddressIsNotHiddenAndIsNotToBeSaved_CreatesOrderAndLeavesAddressAsNotHidden() {
+
+            var basketProduct = TestEntity.Random<BasketProduct>()
+                .WithUserId(TestData.User.Id);
+            var address = TestEntity.Random<Address>()
+                .WithUserId(TestData.User.Id)
+                .WithStreet("Kolonijna 2/14")
+                .WithPostalCode(new PostalCode("11-736"))
+                .WithCity("Gryfice")
+                .WithIsHidden(false);
+
+            var formData = new Dictionary<string, string> {
+                { "Address", address.Street },
+                { "PostalCode", address.PostalCode.Value },
+                { "City", address.City },
+                { "IsAddressToBeSaved", "false" }
+            };
+
+            await PostAsync("/Order/Create", formData, TestData.User);
+
+            TestDocument<Address>.Single(e =>
+                e.Street == formData["Address"]
+                && e.PostalCode.Value == formData["PostalCode"]
+                && e.City == formData["City"]
+                && e.UserId == TestData.User.Id
+                && e.IsHidden == false);
+            TestDocument<Order>.Single(e => e.UserId == TestData.User.Id && e.AddressId == address.AddressId);
+            TestDocumentApprover.ExamineSaveChanges();
+        }
+
+        [TestMethod]
         public async Task Post_UserIsLoggedIn_RedirectsToOrderSummary() {
 
             var basketProducts = TestEntity.Random<BasketProduct>(2);
