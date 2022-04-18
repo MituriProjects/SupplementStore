@@ -46,6 +46,10 @@
                 <label asp-for="City"></label>
                 <input asp-for="City" class="form-control" />
             </div>
+            <div class="form-check my-1">
+                <label asp-for="IsAddressToBeSaved" class="form-check-label"></label>
+                <input asp-for="IsAddressToBeSaved" class="form-check-input" type="checkbox" checked>
+            </div>
             <button type="submit" class="btn btn-success">Create order</button>
         </form>
     }
