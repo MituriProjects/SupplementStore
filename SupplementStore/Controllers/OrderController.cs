@@ -51,7 +51,8 @@ namespace SupplementStore.Controllers {
                 UserId = userId,
                 Address = model.Address,
                 PostalCode = model.PostalCode,
-                City = model.City
+                City = model.City,
+                ShouldAddressBeHidden = !model.IsAddressToBeSaved
             });
 
             if (order == null) {
