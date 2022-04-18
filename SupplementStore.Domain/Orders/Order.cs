@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SupplementStore.Domain.Addresses;
+using System;
 
 namespace SupplementStore.Domain.Orders {
 
@@ -8,7 +9,12 @@ namespace SupplementStore.Domain.Orders {
 
         public string UserId { get; set; }
 
-        public Address Address { get; set; }
+        Guid Address_Id {
+            get => AddressId.Id;
+            set => AddressId = new AddressId(value);
+        }
+
+        public AddressId AddressId { get; set; }
 
         public DateTime CreatedOn { get; set; } = DateTime.Now;
     }
