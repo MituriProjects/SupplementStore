@@ -1,4 +1,5 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using SupplementStore.Domain.Addresses;
 using SupplementStore.Domain.Orders;
 using SupplementStore.Domain.Products;
 using System;
@@ -23,8 +24,10 @@ namespace SupplementStore.Tests.Integration.OrderTests {
         [TestMethod]
         public async Task UserIsLoggedIn_ReturnsOrderDetails() {
 
+            var address = TestEntity.Random<Address>();
             var order = TestEntity.Random<Order>()
-                .WithUserId(TestData.User.Id);
+                .WithUserId(TestData.User.Id)
+                .WithAddressId(address);
             var products = TestEntity.Random<Product>(2);
             var purchases = TestEntity.Random<Purchase>(2);
             purchases[0]
@@ -38,9 +41,9 @@ namespace SupplementStore.Tests.Integration.OrderTests {
 
             var contentScheme = ContentScheme.Html()
                 .Contains("Id", order.OrderId)
-                .Contains("Address", order.Address.Street)
-                .Contains("PostalCode", order.Address.PostalCode)
-                .Contains("City", order.Address.City)
+                .Contains("Address", address.Street)
+                .Contains("PostalCode", address.PostalCode.Value)
+                .Contains("City", address.City)
                 .Contains("CreatedOn", order.CreatedOn);
 
             foreach (var purchase in purchases) {
