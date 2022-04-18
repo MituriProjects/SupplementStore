@@ -1,4 +1,5 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using SupplementStore.Domain.Addresses;
 using SupplementStore.Domain.Baskets;
 using SupplementStore.Domain.Orders;
 using SupplementStore.Domain.Products;
@@ -87,8 +88,12 @@ namespace SupplementStore.Tests.Integration.OrderTests {
 
             await PostAsync("/Order/Create", formData, TestData.User);
 
-            TestDocument<Order>.Single(e => e.Address.Street == formData["Address"] && e.Address.PostalCode == formData["PostalCode"] && e.Address.City == formData["City"] && e.UserId == TestData.User.Id);
-            var createdOrder = TestDocument<Order>.First(e => e.UserId == TestData.User.Id);
+            var createdAddress = TestDocument<Address>.First(e =>
+                e.Street == formData["Address"]
+                && e.PostalCode.Value == formData["PostalCode"]
+                && e.City == formData["City"]
+                && e.UserId == TestData.User.Id);
+            var createdOrder = TestDocument<Order>.First(e => e.UserId == TestData.User.Id && e.AddressId == createdAddress.AddressId);
             TestDocument<Purchase>.Single(e => e.OrderId == createdOrder.OrderId && e.ProductId == basketProducts[0].ProductId && e.Quantity == basketProducts[0].Quantity);
             TestDocument<Purchase>.Single(e => e.OrderId == createdOrder.OrderId && e.ProductId == basketProducts[1].ProductId && e.Quantity == basketProducts[1].Quantity);
             TestDocument<BasketProduct>.None(e => e.BasketProductId == basketProducts[0].BasketProductId);
