@@ -15,13 +15,15 @@ namespace SupplementStore.Infrastructure.AppServices.Order {
             if (order == null)
                 return null;
 
+            var address = AddressRepository.FindBy(order.AddressId);
+
             var purchases = PurchaseRepository.FindBy(new OrderPurchasesFilter(order.OrderId));
 
             var products = ProductRepository.Entities
                 .Where(e => purchases.Select(o => o.ProductId).Contains(e.ProductId))
                 .ToList();
 
-            return order.ToDetails(purchases.ToDetails(products));
+            return order.ToDetails(address, purchases.ToDetails(products));
         }
     }
 }

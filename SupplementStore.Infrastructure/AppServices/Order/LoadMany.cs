@@ -21,7 +21,9 @@ namespace SupplementStore.Infrastructure.AppServices.Order {
 
             foreach (var order in orders) {
 
-                yield return order.ToDetails(ordersPurchases.ToDetails(products));
+                var address = AddressRepository.FindBy(order.AddressId);
+
+                yield return order.ToDetails(address, ordersPurchases.ToDetails(products));
             }
         }
     }
