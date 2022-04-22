@@ -33,10 +33,10 @@ namespace SupplementStore.Tests.Integration.AdminTests {
             var addresses = TestEntity.Random<Address>(2);
             var orders = TestEntity.Random<Order>(2);
             orders[0]
-                .WithUserId(TestData.Users[0].Id)
+                .WithUserId(TestData.Users[0])
                 .WithAddressId(addresses[0]);
             orders[1]
-                .WithUserId(TestData.Users[1].Id)
+                .WithUserId(TestData.Users[1])
                 .WithAddressId(addresses[1]);
             var purchases = TestEntity.Random<Purchase>(4);
             purchases[0]
