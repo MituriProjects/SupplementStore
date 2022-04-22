@@ -32,7 +32,7 @@ namespace SupplementStore.Tests.Integration.AddressTests {
         public async Task AddressExistsAndBelongsToUser_HidesAddress() {
 
             var address = TestEntity.Random<Address>()
-                .WithUserId(TestData.User.Id);
+                .WithUserId(TestData.User);
 
             await PostAsync($"/Address/Delete/{address.AddressId}", TestData.User);
 
