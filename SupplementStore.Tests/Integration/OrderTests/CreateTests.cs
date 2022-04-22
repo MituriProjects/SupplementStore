@@ -107,7 +107,7 @@ namespace SupplementStore.Tests.Integration.OrderTests {
             var basketProduct = TestEntity.Random<BasketProduct>()
                 .WithUserId(TestData.User.Id);
             var address = TestEntity.Random<Address>()
-                .WithUserId(TestData.User.Id)
+                .WithUserId(TestData.User)
                 .WithStreet("Lotnicza 39/4")
                 .WithPostalCode(new PostalCode("22-726"))
                 .WithCity("Legnica");
@@ -166,7 +166,7 @@ namespace SupplementStore.Tests.Integration.OrderTests {
             var basketProduct = TestEntity.Random<BasketProduct>()
                 .WithUserId(TestData.Users[0].Id);
             var address = TestEntity.Random<Address>()
-                .WithUserId(TestData.Users[1].Id)
+                .WithUserId(TestData.Users[1])
                 .WithStreet("Lotnicza 39/4")
                 .WithPostalCode(new PostalCode("22-726"))
                 .WithCity("Legnica");
@@ -199,7 +199,7 @@ namespace SupplementStore.Tests.Integration.OrderTests {
             var basketProduct = TestEntity.Random<BasketProduct>()
                 .WithUserId(TestData.User.Id);
             var address = TestEntity.Random<Address>()
-                .WithUserId(TestData.User.Id)
+                .WithUserId(TestData.User)
                 .WithStreet("Hutnicza 34/10")
                 .WithPostalCode(new PostalCode("14-141"))
                 .WithCity("Gniezno")
@@ -230,7 +230,7 @@ namespace SupplementStore.Tests.Integration.OrderTests {
             var basketProduct = TestEntity.Random<BasketProduct>()
                 .WithUserId(TestData.User.Id);
             var address = TestEntity.Random<Address>()
-                .WithUserId(TestData.User.Id)
+                .WithUserId(TestData.User)
                 .WithStreet("Karpacka 6/12")
                 .WithPostalCode(new PostalCode("55-113"))
                 .WithCity("Walcz")
@@ -261,7 +261,7 @@ namespace SupplementStore.Tests.Integration.OrderTests {
             var basketProduct = TestEntity.Random<BasketProduct>()
                 .WithUserId(TestData.User.Id);
             var address = TestEntity.Random<Address>()
-                .WithUserId(TestData.User.Id)
+                .WithUserId(TestData.User)
                 .WithStreet("Kolonijna 2/14")
                 .WithPostalCode(new PostalCode("11-736"))
                 .WithCity("Gryfice")
