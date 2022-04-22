@@ -23,9 +23,9 @@ namespace SupplementStore.Tests.Integration.OpinionTests {
             var products = TestEntity.Random<Product>(3);
             var orders = TestEntity.Random<Order>(2);
             orders[0]
-                .WithUserId(TestData.User.Id);
+                .WithUserId(TestData.User);
             orders[1]
-                .WithUserId(TestData.User.Id);
+                .WithUserId(TestData.User);
             var purchases = TestEntity.Random<Purchase>(3);
             purchases[0]
                 .WithOrderId(orders[0])
