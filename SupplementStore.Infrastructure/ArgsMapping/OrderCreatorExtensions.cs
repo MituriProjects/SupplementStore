@@ -11,7 +11,8 @@ namespace SupplementStore.Infrastructure.ArgsMapping {
                 UserId = orderCreatorArgs.UserId,
                 Address = orderCreatorArgs.Address,
                 PostalCode = orderCreatorArgs.PostalCode,
-                City = orderCreatorArgs.City
+                City = orderCreatorArgs.City,
+                ShouldAddressBeHidden = orderCreatorArgs.ShouldAddressBeHidden
             };
         }
     }

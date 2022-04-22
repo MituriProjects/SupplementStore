@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SupplementStore.Infrastructure;
 
 namespace SupplementStore.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220415053411_AddressEntity")]
+    partial class AddressEntity
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -252,16 +254,12 @@ namespace SupplementStore.Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasDefaultValueSql("newsequentialid()");
 
-                    b.Property<Guid>("Address_Id");
-
                     b.Property<DateTime>("CreatedOn");
 
                     b.Property<string>("UserId")
                         .IsRequired();
 
                     b.HasKey("Id");
-
-                    b.HasIndex("Address_Id");
 
                     b.HasIndex("UserId");
 
@@ -459,15 +457,32 @@ namespace SupplementStore.Infrastructure.Migrations
 
             modelBuilder.Entity("SupplementStore.Domain.Orders.Order", b =>
                 {
-                    b.HasOne("SupplementStore.Domain.Addresses.Address")
-                        .WithMany()
-                        .HasForeignKey("Address_Id")
-                        .OnDelete(DeleteBehavior.Restrict);
-
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
+
+                    b.OwnsOne("SupplementStore.Domain.Orders.Address", "Address", b1 =>
+                        {
+                            b1.Property<Guid?>("OrderId")
+                                .ValueGeneratedOnAdd();
+
+                            b1.Property<string>("City")
+                                .IsRequired();
+
+                            b1.Property<string>("PostalCode")
+                                .IsRequired();
+
+                            b1.Property<string>("Street")
+                                .IsRequired();
+
+                            b1.ToTable("Orders");
+
+                            b1.HasOne("SupplementStore.Domain.Orders.Order")
+                                .WithOne("Address")
+                                .HasForeignKey("SupplementStore.Domain.Orders.Address", "OrderId")
+                                .OnDelete(DeleteBehavior.Cascade);
+                        });
                 });
 
             modelBuilder.Entity("SupplementStore.Domain.Orders.Purchase", b =>

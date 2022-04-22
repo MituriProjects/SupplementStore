@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using SupplementStore.Domain.Orders;
 
@@ -12,14 +13,11 @@ namespace SupplementStore.Infrastructure.Configurations {
                 .WithMany()
                 .HasForeignKey(e => e.UserId)
                 .IsRequired();
-            builder.OwnsOne(e => e.Address)
-                .Property(e => e.Street)
-                .IsRequired();
-            builder.OwnsOne(e => e.Address)
-                .Property(e => e.PostalCode)
-                .IsRequired();
-            builder.OwnsOne(e => e.Address)
-                .Property(e => e.City)
+            builder.Ignore(e => e.AddressId);
+            builder.HasOne<Domain.Addresses.Address>()
+                .WithMany()
+                .OnDelete(DeleteBehavior.Restrict)
+                .HasForeignKey("Address_Id")
                 .IsRequired();
         }
     }

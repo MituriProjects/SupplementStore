@@ -1,0 +1,36 @@
+﻿@model IEnumerable<AddressDetails>
+
+<environment exclude="Testing">
+
+    <a asp-controller="Address" asp-action="Create" class="btn btn-outline-success m-2">Dodaj nowy</a>
+
+    @foreach (var address in Model) {
+
+        <div class="bg-info w-25 mx-2 my-1 p-2 px-3">
+            <div>
+                <div>@address.Street</div>
+                <div>@address.PostalCode</div>
+                <div>@address.City</div>
+            </div>
+            <div>
+                <a asp-controller="Address" asp-action="Edit" asp-route-id="@address.Id" class="btn btn-outline-primary mt-2">Edytuj</a>
+                <form asp-controller="Address" asp-action="Delete" asp-route-id="@address.Id" class="d-inline-block">
+                    <button type="submit" class="btn btn-outline-danger mt-2">Usuń</button>
+                </form>
+            </div>
+        </div>
+    }
+
+</environment>
+
+<environment include="Testing">
+
+    @foreach (var address in Model) {
+
+        <div name="Id">@address.Id</div>
+        <div name="Street">@address.Street</div>
+        <div name="PostalCode">@address.PostalCode</div>
+        <div name="City">@address.City</div>
+    }
+
+</environment>

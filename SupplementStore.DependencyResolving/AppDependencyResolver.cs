@@ -1,12 +1,14 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using SupplementStore.Application.Services;
 using SupplementStore.Domain;
+using SupplementStore.Domain.Addresses;
 using SupplementStore.Domain.Baskets;
 using SupplementStore.Domain.Opinions;
 using SupplementStore.Domain.Orders;
 using SupplementStore.Domain.Products;
 using SupplementStore.Domain.Wishes;
 using SupplementStore.Infrastructure;
+using SupplementStore.Infrastructure.AppServices.Addresses;
 using SupplementStore.Infrastructure.AppServices.BasketProduct;
 using SupplementStore.Infrastructure.AppServices.Opinions;
 using SupplementStore.Infrastructure.AppServices.Order;
@@ -26,6 +28,7 @@ namespace SupplementStore.DependencyResolving {
             services.AddTransient<IDomainApprover, DocumentApprover>();
 
             services.AddTransient(typeof(IRepository<>), typeof(Repository<>));
+            services.AddTransient<IAddressRepository, AddressRepository>();
             services.AddTransient<IBasketProductRepository, BasketProductRepository>();
             services.AddTransient<IOrderRepository, OrderRepository>();
             services.AddTransient<IPurchaseRepository, PurchaseRepository>();
@@ -34,9 +37,11 @@ namespace SupplementStore.DependencyResolving {
             services.AddTransient<IWishRepository, WishRepository>();
             services.AddTransient<IOpinionRepository, OpinionRepository>();
 
+            services.AddTransient<AddressFactory>();
             services.AddTransient<BasketProductManager>();
             services.AddTransient<OrderFactory>();
 
+            services.AddTransient<IAddressService, AddressService>();
             services.AddTransient<IProductService, ProductService>();
             services.AddTransient<IProductImageService, ProductImageService>();
             services.AddTransient<IBasketProductService, BasketProductService>();

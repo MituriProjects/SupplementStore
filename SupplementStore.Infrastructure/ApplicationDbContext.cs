@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using SupplementStore.Domain.Addresses;
 using SupplementStore.Domain.Baskets;
 using SupplementStore.Domain.Opinions;
 using SupplementStore.Domain.Orders;
@@ -14,6 +15,8 @@ namespace SupplementStore.Infrastructure {
 
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options) { }
+
+        public DbSet<Address> Addresses { get; set; }
 
         public DbSet<Product> Products { get; set; }
 
@@ -33,6 +36,7 @@ namespace SupplementStore.Infrastructure {
 
             base.OnModelCreating(builder);
 
+            builder.ApplyConfiguration(new AddressConfiguration());
             builder.ApplyConfiguration(new ProductConfiguration());
             builder.ApplyConfiguration(new ProductImageConfiguration());
             builder.ApplyConfiguration(new BasketProductConfiguration());

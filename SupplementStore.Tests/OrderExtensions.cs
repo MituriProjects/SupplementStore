@@ -1,4 +1,5 @@
-﻿using SupplementStore.Domain.Orders;
+﻿using SupplementStore.Domain.Addresses;
+using SupplementStore.Domain.Orders;
 
 namespace SupplementStore.Tests {
 
@@ -11,9 +12,9 @@ namespace SupplementStore.Tests {
             return order;
         }
 
-        public static Order WithAddress(this Order order, Address address) {
+        public static Order WithAddressId(this Order order, Address address) {
 
-            order.Address = address;
+            order.AddressId = address.AddressId;
 
             return order;
         }
