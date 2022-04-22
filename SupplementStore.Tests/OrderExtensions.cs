@@ -1,13 +1,14 @@
-﻿using SupplementStore.Domain.Addresses;
+﻿using Microsoft.AspNetCore.Identity;
+using SupplementStore.Domain.Addresses;
 using SupplementStore.Domain.Orders;
 
 namespace SupplementStore.Tests {
 
     static class OrderExtensions {
 
-        public static Order WithUserId(this Order order, string userId) {
+        public static Order WithUserId(this Order order, IdentityUser user) {
 
-            order.UserId = userId;
+            order.UserId = user.Id;
 
             return order;
         }
