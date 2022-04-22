@@ -66,7 +66,7 @@ namespace SupplementStore.Tests.Integration.BasketTests {
 
             var product = TestEntity.Random<Product>();
             TestEntity.Random<BasketProduct>()
-                .WithUserId(TestData.User.Id)
+                .WithUserId(TestData.User)
                 .WithProductId(product.ProductId)
                 .WithQuantity(1);
 
