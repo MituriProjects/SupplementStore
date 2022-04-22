@@ -1,13 +1,14 @@
-﻿using SupplementStore.Domain.Baskets;
+﻿using Microsoft.AspNetCore.Identity;
+using SupplementStore.Domain.Baskets;
 using SupplementStore.Domain.Products;
 
 namespace SupplementStore.Tests {
 
     static class BasketProductExtensions {
 
-        public static BasketProduct WithUserId(this BasketProduct basketProduct, string userId) {
+        public static BasketProduct WithUserId(this BasketProduct basketProduct, IdentityUser user) {
 
-            basketProduct.UserId = userId;
+            basketProduct.UserId = user.Id;
 
             return basketProduct;
         }
