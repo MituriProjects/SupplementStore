@@ -54,7 +54,7 @@ namespace SupplementStore.Tests {
             }
         }
 
-        public static void Single(Func<TEntity, bool> predicate) {
+        public static TEntity Single(Func<TEntity, bool> predicate) {
 
             var entities = Entities
                 .Where(predicate)
@@ -68,6 +68,8 @@ namespace SupplementStore.Tests {
 
                 throw new AssertFailedException($"The TestDocument<{typeof(TEntity).Name}> contains more than one element that matches the provided predicate.");
             }
+
+            return entities.First();
         }
 
         public static void None(Func<TEntity, bool> predicate) {
