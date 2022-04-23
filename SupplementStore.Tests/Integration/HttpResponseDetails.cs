@@ -5,7 +5,7 @@ using System.Net.Http.Headers;
 
 namespace SupplementStore.Tests.Integration {
 
-    class HttpResponseDetails {
+    class HttpResponseDetails : IResponseDetails {
 
         string Content { get; set; }
 
