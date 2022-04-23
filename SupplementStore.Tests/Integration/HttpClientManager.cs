@@ -39,7 +39,7 @@ namespace SupplementStore.Tests.Integration {
 
         IdentityUser User { get; set; }
 
-        public async Task<HttpResponseDetails> GetAsync(string requestUri, IdentityUser user = null) {
+        public async Task<IResponseDetails> GetAsync(string requestUri, IdentityUser user = null) {
 
             await ManageAuthentication(user);
 
@@ -48,7 +48,7 @@ namespace SupplementStore.Tests.Integration {
             return HttpResponseDetails.WithResponse(response);
         }
 
-        public async Task<HttpResponseDetails> PostAsync(string requestUri, Dictionary<string, string> formData, IdentityUser user = null) {
+        public async Task<IResponseDetails> PostAsync(string requestUri, Dictionary<string, string> formData, IdentityUser user = null) {
 
             await ManageAuthentication(user);
 
@@ -68,7 +68,7 @@ namespace SupplementStore.Tests.Integration {
             }
         }
 
-        public async Task<HttpResponseDetails> PostAsync(string requestUri, Dictionary<string, string> formData, FormFileData formFileData, IdentityUser user = null) {
+        public async Task<IResponseDetails> PostAsync(string requestUri, Dictionary<string, string> formData, FormFileData formFileData, IdentityUser user = null) {
 
             await ManageAuthentication(user);
 
