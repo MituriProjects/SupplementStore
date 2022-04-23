@@ -23,10 +23,10 @@ namespace SupplementStore.Tests.Integration.WishTests {
             var wishes = TestEntity.Random<Wish>(3);
             wishes[0]
                 .WithProductId(products[2])
-                .WithUserId(TestData.User.Id);
+                .WithUserId(TestData.User);
             wishes[2]
                 .WithProductId(products[1])
-                .WithUserId(TestData.User.Id);
+                .WithUserId(TestData.User);
 
             await GetAsync("/Wish", TestData.User);
 
