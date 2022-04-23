@@ -1,13 +1,14 @@
-﻿using SupplementStore.Domain.Products;
+﻿using Microsoft.AspNetCore.Identity;
+using SupplementStore.Domain.Products;
 using SupplementStore.Domain.Wishes;
 
 namespace SupplementStore.Tests {
 
     static class WishExtensions {
 
-        public static Wish WithUserId(this Wish wish, string userId) {
+        public static Wish WithUserId(this Wish wish, IdentityUser user) {
 
-            wish.UserId = userId;
+            wish.UserId = user.Id;
 
             return wish;
         }
