@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace SupplementStore.Application.Results {
 
-    public class ProductsProviderResult {
+    public class ProductsProvideResult {
 
         public int AllProductsCount { get; set; }
 

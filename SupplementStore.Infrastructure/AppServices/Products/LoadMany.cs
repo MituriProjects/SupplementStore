@@ -8,14 +8,14 @@ namespace SupplementStore.Infrastructure.AppServices.Products {
 
     public partial class ProductService {
 
-        public ProductsProviderResult LoadMany(ProductsProvideArgs args) {
+        public ProductsProvideResult LoadMany(ProductsProvideArgs args) {
 
             var products = ProductRepository.Entities
                 .Skip(args.Skip)
                 .Take(args.Take)
                 .Select(e => e.ToDetails(ProductImageRepository.FindBy(new MainProductImageFilter(e.ProductId))));
 
-            return new ProductsProviderResult {
+            return new ProductsProvideResult {
                 AllProductsCount = ProductRepository.Count(),
                 Products = products
             };
