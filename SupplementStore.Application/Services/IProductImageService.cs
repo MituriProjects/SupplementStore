@@ -7,7 +7,7 @@ namespace SupplementStore.Application.Services {
     public interface IProductImageService {
         IEnumerable<ProductImageDetails> LoadMany(string productId);
         ProductImageCreateResult Create(string productId, string imageName);
-        ProductImageRemoverResult Remove(string productId, string name);
+        ProductImageRemoveResult Remove(string productId, string name);
         void AppointMain(string productId, string name);
     }
 }

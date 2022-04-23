@@ -140,9 +140,9 @@ namespace SupplementStore.Controllers {
         [Authorize(Roles = "Admin")]
         public IActionResult RemoveImage(string productId, string imageName) {
 
-            var productImageRemoverResult = ProductImageService.Remove(productId, imageName);
+            var productImageRemoveResult = ProductImageService.Remove(productId, imageName);
 
-            if (productImageRemoverResult.Success) {
+            if (productImageRemoveResult.Success) {
 
                 FileWriter.Delete(imageName, "productImages", productId);
             }
