@@ -39,7 +39,7 @@ namespace SupplementStore.Controllers {
             var productToOpine = OpinionService.LoadProductToOpine(userId);
 
             if (productToOpine.IsEmpty)
-                return RedirectToAction("Index");
+                return RedirectToAction(nameof(Index));
 
             return View(new OpinionCreateVM {
                 PurchaseId = productToOpine.PurchaseId,
