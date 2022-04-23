@@ -3,9 +3,9 @@ using SupplementStore.Domain.Orders;
 
 namespace SupplementStore.Infrastructure.ArgsMapping {
 
-    static class OrderCreatorExtensions {
+    static class OrderCreateExtensions {
 
-        public static OrderFactoryArgs ToOrderFactoryArgs(this OrderCreatorArgs orderCreatorArgs) {
+        public static OrderFactoryArgs ToOrderFactoryArgs(this OrderCreateArgs orderCreatorArgs) {
 
             return new OrderFactoryArgs {
                 UserId = orderCreatorArgs.UserId,

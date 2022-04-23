@@ -1,6 +1,6 @@
 ﻿namespace SupplementStore.Application.Args {
 
-    public class OrderCreatorArgs {
+    public class OrderCreateArgs {
 
         public string UserId { get; set; }
 

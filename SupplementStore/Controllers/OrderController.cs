@@ -47,7 +47,7 @@ namespace SupplementStore.Controllers {
                 return View(model);
             }
 
-            var order = OrderService.Create(new OrderCreatorArgs {
+            var order = OrderService.Create(new OrderCreateArgs {
                 UserId = userId,
                 Address = model.Address,
                 PostalCode = model.PostalCode,

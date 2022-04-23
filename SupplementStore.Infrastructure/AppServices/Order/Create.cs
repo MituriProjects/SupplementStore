@@ -7,7 +7,7 @@ namespace SupplementStore.Infrastructure.AppServices.Order {
 
     public partial class OrderService {
 
-        public OrderDetails Create(OrderCreatorArgs args) {
+        public OrderDetails Create(OrderCreateArgs args) {
 
             var order = OrderFactory.Create(args.ToOrderFactoryArgs());
 
