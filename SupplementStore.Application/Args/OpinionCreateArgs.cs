@@ -1,6 +1,6 @@
 ﻿namespace SupplementStore.Application.Args {
 
-    public class OpinionCreatorArgs {
+    public class OpinionCreateArgs {
 
         public string PurchaseId { get; set; }
 

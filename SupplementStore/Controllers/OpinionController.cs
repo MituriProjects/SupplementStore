@@ -51,7 +51,7 @@ namespace SupplementStore.Controllers {
         [HttpPost]
         public IActionResult Create(OpinionCreateVM model) {
 
-            OpinionService.Create(new OpinionCreatorArgs {
+            OpinionService.Create(new OpinionCreateArgs {
                 PurchaseId = model.PurchaseId,
                 Text = model.Text,
                 Stars = model.Stars
