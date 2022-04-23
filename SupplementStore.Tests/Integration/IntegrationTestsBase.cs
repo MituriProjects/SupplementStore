@@ -13,7 +13,7 @@ namespace SupplementStore.Tests.Integration {
         [TestInitialize]
         public void Setup() {
 
-            ResponseDetails = null;
+            ResponseDetails = new NullResponseDetails();
 
             TestDocumentApprover.ClearDocuments();
 
