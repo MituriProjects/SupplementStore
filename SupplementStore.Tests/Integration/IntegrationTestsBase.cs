@@ -20,7 +20,7 @@ namespace SupplementStore.Tests.Integration {
             Mocks.Reset();
         }
 
-        HttpResponseDetails ResponseDetails { get; set; }
+        IResponseDetails ResponseDetails { get; set; }
 
         protected async Task GetAsync(string requestUri, IdentityUser user = null) {
 
