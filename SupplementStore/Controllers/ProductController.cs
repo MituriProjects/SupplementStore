@@ -117,9 +117,9 @@ namespace SupplementStore.Controllers {
             if (file == null)
                 return RedirectToAction(nameof(Details), new { Id = productId });
 
-            var productImageCreatorResult = ProductImageService.Create(productId, file.FileName);
+            var productImageCreateResult = ProductImageService.Create(productId, file.FileName);
 
-            if (productImageCreatorResult.Success) {
+            if (productImageCreateResult.Success) {
 
                 await FileWriter.SaveAsync(file, "productImages", productId);
             }
