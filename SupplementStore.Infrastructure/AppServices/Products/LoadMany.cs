@@ -8,7 +8,7 @@ namespace SupplementStore.Infrastructure.AppServices.Products {
 
     public partial class ProductService {
 
-        public ProductsProviderResult LoadMany(ProductsProviderArgs args) {
+        public ProductsProviderResult LoadMany(ProductsProvideArgs args) {
 
             var products = ProductRepository.Entities
                 .Skip(args.Skip)

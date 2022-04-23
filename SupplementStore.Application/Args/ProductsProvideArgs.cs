@@ -1,6 +1,6 @@
 ﻿namespace SupplementStore.Application.Args {
 
-    public class ProductsProviderArgs {
+    public class ProductsProvideArgs {
 
         public int Skip { get; set; }
 

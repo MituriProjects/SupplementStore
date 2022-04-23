@@ -7,7 +7,7 @@ namespace SupplementStore.Application.Services {
 
     public interface IProductService {
         ProductDetails Load(string productId);
-        ProductsProviderResult LoadMany(ProductsProviderArgs args);
+        ProductsProviderResult LoadMany(ProductsProvideArgs args);
         IEnumerable<ProductOpinionDetails> LoadOpinions(string productId);
         ProductDetails Create(string name, decimal price);
         void Update(ProductDetails productDetails);

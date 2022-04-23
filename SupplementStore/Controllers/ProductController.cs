@@ -34,7 +34,7 @@ namespace SupplementStore.Controllers {
 
             model = model ?? new ProductIndexVM();
 
-            var loadedProducts = ProductService.LoadMany(new ProductsProviderArgs {
+            var loadedProducts = ProductService.LoadMany(new ProductsProvideArgs {
                 Skip = model.Skip,
                 Take = model.Take
             });
