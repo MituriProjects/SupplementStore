@@ -51,7 +51,7 @@ namespace SupplementStore.Controllers {
                 City = model.City
             });
 
-            return RedirectToAction("Index");
+            return RedirectToAction(nameof(Index));
         }
 
         public IActionResult Edit(string id) {
