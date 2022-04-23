@@ -44,7 +44,7 @@ namespace SupplementStore.Controllers {
 
             BasketProductService.Remove(userId, productId);
 
-            return RedirectToAction("Index");
+            return RedirectToAction(nameof(Index));
         }
     }
 }
