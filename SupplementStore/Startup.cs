@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Razor;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -41,12 +42,16 @@ namespace SupplementStore {
             services.AddTransient<AdminManager>();
             services.AddTransient<IFileManager, FileManager>();
 
+            services.AddLocalization(options => options.ResourcesPath = "Resources");
+
             services.AddMvc(options => {
 
                 options.Filters.Add(new AutoValidateAntiforgeryTokenAttribute());
 
                 options.ModelBindingMessageProvider.SetAttemptedValueIsInvalidAccessor((s1, s2) => $"Wartość '{s1}' jest nieprawidłowa dla pola '{s2}'");
-            });
+
+            }).AddViewLocalization(LanguageViewLocationExpanderFormat.Suffix)
+            .AddDataAnnotationsLocalization();
 
             ReconfigureServices(services);
         }
