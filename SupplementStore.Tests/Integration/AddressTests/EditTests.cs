@@ -23,7 +23,7 @@ namespace SupplementStore.Tests.Integration.AddressTests {
         public async Task Get_AddressExists_ReturnsAddressDetails() {
 
             var address = TestEntity.Random<Address>()
-                .WithUserId(TestData.User.Id);
+                .WithUserId(TestData.User);
 
             await GetAsync($"/Address/Edit/{address.AddressId}", TestData.User);
 
@@ -61,7 +61,7 @@ namespace SupplementStore.Tests.Integration.AddressTests {
         public async Task Post_UserIsLoggedIn_RedirectsToIndex() {
 
             var address = TestEntity.Random<Address>()
-                .WithUserId(TestData.User.Id);
+                .WithUserId(TestData.User);
 
             var formData = new Dictionary<string, string> {
                 { "Id", address.AddressId.ToString() },
@@ -79,7 +79,7 @@ namespace SupplementStore.Tests.Integration.AddressTests {
         public async Task Post_FromDataIsValid_EditsAddress() {
 
             var address = TestEntity.Random<Address>()
-                .WithUserId(TestData.User.Id);
+                .WithUserId(TestData.User);
 
             var formData = new Dictionary<string, string> {
                 { "Id", address.AddressId.ToString() },
@@ -120,7 +120,7 @@ namespace SupplementStore.Tests.Integration.AddressTests {
         public async Task Post_AddressDoesNotBelongToUser_NoAddressEdition() {
 
             var address = TestEntity.Random<Address>()
-                .WithUserId(TestData.Users[1].Id);
+                .WithUserId(TestData.Users[1]);
 
             var formData = new Dictionary<string, string> {
                 { "Id", address.AddressId.ToString() },
@@ -145,7 +145,7 @@ namespace SupplementStore.Tests.Integration.AddressTests {
         public async Task Post_StreetIsEmpty_ReturnsDetails() {
 
             var address = TestEntity.Random<Address>()
-                .WithUserId(TestData.User.Id);
+                .WithUserId(TestData.User);
 
             var formData = new Dictionary<string, string> {
                 { "Id", address.AddressId.ToString() },
@@ -167,7 +167,7 @@ namespace SupplementStore.Tests.Integration.AddressTests {
         public async Task Post_PostalCodeIsEmpty_ReturnsDetails() {
 
             var address = TestEntity.Random<Address>()
-                .WithUserId(TestData.User.Id);
+                .WithUserId(TestData.User);
 
             var formData = new Dictionary<string, string> {
                 { "Id", address.AddressId.ToString() },
@@ -189,7 +189,7 @@ namespace SupplementStore.Tests.Integration.AddressTests {
         public async Task Post_PostalCodeIsInvalid_ReturnsDetails() {
 
             var address = TestEntity.Random<Address>()
-                .WithUserId(TestData.User.Id);
+                .WithUserId(TestData.User);
 
             var formData = new Dictionary<string, string> {
                 { "Id", address.AddressId.ToString() },
@@ -211,7 +211,7 @@ namespace SupplementStore.Tests.Integration.AddressTests {
         public async Task Post_CityIsEmpty_ReturnsDetails() {
 
             var address = TestEntity.Random<Address>()
-                .WithUserId(TestData.User.Id);
+                .WithUserId(TestData.User);
 
             var formData = new Dictionary<string, string> {
                 { "Id", address.AddressId.ToString() },

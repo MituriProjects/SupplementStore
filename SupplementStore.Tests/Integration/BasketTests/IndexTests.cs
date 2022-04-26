@@ -17,8 +17,8 @@ namespace SupplementStore.Tests.Integration.BasketTests {
             var basketProducts = TestEntity.Random<BasketProduct>(4);
             for (int i = 0; i < basketProducts.Length; i++)
                 basketProducts[i].WithProductId(products[i].ProductId);
-            basketProducts[1].WithUserId(TestData.User.Id);
-            basketProducts[3].WithUserId(TestData.User.Id);
+            basketProducts[1].WithUserId(TestData.User);
+            basketProducts[3].WithUserId(TestData.User);
 
             await GetAsync("/Basket", TestData.User);
 

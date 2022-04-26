@@ -27,10 +27,10 @@ namespace SupplementStore.Tests.Integration.OrderTests {
             var basketProducts = TestEntity.Random<BasketProduct>(3);
             basketProducts[0]
                 .WithProductId(products[2].ProductId)
-                .WithUserId(TestData.User.Id);
+                .WithUserId(TestData.User);
             basketProducts[1]
                 .WithProductId(products[0].ProductId)
-                .WithUserId(TestData.User.Id);
+                .WithUserId(TestData.User);
             basketProducts[2]
                 .WithProductId(products[1].ProductId);
 
@@ -77,8 +77,8 @@ namespace SupplementStore.Tests.Integration.OrderTests {
         public async Task Post_UserIsLoggedIn_CreatesOrderAndPurchasesAndDeletesBasketProducts() {
 
             var basketProducts = TestEntity.Random<BasketProduct>(2);
-            basketProducts[0].WithUserId(TestData.User.Id);
-            basketProducts[1].WithUserId(TestData.User.Id);
+            basketProducts[0].WithUserId(TestData.User);
+            basketProducts[1].WithUserId(TestData.User);
 
             var formData = new Dictionary<string, string> {
                 { "Address", "ul. Fircowskiego 5/7" },
@@ -105,9 +105,9 @@ namespace SupplementStore.Tests.Integration.OrderTests {
         public async Task Post_UserAddressExists_CreatesOrderWithExistingAddress() {
 
             var basketProduct = TestEntity.Random<BasketProduct>()
-                .WithUserId(TestData.User.Id);
+                .WithUserId(TestData.User);
             var address = TestEntity.Random<Address>()
-                .WithUserId(TestData.User.Id)
+                .WithUserId(TestData.User)
                 .WithStreet("Lotnicza 39/4")
                 .WithPostalCode(new PostalCode("22-726"))
                 .WithCity("Legnica");
@@ -133,7 +133,7 @@ namespace SupplementStore.Tests.Integration.OrderTests {
         public async Task Post_AddressDoesNotExistAndIsNotToBeSaved_CreatesOrderAndSetsAddressAsHidden() {
 
             var basketProduct = TestEntity.Random<BasketProduct>()
-               .WithUserId(TestData.User.Id);
+               .WithUserId(TestData.User);
 
             var formData = new Dictionary<string, string> {
                 { "Address", "Rycerska 11/5" },
@@ -164,9 +164,9 @@ namespace SupplementStore.Tests.Integration.OrderTests {
         public async Task Post_UserAddressDoesNotExist_CreatesOrderAndAddress() {
 
             var basketProduct = TestEntity.Random<BasketProduct>()
-                .WithUserId(TestData.Users[0].Id);
+                .WithUserId(TestData.Users[0]);
             var address = TestEntity.Random<Address>()
-                .WithUserId(TestData.Users[1].Id)
+                .WithUserId(TestData.Users[1])
                 .WithStreet("Lotnicza 39/4")
                 .WithPostalCode(new PostalCode("22-726"))
                 .WithCity("Legnica");
@@ -197,9 +197,9 @@ namespace SupplementStore.Tests.Integration.OrderTests {
         public async Task Post_AddressIsHiddenAndIsToBeSaved_CreatesOrderAndSetsAddressAsNotHidden() {
 
             var basketProduct = TestEntity.Random<BasketProduct>()
-                .WithUserId(TestData.User.Id);
+                .WithUserId(TestData.User);
             var address = TestEntity.Random<Address>()
-                .WithUserId(TestData.User.Id)
+                .WithUserId(TestData.User)
                 .WithStreet("Hutnicza 34/10")
                 .WithPostalCode(new PostalCode("14-141"))
                 .WithCity("Gniezno")
@@ -228,9 +228,9 @@ namespace SupplementStore.Tests.Integration.OrderTests {
         public async Task Post_AddressIsHiddenAndIsNotToBeSaved_CreatesOrderAndLeavesAddressAsHidden() {
 
             var basketProduct = TestEntity.Random<BasketProduct>()
-                .WithUserId(TestData.User.Id);
+                .WithUserId(TestData.User);
             var address = TestEntity.Random<Address>()
-                .WithUserId(TestData.User.Id)
+                .WithUserId(TestData.User)
                 .WithStreet("Karpacka 6/12")
                 .WithPostalCode(new PostalCode("55-113"))
                 .WithCity("Walcz")
@@ -259,9 +259,9 @@ namespace SupplementStore.Tests.Integration.OrderTests {
         public async Task Post_AddressIsNotHiddenAndIsNotToBeSaved_CreatesOrderAndLeavesAddressAsNotHidden() {
 
             var basketProduct = TestEntity.Random<BasketProduct>()
-                .WithUserId(TestData.User.Id);
+                .WithUserId(TestData.User);
             var address = TestEntity.Random<Address>()
-                .WithUserId(TestData.User.Id)
+                .WithUserId(TestData.User)
                 .WithStreet("Kolonijna 2/14")
                 .WithPostalCode(new PostalCode("11-736"))
                 .WithCity("Gryfice")
@@ -290,8 +290,8 @@ namespace SupplementStore.Tests.Integration.OrderTests {
         public async Task Post_UserIsLoggedIn_RedirectsToOrderSummary() {
 
             var basketProducts = TestEntity.Random<BasketProduct>(2);
-            basketProducts[0].WithUserId(TestData.User.Id);
-            basketProducts[1].WithUserId(TestData.User.Id);
+            basketProducts[0].WithUserId(TestData.User);
+            basketProducts[1].WithUserId(TestData.User);
 
             var formData = new Dictionary<string, string> {
                 { "Address", "ul. Unii Lubelskiej 11" },
@@ -312,10 +312,10 @@ namespace SupplementStore.Tests.Integration.OrderTests {
             var basketProducts = TestEntity.Random<BasketProduct>(2);
             basketProducts[0]
                 .WithProductId(products[0].ProductId)
-                .WithUserId(TestData.User.Id);
+                .WithUserId(TestData.User);
             basketProducts[1]
                 .WithProductId(products[1].ProductId)
-                .WithUserId(TestData.User.Id);
+                .WithUserId(TestData.User);
 
             var formData = new Dictionary<string, string> {
                 { "Address", "ul. Marii Konopnickiej 11" },
@@ -339,10 +339,10 @@ namespace SupplementStore.Tests.Integration.OrderTests {
             var basketProducts = TestEntity.Random<BasketProduct>(2);
             basketProducts[0]
                 .WithProductId(products[0].ProductId)
-                .WithUserId(TestData.User.Id);
+                .WithUserId(TestData.User);
             basketProducts[1]
                 .WithProductId(products[1].ProductId)
-                .WithUserId(TestData.User.Id);
+                .WithUserId(TestData.User);
 
             var formData = new Dictionary<string, string> {
                 { "PostalCode", "00-046" },
@@ -365,10 +365,10 @@ namespace SupplementStore.Tests.Integration.OrderTests {
             var basketProducts = TestEntity.Random<BasketProduct>(2);
             basketProducts[0]
                 .WithProductId(products[0].ProductId)
-                .WithUserId(TestData.User.Id);
+                .WithUserId(TestData.User);
             basketProducts[1]
                 .WithProductId(products[1].ProductId)
-                .WithUserId(TestData.User.Id);
+                .WithUserId(TestData.User);
 
             var formData = new Dictionary<string, string> {
                 { "Address", "ul. Adama Mickiewicza 66/43" },
@@ -391,10 +391,10 @@ namespace SupplementStore.Tests.Integration.OrderTests {
             var basketProducts = TestEntity.Random<BasketProduct>(2);
             basketProducts[0]
                 .WithProductId(products[0].ProductId)
-                .WithUserId(TestData.User.Id);
+                .WithUserId(TestData.User);
             basketProducts[1]
                 .WithProductId(products[1].ProductId)
-                .WithUserId(TestData.User.Id);
+                .WithUserId(TestData.User);
 
             var formData = new Dictionary<string, string> {
                 { "Address", "ul. Dworcowa 33/65" },

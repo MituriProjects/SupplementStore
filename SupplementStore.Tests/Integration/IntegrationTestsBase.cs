@@ -13,14 +13,14 @@ namespace SupplementStore.Tests.Integration {
         [TestInitialize]
         public void Setup() {
 
-            ResponseDetails = null;
+            ResponseDetails = new NullResponseDetails();
 
             TestDocumentApprover.ClearDocuments();
 
             Mocks.Reset();
         }
 
-        HttpResponseDetails ResponseDetails { get; set; }
+        IResponseDetails ResponseDetails { get; set; }
 
         protected async Task GetAsync(string requestUri, IdentityUser user = null) {
 

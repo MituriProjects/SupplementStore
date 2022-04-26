@@ -53,7 +53,7 @@ namespace SupplementStore.Tests.Integration.WishApiTests {
             var wish = TestEntity.Random<Wish>();
             wish
                 .WithProductId(product)
-                .WithUserId(TestData.User.Id);
+                .WithUserId(TestData.User);
 
             await PostAsync($"api/wish/{product.ProductId}", TestData.User);
 

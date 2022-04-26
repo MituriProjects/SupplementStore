@@ -20,9 +20,9 @@ namespace SupplementStore.Tests.Integration.AddressTests {
 
             var addresses = TestEntity.Random<Address>(2);
             addresses[0]
-                .WithUserId(TestData.User.Id);
+                .WithUserId(TestData.User);
             addresses[1]
-                .WithUserId(TestData.User.Id);
+                .WithUserId(TestData.User);
 
             await GetAsync("/Address", TestData.User);
 

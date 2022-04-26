@@ -34,7 +34,7 @@ namespace SupplementStore.Controllers {
 
             model = model ?? new ProductIndexVM();
 
-            var loadedProducts = ProductService.LoadMany(new ProductsProviderArgs {
+            var loadedProducts = ProductService.LoadMany(new ProductsProvideArgs {
                 Skip = model.Skip,
                 Take = model.Take
             });
@@ -117,9 +117,9 @@ namespace SupplementStore.Controllers {
             if (file == null)
                 return RedirectToAction(nameof(Details), new { Id = productId });
 
-            var productImageCreatorResult = ProductImageService.Create(productId, file.FileName);
+            var productImageCreateResult = ProductImageService.Create(productId, file.FileName);
 
-            if (productImageCreatorResult.Success) {
+            if (productImageCreateResult.Success) {
 
                 await FileWriter.SaveAsync(file, "productImages", productId);
             }
@@ -140,9 +140,9 @@ namespace SupplementStore.Controllers {
         [Authorize(Roles = "Admin")]
         public IActionResult RemoveImage(string productId, string imageName) {
 
-            var productImageRemoverResult = ProductImageService.Remove(productId, imageName);
+            var productImageRemoveResult = ProductImageService.Remove(productId, imageName);
 
-            if (productImageRemoverResult.Success) {
+            if (productImageRemoveResult.Success) {
 
                 FileWriter.Delete(imageName, "productImages", productId);
             }

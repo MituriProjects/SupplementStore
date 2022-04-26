@@ -6,7 +6,7 @@ namespace SupplementStore.Infrastructure.AppServices.Opinions {
 
     public partial class OpinionService {
 
-        public void Create(OpinionCreatorArgs args) {
+        public void Create(OpinionCreateArgs args) {
 
             var purchase = PurchaseRepository.FindBy(new PurchaseId(args.PurchaseId));
 

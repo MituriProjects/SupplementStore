@@ -26,7 +26,7 @@ namespace SupplementStore.Tests.Integration.OrderTests {
 
             var address = TestEntity.Random<Address>();
             var order = TestEntity.Random<Order>()
-                .WithUserId(TestData.User.Id)
+                .WithUserId(TestData.User)
                 .WithAddressId(address);
             var products = TestEntity.Random<Product>(2);
             var purchases = TestEntity.Random<Purchase>(2);
@@ -61,7 +61,7 @@ namespace SupplementStore.Tests.Integration.OrderTests {
         public async Task OrderDoesNotBelongToUser_RedirectsToMain() {
 
             var order = TestEntity.Random<Order>()
-                .WithUserId(TestData.Users[1].Id);
+                .WithUserId(TestData.Users[1]);
 
             await GetAsync($"/Order/Summary/{order.OrderId}", TestData.Users[0]);
 

@@ -11,7 +11,7 @@ namespace SupplementStore.Application.Services {
         IEnumerable<HiddenOpinionDetails> LoadHidden();
         ProductDetails LoadOpinionProduct(string opinionId);
         ProductToOpineResult LoadProductToOpine(string userId);
-        void Create(OpinionCreatorArgs args);
+        void Create(OpinionCreateArgs args);
         void UpdateText(string opinionId, string text);
         void Hide(string opinionId);
         void Reveal(string opinionId);
