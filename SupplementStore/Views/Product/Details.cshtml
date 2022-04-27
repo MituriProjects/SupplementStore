@@ -75,13 +75,13 @@
             <input hidden name="ProductId" value="@Model.Product.Id" />
             <input hidden name="Quantity" value="1" />
             <input hidden name="ReturnUrl" value="/Product/Details/@Model.Product.Id" />
-            <button type="submit" class="btn btn-outline-primary">Add to basket</button>
+            <button type="submit" class="btn btn-outline-primary">@Localizer["AddToBasketButtonText"]</button>
         </form>
     }
 
     <div class="bg-info m-2 p-2 w-25">
 
-        <h4>Oceny:</h4>
+        <h4>@Localizer["RatingsHeader"]:</h4>
 
         @{
 
@@ -100,7 +100,7 @@
 
         <div class="bg-secondary text-light m-2 p-2 w-25">
 
-            <div class="mb-1">Ocena: @opinion.Stars</div>
+            <div class="mb-1">@Localizer["RatingLabel"]: @opinion.Stars</div>
 
             <div>@opinion.Text</div>
 
@@ -108,8 +108,8 @@
 
                 <div class="mt-1">
                     <form asp-controller="Opinion" asp-action="Hide" asp-route-id="@opinion.Id">
-                        <a asp-controller="Opinion" asp-action="Edit" asp-route-id="@opinion.Id" class="btn btn-warning">Edit</a>
-                        <button type="submit" class="btn btn-danger mx-1">Hide</button>
+                        <a asp-controller="Opinion" asp-action="Edit" asp-route-id="@opinion.Id" class="btn btn-warning">@Localizer["EditOpinionButtonText"]</a>
+                        <button type="submit" class="btn btn-danger mx-1">@Localizer["HideOpinionButtonText"]</button>
                     </form>
                 </div>
             }
@@ -126,12 +126,14 @@
             <input hidden name="ProductId" value="@Model.Product.Id" />
 
             <div class="form-group m-1">
-                <label for="File">Add image</label>
-                <input type="file" class="form-control-file" name="File" />
+                <label for="File">@Localizer["AddImageLabel"]</label>
+                <label for="choose-file-btn" class="btn btn-outline-dark">@Localizer["ChooseFileButtonText"]</label>
+                <input type="file" id="choose-file-btn" class="form-control-file" name="File" style="display:none;" />
+                <span id="chosen-file-text">@Localizer["NoImageSelectedText"]</span>
             </div>
 
             <div class="form-group m-1">
-                <button type="submit" class="btn btn-primary">Add</button>
+                <button type="submit" class="btn btn-primary">@Localizer["AddImageButtonText"]</button>
             </div>
 
         </form>
@@ -202,6 +204,22 @@
                         $("#btn-prev-image")
                             .addClass("invisible");
                     }
+                });
+        });
+
+        $(document).ready(function () {
+
+            $("#choose-file-btn")
+                .change(function () {
+
+                    var fileName = $(this)
+                        .val();
+
+                    fileName = fileName
+                        .substring(fileName.lastIndexOf("\\") + 1);
+
+                    $("#chosen-file-text")
+                        .text(fileName);
                 });
         });
 
