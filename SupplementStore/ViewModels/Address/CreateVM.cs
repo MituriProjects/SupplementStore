@@ -4,17 +4,17 @@ namespace SupplementStore.ViewModels.Address {
 
     public class CreateVM {
 
-        [Required(ErrorMessage = "Nazwa ulicy jest wymagana.")]
-        [Display(Name = "Ulica")]
+        [Required(ErrorMessage = "StreetRequiredErrorMessage")]
+        [Display(Name = "StreetLabel")]
         public string Street { get; set; }
 
-        [Required(ErrorMessage = "Kod pocztowy jest wymagany.")]
-        [RegularExpression(@"^\d{2}-\d{3}$", ErrorMessage = "Kod pocztowy ma niewłaściwy format.")]
-        [Display(Name = "Kod pocztowy")]
+        [Required(ErrorMessage = "PostalCodeRequiredErrorMessage")]
+        [RegularExpression(@"^\d{2}-\d{3}$", ErrorMessage = "RegularExpressionErrorMessage")]
+        [Display(Name = "PostalCodeLabel")]
         public string PostalCode { get; set; }
 
-        [Required(ErrorMessage = "Nazwa miejscowości jest wymagana.")]
-        [Display(Name = "Miasto")]
+        [Required(ErrorMessage = "CityRequiredErrorMessage")]
+        [Display(Name = "CityLabel")]
         public string City { get; set; }
     }
 }
