@@ -4,19 +4,19 @@
 
     @if (Model.IsProductToOpineWaiting) {
 
-        <a asp-controller="Opinion" asp-action="Create" class="btn btn-outline-success m-3">Produkty czekają na Twoją opinię</a>
+        <a asp-controller="Opinion" asp-action="Create" class="btn btn-outline-success m-3">@Localizer["OpineProductsButtonText"]</a>
     }
 
     @foreach (var opinion in Model.Opinions) {
 
         <div class="bg-light m-3 p-2" style="width:700px;">
-            <div>@opinion.ProductName (zakupiono: @opinion.BuyingDate)</div>
-            <div>Ocena: @opinion.Stars</div>
+            <div>@opinion.ProductName (@Localizer["BuyingDateLabel"]: @opinion.BuyingDate)</div>
+            <div>@Localizer["RatingLabel"]: @opinion.Stars</div>
 
             @if (opinion.Text == null) {
 
 
-                <div><i>(brak opinii)</i></div>
+                <div><i>(@Localizer["NoOpinionsHeader"])</i></div>
             }
             else {
 
