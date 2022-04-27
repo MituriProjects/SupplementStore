@@ -5,10 +5,10 @@
     @foreach (var opinion in Model) {
 
         <div class="bg-light m-2 p-2">
-            <div>Nazwa produktu: @opinion.ProductName</div>
-            <div>Treść opinii: @opinion.Text</div>
+            <div>@Localizer["ProductNameLabel"]: @opinion.ProductName</div>
+            <div>@Localizer["OpinionTextLabel"]: @opinion.Text</div>
             <form asp-controller="Opinion" asp-action="Show" asp-route-id="@opinion.Id">
-                <button type="submit" class="btn btn-warning my-2">Restore</button>
+                <button type="submit" class="btn btn-warning my-2">@Localizer["RestoreButtonText"]</button>
             </form>
         </div>
     }
