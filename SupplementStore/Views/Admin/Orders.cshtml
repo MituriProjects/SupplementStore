@@ -8,29 +8,29 @@
 
             <li class="my-2 mx-5 p-2 bg-light">
 
-                <div>Id: @order.Id</div>
-                <div>Data utworzenia: @order.CreatedOn</div>
-                <div>Email użytkownika: @Model.UserEmails[order.UserId]</div>
+                <div>@Localizer["IdLabel"]: @order.Id</div>
+                <div>@Localizer["CreationDateLabel"]: @order.CreatedOn</div>
+                <div>@Localizer["UserEmailLabel"]: @Model.UserEmails[order.UserId]</div>
                 <div>
-                    <span>Adres:</span>
+                    <span>@Localizer["AddressLabel"]:</span>
                     <span>@order.Address</span>
                     <span>@order.City</span>
                     <span>@order.PostalCode</span>
                 </div>
                 <div>
-                    Produkty:
+                    @Localizer["ProductListHeader"]:
                     <ul>
                         @foreach (var purchase in order.Purchases) {
 
                             <li>
                                 <span>@purchase.ProductName</span>
-                                <span>(ilość:</span>
+                                <span>(@Localizer["QuantityLabel"]:</span>
                                 <span>@purchase.Quantity)</span>
                             </li>
                         }
                     </ul>
                 </div>
-                <div>Do zapłaty: @order.ToPay</div>
+                <div>@Localizer["ToPayLabel"]: @order.ToPay</div>
 
             </li>
         }
