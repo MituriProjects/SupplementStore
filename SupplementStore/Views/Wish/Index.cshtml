@@ -17,7 +17,7 @@
                     @product.Name -> @product.Price.ToString()
                 </a>
 
-                <div class="btn btn-outline-danger wish-remove-btn" data-product-id="@product.Id">Usuń</div>
+                <div class="btn btn-outline-danger wish-remove-btn" data-product-id="@product.Id">@Localizer["RemoveWishButtonText"]</div>
 
             </li>
         }
