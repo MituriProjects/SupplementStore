@@ -13,6 +13,18 @@
 
 <div class="m-2 mx-4 text-end">
 
+    <div class="d-inline-flex">
+
+        <form asp-controller="Home" asp-action="SetLanguage" asp-route-language="en" asp-route-returnUrl="@returnUrl" class="d-inline-block">
+            <button type="submit" class="btn btn-outline-info"><img src="~/images/en.png" width="20" /></button>
+        </form>
+
+        <form asp-controller="Home" asp-action="SetLanguage" asp-route-language="pl" asp-route-returnUrl="@returnUrl" class="d-inline-block mx-1">
+            <button type="submit" class="btn btn-outline-info"><img src="~/images/pl.png" width="20" /></button>
+        </form>
+
+    </div>
+
     @if (User.IsInRole("Admin")) {
 
         @if (User.IsInRole("Owner")) {
