@@ -6,7 +6,7 @@ namespace SupplementStore.ViewModels.Opinion {
 
         public string Id { get; set; }
 
-        [Display(Name = "Treść opinii:")]
+        [Display(Name = "OpinionTextLabel")]
         public string Text { get; set; }
     }
 }

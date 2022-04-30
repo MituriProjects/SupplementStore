@@ -2,7 +2,7 @@
 
 <environment exclude="Testing">
 
-    <a asp-controller="Address" asp-action="Create" class="btn btn-outline-success m-2">Dodaj nowy</a>
+    <a asp-controller="Address" asp-action="Create" class="btn btn-outline-success m-2">@Localizer["NewAddressButtonText"]</a>
 
     @foreach (var address in Model) {
 
@@ -13,9 +13,9 @@
                 <div>@address.City</div>
             </div>
             <div>
-                <a asp-controller="Address" asp-action="Edit" asp-route-id="@address.Id" class="btn btn-outline-primary mt-2">Edytuj</a>
+                <a asp-controller="Address" asp-action="Edit" asp-route-id="@address.Id" class="btn btn-outline-primary mt-2">@Localizer["EditAddressButtonText"]</a>
                 <form asp-controller="Address" asp-action="Delete" asp-route-id="@address.Id" class="d-inline-block">
-                    <button type="submit" class="btn btn-outline-danger mt-2">Usuń</button>
+                    <button type="submit" class="btn btn-outline-danger mt-2">@Localizer["DeleteAddressButtonText"]</button>
                 </form>
             </div>
         </div>

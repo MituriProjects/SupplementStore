@@ -10,7 +10,7 @@
     <div>
         @if (User.IsInRole("Admin")) {
 
-            <a asp-controller="Product" asp-action="Create" class="btn btn-outline-success m-2">Nowy produkt</a>
+            <a asp-controller="Product" asp-action="Create" class="btn btn-outline-success m-2">@Localizer["NewProductButtonText"]</a>
         }
     </div>
 
@@ -22,7 +22,7 @@
             <option>50</option>
         </select>
 
-        <button class="btn btn-outline-primary mb-1" type="submit">Apply</button>
+        <button class="btn btn-outline-primary mb-1" type="submit">@Localizer["ApplyFiltersButtonText"]</button>
 
     </form>
 
@@ -59,7 +59,7 @@
                     var productRating = Model.ProductRatings[product.Id];
                 }
 
-                <span>Ocena:</span>
+                <span>@Localizer["RatingLabel"]:</span>
                 <span>@productRating.Average</span>
                 <span>(@productRating.Count)</span>
 
@@ -75,7 +75,7 @@
 
                 @if (User.IsInRole("Admin")) {
 
-                    <a asp-controller="Product" asp-action="Edit" asp-route-id="@product.Id" class="btn btn-outline-primary">Edytuj</a>
+                    <a asp-controller="Product" asp-action="Edit" asp-route-id="@product.Id" class="btn btn-outline-primary">@Localizer["EditProductButtonText"]</a>
                 }
 
             </li>

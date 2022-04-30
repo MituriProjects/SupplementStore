@@ -11,7 +11,7 @@ namespace SupplementStore.ViewModels.Opinion {
 
         public DateTime BuyingDate { get; set; }
 
-        [Display(Name = "Twoja opinia:")]
+        [Display(Name = "OpinionTextLabel")]
         public string Text { get; set; }
 
         public int Stars { get; set; } = 5;

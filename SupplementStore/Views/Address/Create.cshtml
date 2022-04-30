@@ -2,7 +2,7 @@
 
 <environment exclude="Testing">
 
-    <h3 class="m-2">Nowy adres:</h3>
+    <h3 class="m-2">@Localizer["NewAddressHeader"]:</h3>
 
     <form method="post" asp-controller="Address" asp-action="Create" class="m-2 w-25">
 
@@ -24,7 +24,7 @@
             <div style="height:20px;"><span asp-validation-for="City" class="text-danger small text-decoration-underline"></span></div>
         </div>
 
-        <button type="submit" class="btn btn-success my-3">Zatwierdź</button>
+        <button type="submit" class="btn btn-success my-3">@Localizer["NewAddressButtonText"]</button>
 
     </form>
 

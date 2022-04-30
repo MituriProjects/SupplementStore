@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Razor;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -41,18 +42,30 @@ namespace SupplementStore {
             services.AddTransient<AdminManager>();
             services.AddTransient<IFileManager, FileManager>();
 
+            services.AddLocalization(options => options.ResourcesPath = "Resources");
+
             services.AddMvc(options => {
 
                 options.Filters.Add(new AutoValidateAntiforgeryTokenAttribute());
 
                 options.ModelBindingMessageProvider.SetAttemptedValueIsInvalidAccessor((s1, s2) => $"Wartość '{s1}' jest nieprawidłowa dla pola '{s2}'");
-            });
+
+            }).AddViewLocalization(LanguageViewLocationExpanderFormat.Suffix)
+            .AddDataAnnotationsLocalization();
 
             ReconfigureServices(services);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env) {
+
+            var supportedCultures = new[] { "en", "pl" };
+            var localizationOptions = new RequestLocalizationOptions()
+                .SetDefaultCulture(supportedCultures[0])
+                .AddSupportedCultures(supportedCultures)
+                .AddSupportedUICultures(supportedCultures);
+
+            app.UseRequestLocalization(localizationOptions);
 
             if (env.IsDevelopment()) {
 

@@ -2,7 +2,7 @@
 
 <environment exclude="Testing">
 
-    <h4 class="m-3">@Model.ProductName (zakupiono: @Model.BuyingDate)</h4>
+    <h4 class="m-3">@Model.ProductName (@Localizer["BuyingDateLabel"]: @Model.BuyingDate)</h4>
 
     <form asp-controller="Opinion" asp-action="Create" class="m-2">
 
@@ -23,7 +23,7 @@
             <span asp-validation-for="Text" class="text-danger"></span>
         </div>
 
-        <button type="submit" class="btn btn-outline-primary m-2">Zatwierdź</button>
+        <button type="submit" class="btn btn-outline-primary m-2">@Localizer["CreateOpinionButtonText"]</button>
 
     </form>
 

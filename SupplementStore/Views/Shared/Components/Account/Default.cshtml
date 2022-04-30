@@ -13,6 +13,18 @@
 
 <div class="m-2 mx-4 text-end">
 
+    <div class="d-inline-flex">
+
+        <form asp-controller="Home" asp-action="SetLanguage" asp-route-language="en" asp-route-returnUrl="@returnUrl" class="d-inline-block">
+            <button type="submit" class="btn btn-outline-info"><img src="~/images/en.png" width="20" /></button>
+        </form>
+
+        <form asp-controller="Home" asp-action="SetLanguage" asp-route-language="pl" asp-route-returnUrl="@returnUrl" class="d-inline-block mx-1">
+            <button type="submit" class="btn btn-outline-info"><img src="~/images/pl.png" width="20" /></button>
+        </form>
+
+    </div>
+
     @if (User.IsInRole("Admin")) {
 
         @if (User.IsInRole("Owner")) {
@@ -29,10 +41,10 @@
             <img src="~/images/basket.png" alt="basket" style="height:28px;width:30px;" />
         </a>
 
-        <a asp-controller="Account" asp-action="Index" class="btn btn-outline-primary m-2">Account</a>
+        <a asp-controller="Account" asp-action="Index" class="btn btn-outline-primary m-2">@Localizer["AccountButtonText"]</a>
 
         <a asp-action="Logout" asp-controller="Account" asp-route-returnUrl="@pathAndQuery" class="btn btn-primary">
-            Sign out
+            @Localizer["SignOutButtonText"]
         </a>
     }
     else {
@@ -40,13 +52,13 @@
         <a asp-action="Register" asp-controller="Account" asp-route-returnUrl="@returnUrl"
            class="btn btn-primary @(ViewContext.RouteData.Values["Action"].ToString() == "Register" ? "disabled" : "")">
 
-            Register
+            @Localizer["SignUpButtonText"]
         </a>
 
         <a asp-action="Login" asp-controller="Account" asp-route-returnUrl="@returnUrl"
            class="btn btn-primary @(ViewContext.RouteData.Values["Action"].ToString() == "Login" ? "disabled" : "")">
 
-            Login
+            @Localizer["SignInButtonText"]
         </a>
     }
 

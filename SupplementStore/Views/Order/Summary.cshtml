@@ -27,7 +27,7 @@
     }
 
     <div class="bg-success text-light w-25 m-2 p-1">
-        <span>To pay: </span>
+        <span>@Localizer["CostSummaryLabel"]: </span>
         <span id="costSummary">@costSummary</span>
     </div>
 
@@ -36,7 +36,7 @@
         <div>@Model.PostalCode</div>
         <div>@Model.City</div>
     </div>
-    <div class="bg-info w-25 m-2">Order date: @Model.CreatedOn</div>
+    <div class="bg-info w-25 m-2">@Localizer["CreationDateLabel"]: @Model.CreatedOn</div>
 
 </environment>
 
