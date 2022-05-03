@@ -11,6 +11,7 @@ using SupplementStore.Domain.Wishes;
 using SupplementStore.Infrastructure;
 using SupplementStore.Infrastructure.AppServices.Addresses;
 using SupplementStore.Infrastructure.AppServices.BasketProduct;
+using SupplementStore.Infrastructure.AppServices.Messages;
 using SupplementStore.Infrastructure.AppServices.Opinions;
 using SupplementStore.Infrastructure.AppServices.Order;
 using SupplementStore.Infrastructure.AppServices.ProductImages;
@@ -48,6 +49,7 @@ namespace SupplementStore.DependencyResolving {
             services.AddTransient<IProductService, ProductService>();
             services.AddTransient<IProductImageService, ProductImageService>();
             services.AddTransient<IBasketProductService, BasketProductService>();
+            services.AddTransient<IMessageService, MessageService>();
             services.AddTransient<IOrderService, OrderService>();
             services.AddTransient<IWishService, WishService>();
             services.AddTransient<IOpinionService, OpinionService>();
