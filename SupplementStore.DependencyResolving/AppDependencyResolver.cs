@@ -41,6 +41,7 @@ namespace SupplementStore.DependencyResolving {
 
             services.AddTransient<AddressFactory>();
             services.AddTransient<BasketProductManager>();
+            services.AddTransient<MessageFactory>();
             services.AddTransient<OrderFactory>();
 
             services.AddTransient<IAddressService, AddressService>();
