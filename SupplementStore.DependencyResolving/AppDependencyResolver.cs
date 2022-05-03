@@ -3,6 +3,7 @@ using SupplementStore.Application.Services;
 using SupplementStore.Domain;
 using SupplementStore.Domain.Addresses;
 using SupplementStore.Domain.Baskets;
+using SupplementStore.Domain.Messages;
 using SupplementStore.Domain.Opinions;
 using SupplementStore.Domain.Orders;
 using SupplementStore.Domain.Products;
@@ -30,6 +31,7 @@ namespace SupplementStore.DependencyResolving {
             services.AddTransient(typeof(IRepository<>), typeof(Repository<>));
             services.AddTransient<IAddressRepository, AddressRepository>();
             services.AddTransient<IBasketProductRepository, BasketProductRepository>();
+            services.AddTransient<IMessageRepository, MessageRepository>();
             services.AddTransient<IOrderRepository, OrderRepository>();
             services.AddTransient<IPurchaseRepository, PurchaseRepository>();
             services.AddTransient<IProductRepository, ProductRepository>();
