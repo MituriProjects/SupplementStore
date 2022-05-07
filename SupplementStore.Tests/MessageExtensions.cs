@@ -11,5 +11,12 @@ namespace SupplementStore.Tests {
 
             return message;
         }
+
+        public static Message WithSenderEmail(this Message message, string email) {
+
+            message.SenderEmail = email;
+
+            return message;
+        }
     }
 }
