@@ -22,5 +22,16 @@
         @RenderBody()
     </div>
 
+    <environment exclude="Testing">
+
+        <footer class="border-top card-footer navbar fixed-bottom bg-light">
+            <div class="m-auto">
+                <span>&copy; @DateTime.Now.Year - Supplement Store</span>
+                <a asp-controller="Support" asp-action="SendMessage" class="mx-2">@Localizer["SupportSendMessageLinkText"]</a>
+            </div>
+        </footer>
+
+    </environment>
+
 </body>
 </html>
