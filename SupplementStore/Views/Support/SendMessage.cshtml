@@ -1,0 +1,46 @@
+﻿@model SendMessageVM
+
+@using Microsoft.AspNetCore.Identity
+@inject UserManager<IdentityUser> UserManager
+
+@{
+
+    var user = await UserManager.GetUserAsync(User);
+    var userEmail = user?.Email;
+}
+
+<environment exclude="Testing">
+
+    <form asp-controller="Support" asp-action="SendMessage">
+
+        <div class="form-group m-2">
+            <label asp-for="Text"></label>
+            <textarea asp-for="Text" class="form-control w-25" rows="4">@Model.Text</textarea>
+            <span asp-validation-for="Text" class="text-danger"></span>
+        </div>
+
+        @if (User.Identity.IsAuthenticated) {
+
+            <input hidden asp-for="Email" value="@userEmail" />
+        }
+        else {
+
+            <div class="form-group m-2">
+                <label asp-for="Email"></label>
+                <input asp-for="Email" class="form-control w-25" />
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+        }
+
+        <button type="submit" class="btn btn-outline-success mx-2">@Localizer["SendMessageButtonText"]</button>
+
+    </form>
+
+</environment>
+
+<environment include="Testing">
+
+    <div name="Text">@Model.Text</div>
+    <div name="Email">@Model.Email</div>
+
+</environment>
