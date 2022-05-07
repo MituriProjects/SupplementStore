@@ -18,5 +18,12 @@ namespace SupplementStore.Tests {
 
             return message;
         }
+
+        public static Message WithText(this Message message, string text) {
+
+            message.Text = text;
+
+            return message;
+        }
     }
 }
