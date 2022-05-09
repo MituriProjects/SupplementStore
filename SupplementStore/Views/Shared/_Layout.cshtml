@@ -16,6 +16,22 @@
             @await Component.InvokeAsync("Account")
         </div>
 
+        @if (TempData["SuccessMessage"] != null) {
+
+            <div class="message-wrapper bg-success p-3">
+                <div class="m-4 text-white d-inline">@Localizer[TempData["SuccessMessage"].ToString()]</div>
+                <div role="button" class="message-close-btn text-white m-4 d-inline">&#x2573</div>
+            </div>
+        }
+
+        @if (TempData["FailureMessage"] != null) {
+
+            <div class="message-wrapper bg-danger p-3">
+                <div class="m-4 text-white d-inline">@Localizer[TempData["FailureMessage"].ToString()]</div>
+                <div role="button" class="message-close-btn text-white m-4 d-inline">&#x2573</div>
+            </div>
+        }
+
     </environment>
 
     <div>
@@ -32,6 +48,21 @@
         </footer>
 
     </environment>
+
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+
+            $(".message-close-btn")
+                .click(function () {
+
+                    $(this)
+                        .closest(".message-wrapper")
+                        .hide();
+                });
+        });
+
+    </script>
 
 </body>
 </html>
