@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 namespace SupplementStore.Controllers {
 
     [Authorize(Roles = "Owner")]
-    public class RoleController : Controller {
+    public class RoleController : AppControllerBase {
 
         RoleManager<IdentityRole> RoleManager { get; }
 

@@ -5,7 +5,7 @@ using System;
 
 namespace SupplementStore.Controllers {
 
-    public class HomeController : Controller {
+    public class HomeController : AppControllerBase {
 
         public IActionResult Index() {
 

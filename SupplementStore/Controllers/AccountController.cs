@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace SupplementStore.Controllers {
 
     [ViewComponent(Name = "Account")]
-    public class AccountController : Controller {
+    public class AccountController : AppControllerBase {
 
         UserManager<IdentityUser> UserManager { get; }
 

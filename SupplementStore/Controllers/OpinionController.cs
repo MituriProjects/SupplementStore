@@ -8,7 +8,7 @@ using SupplementStore.ViewModels.Opinion;
 namespace SupplementStore.Controllers {
 
     [Authorize]
-    public class OpinionController : Controller {
+    public class OpinionController : AppControllerBase {
 
         UserManager<IdentityUser> UserManager { get; }
 

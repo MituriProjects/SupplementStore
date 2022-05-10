@@ -7,7 +7,7 @@ using SupplementStore.ViewModels.Support;
 
 namespace SupplementStore.Controllers {
 
-    public class SupportController : Controller {
+    public class SupportController : AppControllerBase {
 
         UserManager<IdentityUser> UserManager { get; }
 

@@ -8,7 +8,7 @@ using SupplementStore.ViewModels.Address;
 namespace SupplementStore.Controllers {
 
     [Authorize]
-    public class AddressController : Controller {
+    public class AddressController : AppControllerBase {
 
         UserManager<IdentityUser> UserManager { get; }
 

@@ -8,7 +8,7 @@ using SupplementStore.ViewModels.Order;
 namespace SupplementStore.Controllers {
 
     [Authorize]
-    public class OrderController : Controller {
+    public class OrderController : AppControllerBase {
 
         UserManager<IdentityUser> UserManager { get; }
 

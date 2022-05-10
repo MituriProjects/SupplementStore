@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 namespace SupplementStore.Controllers {
 
     [Authorize(Roles = "Admin")]
-    public class AdminController : Controller {
+    public class AdminController : AppControllerBase {
 
         IOrderService OrderService { get; }
 

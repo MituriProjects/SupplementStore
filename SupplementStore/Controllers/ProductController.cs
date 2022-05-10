@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace SupplementStore.Controllers {
 
-    public class ProductController : Controller {
+    public class ProductController : AppControllerBase {
 
         IProductService ProductService { get; }
 

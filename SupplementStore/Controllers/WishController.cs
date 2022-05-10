@@ -6,7 +6,7 @@ using SupplementStore.Application.Services;
 namespace SupplementStore.Controllers {
 
     [Authorize]
-    public class WishController : Controller {
+    public class WishController : AppControllerBase {
 
         UserManager<IdentityUser> UserManager { get; }
 
