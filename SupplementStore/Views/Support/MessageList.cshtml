@@ -1,0 +1,25 @@
+﻿@model IEnumerable<MessageDetails>
+
+<environment exclude="Testing">
+
+    @foreach (var message in Model) {
+
+        <div class="bg-light m-3 p-2 w-25">
+            <div>@Localizer["TextLabel"]: @message.Text</div>
+            <div>@Localizer["EmailLabel"]: @message.Email</div>
+            <div>@Localizer["CreatedOnLabel"]: @message.CreatedOn</div>
+        </div>
+    }
+
+</environment>
+
+<environment include="Testing">
+
+    @foreach (var message in Model) {
+
+        <div name="Email">@message.Email</div>
+        <div name="Text">@message.Text</div>
+        <div name="CreatedOn">@message.CreatedOn</div>
+    }
+
+</environment>
