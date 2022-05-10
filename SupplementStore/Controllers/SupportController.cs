@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using SupplementStore.Application.Args;
 using SupplementStore.Application.Services;
@@ -46,6 +47,12 @@ namespace SupplementStore.Controllers {
                 TempData["FailureMessage"] = "SendMessageFailure";
 
             return RedirectToAction(nameof(SendMessage));
+        }
+
+        [Authorize(Roles = "Admin")]
+        public IActionResult MessageList() {
+
+            return View(MessageService.LoadMany());
         }
     }
 }
