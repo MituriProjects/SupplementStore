@@ -120,6 +120,9 @@
   <data name="HiddenOpinionsButtonText" xml:space="preserve">
     <value>Hidden opinions</value>
   </data>
+  <data name="MessageListButtonText" xml:space="preserve">
+    <value>Messages</value>
+  </data>
   <data name="OrdersButtonText" xml:space="preserve">
     <value>Orders</value>
   </data>

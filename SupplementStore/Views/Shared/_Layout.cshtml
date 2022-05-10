@@ -16,11 +16,53 @@
             @await Component.InvokeAsync("Account")
         </div>
 
+        @if (TempData["SuccessMessage"] != null) {
+
+            <div class="message-wrapper bg-success p-3">
+                <div class="m-4 text-white d-inline">@Localizer[TempData["SuccessMessage"].ToString()]</div>
+                <div role="button" class="message-close-btn text-white m-4 d-inline">&#x2573</div>
+            </div>
+        }
+
+        @if (TempData["FailureMessage"] != null) {
+
+            <div class="message-wrapper bg-danger p-3">
+                <div class="m-4 text-white d-inline">@Localizer[TempData["FailureMessage"].ToString()]</div>
+                <div role="button" class="message-close-btn text-white m-4 d-inline">&#x2573</div>
+            </div>
+        }
+
     </environment>
 
     <div>
         @RenderBody()
     </div>
+
+    <environment exclude="Testing">
+
+        <footer class="border-top card-footer navbar fixed-bottom bg-light">
+            <div class="m-auto">
+                <span>&copy; @DateTime.Now.Year - Supplement Store</span>
+                <a asp-controller="Support" asp-action="SendMessage" class="mx-2">@Localizer["SupportSendMessageLinkText"]</a>
+            </div>
+        </footer>
+
+    </environment>
+
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+
+            $(".message-close-btn")
+                .click(function () {
+
+                    $(this)
+                        .closest(".message-wrapper")
+                        .hide();
+                });
+        });
+
+    </script>
 
 </body>
 </html>

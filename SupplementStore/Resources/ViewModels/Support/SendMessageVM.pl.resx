@@ -117,16 +117,19 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="HiddenOpinionsButtonText" xml:space="preserve">
-    <value>Ukryte opinie</value>
+  <data name="EmailAddressErrorMessage" xml:space="preserve">
+    <value>E-mail jest błędny.</value>
   </data>
-  <data name="MessageListButtonText" xml:space="preserve">
-    <value>Wiadomości</value>
+  <data name="EmailLabel" xml:space="preserve">
+    <value>E-mail</value>
   </data>
-  <data name="OrdersButtonText" xml:space="preserve">
-    <value>Zamówienia</value>
+  <data name="EmailRequiredErrorMessage" xml:space="preserve">
+    <value>E-mail jest wymagany.</value>
   </data>
-  <data name="ProductsButtonText" xml:space="preserve">
-    <value>Produkty</value>
+  <data name="TextLabel" xml:space="preserve">
+    <value>Wiadomość</value>
+  </data>
+  <data name="TextRequiredErrorMessage" xml:space="preserve">
+    <value>Tekst wiadomości jest wymagany.</value>
   </data>
 </root>

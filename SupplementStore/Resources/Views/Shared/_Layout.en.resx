@@ -117,16 +117,13 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="HiddenOpinionsButtonText" xml:space="preserve">
-    <value>Ukryte opinie</value>
+  <data name="SendMessageFailure" xml:space="preserve">
+    <value>There was some error in sending your message. Try again later.</value>
   </data>
-  <data name="MessageListButtonText" xml:space="preserve">
-    <value>Wiadomości</value>
+  <data name="SendMessageSuccess" xml:space="preserve">
+    <value>Success. Expect our reply.</value>
   </data>
-  <data name="OrdersButtonText" xml:space="preserve">
-    <value>Zamówienia</value>
-  </data>
-  <data name="ProductsButtonText" xml:space="preserve">
-    <value>Produkty</value>
+  <data name="SupportSendMessageLinkText" xml:space="preserve">
+    <value>Contact</value>
   </data>
 </root>
