@@ -61,7 +61,7 @@ namespace SupplementStore {
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env) {
 
-            var supportedCultures = new[] { "en", "pl" };
+            var supportedCultures = new[] { "pl", "en" };
             var localizationOptions = new RequestLocalizationOptions()
                 .SetDefaultCulture(supportedCultures[0])
                 .AddSupportedCultures(supportedCultures)
