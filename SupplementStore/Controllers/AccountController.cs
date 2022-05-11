@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ViewComponents;
+using SupplementStore.Controllers.Filters;
 using SupplementStore.ViewModels.Account;
 using System.Threading.Tasks;
 
@@ -33,14 +34,14 @@ namespace SupplementStore.Controllers {
             return View();
         }
 
+        [PreserveReturnUrl]
         public IActionResult Login(string returnUrl) {
-
-            ViewBag.ReturnUrl = returnUrl;
 
             return View();
         }
 
         [HttpPost]
+        [PreserveReturnUrl]
         public async Task<IActionResult> Login(LoginVM details, string returnUrl) {
 
             if (IsModelValid) {
@@ -65,14 +66,14 @@ namespace SupplementStore.Controllers {
             return View(details);
         }
 
+        [PreserveReturnUrl]
         public IActionResult Register(string returnUrl) {
-
-            ViewBag.ReturnUrl = returnUrl;
 
             return View();
         }
 
         [HttpPost]
+        [PreserveReturnUrl]
         public async Task<IActionResult> Register(RegisterVM model, string returnUrl) {
 
             if (IsModelValid) {
