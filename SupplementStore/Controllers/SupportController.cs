@@ -42,7 +42,7 @@ namespace SupplementStore.Controllers {
             });
 
             if (result.Success)
-                TempData["SuccessMessage"] = "SendMessageSuccess";
+                SetSuccessMessage("SendMessageSuccess");
             else
                 TempData["FailureMessage"] = "SendMessageFailure";
 
