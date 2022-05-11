@@ -43,7 +43,7 @@ namespace SupplementStore.Controllers {
         [HttpPost]
         public async Task<IActionResult> Login(LoginVM details, string returnUrl) {
 
-            if (ModelState.IsValid) {
+            if (IsModelValid) {
 
                 IdentityUser user = await UserManager.FindByEmailAsync(details.Email);
 
@@ -75,7 +75,7 @@ namespace SupplementStore.Controllers {
         [HttpPost]
         public async Task<IActionResult> Register(RegisterVM model, string returnUrl) {
 
-            if (ModelState.IsValid) {
+            if (IsModelValid) {
 
                 IdentityUser user = new IdentityUser {
                     UserName = model.Email,
