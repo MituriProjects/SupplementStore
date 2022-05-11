@@ -91,7 +91,7 @@ namespace SupplementStore.Controllers {
         [Authorize(Roles = "Admin")]
         public IActionResult Edit(ProductEditVM model) {
 
-            if (ModelState.IsValid == false)
+            if (IsModelInvalid)
                 return View(model);
 
             if (string.IsNullOrEmpty(model.Id)) {
