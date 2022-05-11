@@ -18,5 +18,24 @@ namespace SupplementStore.Controllers {
 
         protected void SetFailureMessage(string message) =>
             TempData["FailureMessage"] = message;
+
+        protected RedirectToActionResult RedirectToAction<TController>(string actionName) {
+
+            var controllerName = typeof(TController).Name;
+
+            return RedirectToAction(
+                actionName,
+                controllerName.Substring(0, controllerName.IndexOf("Controller")));
+        }
+
+        protected RedirectToActionResult RedirectToAction<TController>(string actionName, object routeValues) {
+
+            var controllerName = typeof(TController).Name;
+
+            return RedirectToAction(
+                actionName,
+                controllerName.Substring(0, controllerName.IndexOf("Controller")),
+                routeValues);
+        }
     }
 }
