@@ -37,7 +37,7 @@ namespace SupplementStore.Controllers {
         [HttpPost]
         public IActionResult Create(CreateVM model) {
 
-            if (ModelState.IsValid == false) {
+            if (IsModelInvalid) {
 
                 return View(model);
             }
@@ -72,7 +72,7 @@ namespace SupplementStore.Controllers {
         [HttpPost]
         public IActionResult Edit(EditVM model) {
 
-            if (ModelState.IsValid == false)
+            if (IsModelInvalid)
                 return View(model);
 
             var userId = UserManager.GetUserId(HttpContext.User);
