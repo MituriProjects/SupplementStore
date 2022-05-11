@@ -79,7 +79,7 @@ namespace SupplementStore.Controllers {
 
             var product = OpinionService.LoadOpinionProduct(model.Id);
 
-            return RedirectToAction("Details", "Product", new { product.Id });
+            return RedirectToAction<ProductController>(nameof(ProductController.Details), new { product.Id });
         }
 
         [HttpPost]
@@ -90,7 +90,7 @@ namespace SupplementStore.Controllers {
 
             var product = OpinionService.LoadOpinionProduct(id);
 
-            return RedirectToAction("Details", "Product", new { product.Id });
+            return RedirectToAction<ProductController>(nameof(ProductController.Details), new { product.Id });
         }
 
         [HttpPost]
@@ -99,7 +99,7 @@ namespace SupplementStore.Controllers {
 
             OpinionService.Reveal(id);
 
-            return RedirectToAction("HiddenOpinions", "Admin");
+            return RedirectToAction<AdminController>(nameof(AdminController.HiddenOpinions));
         }
     }
 }
