@@ -37,11 +37,11 @@ namespace SupplementStore.Controllers {
         public async Task<IActionResult> Create(string roleName) {
 
             if (roleName == null)
-                return RedirectToAction("Index");
+                return RedirectToAction(nameof(Index));
 
             await RoleManager.CreateAsync(new IdentityRole(roleName));
 
-            return RedirectToAction("Index");
+            return RedirectToAction(nameof(Index));
         }
 
         public async Task<IActionResult> Users() {
