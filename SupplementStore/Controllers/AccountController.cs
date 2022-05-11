@@ -59,7 +59,7 @@ namespace SupplementStore.Controllers {
                     }
                 }
 
-                ModelState.AddModelError(nameof(LoginVM.Email), "Invalid user or password");
+                AddModelError(nameof(LoginVM.Email), "Invalid user or password");
             }
 
             return View(details);
@@ -92,7 +92,7 @@ namespace SupplementStore.Controllers {
 
                     foreach (IdentityError error in result.Errors) {
 
-                        ModelState.AddModelError("", error.Description);
+                        AddModelError("", error.Description);
                     }
                 }
             }
