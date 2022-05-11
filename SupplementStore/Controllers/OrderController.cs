@@ -40,7 +40,7 @@ namespace SupplementStore.Controllers {
 
             var userId = UserManager.GetUserId(HttpContext.User);
 
-            if (ModelState.IsValid == false) {
+            if (IsModelInvalid) {
 
                 model.BasketProducts = BasketProductService.LoadMany(userId);
 
