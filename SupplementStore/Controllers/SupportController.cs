@@ -29,7 +29,7 @@ namespace SupplementStore.Controllers {
         [HttpPost]
         public IActionResult SendMessage(SendMessageVM model) {
 
-            if (ModelState.IsValid == false)
+            if (IsModelInvalid)
                 return View(model);
 
             string userId = UserManager.GetUserId(HttpContext.User)
