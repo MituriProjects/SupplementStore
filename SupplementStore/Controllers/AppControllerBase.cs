@@ -10,6 +10,9 @@ namespace SupplementStore.Controllers {
         protected bool IsModelInvalid =>
             ModelState.IsValid == false;
 
+        protected void AddModelError(string key, string message) =>
+            ModelState.AddModelError(key, message);
+
         protected void SetSuccessMessage(string message) =>
             TempData["SuccessMessage"] = message;
 
