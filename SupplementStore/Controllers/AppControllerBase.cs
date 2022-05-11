@@ -6,5 +6,8 @@ namespace SupplementStore.Controllers {
 
         protected bool IsModelValid =>
             ModelState.IsValid;
+
+        protected bool IsModelInvalid =>
+            ModelState.IsValid == false;
     }
 }
