@@ -12,5 +12,8 @@ namespace SupplementStore.Controllers {
 
         protected void SetSuccessMessage(string message) =>
             TempData["SuccessMessage"] = message;
+
+        protected void SetFailureMessage(string message) =>
+            TempData["FailureMessage"] = message;
     }
 }
