@@ -57,7 +57,7 @@ namespace SupplementStore.Controllers {
 
             if (order == null) {
 
-                ModelState.AddModelError(string.Empty, "The creation of an order failed.");
+                AddModelError(string.Empty, "The creation of an order failed.");
 
                 model.BasketProducts = BasketProductService.LoadMany(userId);
 
