@@ -44,7 +44,7 @@ namespace SupplementStore.Controllers {
             if (result.Success)
                 SetSuccessMessage("SendMessageSuccess");
             else
-                TempData["FailureMessage"] = "SendMessageFailure";
+                SetFailureMessage("SendMessageFailure");
 
             return RedirectToAction(nameof(SendMessage));
         }
