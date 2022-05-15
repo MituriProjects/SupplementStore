@@ -5,7 +5,7 @@ namespace SupplementStore.ViewModels.Account {
     public class RegisterVM {
 
         [Required(ErrorMessage = "EmailRequiredErrorMessage")]
-        [EmailAddress]
+        [Email]
         [Display(Name = "EmailLabel")]
         public string Email { get; set; }
 
