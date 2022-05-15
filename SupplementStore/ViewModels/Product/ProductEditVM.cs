@@ -7,12 +7,12 @@ namespace SupplementStore.ViewModels.Product {
         public string Id { get; set; }
 
         [Required(ErrorMessage = "NameRequiredErrorMessage")]
-        [Display(Name = "NameLabel")]
+        [Label]
         public string Name { get; set; }
 
         [Required(ErrorMessage = "PriceRequiredErrorMessage")]
         [Range(0.01, double.MaxValue, ErrorMessage = "PriceAboveZeroErrorMessage")]
-        [Display(Name = "PriceLabel")]
+        [Label]
         public decimal? Price { get; set; } = 0;
     }
 }
