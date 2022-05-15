@@ -123,4 +123,7 @@
   <data name="EmailRequiredErrorMessage" xml:space="preserve">
     <value>E-mail jest wymagany.</value>
   </data>
+  <data name="PasswordRequiredErrorMessage" xml:space="preserve">
+    <value>Hasło jest wymagane.</value>
+  </data>
 </root>
