@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using SupplementStore.Application.Args;
 using SupplementStore.Application.Services;
+using SupplementStore.Controllers.Filters;
 using SupplementStore.ViewModels.Support;
 
 namespace SupplementStore.Controllers {
@@ -27,10 +28,8 @@ namespace SupplementStore.Controllers {
         }
 
         [HttpPost]
+        [ReturnToViewOnModelInvalid]
         public IActionResult SendMessage(SendMessageVM model) {
-
-            if (IsModelInvalid)
-                return View(model);
 
             string userId = UserManager.GetUserId(HttpContext.User)
                 ?? UserManager.FindByEmailAsync(model.Email).Result?.Id;
