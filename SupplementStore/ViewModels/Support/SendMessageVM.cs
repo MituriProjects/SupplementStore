@@ -5,12 +5,12 @@ namespace SupplementStore.ViewModels.Support {
     public class SendMessageVM {
 
         [Required(ErrorMessage = "TextRequiredErrorMessage")]
-        [Display(Name = "TextLabel")]
+        [Label]
         public string Text { get; set; }
 
         [Required(ErrorMessage = "EmailRequiredErrorMessage")]
         [Email]
-        [Display(Name = "EmailLabel")]
+        [Label]
         public string Email { get; set; }
     }
 }
