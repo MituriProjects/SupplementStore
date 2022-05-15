@@ -1,12 +1,10 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace SupplementStore.ViewModels.Opinion {
+﻿namespace SupplementStore.ViewModels.Opinion {
 
     public class OpinionEditVM {
 
         public string Id { get; set; }
 
-        [Display(Name = "OpinionTextLabel")]
+        [Label]
         public string Text { get; set; }
     }
 }
