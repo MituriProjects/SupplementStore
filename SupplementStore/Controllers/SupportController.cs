@@ -40,10 +40,7 @@ namespace SupplementStore.Controllers {
                 SenderEmail = model.Email
             });
 
-            if (result.Success)
-                SetSuccessMessage("SendMessageSuccess");
-            else
-                SetFailureMessage("SendMessageFailure");
+            SetResultMessage(result.Success);
 
             return RedirectToAction(nameof(SendMessage));
         }
