@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using SupplementStore.Application.Args;
 using SupplementStore.Application.Models;
 using SupplementStore.Application.Services;
+using SupplementStore.Controllers.Filters;
 using SupplementStore.Controllers.Services;
 using SupplementStore.ViewModels.Product;
 using System;
@@ -89,10 +90,8 @@ namespace SupplementStore.Controllers {
 
         [HttpPost]
         [Authorize(Roles = "Admin")]
+        [ReturnToViewOnModelInvalid]
         public IActionResult Edit(ProductEditVM model) {
-
-            if (IsModelInvalid)
-                return View(model);
 
             if (string.IsNullOrEmpty(model.Id)) {
 
