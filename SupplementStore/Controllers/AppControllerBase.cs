@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using System.Runtime.CompilerServices;
 
 namespace SupplementStore.Controllers {
 
@@ -18,6 +19,14 @@ namespace SupplementStore.Controllers {
 
         protected void SetFailureMessage(string message) =>
             TempData["FailureMessage"] = message;
+
+        protected void SetResultMessage(bool result, [CallerMemberName]string callerName = null) {
+
+            if (result)
+                SetSuccessMessage($"{callerName}Success");
+            else
+                SetFailureMessage($"{callerName}Failure");
+        }
 
         protected RedirectToActionResult RedirectToAction<TController>(string actionName) {
 
