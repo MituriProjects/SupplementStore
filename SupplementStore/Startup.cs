@@ -43,6 +43,7 @@ namespace SupplementStore {
             services.AddTransient<IFileManager, FileManager>();
 
             services.AddSingleton<Translator>();
+            services.AddSingleton(typeof(Translator<>));
 
             services.AddLocalization(options => options.ResourcesPath = "Resources");
 
