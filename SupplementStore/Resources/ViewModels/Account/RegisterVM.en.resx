@@ -123,7 +123,4 @@
   <data name="PasswordLabel" xml:space="preserve">
     <value>Password</value>
   </data>
-  <data name="PasswordRequiredErrorMessage" xml:space="preserve">
-    <value>Password is required.</value>
-  </data>
 </root>
