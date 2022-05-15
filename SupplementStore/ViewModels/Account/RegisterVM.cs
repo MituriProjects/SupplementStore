@@ -6,12 +6,12 @@ namespace SupplementStore.ViewModels.Account {
 
         [Required(ErrorMessage = "EmailRequiredErrorMessage")]
         [Email]
-        [Display(Name = "EmailLabel")]
+        [Label]
         public string Email { get; set; }
 
         [Required(ErrorMessage = "PasswordRequiredErrorMessage")]
         [UIHint("password")]
-        [Display(Name = "PasswordLabel")]
+        [Label]
         public string Password { get; set; }
     }
 }
