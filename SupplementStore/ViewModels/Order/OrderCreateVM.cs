@@ -9,19 +9,19 @@ namespace SupplementStore.ViewModels.Order {
         public IEnumerable<BasketProductDetails> BasketProducts { get; set; }
 
         [Required(ErrorMessage = "AddressRequiredErrorMessage")]
-        [Display(Name = "AddressLabel")]
+        [Label]
         public string Address { get; set; }
 
         [Required(ErrorMessage = "PostalCodeRequiredErrorMessage")]
         [RegularExpression(@"^\d{2}-\d{3}$", ErrorMessage = "PostalCodeRegularExpressionErrorMessage")]
-        [Display(Name = "PostalCodeLabel")]
+        [Label]
         public string PostalCode { get; set; }
 
         [Required(ErrorMessage = "CityRequiredErrorMessage")]
-        [Display(Name = "CityLabel")]
+        [Label]
         public string City { get; set; }
 
-        [Display(Name = "SaveAddressLabel")]
+        [Label]
         public bool IsAddressToBeSaved { get; set; }
     }
 }
