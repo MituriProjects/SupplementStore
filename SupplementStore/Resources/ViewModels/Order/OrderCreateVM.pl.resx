@@ -129,6 +129,9 @@
   <data name="CityRequiredErrorMessage" xml:space="preserve">
     <value>Miasto jest wymagane.</value>
   </data>
+  <data name="IsAddressToBeSavedLabel" xml:space="preserve">
+    <value>Zapisz adres</value>
+  </data>
   <data name="PostalCodeLabel" xml:space="preserve">
     <value>Kod pocztowy</value>
   </data>
@@ -137,8 +140,5 @@
   </data>
   <data name="PostalCodeRequiredErrorMessage" xml:space="preserve">
     <value>Kod pocztowy jest wymagany.</value>
-  </data>
-  <data name="SaveAddressLabel" xml:space="preserve">
-    <value>Zapisz adres</value>
   </data>
 </root>
