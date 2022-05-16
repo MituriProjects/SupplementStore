@@ -123,9 +123,6 @@
   <data name="EmailLabel" xml:space="preserve">
     <value>E-mail</value>
   </data>
-  <data name="EmailRequiredErrorMessage" xml:space="preserve">
-    <value>E-mail is required.</value>
-  </data>
   <data name="TextLabel" xml:space="preserve">
     <value>Message</value>
   </data>
