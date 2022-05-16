@@ -126,9 +126,6 @@
   <data name="PostalCodeLabel" xml:space="preserve">
     <value>Postal code</value>
   </data>
-  <data name="PostalCodeRequiredErrorMessage" xml:space="preserve">
-    <value>Postal code is required.</value>
-  </data>
   <data name="RegularExpressionErrorMessage" xml:space="preserve">
     <value>Postal code has invalid structure.</value>
   </data>
