@@ -126,6 +126,9 @@
   <data name="PasswordRequiredErrorMessage" xml:space="preserve">
     <value>Hasło jest wymagane.</value>
   </data>
+  <data name="PostalCodeRequiredErrorMessage" xml:space="preserve">
+    <value>Kod pocztowy jest wymagany.</value>
+  </data>
   <data name="StreetRequiredErrorMessage" xml:space="preserve">
     <value>Nazwa ulicy jest wymagana.</value>
   </data>
