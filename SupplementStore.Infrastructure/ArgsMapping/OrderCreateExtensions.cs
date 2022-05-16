@@ -9,7 +9,7 @@ namespace SupplementStore.Infrastructure.ArgsMapping {
 
             return new OrderFactoryArgs {
                 UserId = orderCreatorArgs.UserId,
-                Address = orderCreatorArgs.Street,
+                Street = orderCreatorArgs.Street,
                 PostalCode = orderCreatorArgs.PostalCode,
                 City = orderCreatorArgs.City,
                 ShouldAddressBeHidden = orderCreatorArgs.ShouldAddressBeHidden
