@@ -4,16 +4,16 @@ namespace SupplementStore.ViewModels.Address {
 
     public class CreateVM {
 
-        [Required(ErrorMessage = "StreetRequiredErrorMessage")]
+        [IsRequired]
         [Label]
         public string Street { get; set; }
 
-        [Required(ErrorMessage = "PostalCodeRequiredErrorMessage")]
+        [IsRequired]
         [RegularExpression(@"^\d{2}-\d{3}$", ErrorMessage = "RegularExpressionErrorMessage")]
         [Label]
         public string PostalCode { get; set; }
 
-        [Required(ErrorMessage = "CityRequiredErrorMessage")]
+        [IsRequired]
         [Label]
         public string City { get; set; }
     }
