@@ -126,9 +126,6 @@
   <data name="CityLabel" xml:space="preserve">
     <value>Miasto</value>
   </data>
-  <data name="CityRequiredErrorMessage" xml:space="preserve">
-    <value>Miasto jest wymagane.</value>
-  </data>
   <data name="IsAddressToBeSavedLabel" xml:space="preserve">
     <value>Zapisz adres</value>
   </data>
