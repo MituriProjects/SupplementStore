@@ -8,7 +8,7 @@ namespace SupplementStore.ViewModels.Order {
 
         public IEnumerable<BasketProductDetails> BasketProducts { get; set; }
 
-        [IsRequired(typeof(OrderCreateVM))]
+        [IsRequired]
         [Label]
         public string Street { get; set; }
 
