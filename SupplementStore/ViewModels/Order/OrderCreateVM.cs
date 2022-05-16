@@ -8,16 +8,16 @@ namespace SupplementStore.ViewModels.Order {
 
         public IEnumerable<BasketProductDetails> BasketProducts { get; set; }
 
-        [Required(ErrorMessage = "AddressRequiredErrorMessage")]
+        [IsRequired(typeof(OrderCreateVM))]
         [Label]
         public string Address { get; set; }
 
-        [Required(ErrorMessage = "PostalCodeRequiredErrorMessage")]
+        [IsRequired]
         [RegularExpression(@"^\d{2}-\d{3}$", ErrorMessage = "PostalCodeRegularExpressionErrorMessage")]
         [Label]
         public string PostalCode { get; set; }
 
-        [Required(ErrorMessage = "CityRequiredErrorMessage")]
+        [IsRequired]
         [Label]
         public string City { get; set; }
 
