@@ -81,7 +81,7 @@ namespace SupplementStore.Tests.Integration.OrderTests {
             basketProducts[1].WithUserId(TestData.User);
 
             var formData = new Dictionary<string, string> {
-                { "Address", "ul. Fircowskiego 5/7" },
+                { "Street", "ul. Fircowskiego 5/7" },
                 { "PostalCode", "35-030" },
                 { "City", "Rzeszów" }
             };
@@ -89,7 +89,7 @@ namespace SupplementStore.Tests.Integration.OrderTests {
             await PostAsync("/Order/Create", formData, TestData.User);
 
             var createdAddress = TestDocument<Address>.First(e =>
-                e.Street == formData["Address"]
+                e.Street == formData["Street"]
                 && e.PostalCode.Value == formData["PostalCode"]
                 && e.City == formData["City"]
                 && e.UserId == TestData.User.Id);
@@ -113,7 +113,7 @@ namespace SupplementStore.Tests.Integration.OrderTests {
                 .WithCity("Legnica");
 
             var formData = new Dictionary<string, string> {
-                { "Address", address.Street },
+                { "Street", address.Street },
                 { "PostalCode", address.PostalCode.Value },
                 { "City", address.City }
             };
@@ -121,7 +121,7 @@ namespace SupplementStore.Tests.Integration.OrderTests {
             await PostAsync("/Order/Create", formData, TestData.User);
 
             TestDocument<Address>.Single(e =>
-                e.Street == formData["Address"]
+                e.Street == formData["Street"]
                 && e.PostalCode.Value == formData["PostalCode"]
                 && e.City == formData["City"]
                 && e.UserId == TestData.User.Id);
@@ -136,7 +136,7 @@ namespace SupplementStore.Tests.Integration.OrderTests {
                .WithUserId(TestData.User);
 
             var formData = new Dictionary<string, string> {
-                { "Address", "Rycerska 11/5" },
+                { "Street", "Rycerska 11/5" },
                 { "PostalCode", "11-459" },
                 { "City", "Leszno" },
                 { "IsAddressToBeSaved", "false" }
@@ -145,13 +145,13 @@ namespace SupplementStore.Tests.Integration.OrderTests {
             await PostAsync("/Order/Create", formData, TestData.User);
 
             TestDocument<Address>.Single(e =>
-                e.Street == formData["Address"]
+                e.Street == formData["Street"]
                 && e.PostalCode.Value == formData["PostalCode"]
                 && e.City == formData["City"]
                 && e.UserId == TestData.User.Id
                 && e.IsHidden);
             var createdAddress = TestDocument<Address>.First(e =>
-                e.Street == formData["Address"]
+                e.Street == formData["Street"]
                 && e.PostalCode.Value == formData["PostalCode"]
                 && e.City == formData["City"]
                 && e.UserId == TestData.User.Id
@@ -172,7 +172,7 @@ namespace SupplementStore.Tests.Integration.OrderTests {
                 .WithCity("Legnica");
 
             var formData = new Dictionary<string, string> {
-                { "Address", address.Street },
+                { "Street", address.Street },
                 { "PostalCode", address.PostalCode.Value },
                 { "City", address.City }
             };
@@ -180,12 +180,12 @@ namespace SupplementStore.Tests.Integration.OrderTests {
             await PostAsync("/Order/Create", formData, TestData.Users[0]);
 
             TestDocument<Address>.Single(e =>
-                e.Street == formData["Address"]
+                e.Street == formData["Street"]
                 && e.PostalCode.Value == formData["PostalCode"]
                 && e.City == formData["City"]
                 && e.UserId == TestData.Users[1].Id);
             var createdAddress = TestDocument<Address>.First(e =>
-                e.Street == formData["Address"]
+                e.Street == formData["Street"]
                 && e.PostalCode.Value == formData["PostalCode"]
                 && e.City == formData["City"]
                 && e.UserId == TestData.Users[0].Id);
@@ -206,7 +206,7 @@ namespace SupplementStore.Tests.Integration.OrderTests {
                 .WithIsHidden(true);
 
             var formData = new Dictionary<string, string> {
-                { "Address", address.Street },
+                { "Street", address.Street },
                 { "PostalCode", address.PostalCode.Value },
                 { "City", address.City },
                 { "IsAddressToBeSaved", "true" }
@@ -215,7 +215,7 @@ namespace SupplementStore.Tests.Integration.OrderTests {
             await PostAsync("/Order/Create", formData, TestData.User);
 
             TestDocument<Address>.Single(e =>
-                e.Street == formData["Address"]
+                e.Street == formData["Street"]
                 && e.PostalCode.Value == formData["PostalCode"]
                 && e.City == formData["City"]
                 && e.UserId == TestData.User.Id
@@ -237,7 +237,7 @@ namespace SupplementStore.Tests.Integration.OrderTests {
                 .WithIsHidden(true);
 
             var formData = new Dictionary<string, string> {
-                { "Address", address.Street },
+                { "Street", address.Street },
                 { "PostalCode", address.PostalCode.Value },
                 { "City", address.City },
                 { "IsAddressToBeSaved", "false" }
@@ -246,7 +246,7 @@ namespace SupplementStore.Tests.Integration.OrderTests {
             await PostAsync("/Order/Create", formData, TestData.User);
 
             TestDocument<Address>.Single(e =>
-                e.Street == formData["Address"]
+                e.Street == formData["Street"]
                 && e.PostalCode.Value == formData["PostalCode"]
                 && e.City == formData["City"]
                 && e.UserId == TestData.User.Id
@@ -268,7 +268,7 @@ namespace SupplementStore.Tests.Integration.OrderTests {
                 .WithIsHidden(false);
 
             var formData = new Dictionary<string, string> {
-                { "Address", address.Street },
+                { "Street", address.Street },
                 { "PostalCode", address.PostalCode.Value },
                 { "City", address.City },
                 { "IsAddressToBeSaved", "false" }
@@ -277,7 +277,7 @@ namespace SupplementStore.Tests.Integration.OrderTests {
             await PostAsync("/Order/Create", formData, TestData.User);
 
             TestDocument<Address>.Single(e =>
-                e.Street == formData["Address"]
+                e.Street == formData["Street"]
                 && e.PostalCode.Value == formData["PostalCode"]
                 && e.City == formData["City"]
                 && e.UserId == TestData.User.Id
@@ -294,7 +294,7 @@ namespace SupplementStore.Tests.Integration.OrderTests {
             basketProducts[1].WithUserId(TestData.User);
 
             var formData = new Dictionary<string, string> {
-                { "Address", "ul. Unii Lubelskiej 11" },
+                { "Street", "ul. Unii Lubelskiej 11" },
                 { "PostalCode", "35-016" },
                 { "City", "Rzeszów" }
             };
@@ -318,7 +318,7 @@ namespace SupplementStore.Tests.Integration.OrderTests {
                 .WithUserId(TestData.User);
 
             var formData = new Dictionary<string, string> {
-                { "Address", "ul. Marii Konopnickiej 11" },
+                { "Street", "ul. Marii Konopnickiej 11" },
                 { "PostalCode", "999-99" },
                 { "City", "Kielce" }
             };
@@ -327,7 +327,7 @@ namespace SupplementStore.Tests.Integration.OrderTests {
 
             TestDocumentApprover.ExamineNoChangesSaved();
             Examine(ContentScheme.Html()
-                .Contains("Address", formData["Address"])
+                .Contains("Street", formData["Street"])
                 .Contains("PostalCode", formData["PostalCode"])
                 .Contains("City", formData["City"]));
         }
@@ -353,7 +353,7 @@ namespace SupplementStore.Tests.Integration.OrderTests {
 
             TestDocument<Order>.None(e => e.UserId == TestData.User.Id);
             Examine(ContentScheme.Html()
-                .Contains("Address", "")
+                .Contains("Street", "")
                 .Contains("PostalCode", formData["PostalCode"])
                 .Contains("City", formData["City"]));
         }
@@ -371,7 +371,7 @@ namespace SupplementStore.Tests.Integration.OrderTests {
                 .WithUserId(TestData.User);
 
             var formData = new Dictionary<string, string> {
-                { "Address", "ul. Adama Mickiewicza 66/43" },
+                { "Street", "ul. Adama Mickiewicza 66/43" },
                 { "City", "Warszawa" }
             };
 
@@ -379,7 +379,7 @@ namespace SupplementStore.Tests.Integration.OrderTests {
 
             TestDocument<Order>.None(e => e.UserId == TestData.User.Id);
             Examine(ContentScheme.Html()
-                .Contains("Address", formData["Address"])
+                .Contains("Street", formData["Street"])
                 .Contains("PostalCode", "")
                 .Contains("City", formData["City"]));
         }
@@ -397,7 +397,7 @@ namespace SupplementStore.Tests.Integration.OrderTests {
                 .WithUserId(TestData.User);
 
             var formData = new Dictionary<string, string> {
-                { "Address", "ul. Dworcowa 33/65" },
+                { "Street", "ul. Dworcowa 33/65" },
                 { "PostalCode", "10-437" }
             };
 
@@ -405,7 +405,7 @@ namespace SupplementStore.Tests.Integration.OrderTests {
 
             TestDocument<Order>.None(e => e.UserId == TestData.User.Id);
             Examine(ContentScheme.Html()
-                .Contains("Address", formData["Address"])
+                .Contains("Street", formData["Street"])
                 .Contains("PostalCode", formData["PostalCode"])
                 .Contains("City", ""));
         }
