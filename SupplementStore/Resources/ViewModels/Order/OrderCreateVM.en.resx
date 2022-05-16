@@ -120,9 +120,6 @@
   <data name="AddressLabel" xml:space="preserve">
     <value>Address</value>
   </data>
-  <data name="AddressRequiredErrorMessage" xml:space="preserve">
-    <value>Address is required.</value>
-  </data>
   <data name="CityLabel" xml:space="preserve">
     <value>City</value>
   </data>
