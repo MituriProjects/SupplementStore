@@ -1,14 +1,12 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace SupplementStore.ViewModels.Support {
+﻿namespace SupplementStore.ViewModels.Support {
 
     public class SendMessageVM {
 
-        [Required(ErrorMessage = "TextRequiredErrorMessage")]
+        [IsRequired(typeof(SendMessageVM))]
         [Label]
         public string Text { get; set; }
 
-        [Required(ErrorMessage = "EmailRequiredErrorMessage")]
+        [IsRequired]
         [Email]
         [Label]
         public string Email { get; set; }
