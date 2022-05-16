@@ -49,7 +49,7 @@ namespace SupplementStore.Controllers {
 
             var order = OrderService.Create(new OrderCreateArgs {
                 UserId = userId,
-                Address = model.Address,
+                Address = model.Street,
                 PostalCode = model.PostalCode,
                 City = model.City,
                 ShouldAddressBeHidden = !model.IsAddressToBeSaved

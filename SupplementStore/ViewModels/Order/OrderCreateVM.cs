@@ -10,7 +10,7 @@ namespace SupplementStore.ViewModels.Order {
 
         [IsRequired(typeof(OrderCreateVM))]
         [Label]
-        public string Address { get; set; }
+        public string Street { get; set; }
 
         [IsRequired]
         [RegularExpression(@"^\d{2}-\d{3}$", ErrorMessage = "PostalCodeRegularExpressionErrorMessage")]
