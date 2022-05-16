@@ -120,9 +120,6 @@
   <data name="CityLabel" xml:space="preserve">
     <value>Miasto</value>
   </data>
-  <data name="CityRequiredErrorMessage" xml:space="preserve">
-    <value>Nazwa miejscowości jest wymagana.</value>
-  </data>
   <data name="PostalCodeLabel" xml:space="preserve">
     <value>Kod pocztowy</value>
   </data>
