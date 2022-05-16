@@ -135,7 +135,4 @@
   <data name="StreetLabel" xml:space="preserve">
     <value>Ulica</value>
   </data>
-  <data name="StreetRequiredErrorMessage" xml:space="preserve">
-    <value>Nazwa ulicy jest wymagana.</value>
-  </data>
 </root>
