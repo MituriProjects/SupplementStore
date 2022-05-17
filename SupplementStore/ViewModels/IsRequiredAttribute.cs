@@ -1,5 +1,7 @@
-﻿using System;
+﻿using Microsoft.Extensions.Localization;
+using System;
 using System.ComponentModel.DataAnnotations;
+using System.Reflection;
 using System.Runtime.CompilerServices;
 
 namespace SupplementStore.ViewModels {
@@ -8,9 +10,21 @@ namespace SupplementStore.ViewModels {
 
         Type Type { get; }
 
-        public IsRequiredAttribute(Type containingType = null, [CallerMemberName]string callerName = null) {
+        public IsRequiredAttribute([CallerFilePath]string filePath = null, [CallerMemberName]string callerName = null) {
 
-            Type = containingType;
+            var assemblyName = Assembly
+                .GetExecutingAssembly()
+                .GetName()
+                .Name;
+
+            var viewModelsPathPiece = assemblyName + "\\ViewModels";
+
+            var typeFullName = filePath
+                .Substring(filePath.IndexOf(viewModelsPathPiece), filePath.LastIndexOf(".") - filePath.IndexOf(viewModelsPathPiece))
+                .Replace("\\", ".");
+
+            Type = Assembly.GetExecutingAssembly().GetType(typeFullName);
+
             ErrorMessage = $"{callerName}RequiredErrorMessage";
         }
 
@@ -26,13 +40,9 @@ namespace SupplementStore.ViewModels {
 
         private string GetErrorMessage(ValidationContext validationContext) {
 
-            var translatorType = Type == null
-                ? typeof(Translator)
-                : typeof(Translator<>).MakeGenericType(Type);
+            var localizer = validationContext.GetService(typeof(IStringLocalizer<>).MakeGenericType(Type)) as IStringLocalizer;
 
-            dynamic translator = validationContext.GetService(translatorType);
-
-            return translator.GetLocalizedText(ErrorMessage);
+            return localizer[ErrorMessage];
         }
     }
 }
