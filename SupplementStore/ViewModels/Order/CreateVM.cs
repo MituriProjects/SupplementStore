@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace SupplementStore.ViewModels.Order {
 
-    public class OrderCreateVM {
+    public class CreateVM {
 
         public IEnumerable<BasketProductDetails> BasketProducts { get; set; }
 
