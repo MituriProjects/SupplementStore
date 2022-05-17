@@ -1,6 +1,5 @@
 ﻿using SupplementStore.Application.Models;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 
 namespace SupplementStore.ViewModels.Order {
 
@@ -13,7 +12,7 @@ namespace SupplementStore.ViewModels.Order {
         public string Street { get; set; }
 
         [IsRequired]
-        [RegularExpression(@"^\d{2}-\d{3}$", ErrorMessage = "PostalCodeRegularExpressionErrorMessage")]
+        [PostalCode]
         [Label]
         public string PostalCode { get; set; }
 
