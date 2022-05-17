@@ -2,7 +2,7 @@
 
     public class SendMessageVM {
 
-        [IsRequired(typeof(SendMessageVM))]
+        [IsRequired]
         [Label]
         public string Text { get; set; }
 
