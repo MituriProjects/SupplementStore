@@ -126,7 +126,4 @@
   <data name="RegularExpressionErrorMessage" xml:space="preserve">
     <value>Kod pocztowy ma niewłaściwy format.</value>
   </data>
-  <data name="StreetLabel" xml:space="preserve">
-    <value>Ulica</value>
-  </data>
 </root>
