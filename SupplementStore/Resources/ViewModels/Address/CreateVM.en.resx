@@ -126,7 +126,4 @@
   <data name="RegularExpressionErrorMessage" xml:space="preserve">
     <value>Postal code has invalid structure.</value>
   </data>
-  <data name="StreetLabel" xml:space="preserve">
-    <value>Street</value>
-  </data>
 </root>
