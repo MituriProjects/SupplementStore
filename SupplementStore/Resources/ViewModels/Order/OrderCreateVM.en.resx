@@ -120,7 +120,4 @@
   <data name="IsAddressToBeSavedLabel" xml:space="preserve">
     <value>Save address</value>
   </data>
-  <data name="PostalCodeRegularExpressionErrorMessage" xml:space="preserve">
-    <value>Postal code has invalid structure.</value>
-  </data>
 </root>
