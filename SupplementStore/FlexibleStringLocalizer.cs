@@ -6,6 +6,13 @@ using System.Linq;
 
 namespace SupplementStore {
 
+    public class FlexibleStringLocalizer<T> : FlexibleStringLocalizer, IStringLocalizer<T> {
+
+        public FlexibleStringLocalizer(IStringLocalizerFactory factory)
+            : base(typeof(T), factory) {
+        }
+    }
+
     public class FlexibleStringLocalizer : IStringLocalizer {
 
         IStringLocalizer DedicatedResourceLocalizer { get; set; }
