@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc.Razor;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Localization;
 using SupplementStore.Controllers.Services;
 using SupplementStore.DependencyResolving;
 using SupplementStore.Infrastructure;
@@ -61,6 +62,8 @@ namespace SupplementStore {
                     return new FlexibleStringLocalizer(type, factory);
                 };
             });
+
+            services.AddTransient(typeof(IStringLocalizer<>), typeof(FlexibleStringLocalizer<>));
 
             ReconfigureServices(services);
         }
