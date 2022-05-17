@@ -132,6 +132,9 @@
   <data name="PostalCodeRequiredErrorMessage" xml:space="preserve">
     <value>Postal code is required.</value>
   </data>
+  <data name="StreetLabel" xml:space="preserve">
+    <value>Street</value>
+  </data>
   <data name="StreetRequiredErrorMessage" xml:space="preserve">
     <value>Street is required.</value>
   </data>
