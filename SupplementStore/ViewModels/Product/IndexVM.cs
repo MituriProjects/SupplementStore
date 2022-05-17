@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace SupplementStore.ViewModels.Product {
 
-    public class ProductIndexVM {
+    public class IndexVM {
 
         public int Skip { get; set; }
 
