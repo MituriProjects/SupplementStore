@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace SupplementStore.ViewModels.Product {
 
-    public class ProductDetailsVM {
+    public class DetailsVM {
 
         public ProductDetails Product { get; set; }
 
