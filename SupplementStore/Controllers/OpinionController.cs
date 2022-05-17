@@ -41,7 +41,7 @@ namespace SupplementStore.Controllers {
             if (productToOpine.IsEmpty)
                 return RedirectToAction(nameof(Index));
 
-            return View(new OpinionCreateVM {
+            return View(new CreateVM {
                 PurchaseId = productToOpine.PurchaseId,
                 ProductName = productToOpine.ProductName,
                 BuyingDate = productToOpine.BuyingDate
@@ -49,7 +49,7 @@ namespace SupplementStore.Controllers {
         }
 
         [HttpPost]
-        public IActionResult Create(OpinionCreateVM model) {
+        public IActionResult Create(CreateVM model) {
 
             OpinionService.Create(new OpinionCreateArgs {
                 PurchaseId = model.PurchaseId,

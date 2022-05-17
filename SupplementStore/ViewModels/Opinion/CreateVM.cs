@@ -2,7 +2,7 @@
 
 namespace SupplementStore.ViewModels.Opinion {
 
-    public class OpinionCreateVM {
+    public class CreateVM {
 
         public string PurchaseId { get; set; }
 
