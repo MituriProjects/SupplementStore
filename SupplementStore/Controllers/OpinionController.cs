@@ -26,7 +26,7 @@ namespace SupplementStore.Controllers {
 
             var userId = UserManager.GetUserId(HttpContext.User);
 
-            return View(new OpinionIndexVM {
+            return View(new IndexVM {
                 IsProductToOpineWaiting = OpinionService.LoadProductToOpine(userId).IsEmpty == false,
                 Opinions = OpinionService.LoadMany(userId)
             });

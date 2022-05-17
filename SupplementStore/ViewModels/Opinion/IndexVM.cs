@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace SupplementStore.ViewModels.Opinion {
 
-    public class OpinionIndexVM {
+    public class IndexVM {
 
         public bool IsProductToOpineWaiting { get; set; }
 
