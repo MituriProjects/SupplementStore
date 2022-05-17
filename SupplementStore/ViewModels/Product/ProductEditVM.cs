@@ -6,11 +6,11 @@ namespace SupplementStore.ViewModels.Product {
 
         public string Id { get; set; }
 
-        [IsRequired(typeof(ProductEditVM))]
+        [IsRequired]
         [Label]
         public string Name { get; set; }
 
-        [IsRequired(typeof(ProductEditVM))]
+        [IsRequired]
         [Range(0.01, double.MaxValue, ErrorMessage = "PriceAboveZeroErrorMessage")]
         [Label]
         public decimal? Price { get; set; } = 0;
