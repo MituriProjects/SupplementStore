@@ -126,6 +126,9 @@
   <data name="EmailErrorMessage" xml:space="preserve">
     <value>E-mail jest błędny.</value>
   </data>
+  <data name="EmailLabel" xml:space="preserve">
+    <value>E-mail</value>
+  </data>
   <data name="EmailRequiredErrorMessage" xml:space="preserve">
     <value>E-mail jest wymagany.</value>
   </data>
