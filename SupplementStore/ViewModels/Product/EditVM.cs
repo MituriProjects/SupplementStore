@@ -1,6 +1,6 @@
 ﻿namespace SupplementStore.ViewModels.Product {
 
-    public class ProductEditVM {
+    public class EditVM {
 
         public string Id { get; set; }
 

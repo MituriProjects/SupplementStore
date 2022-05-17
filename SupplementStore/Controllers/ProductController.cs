@@ -73,7 +73,7 @@ namespace SupplementStore.Controllers {
         [Authorize(Roles = "Admin")]
         public IActionResult Create() {
 
-            return View("Edit", new ProductEditVM());
+            return View("Edit", new EditVM());
         }
 
         [Authorize(Roles = "Admin")]
@@ -81,7 +81,7 @@ namespace SupplementStore.Controllers {
 
             var product = ProductService.Load(id);
 
-            return View(new ProductEditVM {
+            return View(new EditVM {
                 Id = product.Id,
                 Name = product.Name,
                 Price = product.Price
@@ -91,7 +91,7 @@ namespace SupplementStore.Controllers {
         [HttpPost]
         [Authorize(Roles = "Admin")]
         [ReturnToViewOnModelInvalid]
-        public IActionResult Edit(ProductEditVM model) {
+        public IActionResult Edit(EditVM model) {
 
             if (string.IsNullOrEmpty(model.Id)) {
 
