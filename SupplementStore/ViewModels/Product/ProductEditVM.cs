@@ -1,6 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace SupplementStore.ViewModels.Product {
+﻿namespace SupplementStore.ViewModels.Product {
 
     public class ProductEditVM {
 
@@ -11,7 +9,7 @@ namespace SupplementStore.ViewModels.Product {
         public string Name { get; set; }
 
         [IsRequired]
-        [Range(0.01, double.MaxValue, ErrorMessage = "PriceAboveZeroErrorMessage")]
+        [Price]
         [Label]
         public decimal? Price { get; set; } = 0;
     }
