@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ViewComponents;
+using Microsoft.Extensions.Localization;
 using SupplementStore.Controllers.Filters;
 using SupplementStore.ViewModels.Account;
 using System.Threading.Tasks;
@@ -15,12 +16,16 @@ namespace SupplementStore.Controllers {
 
         SignInManager<IdentityUser> SignInManager { get; }
 
+        IStringLocalizer<AccountController> Localizer { get; }
+
         public AccountController(
             UserManager<IdentityUser> userManager,
-            SignInManager<IdentityUser> signInManager) {
+            SignInManager<IdentityUser> signInManager,
+            IStringLocalizer<AccountController> stringLocalizer) {
 
             UserManager = userManager;
             SignInManager = signInManager;
+            Localizer = stringLocalizer;
         }
 
         public IViewComponentResult Invoke() {
@@ -60,7 +65,7 @@ namespace SupplementStore.Controllers {
                     }
                 }
 
-                AddModelError(nameof(LoginVM.Email), "Invalid user or password");
+                AddModelError(nameof(LoginVM.Email), Localizer["LoginAttemptErrorMessage"]);
             }
 
             return View(details);
