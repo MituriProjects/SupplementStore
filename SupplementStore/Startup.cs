@@ -54,7 +54,13 @@ namespace SupplementStore {
                 options.ModelBindingMessageProvider.SetAttemptedValueIsInvalidAccessor((s1, s2) => $"Wartość '{s1}' jest nieprawidłowa dla pola '{s2}'");
 
             }).AddViewLocalization(LanguageViewLocationExpanderFormat.Suffix)
-            .AddDataAnnotationsLocalization();
+            .AddDataAnnotationsLocalization(options => {
+
+                options.DataAnnotationLocalizerProvider = (type, factory) => {
+
+                    return new FlexibleStringLocalizer(type, factory);
+                };
+            });
 
             ReconfigureServices(services);
         }
