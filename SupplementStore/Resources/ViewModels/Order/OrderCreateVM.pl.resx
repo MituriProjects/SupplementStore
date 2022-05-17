@@ -123,9 +123,6 @@
   <data name="IsAddressToBeSavedLabel" xml:space="preserve">
     <value>Zapisz adres</value>
   </data>
-  <data name="PostalCodeLabel" xml:space="preserve">
-    <value>Kod pocztowy</value>
-  </data>
   <data name="PostalCodeRegularExpressionErrorMessage" xml:space="preserve">
     <value>Kod pocztowy ma niewłaściwy format.</value>
   </data>
