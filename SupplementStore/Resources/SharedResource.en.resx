@@ -132,6 +132,9 @@
   <data name="EmailRequiredErrorMessage" xml:space="preserve">
     <value>E-mail is required.</value>
   </data>
+  <data name="InvalidPostalCodeErrorMessage" xml:space="preserve">
+    <value>Postal code has invalid structure.</value>
+  </data>
   <data name="PasswordLabel" xml:space="preserve">
     <value>Password</value>
   </data>
