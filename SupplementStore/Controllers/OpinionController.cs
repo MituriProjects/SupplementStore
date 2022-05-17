@@ -65,7 +65,7 @@ namespace SupplementStore.Controllers {
 
             var opinion = OpinionService.Load(id);
 
-            return View(new OpinionEditVM {
+            return View(new EditVM {
                 Id = opinion.Id,
                 Text = opinion.Text
             });
@@ -73,7 +73,7 @@ namespace SupplementStore.Controllers {
 
         [HttpPost]
         [Authorize(Roles = "Admin")]
-        public IActionResult Edit(OpinionEditVM model) {
+        public IActionResult Edit(EditVM model) {
 
             OpinionService.UpdateText(model.Id, model.Text);
 

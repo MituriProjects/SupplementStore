@@ -1,6 +1,6 @@
 ﻿namespace SupplementStore.ViewModels.Opinion {
 
-    public class OpinionEditVM {
+    public class EditVM {
 
         public string Id { get; set; }
 
