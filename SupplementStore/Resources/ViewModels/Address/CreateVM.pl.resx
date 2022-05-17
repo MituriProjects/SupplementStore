@@ -120,9 +120,6 @@
   <data name="CityLabel" xml:space="preserve">
     <value>Miasto</value>
   </data>
-  <data name="PostalCodeLabel" xml:space="preserve">
-    <value>Kod pocztowy</value>
-  </data>
   <data name="RegularExpressionErrorMessage" xml:space="preserve">
     <value>Kod pocztowy ma niewłaściwy format.</value>
   </data>
