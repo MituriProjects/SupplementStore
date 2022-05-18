@@ -117,25 +117,7 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="CityLabel" xml:space="preserve">
-    <value>Miasto</value>
-  </data>
-  <data name="CityRequiredErrorMessage" xml:space="preserve">
-    <value>Nazwa miejscowości jest wymagana.</value>
-  </data>
-  <data name="PostalCodeLabel" xml:space="preserve">
-    <value>Kod pocztowy</value>
-  </data>
-  <data name="PostalCodeRequiredErrorMessage" xml:space="preserve">
-    <value>Kod pocztowy jest wymagany.</value>
-  </data>
-  <data name="RegularExpressionErrorMessage" xml:space="preserve">
-    <value>Kod pocztowy ma niewłaściwy format.</value>
-  </data>
-  <data name="StreetLabel" xml:space="preserve">
-    <value>Ulica</value>
-  </data>
-  <data name="StreetRequiredErrorMessage" xml:space="preserve">
-    <value>Nazwa ulicy jest wymagana.</value>
+  <data name="LoginAttemptErrorMessage" xml:space="preserve">
+    <value>Nieprawidłowa nazwa użytkownika lub hasło.</value>
   </data>
 </root>

@@ -8,7 +8,7 @@ using SupplementStore.ViewModels.Opinion;
 namespace SupplementStore.Controllers {
 
     [Authorize]
-    public class OpinionController : Controller {
+    public class OpinionController : AppControllerBase {
 
         UserManager<IdentityUser> UserManager { get; }
 
@@ -26,7 +26,7 @@ namespace SupplementStore.Controllers {
 
             var userId = UserManager.GetUserId(HttpContext.User);
 
-            return View(new OpinionIndexVM {
+            return View(new IndexVM {
                 IsProductToOpineWaiting = OpinionService.LoadProductToOpine(userId).IsEmpty == false,
                 Opinions = OpinionService.LoadMany(userId)
             });
@@ -41,7 +41,7 @@ namespace SupplementStore.Controllers {
             if (productToOpine.IsEmpty)
                 return RedirectToAction(nameof(Index));
 
-            return View(new OpinionCreateVM {
+            return View(new CreateVM {
                 PurchaseId = productToOpine.PurchaseId,
                 ProductName = productToOpine.ProductName,
                 BuyingDate = productToOpine.BuyingDate
@@ -49,7 +49,7 @@ namespace SupplementStore.Controllers {
         }
 
         [HttpPost]
-        public IActionResult Create(OpinionCreateVM model) {
+        public IActionResult Create(CreateVM model) {
 
             OpinionService.Create(new OpinionCreateArgs {
                 PurchaseId = model.PurchaseId,
@@ -65,7 +65,7 @@ namespace SupplementStore.Controllers {
 
             var opinion = OpinionService.Load(id);
 
-            return View(new OpinionEditVM {
+            return View(new EditVM {
                 Id = opinion.Id,
                 Text = opinion.Text
             });
@@ -73,13 +73,13 @@ namespace SupplementStore.Controllers {
 
         [HttpPost]
         [Authorize(Roles = "Admin")]
-        public IActionResult Edit(OpinionEditVM model) {
+        public IActionResult Edit(EditVM model) {
 
             OpinionService.UpdateText(model.Id, model.Text);
 
             var product = OpinionService.LoadOpinionProduct(model.Id);
 
-            return RedirectToAction("Details", "Product", new { product.Id });
+            return RedirectToAction<ProductController>(nameof(ProductController.Details), new { product.Id });
         }
 
         [HttpPost]
@@ -90,7 +90,7 @@ namespace SupplementStore.Controllers {
 
             var product = OpinionService.LoadOpinionProduct(id);
 
-            return RedirectToAction("Details", "Product", new { product.Id });
+            return RedirectToAction<ProductController>(nameof(ProductController.Details), new { product.Id });
         }
 
         [HttpPost]
@@ -99,7 +99,7 @@ namespace SupplementStore.Controllers {
 
             OpinionService.Reveal(id);
 
-            return RedirectToAction("HiddenOpinions", "Admin");
+            return RedirectToAction<AdminController>(nameof(AdminController.HiddenOpinions));
         }
     }
 }

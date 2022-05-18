@@ -3,11 +3,12 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using SupplementStore.Application.Args;
 using SupplementStore.Application.Services;
+using SupplementStore.Controllers.Filters;
 using SupplementStore.ViewModels.Support;
 
 namespace SupplementStore.Controllers {
 
-    public class SupportController : Controller {
+    public class SupportController : AppControllerBase {
 
         UserManager<IdentityUser> UserManager { get; }
 
@@ -27,10 +28,8 @@ namespace SupplementStore.Controllers {
         }
 
         [HttpPost]
+        [ReturnToViewOnModelInvalid]
         public IActionResult SendMessage(SendMessageVM model) {
-
-            if (ModelState.IsValid == false)
-                return View(model);
 
             string userId = UserManager.GetUserId(HttpContext.User)
                 ?? UserManager.FindByEmailAsync(model.Email).Result?.Id;
@@ -41,10 +40,7 @@ namespace SupplementStore.Controllers {
                 SenderEmail = model.Email
             });
 
-            if (result.Success)
-                TempData["SuccessMessage"] = "SendMessageSuccess";
-            else
-                TempData["FailureMessage"] = "SendMessageFailure";
+            SetResultMessage(result.Success);
 
             return RedirectToAction(nameof(SendMessage));
         }

@@ -2,13 +2,11 @@
 
 namespace SupplementStore.Domain.Messages {
 
-    public class Message : Entity {
+    public class Message : UserEntity {
 
         public MessageId MessageId { get; private set; } = new MessageId(Guid.Empty);
 
         public string SenderEmail { get; set; }
-
-        public string UserId { get; set; }
 
         public string Text { get; set; }
 

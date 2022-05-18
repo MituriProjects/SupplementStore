@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using SupplementStore.Application.Args;
 using SupplementStore.Application.Models;
 using SupplementStore.Application.Services;
+using SupplementStore.Controllers.Filters;
 using SupplementStore.Controllers.Services;
 using SupplementStore.ViewModels.Product;
 using System;
@@ -12,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace SupplementStore.Controllers {
 
-    public class ProductController : Controller {
+    public class ProductController : AppControllerBase {
 
         IProductService ProductService { get; }
 
@@ -30,9 +31,9 @@ namespace SupplementStore.Controllers {
             FileWriter = fileWriter;
         }
 
-        public IActionResult Index(ProductIndexVM model) {
+        public IActionResult Index(IndexVM model) {
 
-            model = model ?? new ProductIndexVM();
+            model = model ?? new IndexVM();
 
             var loadedProducts = ProductService.LoadMany(new ProductsProvideArgs {
                 Skip = model.Skip,
@@ -62,7 +63,7 @@ namespace SupplementStore.Controllers {
             if (product == null)
                 return RedirectToAction("Index");
 
-            return View(new ProductDetailsVM {
+            return View(new DetailsVM {
                 Product = product,
                 Opinions = ProductService.LoadOpinions(product.Id),
                 Images = ProductImageService.LoadMany(product.Id).OrderByDescending(e => e.IsMain).Select(e => e.Name)
@@ -72,7 +73,7 @@ namespace SupplementStore.Controllers {
         [Authorize(Roles = "Admin")]
         public IActionResult Create() {
 
-            return View("Edit", new ProductEditVM());
+            return View("Edit", new EditVM());
         }
 
         [Authorize(Roles = "Admin")]
@@ -80,7 +81,7 @@ namespace SupplementStore.Controllers {
 
             var product = ProductService.Load(id);
 
-            return View(new ProductEditVM {
+            return View(new EditVM {
                 Id = product.Id,
                 Name = product.Name,
                 Price = product.Price
@@ -89,10 +90,8 @@ namespace SupplementStore.Controllers {
 
         [HttpPost]
         [Authorize(Roles = "Admin")]
-        public IActionResult Edit(ProductEditVM model) {
-
-            if (ModelState.IsValid == false)
-                return View(model);
+        [ReturnToViewOnModelInvalid]
+        public IActionResult Edit(EditVM model) {
 
             if (string.IsNullOrEmpty(model.Id)) {
 

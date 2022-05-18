@@ -4,14 +4,14 @@ namespace SupplementStore.ViewModels.Account {
 
     public class LoginVM {
 
-        [Required(ErrorMessage = "EmailRequiredErrorMessage")]
-        [EmailAddress]
-        [Display(Name = "EmailLabel")]
+        [IsRequired]
+        [Email]
+        [Label]
         public string Email { get; set; }
 
-        [Required(ErrorMessage = "PasswordRequiredErrorMessage")]
+        [IsRequired]
         [UIHint("password")]
-        [Display(Name = "PasswordLabel")]
+        [Label]
         public string Password { get; set; }
     }
 }

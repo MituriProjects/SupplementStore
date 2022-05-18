@@ -2,24 +2,30 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ViewComponents;
+using Microsoft.Extensions.Localization;
+using SupplementStore.Controllers.Filters;
 using SupplementStore.ViewModels.Account;
 using System.Threading.Tasks;
 
 namespace SupplementStore.Controllers {
 
     [ViewComponent(Name = "Account")]
-    public class AccountController : Controller {
+    public class AccountController : AppControllerBase {
 
         UserManager<IdentityUser> UserManager { get; }
 
         SignInManager<IdentityUser> SignInManager { get; }
 
+        IStringLocalizer<AccountController> Localizer { get; }
+
         public AccountController(
             UserManager<IdentityUser> userManager,
-            SignInManager<IdentityUser> signInManager) {
+            SignInManager<IdentityUser> signInManager,
+            IStringLocalizer<AccountController> stringLocalizer) {
 
             UserManager = userManager;
             SignInManager = signInManager;
+            Localizer = stringLocalizer;
         }
 
         public IViewComponentResult Invoke() {
@@ -33,17 +39,17 @@ namespace SupplementStore.Controllers {
             return View();
         }
 
+        [PreserveReturnUrl]
         public IActionResult Login(string returnUrl) {
-
-            ViewBag.ReturnUrl = returnUrl;
 
             return View();
         }
 
         [HttpPost]
+        [PreserveReturnUrl]
         public async Task<IActionResult> Login(LoginVM details, string returnUrl) {
 
-            if (ModelState.IsValid) {
+            if (IsModelValid) {
 
                 IdentityUser user = await UserManager.FindByEmailAsync(details.Email);
 
@@ -59,23 +65,23 @@ namespace SupplementStore.Controllers {
                     }
                 }
 
-                ModelState.AddModelError(nameof(LoginVM.Email), "Invalid user or password");
+                AddModelError(nameof(LoginVM.Email), Localizer["LoginAttemptErrorMessage"]);
             }
 
             return View(details);
         }
 
+        [PreserveReturnUrl]
         public IActionResult Register(string returnUrl) {
-
-            ViewBag.ReturnUrl = returnUrl;
 
             return View();
         }
 
         [HttpPost]
+        [PreserveReturnUrl]
         public async Task<IActionResult> Register(RegisterVM model, string returnUrl) {
 
-            if (ModelState.IsValid) {
+            if (IsModelValid) {
 
                 IdentityUser user = new IdentityUser {
                     UserName = model.Email,
@@ -92,7 +98,7 @@ namespace SupplementStore.Controllers {
 
                     foreach (IdentityError error in result.Errors) {
 
-                        ModelState.AddModelError("", error.Description);
+                        AddModelError("", error.Description);
                     }
                 }
             }

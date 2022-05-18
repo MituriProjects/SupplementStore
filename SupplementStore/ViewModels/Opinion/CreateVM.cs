@@ -1,9 +1,8 @@
 ﻿using System;
-using System.ComponentModel.DataAnnotations;
 
 namespace SupplementStore.ViewModels.Opinion {
 
-    public class OpinionCreateVM {
+    public class CreateVM {
 
         public string PurchaseId { get; set; }
 
@@ -11,7 +10,7 @@ namespace SupplementStore.ViewModels.Opinion {
 
         public DateTime BuyingDate { get; set; }
 
-        [Display(Name = "OpinionTextLabel")]
+        [Label]
         public string Text { get; set; }
 
         public int Stars { get; set; } = 5;

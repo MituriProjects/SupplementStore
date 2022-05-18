@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 namespace SupplementStore.Controllers {
 
     [Authorize(Roles = "Owner")]
-    public class RoleController : Controller {
+    public class RoleController : AppControllerBase {
 
         RoleManager<IdentityRole> RoleManager { get; }
 
@@ -37,11 +37,11 @@ namespace SupplementStore.Controllers {
         public async Task<IActionResult> Create(string roleName) {
 
             if (roleName == null)
-                return RedirectToAction("Index");
+                return RedirectToAction(nameof(Index));
 
             await RoleManager.CreateAsync(new IdentityRole(roleName));
 
-            return RedirectToAction("Index");
+            return RedirectToAction(nameof(Index));
         }
 
         public async Task<IActionResult> Users() {

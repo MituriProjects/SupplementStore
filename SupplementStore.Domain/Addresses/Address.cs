@@ -2,11 +2,9 @@
 
 namespace SupplementStore.Domain.Addresses {
 
-    public class Address : Entity {
+    public class Address : UserEntity {
 
         public AddressId AddressId { get; private set; } = new AddressId(Guid.Empty);
-
-        public string UserId { get; set; }
 
         public string Street { get; set; }
 

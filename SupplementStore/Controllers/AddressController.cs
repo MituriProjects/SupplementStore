@@ -3,12 +3,13 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using SupplementStore.Application.Args;
 using SupplementStore.Application.Services;
+using SupplementStore.Controllers.Filters;
 using SupplementStore.ViewModels.Address;
 
 namespace SupplementStore.Controllers {
 
     [Authorize]
-    public class AddressController : Controller {
+    public class AddressController : AppControllerBase {
 
         UserManager<IdentityUser> UserManager { get; }
 
@@ -35,12 +36,8 @@ namespace SupplementStore.Controllers {
         }
 
         [HttpPost]
+        [ReturnToViewOnModelInvalid]
         public IActionResult Create(CreateVM model) {
-
-            if (ModelState.IsValid == false) {
-
-                return View(model);
-            }
 
             var userId = UserManager.GetUserId(HttpContext.User);
 
@@ -70,10 +67,8 @@ namespace SupplementStore.Controllers {
         }
 
         [HttpPost]
+        [ReturnToViewOnModelInvalid]
         public IActionResult Edit(EditVM model) {
-
-            if (ModelState.IsValid == false)
-                return View(model);
 
             var userId = UserManager.GetUserId(HttpContext.User);
 

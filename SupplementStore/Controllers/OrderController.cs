@@ -8,7 +8,7 @@ using SupplementStore.ViewModels.Order;
 namespace SupplementStore.Controllers {
 
     [Authorize]
-    public class OrderController : Controller {
+    public class OrderController : AppControllerBase {
 
         UserManager<IdentityUser> UserManager { get; }
 
@@ -30,17 +30,17 @@ namespace SupplementStore.Controllers {
 
             var userId = UserManager.GetUserId(HttpContext.User);
 
-            return View(new OrderCreateVM {
+            return View(new CreateVM {
                 BasketProducts = BasketProductService.LoadMany(userId)
             });
         }
 
         [HttpPost]
-        public IActionResult Create(OrderCreateVM model) {
+        public IActionResult Create(CreateVM model) {
 
             var userId = UserManager.GetUserId(HttpContext.User);
 
-            if (ModelState.IsValid == false) {
+            if (IsModelInvalid) {
 
                 model.BasketProducts = BasketProductService.LoadMany(userId);
 
@@ -49,7 +49,7 @@ namespace SupplementStore.Controllers {
 
             var order = OrderService.Create(new OrderCreateArgs {
                 UserId = userId,
-                Address = model.Address,
+                Street = model.Street,
                 PostalCode = model.PostalCode,
                 City = model.City,
                 ShouldAddressBeHidden = !model.IsAddressToBeSaved
@@ -57,7 +57,7 @@ namespace SupplementStore.Controllers {
 
             if (order == null) {
 
-                ModelState.AddModelError(string.Empty, "The creation of an order failed.");
+                AddModelError(string.Empty, "The creation of an order failed.");
 
                 model.BasketProducts = BasketProductService.LoadMany(userId);
 

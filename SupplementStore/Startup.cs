@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc.Razor;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Localization;
 using SupplementStore.Controllers.Services;
 using SupplementStore.DependencyResolving;
 using SupplementStore.Infrastructure;
@@ -42,18 +43,26 @@ namespace SupplementStore {
             services.AddTransient<AdminManager>();
             services.AddTransient<IFileManager, FileManager>();
 
-            services.AddSingleton<Translator>();
-
             services.AddLocalization(options => options.ResourcesPath = "Resources");
 
             services.AddMvc(options => {
 
                 options.Filters.Add(new AutoValidateAntiforgeryTokenAttribute());
 
-                options.ModelBindingMessageProvider.SetAttemptedValueIsInvalidAccessor((s1, s2) => $"Wartość '{s1}' jest nieprawidłowa dla pola '{s2}'");
+                var localizer = services.BuildServiceProvider().GetService(typeof(IStringLocalizer<SharedResource>)) as IStringLocalizer;
+
+                options.ModelBindingMessageProvider.SetAttemptedValueIsInvalidAccessor((s1, s2) => string.Format(localizer["AttemptedValueIsInvalidAccessor"], s1, s2));
 
             }).AddViewLocalization(LanguageViewLocationExpanderFormat.Suffix)
-            .AddDataAnnotationsLocalization();
+            .AddDataAnnotationsLocalization(options => {
+
+                options.DataAnnotationLocalizerProvider = (type, factory) => {
+
+                    return new FlexibleStringLocalizer(type, factory);
+                };
+            });
+
+            services.AddTransient(typeof(IStringLocalizer<>), typeof(FlexibleStringLocalizer<>));
 
             ReconfigureServices(services);
         }
@@ -61,7 +70,7 @@ namespace SupplementStore {
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env) {
 
-            var supportedCultures = new[] { "en", "pl" };
+            var supportedCultures = new[] { "pl", "en" };
             var localizationOptions = new RequestLocalizationOptions()
                 .SetDefaultCulture(supportedCultures[0])
                 .AddSupportedCultures(supportedCultures)

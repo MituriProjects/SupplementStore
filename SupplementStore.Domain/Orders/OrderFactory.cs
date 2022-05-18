@@ -38,13 +38,13 @@ namespace SupplementStore.Domain.Orders {
 
         private Address ManageAddress(OrderFactoryArgs args) {
 
-            var address = AddressRepository.FindBy(new UserWholeAddressFilter(args.UserId, args.Address, new PostalCode(args.PostalCode), args.City));
+            var address = AddressRepository.FindBy(new UserWholeAddressFilter(args.UserId, args.Street, new PostalCode(args.PostalCode), args.City));
 
             if (address == null) {
 
                 address = new Address {
                     UserId = args.UserId,
-                    Street = args.Address,
+                    Street = args.Street,
                     PostalCode = new PostalCode(args.PostalCode),
                     City = args.City,
                     IsHidden = args.ShouldAddressBeHidden

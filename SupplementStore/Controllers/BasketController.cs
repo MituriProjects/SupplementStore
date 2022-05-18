@@ -6,7 +6,7 @@ using SupplementStore.Application.Services;
 namespace SupplementStore.Controllers {
 
     [Authorize]
-    public class BasketController : Controller {
+    public class BasketController : AppControllerBase {
 
         UserManager<IdentityUser> UserManager { get; }
 

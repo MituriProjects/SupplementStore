@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace SupplementStore.Controllers {
 
-    public class OwnerController : Controller {
+    public class OwnerController : AppControllerBase {
 
         UserManager<IdentityUser> UserManager { get; }
 

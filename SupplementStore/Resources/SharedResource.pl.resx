@@ -117,7 +117,43 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="AttemptedValueIsInvalidAccessor" xml:space="preserve">
+    <value>Wartość '{0}' jest nieprawidłowa dla pola '{1}'.</value>
+  </data>
+  <data name="CityLabel" xml:space="preserve">
+    <value>Miejscowość</value>
+  </data>
+  <data name="CityRequiredErrorMessage" xml:space="preserve">
+    <value>Nazwa miejscowości jest wymagana.</value>
+  </data>
   <data name="EmailErrorMessage" xml:space="preserve">
     <value>E-mail jest błędny.</value>
+  </data>
+  <data name="EmailLabel" xml:space="preserve">
+    <value>E-mail</value>
+  </data>
+  <data name="EmailRequiredErrorMessage" xml:space="preserve">
+    <value>E-mail jest wymagany.</value>
+  </data>
+  <data name="InvalidPostalCodeErrorMessage" xml:space="preserve">
+    <value>Kod pocztowy ma niewłaściwy format.</value>
+  </data>
+  <data name="PasswordLabel" xml:space="preserve">
+    <value>Hasło</value>
+  </data>
+  <data name="PasswordRequiredErrorMessage" xml:space="preserve">
+    <value>Hasło jest wymagane.</value>
+  </data>
+  <data name="PostalCodeLabel" xml:space="preserve">
+    <value>Kod pocztowy</value>
+  </data>
+  <data name="PostalCodeRequiredErrorMessage" xml:space="preserve">
+    <value>Kod pocztowy jest wymagany.</value>
+  </data>
+  <data name="StreetLabel" xml:space="preserve">
+    <value>Ulica</value>
+  </data>
+  <data name="StreetRequiredErrorMessage" xml:space="preserve">
+    <value>Nazwa ulicy jest wymagana.</value>
   </data>
 </root>
