@@ -3,11 +3,9 @@ using System;
 
 namespace SupplementStore.Domain.Wishes {
 
-    public class Wish : Entity {
+    public class Wish : UserEntity {
 
         WishId WishId { get; set; } = new WishId(Guid.Empty);
-
-        public string UserId { get; set; }
 
         Guid Product_Id {
             get => ProductId.Id;
