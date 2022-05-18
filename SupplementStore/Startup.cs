@@ -49,7 +49,9 @@ namespace SupplementStore {
 
                 options.Filters.Add(new AutoValidateAntiforgeryTokenAttribute());
 
-                options.ModelBindingMessageProvider.SetAttemptedValueIsInvalidAccessor((s1, s2) => $"Wartość '{s1}' jest nieprawidłowa dla pola '{s2}'");
+                var localizer = services.BuildServiceProvider().GetService(typeof(IStringLocalizer<SharedResource>)) as IStringLocalizer;
+
+                options.ModelBindingMessageProvider.SetAttemptedValueIsInvalidAccessor((s1, s2) => string.Format(localizer["AttemptedValueIsInvalidAccessor"], s1, s2));
 
             }).AddViewLocalization(LanguageViewLocationExpanderFormat.Suffix)
             .AddDataAnnotationsLocalization(options => {
