@@ -3,11 +3,9 @@ using System;
 
 namespace SupplementStore.Domain.Orders {
 
-    public class Order : Entity {
+    public class Order : UserEntity {
 
         public OrderId OrderId { get; private set; } = new OrderId(Guid.Empty);
-
-        public string UserId { get; set; }
 
         Guid Address_Id {
             get => AddressId.Id;
