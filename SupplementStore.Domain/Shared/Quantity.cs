@@ -23,7 +23,7 @@ namespace SupplementStore.Domain.Shared {
         private void Validate() {
 
             if (Value <= 0)
-                throw new InvalidStateException($"A basket product's quantity has to be above zero. Current value: {Value};");
+                throw new InvalidStateException($"Quantity has to be above zero. Current value: {Value};");
         }
     }
 }
