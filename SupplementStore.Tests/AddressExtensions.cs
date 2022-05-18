@@ -1,16 +1,8 @@
-﻿using Microsoft.AspNetCore.Identity;
-using SupplementStore.Domain.Addresses;
+﻿using SupplementStore.Domain.Addresses;
 
 namespace SupplementStore.Tests {
 
     static class AddressExtensions {
-
-        public static Address WithUserId(this Address address, IdentityUser user) {
-
-            address.UserId = user.Id;
-
-            return address;
-        }
 
         public static Address WithStreet(this Address address, string street) {
 
