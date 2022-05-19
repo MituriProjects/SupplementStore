@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Localization;
 using Microsoft.AspNetCore.Mvc.Razor;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -63,6 +64,7 @@ namespace SupplementStore {
             });
 
             services.AddTransient(typeof(IStringLocalizer<>), typeof(FlexibleStringLocalizer<>));
+            services.AddTransient<IViewLocalizer, FlexibleViewLocalizer>();
 
             ReconfigureServices(services);
         }
