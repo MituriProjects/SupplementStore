@@ -2,6 +2,12 @@
 
 <environment exclude="Testing">
 
+    @await Html.PartialAsync("_FilterSection", new FilterSectionVM {
+        Page = Model.Page,
+        ControllerName = "Support",
+        ActionName = "MessageList"
+    })
+
     @foreach (var message in Model.Messages) {
 
         <div class="bg-light m-3 p-2 w-25">
