@@ -46,9 +46,19 @@ namespace SupplementStore.Controllers {
         }
 
         [Authorize(Roles = "Admin")]
-        public IActionResult MessageList() {
+        public IActionResult MessageList(MessageListVM model) {
 
-            return View(MessageService.LoadMany());
+            model = model ?? new MessageListVM();
+
+            var messageListResult = MessageService.LoadMany(new MessageListArgs {
+                Skip = model.Page.Skip,
+                Take = model.Page.Take
+            });
+
+            model.Page.Count = messageListResult.AllMessagesCount;
+            model.Messages = messageListResult.Messages;
+
+            return View(model);
         }
     }
 }
