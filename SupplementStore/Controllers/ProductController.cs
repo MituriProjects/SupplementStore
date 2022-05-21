@@ -36,11 +36,11 @@ namespace SupplementStore.Controllers {
             model = model ?? new IndexVM();
 
             var loadedProducts = ProductService.LoadMany(new ProductsProvideArgs {
-                Skip = model.Skip,
-                Take = model.Take
+                Skip = model.Page.Skip,
+                Take = model.Page.Take
             });
 
-            model.AllProductsCount = loadedProducts.AllProductsCount;
+            model.Page.Count = loadedProducts.AllProductsCount;
             model.Products = loadedProducts.Products;
 
             foreach (var product in model.Products) {
