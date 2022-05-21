@@ -1,0 +1,29 @@
+﻿@model FilterSectionVM
+
+<form asp-controller="@Model.ControllerName" asp-action="@Model.ActionName" class="d-inline-block mx-2">
+
+    <select asp-for="Page.Take" class="form-select d-inline-block m-2" style="width:100px">
+        <option>10</option>
+        <option>20</option>
+        <option>50</option>
+    </select>
+
+    <button class="btn btn-outline-primary mb-1" type="submit">@Localizer["ApplyFiltersButtonText"]</button>
+
+</form>
+
+<div class="mx-4 d-inline-block">
+
+    @for (int i = 0; i < Math.Ceiling((double)Model.Page.Count / Model.Page.Take); i++) {
+
+        if (Model.Page.Take * i == Model.Page.Skip) {
+
+            <a asp-controller="Support" asp-action="MessageList" asp-route-page.skip="@(Model.Page.Take * i)" asp-route-page.take="@Model.Page.Take" class="btn btn-primary m-1 disabled">@(i + 1)</a>
+        }
+        else {
+
+            <a asp-controller="Support" asp-action="MessageList" asp-route-page.skip="@(Model.Page.Take * i)" asp-route-page.take="@Model.Page.Take" class="btn btn-outline-primary m-1">@(i + 1)</a>
+        }
+    }
+
+</div>
