@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using SupplementStore.Application.Args;
 using SupplementStore.Application.Services;
 using SupplementStore.ViewModels.Admin;
 using System.Collections.Generic;
@@ -33,21 +34,26 @@ namespace SupplementStore.Controllers {
             return View();
         }
 
-        public async Task<IActionResult> Orders() {
+        public async Task<IActionResult> Orders(OrdersVM model) {
 
-            var orderDetails = OrderService.LoadMany();
+            model = model ?? new OrdersVM();
 
-            Dictionary<string, string> UserEmails = new Dictionary<string, string>();
+            var orderListResult = OrderService.LoadMany(new OrderListArgs {
+                Skip = model.Page.Skip,
+                Take = model.Page.Take
+            });
 
-            foreach (var userId in orderDetails.Select(e => e.UserId).Distinct()) {
+            model.Page.Count = orderListResult.AllOrdersCount;
+            model.OrderDetails = orderListResult.Orders;
 
-                UserEmails[userId] = (await UserManager.FindByIdAsync(userId)).Email;
+            model.UserEmails.Clear();
+
+            foreach (var userId in orderListResult.Orders.Select(e => e.UserId).Distinct()) {
+
+                model.UserEmails[userId] = (await UserManager.FindByIdAsync(userId)).Email;
             }
 
-            return View(new OrdersVM {
-                OrderDetails = orderDetails,
-                UserEmails = UserEmails
-            });
+            return View(model);
         }
 
         public IActionResult HiddenOpinions() {
