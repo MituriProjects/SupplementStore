@@ -8,7 +8,7 @@ namespace SupplementStore.Application.Services {
     public interface IOpinionService {
         OpinionDetails Load(string opinionId);
         IEnumerable<OpinionDetails> LoadMany(string userId);
-        IEnumerable<HiddenOpinionDetails> LoadHidden();
+        HiddenOpinionListResult LoadHidden(HiddenOpinionListArgs args);
         ProductDetails LoadOpinionProduct(string opinionId);
         ProductToOpineResult LoadProductToOpine(string userId);
         void Create(OpinionCreateArgs args);
