@@ -56,9 +56,19 @@ namespace SupplementStore.Controllers {
             return View(model);
         }
 
-        public IActionResult HiddenOpinions() {
+        public IActionResult HiddenOpinions(HiddenOpinionsVM model) {
 
-            return View(OpinionService.LoadHidden());
+            model = model ?? new HiddenOpinionsVM();
+
+            var hiddenOpinionsListResult = OpinionService.LoadHidden(new HiddenOpinionListArgs {
+                Skip = model.Page.Skip,
+                Take = model.Page.Take
+            });
+
+            model.Page.Count = hiddenOpinionsListResult.AllHiddenOpinionsCount;
+            model.HiddenOpinions = hiddenOpinionsListResult.HiddenOpinions;
+
+            return View(model);
         }
     }
 }
