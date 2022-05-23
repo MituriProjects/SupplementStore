@@ -2,6 +2,12 @@
 
 <environment exclude="Testing">
 
+    @await Html.PartialAsync("_FilterSection", new FilterSectionVM {
+        Page = Model.Page,
+        ControllerName = "Admin",
+        ActionName = "HiddenOpinions"
+    })
+
     @foreach (var opinion in Model.HiddenOpinions) {
 
         <div class="bg-light m-2 p-2">
