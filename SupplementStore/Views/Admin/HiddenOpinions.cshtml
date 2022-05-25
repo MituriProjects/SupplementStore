@@ -1,8 +1,14 @@
-﻿@model IEnumerable<HiddenOpinionDetails>
+﻿@model HiddenOpinionsVM
 
 <environment exclude="Testing">
 
-    @foreach (var opinion in Model) {
+    @await Html.PartialAsync("_FilterSection", new FilterSectionVM {
+        Page = Model.Page,
+        ControllerName = "Admin",
+        ActionName = "HiddenOpinions"
+    })
+
+    @foreach (var opinion in Model.HiddenOpinions) {
 
         <div class="bg-light m-2 p-2">
             <div>@Localizer["ProductNameLabel"]: @opinion.ProductName</div>
@@ -17,7 +23,9 @@
 
 <environment include="Testing">
 
-    @foreach (var opinion in Model) {
+    <div name="AllHiddenOpinionsCount">@Model.Page.Count</div>
+
+    @foreach (var opinion in Model.HiddenOpinions) {
 
         <div name="Id">@opinion.Id</div>
         <div name="ProductName">@opinion.ProductName</div>

@@ -1,15 +1,12 @@
 ﻿using SupplementStore.Application.Models;
+using SupplementStore.ViewModels.Shared;
 using System.Collections.Generic;
 
 namespace SupplementStore.ViewModels.Product {
 
     public class IndexVM {
 
-        public int Skip { get; set; }
-
-        public int Take { get; set; } = 10;
-
-        public int AllProductsCount { get; set; }
+        public PageVM Page { get; set; } = new PageVM();
 
         public IEnumerable<ProductDetails> Products { get; set; }
 

@@ -2,6 +2,12 @@
 
 <environment exclude="Testing">
 
+    @await Html.PartialAsync("_FilterSection", new FilterSectionVM {
+        Page = Model.Page,
+        ControllerName = "Admin",
+        ActionName = "Orders"
+    })
+
     <ul class="list-unstyled my-4">
 
         @foreach (var order in Model.OrderDetails) {
@@ -40,6 +46,8 @@
 </environment>
 
 <environment include="Testing">
+
+    <div name="AllOrdersCount">@Model.Page.Count</div>
 
     @foreach (var order in Model.OrderDetails) {
 

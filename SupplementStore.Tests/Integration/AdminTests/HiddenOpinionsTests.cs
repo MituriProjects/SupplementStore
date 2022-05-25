@@ -2,6 +2,7 @@
 using SupplementStore.Domain.Opinions;
 using SupplementStore.Domain.Orders;
 using SupplementStore.Domain.Products;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace SupplementStore.Tests.Integration.AdminTests {
@@ -61,6 +62,69 @@ namespace SupplementStore.Tests.Integration.AdminTests {
                 .Contains("Id", opinions[2].OpinionId)
                 .Contains("ProductName", products[1].Name)
                 .Contains("Text", opinions[2].Text));
+        }
+
+        [TestMethod]
+        public async Task DefaultSkipAndTake_ReturnsAllOrdersCount() {
+
+            var products = TestEntity.Random<Product>(4);
+            var purchases = TestEntity.Random<Purchase>(4);
+            var opinions = TestEntity.Random<Opinion>(4);
+            for (int i = 0; i < opinions.Count(); i++) {
+
+                opinions[i].WithPurchaseId(purchases[i]);
+                purchases[i]
+                    .WithOpinionId(opinions[i])
+                    .WithProductId(products[i]);
+            }
+            opinions[0].WithIsHidden(true);
+            opinions[2].WithIsHidden(true);
+
+            await GetAsync("/Admin/HiddenOpinions", TestData.Admin);
+
+            Examine(ContentScheme.Html()
+                .Contains("AllHiddenOpinionsCount", 2));
+        }
+
+        [TestMethod]
+        public async Task SkipEquals2AndTakeEquals2_ReturnsDetailsOfAppropriateOpinions() {
+
+            var products = TestEntity.Random<Product>(6);
+            var purchases = TestEntity.Random<Purchase>(6);
+            var opinions = TestEntity.Random<Opinion>(6);
+            for (int i = 0; i < opinions.Count(); i++) {
+
+                opinions[i].WithPurchaseId(purchases[i]);
+                purchases[i]
+                    .WithOpinionId(opinions[i])
+                    .WithProductId(products[i]);
+            }
+            opinions[0].WithIsHidden(true);
+            opinions[1].WithIsHidden(true);
+            opinions[2].WithIsHidden(true);
+            opinions[4].WithIsHidden(true);
+            opinions[5].WithIsHidden(true);
+
+            await GetAsync("/Admin/HiddenOpinions?Page.Skip=2&Page.Take=2", TestData.Admin);
+
+            var contentScheme = ContentScheme.Html();
+            for (int i = 0; i < opinions.Count(); i++) {
+
+                if (i < 2 || i == 3 || i == 5) {
+
+                    contentScheme.Lacks("Id", opinions[i].OpinionId);
+                    contentScheme.Lacks("ProductName", products[i].Name);
+                    contentScheme.Lacks("Text", opinions[i].Text);
+                }
+                else {
+
+                    contentScheme.Contains("Id", opinions[i].OpinionId);
+                    contentScheme.Contains("ProductName", products[i].Name);
+                    contentScheme.Contains("Text", opinions[i].Text);
+                }
+            }
+
+            Examine(contentScheme);
         }
     }
 }

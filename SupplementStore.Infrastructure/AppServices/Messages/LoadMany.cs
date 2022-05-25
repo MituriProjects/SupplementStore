@@ -1,17 +1,23 @@
-﻿using SupplementStore.Application.Models;
+﻿using SupplementStore.Application.Args;
+using SupplementStore.Application.Results;
+using SupplementStore.Domain.Messages;
+using SupplementStore.Domain.Shared;
 using SupplementStore.Infrastructure.ModelMapping;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace SupplementStore.Infrastructure.AppServices.Messages {
 
     public partial class MessageService {
 
-        public IEnumerable<MessageDetails> LoadMany() {
+        public MessageListResult LoadMany(MessageListArgs args) {
 
-            return MessageRepository.Entities
-                .OrderByDescending(e => e.CreatedOn)
+            var messages = MessageRepository
+                .FindBy(new PagingFilter<Message>(args.Skip, args.Take, e => e.CreatedOn))
                 .ToDetails(UserRepository);
+
+            return new MessageListResult {
+                AllMessagesCount = MessageRepository.Count(),
+                Messages = messages
+            };
         }
     }
 }

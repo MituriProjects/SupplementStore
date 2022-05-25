@@ -47,5 +47,47 @@ namespace SupplementStore.Tests.Integration.SupportTests {
             }
             Examine(content);
         }
+
+        [TestMethod]
+        public async Task DefaultSkipAndTake_ReturnsAllMessagesCount() {
+
+            var messages = TestEntity.Random<Message>(3);
+
+            await GetAsync("/Support/MessageList", TestData.Admin);
+
+            Examine(ContentScheme.Html()
+                .Contains("AllMessagesCount", 3));
+        }
+
+        [TestMethod]
+        public async Task SkipEquals2AndTakeEquals2_ReturnsDetailsOfAppropriateMessages() {
+
+            var messages = TestEntity.Random<Message>(5);
+
+            await GetAsync("/Support/MessageList?Page.Skip=2&Page.Take=2", TestData.Admin);
+
+            messages = messages
+                .OrderByDescending(e => e.CreatedOn)
+                .ToArray();
+
+            var contentScheme = ContentScheme.Html();
+            for (int i = 0; i < messages.Count(); i++) {
+
+                if (i < 2 || i > 3) {
+
+                    contentScheme.Lacks("Email", messages[i].SenderEmail);
+                    contentScheme.Lacks("Text", messages[i].Text);
+                    contentScheme.Lacks("CreatedOn", messages[i].CreatedOn);
+                }
+                else {
+
+                    contentScheme.Contains("Email", messages[i].SenderEmail);
+                    contentScheme.Contains("Text", messages[i].Text);
+                    contentScheme.Contains("CreatedOn", messages[i].CreatedOn);
+                }
+            }
+
+            Examine(contentScheme);
+        }
     }
 }

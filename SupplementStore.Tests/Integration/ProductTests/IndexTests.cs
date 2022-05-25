@@ -105,7 +105,7 @@ namespace SupplementStore.Tests.Integration.ProductTests {
                 .WithProductId(products[1])
                 .WithOpinionId(opinions[1]);
 
-            await GetAsync("/Product?Skip=2&Take=2");
+            await GetAsync("/Product?Page.Skip=2&Page.Take=2");
 
             var contentScheme = ContentScheme.Html();
             for (int i = 0; i < products.Count(); i++) {

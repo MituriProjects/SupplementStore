@@ -1,12 +1,12 @@
 ﻿using SupplementStore.Application.Args;
 using SupplementStore.Application.Models;
-using System.Collections.Generic;
+using SupplementStore.Application.Results;
 
 namespace SupplementStore.Application.Services {
 
     public interface IOrderService {
         OrderDetails Load(string id);
-        IEnumerable<OrderDetails> LoadMany();
+        OrderListResult LoadMany(OrderListArgs args);
         OrderDetails Create(OrderCreateArgs args);
     }
 }

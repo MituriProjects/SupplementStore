@@ -79,5 +79,45 @@ namespace SupplementStore.Tests.Integration.AdminTests {
 
             Examine(contentScheme);
         }
+
+        [TestMethod]
+        public async Task DefaultSkipAndTake_ReturnsAllOrdersCount() {
+
+            var orders = TestEntity.Random<Order>(3);
+            orders.ToList()
+                .ForEach(e => e.WithUserId(TestData.User));
+
+            await GetAsync("/Admin/Orders", TestData.Admin);
+
+            Examine(ContentScheme.Html()
+                .Contains("AllOrdersCount", 3));
+        }
+
+        [TestMethod]
+        public async Task SkipEquals2AndTakeEquals2_ReturnsDetailsOfAppropriateOrders() {
+
+            var orders = TestEntity.Random<Order>(5);
+            orders.ToList()
+                .ForEach(e => e.WithUserId(TestData.User));
+
+            await GetAsync("/Admin/Orders?Page.Skip=2&Page.Take=2", TestData.Admin);
+
+            var contentScheme = ContentScheme.Html();
+            for (int i = 0; i < orders.Count(); i++) {
+
+                if (i < 2 || i > 3) {
+
+                    contentScheme.Lacks("OrderId", orders[i].OrderId);
+                    contentScheme.Lacks("CreatedOn", orders[i].CreatedOn);
+                }
+                else {
+
+                    contentScheme.Contains("OrderId", orders[i].OrderId);
+                    contentScheme.Contains("CreatedOn", orders[i].CreatedOn);
+                }
+            }
+
+            Examine(contentScheme);
+        }
     }
 }

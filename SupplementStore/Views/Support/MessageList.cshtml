@@ -1,8 +1,14 @@
-﻿@model IEnumerable<MessageDetails>
+﻿@model MessageListVM
 
 <environment exclude="Testing">
 
-    @foreach (var message in Model) {
+    @await Html.PartialAsync("_FilterSection", new FilterSectionVM {
+        Page = Model.Page,
+        ControllerName = "Support",
+        ActionName = "MessageList"
+    })
+
+    @foreach (var message in Model.Messages) {
 
         <div class="bg-light m-3 p-2 w-25">
             <div>@Localizer["TextLabel"]: @message.Text</div>
@@ -15,7 +21,9 @@
 
 <environment include="Testing">
 
-    @foreach (var message in Model) {
+    <div name="AllMessagesCount">@Model.Page.Count</div>
+
+    @foreach (var message in Model.Messages) {
 
         <div name="Email">@message.Email</div>
         <div name="Text">@message.Text</div>

@@ -14,33 +14,11 @@
         }
     </div>
 
-    <form method="post" asp-controller="Product" asp-action="Index" class="d-inline-block mx-2">
-
-        <select asp-for="Take" class="form-select d-inline-block m-2" style="width:100px">
-            <option>10</option>
-            <option>20</option>
-            <option>50</option>
-        </select>
-
-        <button class="btn btn-outline-primary mb-1" type="submit">@Localizer["ApplyFiltersButtonText"]</button>
-
-    </form>
-
-    <div class="mx-4 d-inline-block">
-
-        @for (int i = 0; i < Model.AllProductsCount / Model.Take + 1; i++) {
-
-            if (Model.Take * i == Model.Skip) {
-
-                <a asp-controller="Product" asp-action="Index" asp-route-skip="@(Model.Take * i)" asp-route-take="@Model.Take" class="btn btn-primary m-1 disabled">@(i + 1)</a>
-            }
-            else {
-
-                <a asp-controller="Product" asp-action="Index" asp-route-skip="@(Model.Take * i)" asp-route-take="@Model.Take" class="btn btn-outline-primary m-1">@(i + 1)</a>
-            }
-        }
-
-    </div>
+    @await Html.PartialAsync("_FilterSection", new FilterSectionVM {
+        Page = Model.Page,
+        ControllerName = "Product",
+        ActionName = "Index"
+    })
 
     <ul class="list-unstyled">
 
@@ -165,7 +143,7 @@
 
 <environment include="Testing">
 
-    <div name="AllProductsCount">@Model.AllProductsCount</div>
+    <div name="AllProductsCount">@Model.Page.Count</div>
 
     @foreach (var product in Model.Products) {
 
