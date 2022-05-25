@@ -2,6 +2,7 @@
 using SupplementStore.Application.Models;
 using SupplementStore.Application.Results;
 using SupplementStore.Domain.Orders;
+using SupplementStore.Domain.Shared;
 using SupplementStore.Infrastructure.ModelMapping;
 using System;
 using System.Collections.Generic;
@@ -13,10 +14,8 @@ namespace SupplementStore.Infrastructure.AppServices.Order {
 
         public OrderListResult LoadMany(OrderListArgs args) {
 
-            var orders = OrderRepository.Entities
-                .Skip(args.Skip)
-                .Take(args.Take)
-                .ToList();
+            var orders = OrderRepository
+                .FindBy(new PagingFilter<Domain.Orders.Order>(args.Skip, args.Take));
 
             var ordersPurchases = PurchaseRepository.FindBy(new OrdersPurchasesFilter(orders.Select(e => e.OrderId)));
 
