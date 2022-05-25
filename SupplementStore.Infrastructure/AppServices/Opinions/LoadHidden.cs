@@ -2,6 +2,7 @@
 using SupplementStore.Application.Models;
 using SupplementStore.Application.Results;
 using SupplementStore.Domain.Opinions;
+using SupplementStore.Domain.Shared;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -12,9 +13,7 @@ namespace SupplementStore.Infrastructure.AppServices.Opinions {
         public HiddenOpinionListResult LoadHidden(HiddenOpinionListArgs args) {
 
             var hiddenOpinions = OpinionRepository
-                .FindBy(new HiddenOpinionsFilter())
-                .Skip(args.Skip)
-                .Take(args.Take);
+                .FindBy(new PagingFilter<Opinion>(args.Skip, args.Take, new HiddenOpinionsFilter()));
 
             var loadedHiddenOpinions = new List<HiddenOpinionDetails>();
             foreach (var opinion in hiddenOpinions) {
