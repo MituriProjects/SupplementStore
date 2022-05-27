@@ -12,6 +12,7 @@ using SupplementStore.Controllers.Services;
 using SupplementStore.DependencyResolving;
 using SupplementStore.Infrastructure;
 using System;
+using System.Globalization;
 
 namespace SupplementStore {
 
@@ -77,6 +78,9 @@ namespace SupplementStore {
                 .SetDefaultCulture(supportedCultures[0])
                 .AddSupportedCultures(supportedCultures)
                 .AddSupportedUICultures(supportedCultures);
+
+            CultureInfo.DefaultThreadCurrentCulture = new CultureInfo(supportedCultures[0]);
+            CultureInfo.DefaultThreadCurrentUICulture = new CultureInfo(supportedCultures[0]);
 
             app.UseRequestLocalization(localizationOptions);
 
