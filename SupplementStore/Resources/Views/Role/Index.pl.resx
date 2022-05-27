@@ -120,6 +120,9 @@
   <data name="CreateRoleButtonText" xml:space="preserve">
     <value>Dodaj</value>
   </data>
+  <data name="ManageUsersRolesButtonText" xml:space="preserve">
+    <value>Użytkownicy</value>
+  </data>
   <data name="RoleNameLabel" xml:space="preserve">
     <value>Nazwa uprawnienia</value>
   </data>
