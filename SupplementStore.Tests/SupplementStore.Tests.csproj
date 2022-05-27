@@ -2,8 +2,15 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.1</TargetFramework>
-
     <IsPackable>false</IsPackable>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <NoWarn>1701;1702;NETSDK1138;NETSDK1071</NoWarn>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <NoWarn>1701;1702;NETSDK1138;NETSDK1071</NoWarn>
   </PropertyGroup>
 
   <ItemGroup>
@@ -20,12 +27,6 @@
     <ProjectReference Include="..\SupplementStore.Domain\SupplementStore.Domain.csproj" />
     <ProjectReference Include="..\SupplementStore.Infrastructure\SupplementStore.Infrastructure.csproj" />
     <ProjectReference Include="..\SupplementStore\SupplementStore.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Reference Include="Microsoft.AspNetCore">
-      <HintPath>C:\Program Files\dotnet\sdk\NuGetFallbackFolder\microsoft.aspnetcore\2.1.1\lib\netstandard2.0\Microsoft.AspNetCore.dll</HintPath>
-    </Reference>
   </ItemGroup>
 
 </Project>
