@@ -126,6 +126,9 @@
   <data name="EmptyBasketErrorMessage" xml:space="preserve">
     <value>The basket is empty.</value>
   </data>
+  <data name="NoSavedAddressText" xml:space="preserve">
+    <value>You have no address saved.</value>
+  </data>
   <data name="ToPayLabel" xml:space="preserve">
     <value>To pay</value>
   </data>
