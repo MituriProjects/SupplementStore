@@ -144,6 +144,9 @@
   <data name="PasswordRequiredErrorMessage" xml:space="preserve">
     <value>Password is required.</value>
   </data>
+  <data name="PleaseWaitText" xml:space="preserve">
+    <value>Please wait...</value>
+  </data>
   <data name="PostalCodeLabel" xml:space="preserve">
     <value>Postal code</value>
   </data>
