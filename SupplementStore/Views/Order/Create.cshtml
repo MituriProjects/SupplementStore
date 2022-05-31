@@ -31,32 +31,277 @@
             <span id="costSummary">@costSummary</span>
         </div>
 
-        <div asp-validation-summary="All" class="text-danger"></div>
+        <div id="new-address-section">
 
-        <form method="post" asp-controller="Order" asp-action="Create" class="m-2 w-25">
-            <div class="form-group">
-                <label asp-for="Street"></label>
-                <input asp-for="Street" class="form-control" />
+            <div asp-validation-summary="All" class="text-danger"></div>
+
+            <div id="choose-address-btn" class="btn btn-outline-success m-2">@Localizer["ChooseAddressButtonText"]</div>
+
+            <div id="no-saved-address-text" class="h4 m-2 d-none">@Localizer["NoSavedAddressText"]</div>
+
+            <form method="post" asp-controller="Order" asp-action="Create" class="m-2 w-25">
+                <div class="form-group">
+                    <label asp-for="Street"></label>
+                    <input asp-for="Street" id="address-street-input" class="form-control" />
+                </div>
+                <div class="form-group">
+                    <label asp-for="PostalCode"></label>
+                    <input asp-for="PostalCode" id="address-postal-code-input" class="form-control" />
+                </div>
+                <div class="form-group">
+                    <label asp-for="City"></label>
+                    <input asp-for="City" id="address-city-input" class="form-control" />
+                </div>
+                <div class="form-check my-1">
+                    <label asp-for="IsAddressToBeSaved" class="form-check-label"></label>
+                    <input asp-for="IsAddressToBeSaved" class="form-check-input" type="checkbox" checked>
+                </div>
+                <button type="submit" class="btn btn-success">@Localizer["CreateOrderButtonText"]</button>
+            </form>
+
+        </div>
+
+        <div id="please-wait-text" class="h4 m-2 d-none">@Localizer["PleaseWaitText"]</div>
+
+        <div id="choose-address-section" class="m-2 d-none">
+            <div id="address-to-choose-section" class="white-text-on-hover btn btn-outline-info">
+                <div id="address-to-choose-street-section"></div>
+                <div id="address-to-choose-postal-code-section"></div>
+                <div id="address-to-choose-city-section"></div>
             </div>
-            <div class="form-group">
-                <label asp-for="PostalCode"></label>
-                <input asp-for="PostalCode" class="form-control" />
+            <div class="m-1">
+                <div id="previous-address-btn" class="white-text-on-hover btn btn-outline-info" style="font-size:20px;">&#x25C4</div>
+                <div id="next-address-btn" class="white-text-on-hover btn btn-outline-info" style="font-size:20px;">&#x25BA</div>
             </div>
-            <div class="form-group">
-                <label asp-for="City"></label>
-                <input asp-for="City" class="form-control" />
-            </div>
-            <div class="form-check my-1">
-                <label asp-for="IsAddressToBeSaved" class="form-check-label"></label>
-                <input asp-for="IsAddressToBeSaved" class="form-check-input" type="checkbox" checked>
-            </div>
-            <button type="submit" class="btn btn-success">@Localizer["CreateOrderButtonText"]</button>
-        </form>
+        </div>
     }
     else {
 
         <h3>@Localizer["EmptyBasketErrorMessage"]</h3>
     }
+
+    <script type="text/javascript">
+        
+        $(document).ready(function() {
+
+            var newAddressSection = "new-address-section";
+            var addressStreetInput = "address-street-input";
+            var addressPostalCodeInput = "address-postal-code-input";
+            var addressCityInput = "address-city-input";
+
+            var chooseAddressBtn = "choose-address-btn";
+            var noSavedAddressText = "no-saved-address-text";
+            var pleaseWaitText = "please-wait-text";
+
+            var chooseAddressSection = "choose-address-section";
+            var addressToChooseSection = "address-to-choose-section";
+            var addressToChooseStreetSection = "address-to-choose-street-section";
+            var addressToChoosePostalCodeSection = "address-to-choose-postal-code-section";
+            var addressToChooseCitySection = "address-to-choose-city-section";
+            var previousAddressBtn = "previous-address-btn";
+            var nextAddressBtn = "next-address-btn";
+
+            $(`#${chooseAddressBtn}`)
+                .click(function() {
+
+                    hide(newAddressSection);
+
+                    show(pleaseWaitText);
+
+                    loadUserAddresses();
+                });
+
+            function loadUserAddresses() {
+
+                $.ajax("/api/address", {
+
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    type: "GET",
+                    success: function (data) {
+
+                        hide(pleaseWaitText);
+
+                        manageNoAddressFound(data);
+
+                        manageFoundAddresses(data);
+                    }
+                });
+            }
+
+            function manageNoAddressFound(data) {
+
+                if (data.length > 0)
+                    return;
+
+                show(newAddressSection);
+
+                hide(chooseAddressBtn);
+
+                show(noSavedAddressText);
+            }
+
+            function manageFoundAddresses(data) {
+
+                if (data.length == 0)
+                    return;
+
+                show(chooseAddressSection);
+
+                addressToChooseManager.setup(data);
+            }
+
+            var addressToChooseManager = (function() {
+
+                var actualAddressIndex;
+                var data;
+
+                function setup(addresses) {
+
+                    actualAddressIndex = 0;
+                    data = addresses;
+
+                    setAddressToChoose(data[actualAddressIndex]);
+                }
+
+                $(`#${addressToChooseSection}`)
+                    .click(function() {
+
+                        hide(chooseAddressSection);
+
+                        show(newAddressSection);
+
+                        setAddressInputs();
+                    });
+
+                $(`#${previousAddressBtn}`)
+                    .click(function() {
+
+                        var previousAddress = data[actualAddressIndex - 1];
+
+                        if (previousAddress === undefined)
+                            return;
+
+                        actualAddressIndex--;
+
+                        setAddressToChoose(previousAddress);
+                    });
+
+                $(`#${nextAddressBtn}`)
+                    .click(function() {
+
+                        var nextAddress = data[actualAddressIndex + 1];
+
+                        if (nextAddress === undefined)
+                            return;
+
+                        actualAddressIndex++;
+
+                        setAddressToChoose(nextAddress);
+                    });
+
+                function setAddressInputs() {
+
+                    var selectedAddress = data[actualAddressIndex];
+
+                    setValue(addressStreetInput, selectedAddress.street);
+                    setValue(addressPostalCodeInput, selectedAddress.postalCode);
+                    setValue(addressCityInput, selectedAddress.city);
+                }
+
+                function setAddressToChoose(address) {
+
+                    setText(addressToChooseStreetSection, address.street);
+                    setText(addressToChoosePostalCodeSection, address.postalCode);
+                    setText(addressToChooseCitySection, address.city);
+
+                    adjustAddressNavigationButtons();
+                }
+
+                function adjustAddressNavigationButtons() {
+
+                    adjustPreviousAddressButton();
+                    adjustNextAddressButton();
+                }
+
+                function adjustPreviousAddressButton() {
+
+                    var previousAddress = data[actualAddressIndex - 1];
+
+                    if (previousAddress === undefined) {
+
+                        makeInvisible(previousAddressBtn);
+                    }
+                    else {
+
+                        makeVisible(previousAddressBtn);
+                    }
+                }
+
+                function adjustNextAddressButton() {
+
+                    var nextAddress = data[actualAddressIndex + 1];
+
+                    if (nextAddress === undefined) {
+
+                        makeInvisible(nextAddressBtn);
+                    }
+                    else {
+
+                        makeVisible(nextAddressBtn);
+                    }
+                }
+
+                return {
+                    setup
+                };
+            })();
+
+            function setValue(id, value) {
+
+                $(`#${id}`)
+                    .attr("value", value);
+            }
+
+            function setText(id, text) {
+
+                $(`#${id}`)
+                    .text(text);
+            }
+
+            function show(id) {
+
+                $(`#${id}`)
+                    .removeClass("d-none");
+            }
+
+            function hide(id) {
+
+                $(`#${id}`)
+                    .addClass("d-none");
+            }
+
+            function makeVisible(id) {
+
+                $(`#${id}`)
+                    .removeClass("invisible");
+            }
+
+            function makeInvisible(id) {
+
+                $(`#${id}`)
+                    .addClass("invisible");
+            }
+        });
+
+    </script>
+
+    <style>
+        .white-text-on-hover:hover {
+            color: white !important;
+        }
+    </style>
 
 </environment>
 
