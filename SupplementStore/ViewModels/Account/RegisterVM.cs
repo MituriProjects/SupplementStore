@@ -13,5 +13,11 @@ namespace SupplementStore.ViewModels.Account {
         [UIHint("password")]
         [Label]
         public string Password { get; set; }
+
+        [IsRequired]
+        [UIHint("password")]
+        [Label]
+        [Compare("Password", ErrorMessage = "PasswordsEqualityRequiredErrorMessage")]
+        public string RepeatPassword { get; set; }
     }
 }
