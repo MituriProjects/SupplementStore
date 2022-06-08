@@ -1,5 +1,9 @@
 ﻿@model RegisterVM
 
+@{
+    Layout = "_LoginRegisterLayout";
+}
+
 <form asp-action="Register" method="post">
 
     <input type="hidden" name="returnUrl" value="@ViewBag.ReturnUrl" />
